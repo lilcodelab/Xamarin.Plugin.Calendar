@@ -1,2 +1,2 @@
 # Plugins.Calendar
-© lilcodelab
+Josip Ćaleta @lilcodelab
