@@ -11,7 +11,7 @@
     </ContentPage.BindingContext>
 
     <controls:Calendar
-        Padding="10"
+        Padding="10,0"
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand"
         Events="{Binding Events}"

@@ -13,7 +13,7 @@ namespace SampleApp
 
         public MainPageViewModel()
         {
-            Culture = CultureInfo.CreateSpecificCulture("de-DE");
+            Culture = CultureInfo.CreateSpecificCulture("en-US");
 
             Events = new EventCollection
             {

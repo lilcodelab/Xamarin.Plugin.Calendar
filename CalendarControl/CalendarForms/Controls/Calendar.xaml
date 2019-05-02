@@ -8,7 +8,8 @@
     <!-- TODO: Binding size for monthsView, text etc. -->
     <Grid
         RowSpacing="5"
-        IsClippedToBounds="True">
+        IsClippedToBounds="True"
+        Padding="0,15,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition x:Name="monthsRow" Height="Auto" />
