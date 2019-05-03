@@ -70,8 +70,8 @@ namespace SampleApp
         }
 
         public EventCollection Events { get; }
-        public int Month => DateTime.Now.Month;
-        public int Year => DateTime.Now.Year;
+        public int Month { get; set; } = DateTime.Now.Month;
+        public int Year { get; set; } = DateTime.Now.Year;
 
         public CultureInfo Culture
         {
