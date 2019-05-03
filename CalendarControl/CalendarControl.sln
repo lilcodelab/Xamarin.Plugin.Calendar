@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin", "Plugin", "{183F1D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarForms.Android", "CalendarForms.Android\CalendarForms.Android.csproj", "{E2553329-DA78-4470-8993-CE6A49A0FC27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarForms.iOS", "CalendarForms.iOS\CalendarForms.iOS.csproj", "{86EA2948-5B42-4DAF-87F2-377328609F9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,18 @@ Global
 		{E2553329-DA78-4470-8993-CE6A49A0FC27}.Release|iPhone.Build.0 = Release|Any CPU
 		{E2553329-DA78-4470-8993-CE6A49A0FC27}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{E2553329-DA78-4470-8993-CE6A49A0FC27}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Release|iPhone.Build.0 = Release|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{86EA2948-5B42-4DAF-87F2-377328609F9C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +115,7 @@ Global
 		{CAF19901-87ED-4B87-BCA4-90A36DAFECE8} = {F8F47017-6193-42B2-B7EB-5F448A45F633}
 		{E2CBE830-B388-4FEC-B72A-8968E0AB484B} = {F8F47017-6193-42B2-B7EB-5F448A45F633}
 		{E2553329-DA78-4470-8993-CE6A49A0FC27} = {183F1D40-816F-4B0A-BF43-A0D4B4F0F987}
+		{86EA2948-5B42-4DAF-87F2-377328609F9C} = {183F1D40-816F-4B0A-BF43-A0D4B4F0F987}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07EA3709-75A4-49C4-98E6-39337B51F3FE}
