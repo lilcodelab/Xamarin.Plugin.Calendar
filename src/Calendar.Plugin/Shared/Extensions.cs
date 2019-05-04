@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Xamarin.Forms;
 
 namespace Xamarin.Plugin.Calendar
 {
@@ -11,6 +10,20 @@ namespace Xamarin.Plugin.Calendar
                 return source;
 
             return char.ToUpper(source[0]) + source.Substring(1, source.Length - 1);
+        }
+
+        internal static object CreateContent(this DataTemplate dataTemplate, object itemModel)
+        {
+            if (dataTemplate is DataTemplateSelector templateSelector)
+            {
+                var template = templateSelector.SelectTemplate(itemModel, null);
+                template.SetValue(BindableObject.BindingContextProperty, itemModel);
+
+                return template.CreateContent();
+            }
+
+            dataTemplate.SetValue(BindableObject.BindingContextProperty, itemModel);
+            return dataTemplate.CreateContent();
         }
     }
 }
