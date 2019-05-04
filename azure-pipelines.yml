@@ -30,3 +30,12 @@ steps:
   inputs:
     projectFile: '**/*iOS.csproj'
     configuration: '$(buildConfiguration)'
+    packageApp: false
+    buildForSimulator: true
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    feedsToUse: 'select'
+    packagesToPack: '**/*.nuspec'
+    versioningScheme: 'byBuildNumber'
