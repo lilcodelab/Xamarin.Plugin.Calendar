@@ -2,10 +2,10 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Plugin.Calendar.Controls;
-using Xamarin.Plugin.Calendar.iOS.Renderers;
+using Xamarin.Plugin.Calendar.iOS;
 
 [assembly: ExportRenderer(typeof(SwipeAwareContainer), typeof(SwipeAwareContainerRenderer))]
-namespace Xamarin.Plugin.Calendar.iOS.Renderers
+namespace Xamarin.Plugin.Calendar.iOS
 {
     public class SwipeAwareContainerRenderer : ViewRenderer
     {

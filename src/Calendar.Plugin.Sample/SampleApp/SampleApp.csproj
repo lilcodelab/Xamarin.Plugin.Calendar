@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Calendar.Plugin\Shared\CalendarPlugin.csproj" />
+    <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj" />
   </ItemGroup>
 </Project>
