@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Xamarin.Forms;
 
-namespace CalendarForms.Models
+namespace Xamarin.Plugin.Calendar.Models
 {
     internal class DayModel : INotifyPropertyChanged
     {

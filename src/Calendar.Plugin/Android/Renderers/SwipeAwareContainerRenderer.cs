@@ -1,13 +1,13 @@
 ﻿using System;
 using Android.Content;
 using Android.Views;
-using CalendarForms.Android.Renderers;
-using CalendarForms.Controls;
+using Xamarin.Plugin.Calendar.Android.Renderers;
+using Xamarin.Plugin.Calendar.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(SwipeAwareContainer), typeof(SwipeAwareContainerRenderer))]
-namespace CalendarForms.Android.Renderers
+namespace Xamarin.Plugin.Calendar.Android.Renderers
 {
     public class SwipeAwareContainerRenderer : ViewRenderer, GestureDetector.IOnGestureListener
     {

@@ -3,7 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SampleApp"
-    xmlns:controls="clr-namespace:CalendarForms.Controls;assembly=CalendarForms"
+    xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
     x:Class="SampleApp.MainPage"
     Title="Calendar sample">
     <ContentPage.BindingContext>

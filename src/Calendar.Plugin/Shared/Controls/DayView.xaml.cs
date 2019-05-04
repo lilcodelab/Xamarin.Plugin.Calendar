@@ -1,9 +1,9 @@
-﻿using CalendarForms.Models;
+﻿using Xamarin.Plugin.Calendar.Models;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace CalendarForms.Controls
+namespace Xamarin.Plugin.Calendar.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DayView : ContentView

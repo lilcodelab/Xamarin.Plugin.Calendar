@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace CalendarForms
+namespace Xamarin.Plugin.Calendar
 {
     internal static class Extensions
     {
