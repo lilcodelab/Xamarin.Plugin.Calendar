@@ -99,7 +99,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Calendar.Plugin\Android\CalendarPlugin.Android.csproj">
       <Project>{e2553329-da78-4470-8993-ce6a49a0fc27}</Project>
-      <Name>CalendarForms.Android</Name>
+      <Name>CalendarPlugin.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\SampleApp\SampleApp.csproj">
       <Project>{E4FB5119-AAD4-43E4-8741-1759FAF4083B}</Project>
