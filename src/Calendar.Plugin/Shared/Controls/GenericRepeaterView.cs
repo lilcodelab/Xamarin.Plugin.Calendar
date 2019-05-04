@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace CalendarForms.Controls
+namespace Xamarin.Plugin.Calendar.Controls
 {
     public partial class GenericRepeaterView : StackLayout
     {
