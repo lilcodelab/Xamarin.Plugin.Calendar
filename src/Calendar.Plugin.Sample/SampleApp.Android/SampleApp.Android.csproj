@@ -97,7 +97,7 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CalendarForms.Android\CalendarForms.Android.csproj">
+    <ProjectReference Include="..\..\Calendar.Plugin\Android\CalendarPlugin.Android.csproj">
       <Project>{e2553329-da78-4470-8993-ce6a49a0fc27}</Project>
       <Name>CalendarForms.Android</Name>
     </ProjectReference>

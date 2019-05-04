@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace CalendarForms.Models
+namespace Xamarin.Plugin.Calendar.Models
 {
     public class EventCollection : Dictionary<DateTime, ICollection>
     {

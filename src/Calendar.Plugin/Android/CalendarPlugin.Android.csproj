@@ -10,8 +10,8 @@
     <TemplateGuid>{9ef11e43-1701-4396-8835-8392d57abb70}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CalendarForms.Android</RootNamespace>
-    <AssemblyName>CalendarForms.Android</AssemblyName>
+    <RootNamespace>Xamarin.Plugin.Calendar.Android</RootNamespace>
+    <AssemblyName>Xamarin.Plugin.Calendar.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -55,9 +55,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CalendarForms\CalendarForms.csproj">
-      <Project>{05985758-539D-4FD4-9A07-67D2F938E1B9}</Project>
-      <Name>CalendarForms</Name>
+    <ProjectReference Include="..\Shared\CalendarPlugin.csproj">
+      <Project>{e1111d38-fd6c-49bd-b04b-75aa897c66a6}</Project>
+      <Name>CalendarPlugin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

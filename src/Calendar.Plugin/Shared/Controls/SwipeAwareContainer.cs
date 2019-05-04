@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace CalendarForms.Controls
+namespace Xamarin.Plugin.Calendar.Controls
 {
     public class SwipeAwareContainer: ContentView
     {
