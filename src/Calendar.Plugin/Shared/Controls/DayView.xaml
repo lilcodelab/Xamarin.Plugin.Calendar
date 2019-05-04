@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Xamarin.Plugin.Calendar.Controls.DayView">
+
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        
+        <Frame
+            HasShadow="False"
+            IsClippedToBounds="True"
+            WidthRequest="40"
+            HeightRequest="40"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            CornerRadius="20"
+            Padding="0"
+            BackgroundColor="{Binding BackgroundColor}" />
+
+        <Button
+            IsVisible="{Binding HasEvents}"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            WidthRequest="8"
+            HeightRequest="8"
+            CornerRadius="4"
+            Margin="0,0,0,3"
+            BackgroundColor="{Binding EventIndicatorColor}"
+            InputTransparent="True" />
+
+        <Label
+            Text="{Binding Date.Day}"
+            TextColor="{Binding TextColor}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            InputTransparent="True" />
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Grid.GestureRecognizers>
+    </Grid>
+</ContentView>
