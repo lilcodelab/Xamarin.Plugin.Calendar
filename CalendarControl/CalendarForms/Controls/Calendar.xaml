@@ -230,11 +230,11 @@
                 Grid.Row="1"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="StartAndExpand">
-                <StackLayout
+                <controls:GenericRepeaterView
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand"
-                    BindableLayout.ItemTemplate="{Binding EventTemplate, Source={x:Reference calendar}}"
-                    BindableLayout.ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}" />
+                    ItemTemplate="{Binding EventTemplate, Source={x:Reference calendar}}"
+                    ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}" />
             </ScrollView>
         </Grid>
     </Grid>
