@@ -2,8 +2,8 @@
 <ContentView 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:CalendarForms.Controls"
-    x:Class="CalendarForms.Controls.MonthDaysView"
+    xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
+    x:Class="Xamarin.Plugin.Calendar.Controls.MonthDaysView"
     x:Name="monthsView">
 
     <Grid
