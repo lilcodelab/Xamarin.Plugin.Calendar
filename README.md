@@ -5,7 +5,12 @@
 [![Chat](https://img.shields.io/badge/Telegram-chat-blue.svg)](https://t.me/XamarinPluginCalendar)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/LICENSE)
 
-TODO: screenshots
+![Alt][screenshot1]		![Alt][screenshot2]
+
+[screenshot1]:https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/Android.jpg
+[screenshot2]:https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iPhone_XS.png
+
+![Android Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/Android.jpg) ![iPhone Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iPhone_XS.png)
 
 Simple cross platform plugin for Calendar control featuring:
 - Displaying events by binding EventCollection
@@ -18,9 +23,11 @@ Simple cross platform plugin for Calendar control featuring:
 * Install into your PCL(TODO: ???)/.NET Standard project and Client projects.
 
 #### Supported versions
-* Xamarin.Forms v3.0+
-* Android ?
-* iOS ?
+| Platform | Version |
+| -------- | ------- |
+| Xamarin.Forms | 3.0+ |
+| Xamarin.Android | ? |
+| Xamarin.iOS | ? |
 
 ### Usage
 To get started just install the package via Nuget into your shared and client projects.
