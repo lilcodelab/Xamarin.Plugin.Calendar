@@ -13,11 +13,12 @@ Simple cross platform plugin for Calendar control featuring:
 - Customizeable colors, fonts and sizes (WIP).
 
 ### Setup
-* Available on NuGet (TODO: [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.Media.svg?label=NuGet)](https://www.nuget.org/packages/Xam.Plugin.Media/))
+* Available on NuGet 
+  * https://www.nuget.org/packages/Xamarin.Plugin.Calendar/
 * Install into your PCL(TODO: ???)/.NET Standard project and Client projects.
 
 #### Supported versions
-* Xamarin.Forms v3.5+ (TODO: reduce this)
+* Xamarin.Forms v3.0+
 * Android ?
 * iOS ?
 
@@ -27,7 +28,7 @@ You can take a look on the sample app to get started or continue reading.
 
 Reference the following xmlns to your page:
 ```xml
-xmlns:controls="clr-namespace:CalendarForms.Controls;assembly=CalendarForms"
+xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
 ```
 
 Basic control usage:
@@ -71,7 +72,7 @@ In your XAML, add the data template for events, and bind the events collection, 
 
 In your ViewModel reference the following namespace:
 ```csharp
-using CalendarForms.Models;
+using Xamarin.Plugin.Calendar.Models;
 ```
 
 Add property for Events:
@@ -124,7 +125,6 @@ OtherMonthDayColor="Gray"
 TODO: screenshot of changed colors
 
 ##### TODO
-* Nuget
 * More customization, sizes, fonts etc.
 
 Josip Ćaleta @lilcodelab
