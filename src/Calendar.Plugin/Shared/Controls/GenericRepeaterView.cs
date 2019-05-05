@@ -48,17 +48,12 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (bindable is GenericRepeaterView view)
             {
                 if (oldValue is INotifyCollectionChanged oldObservable)
-                {
                     oldObservable.CollectionChanged -= view.CollectionChanged;
-                }
 
-                if (newValue != null)
-                {
-                    view.ResetItems();
+                view.ResetItems();
 
-                    if (newValue is INotifyCollectionChanged newObservable)
-                        newObservable.CollectionChanged += view.CollectionChanged;
-                }
+                if (newValue is INotifyCollectionChanged newObservable)
+                    newObservable.CollectionChanged += view.CollectionChanged;
             }
         }
 
@@ -70,6 +65,9 @@ namespace Xamarin.Plugin.Calendar.Controls
                 return;
 
             Children.Clear();
+
+            if (ItemsSource == null)
+                return;
 
             foreach (var itemModel in ItemsSource)
                 Children.Add(GetItemView(itemModel));
