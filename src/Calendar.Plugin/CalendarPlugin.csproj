@@ -28,6 +28,8 @@
 
     <!--<GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>-->
     <DefineConstants>$(DefineConstants);</DefineConstants>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
