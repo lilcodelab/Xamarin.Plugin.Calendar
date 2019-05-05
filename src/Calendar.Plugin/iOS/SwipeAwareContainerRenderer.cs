@@ -26,7 +26,7 @@ namespace Xamarin.Plugin.Calendar.iOS
         {
             base.OnElementChanged(e);
 
-            var control = GetControl();
+            var control = NativeView;
 
             if (control == null)
                 return;
