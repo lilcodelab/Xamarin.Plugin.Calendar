@@ -5,6 +5,9 @@ using System.Runtime.Serialization;
 
 namespace Xamarin.Plugin.Calendar.Models
 {
+    /// <summary>
+    /// Class for calendar events (extends Dictionary<DateTime, ICollection>)
+    /// </summary>
     public class EventCollection : Dictionary<DateTime, ICollection>
     {
         #region ctor
@@ -32,6 +35,11 @@ namespace Xamarin.Plugin.Calendar.Models
 
         #endregion
 
+        /// <summary>
+        /// Add collection of value for specific date
+        /// </summary>
+        /// <param name="key">Event DateTime</param>
+        /// <param name="value">Collection of events for </param>
         public new void Add(DateTime key, ICollection value)
         {
             base.Add(key.Date, value);
