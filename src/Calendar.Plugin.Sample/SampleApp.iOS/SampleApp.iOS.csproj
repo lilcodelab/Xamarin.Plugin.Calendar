@@ -128,11 +128,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\CalendarForms.iOS\CalendarPlugin.iOS.csproj">
-      <Project>{86ea2948-5b42-4daf-87f2-377328609f9c}</Project>
-      <Name>CalendarPlugin.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
+    <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj">
+      <Project>{81e938f4-a11c-4726-a13f-0d7ecc84ca66}</Project>
+      <Name>CalendarPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\SampleApp\SampleApp.csproj">
       <Project>{E4FB5119-AAD4-43E4-8741-1759FAF4083B}</Project>
