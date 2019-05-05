@@ -1,6 +1,6 @@
 ## Calendar Plugin for Xamarin.Forms
 [![Build status](https://dev.azure.com/lilcodelab/Xamarin.Plugin.Calendar/_apis/build/status/Xamarin.Plugin.Calendar-Xamarin.Android-CI)](https://github.com/lilcodelab/Xamarin.Plugin.Calendar) 
-[![NuGet](https://img.shields.io/nuget/v/Xamarin.Plugin.Calendar.svg?label=NuGet)](https://www.nuget.org/packages/Xamarin.Plugin.Calendar/)
+[![Nuget](https://img.shields.io/nuget/v/Xamarin.Plugin.Calendar.svg?label=nuget)](https://www.nuget.org/packages/Xamarin.Plugin.Calendar/)
 [![Issues](https://img.shields.io/github/issues/lilcodelab/Xamarin.Plugin.Calendar.svg)](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues)
 [![Chat](https://img.shields.io/badge/Telegram-chat-blue.svg)](https://t.me/XamarinPluginCalendar)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/LICENSE)
@@ -17,7 +17,6 @@ Simple cross platform plugin for Calendar control featuring:
 ### Setup
 * Available on NuGet 
   * https://www.nuget.org/packages/Xamarin.Plugin.Calendar/
-* Install into your PCL(TODO: ???)/.NET Standard project and Client projects.
 
 #### Supported versions
 | Platform | Version |
@@ -128,6 +127,7 @@ OtherMonthDayColor="Gray"
 
 ##### TODO
 * screenshot of changed colors
+* Test Install into your PCL /.NET Standard project and Client projects.
 * comment public properties and methods
 * More customization, sizes, fonts etc.
 
