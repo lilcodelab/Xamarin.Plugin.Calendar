@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.61">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;MonoAndroid70;MonoAndroid71;MonoAndroid80;MonoAndroid81;Xamarin.iOS10</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;MonoAndroid70;MonoAndroid71;MonoAndroid80;MonoAndroid81;Xamarin.iOS10</TargetFrameworks>
     <Authors>Josip Caleta</Authors>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <PackageId>Xamarin.Plugin.Calendar</PackageId>
@@ -26,7 +26,7 @@
     <LangVersion>default</LangVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
-    <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
+    <!--<GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>-->
     <DefineConstants>$(DefineConstants);</DefineConstants>
   </PropertyGroup>
 
