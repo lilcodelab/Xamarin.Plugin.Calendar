@@ -14,6 +14,24 @@ namespace Xamarin.Plugin.Calendar.Controls
     {
         #region Bindable properties
 
+        public static readonly BindableProperty ShowMonthPickerProperty =
+          BindableProperty.Create(nameof(ShowMonthPicker), typeof(bool), typeof(Calendar), true);
+
+        public bool ShowMonthPicker
+        {
+            get => (bool)GetValue(ShowMonthPickerProperty);
+            set => SetValue(ShowMonthPickerProperty, value);
+        }
+
+        public static readonly BindableProperty ShowYearPickerProperty =
+          BindableProperty.Create(nameof(ShowYearPicker), typeof(bool), typeof(Calendar), true);
+
+        public bool ShowYearPicker
+        {
+            get => (bool)GetValue(ShowYearPickerProperty);
+            set => SetValue(ShowYearPickerProperty, value);
+        }
+
         public static readonly BindableProperty MonthProperty =
           BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Now.Month, BindingMode.TwoWay);
 
