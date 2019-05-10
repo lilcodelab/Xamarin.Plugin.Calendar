@@ -124,6 +124,8 @@ DaysTitleColor="Orange"
 SelectedDayTextColor="Cyan"
 DeselectedDayTextColor="Blue"
 OtherMonthDayColor="Gray"
+TodayOutlineColor="Blue"
+TodayFillColor="Silver"
 ```
 
 ##### TODO
