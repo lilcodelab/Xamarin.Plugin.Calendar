@@ -194,6 +194,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ArrowsColorProperty, value);
         }
 
+        public static readonly BindableProperty TodayOutlineColorProperty =
+          BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(Calendar), Color.FromHex("#FF4081"));
+
+        public Color TodayOutlineColor
+        {
+            get => (Color)GetValue(TodayOutlineColorProperty);
+            set => SetValue(TodayOutlineColorProperty, value);
+        }
+
+        public static readonly BindableProperty TodayFillColorProperty =
+          BindableProperty.Create(nameof(TodayFillColor), typeof(Color), typeof(Calendar), Color.Transparent);
+
+        public Color TodayFillColor
+        {
+            get => (Color)GetValue(TodayFillColorProperty);
+            set => SetValue(TodayFillColorProperty, value);
+        }
+
         #endregion
 
         private const uint MonthsAnimationRate = 16;

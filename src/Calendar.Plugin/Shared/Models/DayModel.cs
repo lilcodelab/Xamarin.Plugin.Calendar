@@ -9,7 +9,8 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             get => GetProperty<DateTime>();
             set => SetProperty(value)
-                    .Notify(nameof(IsToday));
+                    .Notify(nameof(BackgroundColor),
+                            nameof(OutlineColor));
         }
 
         public bool HasEvents
@@ -31,8 +32,8 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value)
                     .Notify(nameof(TextColor),
                             nameof(BackgroundColor),
-                            nameof(EventColor),
-                            nameof(IsToday));
+                            nameof(OutlineColor),
+                            nameof(EventColor));
         }
 
         public Color SelectedTextColor
@@ -87,27 +88,36 @@ namespace Xamarin.Plugin.Calendar.Models
         public Color TodayOutlineColor
         {
             get => GetProperty(Color.FromHex("#FF4081"));
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(OutlineColor));
         }
 
         public Color TodayFillColor
         {
             get => GetProperty(Color.Transparent);
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(BackgroundColor));
         }
 
         public Color EventColor => IsSelected
                                  ? EventIndicatorSelectedColor
                                  : EventIndicatorColor;
 
+        public Color OutlineColor => IsToday()
+                                   ? TodayOutlineColor
+                                   : Color.Transparent;
+
         public Color BackgroundColor => IsSelected
                                       ? SelectedBackgroundColor
-                                      : DeselectedBackgroundColor;
+                                      : IsToday()
+                                        ? TodayFillColor
+                                        : DeselectedBackgroundColor;
 
         public Color TextColor => IsSelected
                                 ? SelectedTextColor
                                 : IsThisMonth ? DeselectedTextColor : OtherMonthColor;
 
-        public bool IsToday => Date.Date == DateTime.Today && !IsSelected;
+        private bool IsToday()
+            => Date.Date == DateTime.Today && !IsSelected;
     }
 }

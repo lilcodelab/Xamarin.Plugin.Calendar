@@ -124,6 +124,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorSelectedColorProperty, value);
         }
 
+        public static readonly BindableProperty TodayOutlineColorProperty =
+          BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
+
+        public Color TodayOutlineColor
+        {
+            get => (Color)GetValue(TodayOutlineColorProperty);
+            set => SetValue(TodayOutlineColorProperty, value);
+        }
+
+        public static readonly BindableProperty TodayFillColorProperty =
+          BindableProperty.Create(nameof(TodayFillColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
+
+        public Color TodayFillColor
+        {
+            get => (Color)GetValue(TodayFillColorProperty);
+            set => SetValue(TodayFillColorProperty, value);
+        }
+
         #endregion
 
         private readonly List<DayView> _dayViews = new List<DayView>();
@@ -166,6 +184,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(SelectedDayBackgroundColor):
                 case nameof(EventIndicatorColor):
                 case nameof(EventIndicatorSelectedColor):
+                case nameof(TodayOutlineColor):
+                case nameof(TodayFillColor):
                     UpdateDaysColors();
                     break;
 
@@ -211,6 +231,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
                 dayModel.EventIndicatorColor = EventIndicatorColor;
                 dayModel.EventIndicatorSelectedColor = EventIndicatorSelectedColor;
+                dayModel.TodayOutlineColor = TodayOutlineColor;
+                dayModel.TodayFillColor = TodayFillColor;
             }
         }
 

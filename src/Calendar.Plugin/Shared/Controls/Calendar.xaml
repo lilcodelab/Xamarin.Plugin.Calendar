@@ -194,6 +194,8 @@
                     SelectedDayTextColor="{Binding SelectedDayTextColor, Source={x:Reference calendar}}"
                     DeselectedDayTextColor="{Binding DeselectedDayTextColor, Source={x:Reference calendar}}"
                     OtherMonthDayColor="{Binding OtherMonthDayColor, Source={x:Reference calendar}}"
+                    TodayFillColor="{Binding TodayFillColor, Source={x:Reference calendar}}"
+                    TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand" />
             </StackLayout>

@@ -47,5 +47,7 @@
         DaysTitleColor="Orange"
         SelectedDayTextColor="Cyan"
         DeselectedDayTextColor="Blue"
-        OtherMonthDayColor="Gray"-->
+        OtherMonthDayColor="Gray"
+        TodayOutlineColor="Blue"
+        TodayFillColor="Silver"-->
 </ContentPage>
