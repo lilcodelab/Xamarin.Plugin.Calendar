@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:SampleApp"
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
     x:Class="SampleApp.MainPage"
-    Title="Calendar sample">
+    Title="CALENDATRON-9000K">
     <ContentPage.BindingContext>
         <local:MainPageViewModel />
     </ContentPage.BindingContext>
