@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace Xamarin.Plugin.Calendar.Models
 {
-    internal abstract class BindableBase : INotifyPropertyChanged
+    internal abstract class BindableBase<TData> : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -12,15 +14,15 @@ namespace Xamarin.Plugin.Calendar.Models
         private readonly Dictionary<string, PropertyChangedEventArgs> _propertyChangedArgs = new Dictionary<string, PropertyChangedEventArgs>();
         private readonly Dictionary<string, List<PropertyChangedEventArgs>> _propertyDependencies = new Dictionary<string, List<PropertyChangedEventArgs>>();
 
-        protected TData GetProperty<TData>(TData defaultValue = default, [CallerMemberName] string propertyName = "")
+        protected TProperty GetProperty<TProperty>(TProperty defaultValue = default, [CallerMemberName] string propertyName = "")
         {
             if (!_properties.ContainsKey(propertyName))
                 AddProperty(propertyName, defaultValue);
 
-            return (TData)_properties[propertyName];
+            return (TProperty)_properties[propertyName];
         }
 
-        protected BindableBase SetProperty<TData>(TData value, [CallerMemberName] string propertyName = "")
+        protected BindableBase<TData> SetProperty<TProperty>(TProperty value, Action<TProperty> onChanged = null, [CallerMemberName] string propertyName = "")
         {
             if (!_properties.TryGetValue(propertyName, out object storedValue))
                 AddProperty(propertyName, value);
@@ -29,6 +31,7 @@ namespace Xamarin.Plugin.Calendar.Models
 
             _properties[propertyName] = value;
             PropertyChanged?.Invoke(this, _propertyChangedArgs[propertyName]);
+            onChanged?.Invoke(value);
 
             if (_propertyDependencies.TryGetValue(propertyName, out List<PropertyChangedEventArgs> alsoNotifyFor))
             {
@@ -39,13 +42,21 @@ namespace Xamarin.Plugin.Calendar.Models
             return this;
         }
 
-        internal BindableBase Notify(string propertyName)
+        internal BindableBase<TData> Notify(string propertyName)
         {
             if (!_propertyChangedArgs.ContainsKey(propertyName))
                 _propertyChangedArgs.Add(propertyName, new PropertyChangedEventArgs(propertyName));
 
             PropertyChanged?.Invoke(this, _propertyChangedArgs[propertyName]);
             return this;
+        }
+
+        internal BindableBase<TData> Notify<TProperty>(Expression<Func<TData, TProperty>> propertyExpression)
+        {
+            if (!(propertyExpression.Body is MemberExpression property))
+                throw new ArgumentException($"Expression '{propertyExpression}' does not refer to a property.");
+
+            return Notify(property.Member.Name);
         }
 
         private void AddProperty(string propertyName, object defaultValue)
