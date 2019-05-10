@@ -7,17 +7,33 @@
     <Grid
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
-        
-        <Frame
-            HasShadow="False"
-            IsClippedToBounds="True"
+        <Grid
             WidthRequest="40"
-            HeightRequest="40"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            CornerRadius="20"
-            Padding="0"
-            BackgroundColor="{Binding BackgroundColor}" />
+            HeightRequest="40">
+            <Frame
+                HasShadow="False"
+                IsClippedToBounds="True"
+                WidthRequest="40"
+                HeightRequest="40"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                CornerRadius="20"
+                Padding="0"
+                IsVisible="{Binding IsToday}"
+                OutlineColor="{Binding TodayOutlineColor}"
+                BackgroundColor="{Binding TodayFillColor}" />
+
+            <Frame
+                HasShadow="False"
+                IsClippedToBounds="True"
+                WidthRequest="40"
+                HeightRequest="40"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                CornerRadius="20"
+                Padding="0"
+                BackgroundColor="{Binding BackgroundColor}" />
+        </Grid>
 
         <Button
             IsVisible="{Binding HasEvents}"

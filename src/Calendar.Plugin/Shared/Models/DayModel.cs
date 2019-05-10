@@ -8,7 +8,7 @@ namespace Xamarin.Plugin.Calendar.Models
         public DayModel()
         {
             SetupPropertyDependencies(nameof(IsThisMonth), nameof(TextColor));
-            SetupPropertyDependencies(nameof(IsSelected), nameof(TextColor), nameof(BackgroundColor), nameof(EventColor));
+            SetupPropertyDependencies(nameof(IsSelected), nameof(TextColor), nameof(BackgroundColor), nameof(EventColor), nameof(IsToday));
             SetupPropertyDependencies(nameof(SelectedTextColor), nameof(TextColor));
             SetupPropertyDependencies(nameof(OtherMonthColor), nameof(TextColor));
             SetupPropertyDependencies(nameof(DeselectedTextColor), nameof(TextColor));
@@ -16,6 +16,7 @@ namespace Xamarin.Plugin.Calendar.Models
             SetupPropertyDependencies(nameof(DeselectedBackgroundColor), nameof(BackgroundColor));
             SetupPropertyDependencies(nameof(EventIndicatorColor), nameof(EventColor));
             SetupPropertyDependencies(nameof(EventIndicatorSelectedColor), nameof(EventColor));
+            SetupPropertyDependencies(nameof(Date), nameof(IsToday));
         }
 
         public DateTime Date
@@ -84,6 +85,18 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value);
         }
 
+        public Color TodayOutlineColor
+        {
+            get => GetProperty(Color.FromHex("#FF4081"));
+            set => SetProperty(value);
+        }
+
+        public Color TodayFillColor
+        {
+            get => GetProperty(Color.Transparent);
+            set => SetProperty(value);
+        }
+
         public Color EventColor => IsSelected
                                  ? EventIndicatorSelectedColor
                                  : EventIndicatorColor;
@@ -95,5 +108,7 @@ namespace Xamarin.Plugin.Calendar.Models
         public Color TextColor => IsSelected
                                 ? SelectedTextColor
                                 : IsThisMonth ? DeselectedTextColor : OtherMonthColor;
+
+        public bool IsToday => Date.Date == DateTime.Today && !IsSelected;
     }
 }
