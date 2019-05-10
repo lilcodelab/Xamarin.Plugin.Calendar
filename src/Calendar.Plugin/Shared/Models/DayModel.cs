@@ -5,24 +5,11 @@ namespace Xamarin.Plugin.Calendar.Models
 {
     internal class DayModel : BindableBase
     {
-        public DayModel()
-        {
-            SetupPropertyDependencies(nameof(IsThisMonth), nameof(TextColor));
-            SetupPropertyDependencies(nameof(IsSelected), nameof(TextColor), nameof(BackgroundColor), nameof(EventColor), nameof(IsToday));
-            SetupPropertyDependencies(nameof(SelectedTextColor), nameof(TextColor));
-            SetupPropertyDependencies(nameof(OtherMonthColor), nameof(TextColor));
-            SetupPropertyDependencies(nameof(DeselectedTextColor), nameof(TextColor));
-            SetupPropertyDependencies(nameof(SelectedBackgroundColor), nameof(BackgroundColor));
-            SetupPropertyDependencies(nameof(DeselectedBackgroundColor), nameof(BackgroundColor));
-            SetupPropertyDependencies(nameof(EventIndicatorColor), nameof(EventColor));
-            SetupPropertyDependencies(nameof(EventIndicatorSelectedColor), nameof(EventColor));
-            SetupPropertyDependencies(nameof(Date), nameof(IsToday));
-        }
-
         public DateTime Date
         {
             get => GetProperty<DateTime>();
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(IsToday));
         }
 
         public bool HasEvents
@@ -34,55 +21,67 @@ namespace Xamarin.Plugin.Calendar.Models
         public bool IsThisMonth
         {
             get => GetProperty<bool>();
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(TextColor));
         }
 
         public bool IsSelected
         {
             get => GetProperty<bool>();
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(TextColor))
+                    .Notify(nameof(BackgroundColor))
+                    .Notify(nameof(EventColor))
+                    .Notify(nameof(IsToday));
         }
 
         public Color SelectedTextColor
         {
             get => GetProperty(Color.White);
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(TextColor));
         }
 
         public Color OtherMonthColor
         {
             get => GetProperty(Color.Silver);
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(TextColor));
         }
 
         public Color DeselectedTextColor
         {
             get => GetProperty(Color.Default);
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(TextColor));
         }
 
         public Color SelectedBackgroundColor
         {
             get => GetProperty(Color.FromHex("#2196F3"));
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(BackgroundColor));
         }
 
         public Color DeselectedBackgroundColor
         {
             get => GetProperty(Color.Transparent);
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(BackgroundColor));
         }
 
         public Color EventIndicatorColor
         {
             get => GetProperty(Color.FromHex("#FF4081"));
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(EventColor));
         }
 
         public Color EventIndicatorSelectedColor
         {
             get => GetProperty(Color.FromHex("#FF4081"));
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(EventColor));
         }
 
         public Color TodayOutlineColor

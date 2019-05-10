@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -9,8 +8,8 @@ namespace Xamarin.Plugin.Calendar.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly Dictionary<string, PropertyChangedEventArgs> _propertyChangedArgs = new Dictionary<string, PropertyChangedEventArgs>();
         private readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
+        private readonly Dictionary<string, PropertyChangedEventArgs> _propertyChangedArgs = new Dictionary<string, PropertyChangedEventArgs>();
         private readonly Dictionary<string, List<PropertyChangedEventArgs>> _propertyDependencies = new Dictionary<string, List<PropertyChangedEventArgs>>();
 
         protected TData GetProperty<TData>(TData defaultValue = default, [CallerMemberName] string propertyName = "")
@@ -21,12 +20,12 @@ namespace Xamarin.Plugin.Calendar.Models
             return (TData)_properties[propertyName];
         }
 
-        protected void SetProperty<TData>(TData value, [CallerMemberName] string propertyName = "")
+        protected BindableBase SetProperty<TData>(TData value, [CallerMemberName] string propertyName = "")
         {
-            if (!_properties.ContainsKey(propertyName))
+            if (!_properties.TryGetValue(propertyName, out object storedValue))
                 AddProperty(propertyName, value);
-            else if (value.Equals(_properties[propertyName]))
-                return;
+            else if (storedValue.Equals(value))
+                return this;
 
             _properties[propertyName] = value;
             PropertyChanged?.Invoke(this, _propertyChangedArgs[propertyName]);
@@ -36,21 +35,17 @@ namespace Xamarin.Plugin.Calendar.Models
                 foreach (var dependentPropertyArgs in alsoNotifyFor)
                     PropertyChanged?.Invoke(this, dependentPropertyArgs);
             }
+
+            return this;
         }
 
-        protected void SetupPropertyDependencies(string propertyName, params string[] dependentProperties)
+        internal BindableBase Notify(string propertyName)
         {
-            var dependentPropertyArgs = new List<PropertyChangedEventArgs>();
+            if (!_propertyChangedArgs.ContainsKey(propertyName))
+                _propertyChangedArgs.Add(propertyName, new PropertyChangedEventArgs(propertyName));
 
-            foreach (var dependentProperty in dependentProperties)
-            {
-                if (!_propertyChangedArgs.ContainsKey(dependentProperty))
-                    _propertyChangedArgs.Add(dependentProperty, new PropertyChangedEventArgs(dependentProperty));
-
-                dependentPropertyArgs.Add(_propertyChangedArgs[dependentProperty]);
-            }
-
-            _propertyDependencies.Add(propertyName, dependentPropertyArgs);
+            PropertyChanged?.Invoke(this, _propertyChangedArgs[propertyName]);
+            return this;
         }
 
         private void AddProperty(string propertyName, object defaultValue)
