@@ -115,6 +115,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorColorProperty, value);
         }
 
+        public static readonly BindableProperty EventIndicatorSelectedColorProperty =
+          BindableProperty.Create(nameof(EventIndicatorSelectedColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
+
+        public Color EventIndicatorSelectedColor
+        {
+            get => (Color)GetValue(EventIndicatorSelectedColorProperty);
+            set => SetValue(EventIndicatorSelectedColorProperty, value);
+        }
+
         #endregion
 
         private readonly List<DayView> _dayViews = new List<DayView>();
@@ -156,6 +165,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(DeselectedDayTextColor):
                 case nameof(SelectedDayBackgroundColor):
                 case nameof(EventIndicatorColor):
+                case nameof(EventIndicatorSelectedColor):
                     UpdateDaysColors();
                     break;
 
@@ -200,6 +210,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
                 dayModel.EventIndicatorColor = EventIndicatorColor;
+                dayModel.EventIndicatorSelectedColor = EventIndicatorSelectedColor;
             }
         }
 

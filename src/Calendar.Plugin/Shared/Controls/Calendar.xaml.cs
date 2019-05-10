@@ -176,6 +176,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorColorProperty, value);
         }
 
+        public static readonly BindableProperty EventIndicatorSelectedColorProperty =
+          BindableProperty.Create(nameof(EventIndicatorSelectedColor), typeof(Color), typeof(Calendar), Color.FromHex("#FF4081"));
+
+        public Color EventIndicatorSelectedColor
+        {
+            get => (Color)GetValue(EventIndicatorSelectedColorProperty);
+            set => SetValue(EventIndicatorSelectedColorProperty, value);
+        }
+
         public static readonly BindableProperty ArrowsColorProperty =
           BindableProperty.Create(nameof(ArrowsColor), typeof(Color), typeof(Calendar), Color.Default);
 

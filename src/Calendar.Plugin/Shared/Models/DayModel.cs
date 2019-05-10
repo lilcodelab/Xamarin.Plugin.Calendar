@@ -10,7 +10,7 @@ namespace Xamarin.Plugin.Calendar.Models
         private static readonly PropertyChangedEventArgs _hasEventsPropertyArgs = new PropertyChangedEventArgs(nameof(HasEvents));
         private static readonly PropertyChangedEventArgs _isThisMonthPropertyArgs = new PropertyChangedEventArgs(nameof(IsThisMonth));
         private static readonly PropertyChangedEventArgs _isSelectedPropertyArgs = new PropertyChangedEventArgs(nameof(IsSelected));
-        private static readonly PropertyChangedEventArgs _eventIndicatorColorPropertyArgs = new PropertyChangedEventArgs(nameof(EventIndicatorColor));
+        private static readonly PropertyChangedEventArgs _eventColorPropertyArgs = new PropertyChangedEventArgs(nameof(EventColor));
         private static readonly PropertyChangedEventArgs _selectedTextColorColorPropertyArgs = new PropertyChangedEventArgs(nameof(SelectedTextColor));
         private static readonly PropertyChangedEventArgs _otherMonthColorPropertyArgs = new PropertyChangedEventArgs(nameof(OtherMonthColor));
         private static readonly PropertyChangedEventArgs _deselectedTextColorPropertyArgs = new PropertyChangedEventArgs(nameof(DeselectedTextColor));
@@ -29,6 +29,7 @@ namespace Xamarin.Plugin.Calendar.Models
         private Color _selectedBackgroundColor = Color.FromHex("#2196F3");
         private Color _deselectedBackgroundColor = Color.Transparent;
         private Color _eventIndicatorColor = Color.FromHex("#FF4081");
+        private Color _eventIndicatorSelectedColor = Color.FromHex("#FF4081");
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -53,7 +54,7 @@ namespace Xamarin.Plugin.Calendar.Models
         public bool IsSelected
         {
             get => _isSelected;
-            set => SetProperty(ref _isSelected, value, _isSelectedPropertyArgs, _textColorPropertyArgs, _backgroundColorPropertyArgs);
+            set => SetProperty(ref _isSelected, value, _isSelectedPropertyArgs, _textColorPropertyArgs, _backgroundColorPropertyArgs, _eventColorPropertyArgs);
         }
 
         public Color SelectedTextColor
@@ -89,8 +90,18 @@ namespace Xamarin.Plugin.Calendar.Models
         public Color EventIndicatorColor
         {
             get => _eventIndicatorColor;
-            set => SetProperty(ref _eventIndicatorColor, value, _eventIndicatorColorPropertyArgs);
+            set => SetProperty(ref _eventIndicatorColor, value, _eventColorPropertyArgs);
         }
+
+        public Color EventIndicatorSelectedColor
+        {
+            get => _eventIndicatorSelectedColor;
+            set => SetProperty(ref _eventIndicatorSelectedColor, value, _eventColorPropertyArgs);
+        }
+
+        public Color EventColor => IsSelected
+                                 ? EventIndicatorSelectedColor
+                                 : EventIndicatorColor;
 
         public Color BackgroundColor => IsSelected
                                       ? SelectedBackgroundColor

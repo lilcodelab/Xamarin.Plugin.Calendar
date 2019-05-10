@@ -27,7 +27,7 @@
             HeightRequest="8"
             CornerRadius="4"
             Margin="0,0,0,3"
-            BackgroundColor="{Binding EventIndicatorColor}"
+            BackgroundColor="{Binding EventColor}"
             InputTransparent="True" />
 
         <Label

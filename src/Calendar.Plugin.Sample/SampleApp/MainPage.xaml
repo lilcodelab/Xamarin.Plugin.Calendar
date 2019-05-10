@@ -42,6 +42,7 @@
         SelectedDateColor="Red"
         SelectedDayBackgroundColor="DarkCyan"
         EventIndicatorColor="Red"
+        EventIndicatorSelectedColor="White"
         ArrowsColor="DarkCyan"
         DaysTitleColor="Orange"
         SelectedDayTextColor="Cyan"

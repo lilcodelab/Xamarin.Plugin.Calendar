@@ -189,6 +189,7 @@
                     Culture="{Binding Culture, Source={x:Reference calendar}}"
                     SelectedDayBackgroundColor="{Binding SelectedDayBackgroundColor, Source={x:Reference calendar}}"
                     EventIndicatorColor="{Binding EventIndicatorColor, Source={x:Reference calendar}}"
+                    EventIndicatorSelectedColor="{Binding EventIndicatorSelectedColor, Source={x:Reference calendar}}"
                     DaysTitleColor="{Binding DaysTitleColor, Source={x:Reference calendar}}"
                     SelectedDayTextColor="{Binding SelectedDayTextColor, Source={x:Reference calendar}}"
                     DeselectedDayTextColor="{Binding DeselectedDayTextColor, Source={x:Reference calendar}}"
