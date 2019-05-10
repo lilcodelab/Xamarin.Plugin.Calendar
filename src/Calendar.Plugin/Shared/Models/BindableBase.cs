@@ -42,12 +42,21 @@ namespace Xamarin.Plugin.Calendar.Models
             return this;
         }
 
-        internal BindableBase<TData> Notify(string propertyName)
+        internal BindableBase<TData> Notify(string propertyName, params string[] otherPropertyNames)
         {
             if (!_propertyChangedArgs.ContainsKey(propertyName))
                 _propertyChangedArgs.Add(propertyName, new PropertyChangedEventArgs(propertyName));
 
             PropertyChanged?.Invoke(this, _propertyChangedArgs[propertyName]);
+
+            foreach (var otherPropertyName in otherPropertyNames)
+            {
+                if (!_propertyChangedArgs.ContainsKey(otherPropertyName))
+                    _propertyChangedArgs.Add(otherPropertyName, new PropertyChangedEventArgs(otherPropertyName));
+
+                PropertyChanged?.Invoke(this, _propertyChangedArgs[otherPropertyName]);
+            }
+
             return this;
         }
 
