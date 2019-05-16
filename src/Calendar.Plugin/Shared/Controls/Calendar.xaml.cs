@@ -1,11 +1,11 @@
-﻿using Xamarin.Plugin.Calendar.Models;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -221,6 +221,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private readonly Animation _monthsAnimateOut;
         private bool _monthViewAnimating;
         private bool _monthViewShown;
+        private double _calendarContainerHeight;
 
         public Calendar()
         {
@@ -231,6 +232,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             _monthsAnimateIn = new Animation(AnimateMonths, 1, 0);
             _monthsAnimateOut = new Animation(AnimateMonths, 0, 1);
+
+            calendarContainer.SizeChanged += OnCalendarContainerSizeChanged;
         }
 
         #region PropertyChanged
@@ -286,6 +289,15 @@ namespace Xamarin.Plugin.Calendar.Controls
         #endregion
 
         #region Event Handlers
+
+        private void OnCalendarContainerSizeChanged(object sender, EventArgs e)
+        {
+            if (calendarContainer.Height > 0)
+            {
+                _calendarContainerHeight = calendarContainer.Height;
+                calendarContainer.SizeChanged -= OnCalendarContainerSizeChanged;
+            }
+        }
 
         private void PrevMonthClicked(object sender, EventArgs e)
         {
@@ -345,10 +357,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void AnimateMonths(double currentValue)
         {
-            monthsRow.Height = new GridLength(monthsView.Height * currentValue);
-            monthsView.TranslationY = monthsView.Height * (currentValue - 1);
-            monthsView.Opacity = currentValue * currentValue * currentValue;
+            monthsRow.Height = new GridLength(_calendarContainerHeight * currentValue);
+            calendarContainer.TranslationY = _calendarContainerHeight * (currentValue - 1);
+            calendarContainer.Opacity = currentValue * currentValue * currentValue;
         }
-
     }
 }
