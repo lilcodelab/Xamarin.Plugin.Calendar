@@ -11,177 +11,173 @@
         IsClippedToBounds="True"
         Padding="0,15,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition x:Name="monthsRow" Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- TODO: Controls for circle buttons -->
-        <Grid
-            IsVisible="{Binding ShowMonthPicker, Source={x:Reference calendar}}"
-            VerticalOptions="StartAndExpand"
-            HorizontalOptions="FillAndExpand">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Frame
-                Grid.Column="0"
-                BackgroundColor="White"
-                HasShadow="True"
-                Padding="0"
-                WidthRequest="36"
-                HeightRequest="36"
-                CornerRadius="18"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
-                <Label
-                    TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="←"
-                    VerticalOptions="CenterAndExpand"
-                    VerticalTextAlignment="Center"
-                    HorizontalOptions="CenterAndExpand"
-                    HorizontalTextAlignment="Center"
-                    InputTransparent="True"/>
-
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="PrevMonthClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
-
-            <Label
-                Grid.Column="1"
-                x:Name="monthLabel"
-                TextColor="{Binding MonthLabelColor, Source={x:Reference calendar}}"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                FontSize="Medium"
-                FontAttributes="Bold" />
-
-            <Frame
-                Grid.Column="2"
-                BackgroundColor="White"
-                HasShadow="True"
-                Padding="0"
-                WidthRequest="36"
-                HeightRequest="36"
-                CornerRadius="18"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
-                <Label
-                    TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="→"
-                    VerticalOptions="CenterAndExpand"
-                    VerticalTextAlignment="Center"
-                    HorizontalOptions="CenterAndExpand"
-                    HorizontalTextAlignment="Center"
-                    InputTransparent="True"/>
-
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="NextMonthClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
-        </Grid>
-
-        <Grid
-            Grid.Row="1"
-            IsVisible="{Binding ShowYearPicker, Source={x:Reference calendar}}"
-            VerticalOptions="StartAndExpand"
-            HorizontalOptions="FillAndExpand">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            
-            <Frame
-                Grid.Column="0"
-                BackgroundColor="White"
-                HasShadow="True"
-                Padding="0"
-                WidthRequest="36"
-                HeightRequest="36"
-                CornerRadius="18"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
-                <Label
-                    TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="←"
-                    VerticalOptions="CenterAndExpand"
-                    VerticalTextAlignment="Center"
-                    HorizontalOptions="CenterAndExpand"
-                    HorizontalTextAlignment="Center"
-                    InputTransparent="True" />
-
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="PrevYearClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
-
-            <Label
-                Grid.Column="1"
-                Text="{Binding Year, Source={x:Reference calendar}}"
-                TextColor="{Binding YearLabelColor, Source={x:Reference calendar}}"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                FontSize="Medium"
-                FontAttributes="Bold" />
-
-            <Frame
-                Grid.Column="2"
-                BackgroundColor="White"
-                HasShadow="True"
-                Padding="0"
-                WidthRequest="36"
-                HeightRequest="36"
-                CornerRadius="18"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
-                <Label
-                    TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="→"
-                    VerticalOptions="CenterAndExpand"
-                    VerticalTextAlignment="Center"
-                    HorizontalOptions="CenterAndExpand"
-                    HorizontalTextAlignment="Center"
-                    InputTransparent="True" />
-
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="NextYearClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
-        </Grid>
-
-        <controls:SwipeAwareContainer
-            Grid.Row="2"
+        <StackLayout
+            x:Name="calendarContainer"
+            Grid.Row="0"
             VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand"
-            SwipedLeft="NextMonthClicked"
-            SwipedRight="PrevMonthClicked"
-            SwipedUp="OnMonthsShowHideTapped">
-            <StackLayout
-                IsClippedToBounds="True"
-                VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <Grid
+                IsVisible="{Binding ShowMonthPicker, Source={x:Reference calendar}}"
+                VerticalOptions="StartAndExpand"
                 HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Frame
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    HasShadow="True"
+                    Padding="0"
+                    WidthRequest="36"
+                    HeightRequest="36"
+                    CornerRadius="18"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="←"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        InputTransparent="True"/>
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PrevMonthClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <Label
+                    Grid.Column="1"
+                    x:Name="monthLabel"
+                    TextColor="{Binding MonthLabelColor, Source={x:Reference calendar}}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="Medium"
+                    FontAttributes="Bold" />
+
+                <Frame
+                    Grid.Column="2"
+                    BackgroundColor="White"
+                    HasShadow="True"
+                    Padding="0"
+                    WidthRequest="36"
+                    HeightRequest="36"
+                    CornerRadius="18"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="→"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        InputTransparent="True"/>
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="NextMonthClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </Grid>
+
+            <Grid            
+                IsVisible="{Binding ShowYearPicker, Source={x:Reference calendar}}"
+                VerticalOptions="StartAndExpand"
+                HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Frame
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    HasShadow="True"
+                    Padding="0"
+                    WidthRequest="36"
+                    HeightRequest="36"
+                    CornerRadius="18"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="←"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        InputTransparent="True" />
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PrevYearClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding Year, Source={x:Reference calendar}}"
+                    TextColor="{Binding YearLabelColor, Source={x:Reference calendar}}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="Medium"
+                    FontAttributes="Bold" />
+
+                <Frame
+                    Grid.Column="2"
+                    BackgroundColor="White"
+                    HasShadow="True"
+                    Padding="0"
+                    WidthRequest="36"
+                    HeightRequest="36"
+                    CornerRadius="18"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="→"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        InputTransparent="True" />
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="NextYearClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </Grid>
+
+            <controls:SwipeAwareContainer
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                SwipedLeft="NextMonthClicked"
+                SwipedRight="PrevMonthClicked"
+                SwipedUp="OnMonthsShowHideTapped">
                 <controls:MonthDaysView
-                    x:Name="monthsView"
                     Month="{Binding Month, Source={x:Reference calendar}}"
                     Year="{Binding Year, Source={x:Reference calendar}}"
                     SelectedDate="{Binding SelectedDate, Source={x:Reference calendar}}"
@@ -198,11 +194,12 @@
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand" />
-            </StackLayout>
-        </controls:SwipeAwareContainer>
+            </controls:SwipeAwareContainer>
+
+        </StackLayout>
 
         <Grid
-            Grid.Row="3"
+            Grid.Row="1"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
@@ -253,5 +250,6 @@
                     ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}" />
             </ScrollView>
         </Grid>
+
     </Grid>
 </ContentView>
