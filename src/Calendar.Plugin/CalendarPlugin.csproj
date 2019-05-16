@@ -23,7 +23,7 @@
     <RootNamespace>Xamarin.Plugin.Calendar</RootNamespace>
 
     <NeutralLanguage>en</NeutralLanguage>
-    <LangVersion>default</LangVersion>
+    <LangVersion>latest</LangVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
     <!--<GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>-->
