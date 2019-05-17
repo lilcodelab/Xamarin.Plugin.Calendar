@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Models;
@@ -212,6 +213,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(TodayFillColorProperty, value);
         }
 
+        public static readonly BindableProperty HeaderSectionTemplateProperty =
+          BindableProperty.Create(nameof(HeaderSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DefaultHeaderSectionTemplate());
+
+        public DataTemplate HeaderSectionTemplate
+        {
+            get => (DataTemplate)GetValue(HeaderSectionTemplateProperty);
+            set => SetValue(HeaderSectionTemplateProperty, value);
+        }
+
+        public static readonly BindableProperty MonthTextProperty =
+          BindableProperty.Create(nameof(MonthText), typeof(string), typeof(Calendar), null);
+
+        public string MonthText
+        {
+            get => (string)GetValue(MonthTextProperty);
+            set => SetValue(MonthTextProperty, value);
+        }
+
         #endregion
 
         private const uint MonthsAnimationRate = 16;
@@ -278,7 +297,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateMonthLabel()
         {
-            monthLabel.Text = Culture.DateTimeFormat.MonthNames[Month - 1].Capitalize();
+            MonthText = Culture.DateTimeFormat.MonthNames[Month - 1].Capitalize();
         }
 
         private void UpdateSelectedDateLabel()
@@ -289,6 +308,11 @@ namespace Xamarin.Plugin.Calendar.Controls
         #endregion
 
         #region Event Handlers
+
+        public ICommand PrevMonthCommand => new Command(x => PrevMonthClicked(this, EventArgs.Empty));
+        public ICommand NextMonthCommand => new Command(x => NextMonthClicked(this, EventArgs.Empty));
+        public ICommand PrevYearCommand => new Command(x => PrevYearClicked(this, EventArgs.Empty));
+        public ICommand NextYearCommand => new Command(x => NextYearClicked(this, EventArgs.Empty));
 
         private void OnCalendarContainerSizeChanged(object sender, EventArgs e)
         {

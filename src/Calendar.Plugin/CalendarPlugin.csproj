@@ -61,6 +61,9 @@
     <EmbeddedResource Update="Shared\Controls\DayView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultHeaderSectionTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Shared\Controls\MonthDaysView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -69,6 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
     </None>
     <None Update="Shared\Controls\DayView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Shared\Controls\DefaultHeaderSectionTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
     <None Update="Shared\Controls\MonthDaysView.xaml">
