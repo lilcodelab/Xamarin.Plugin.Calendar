@@ -8,7 +8,6 @@
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
 
-
         <Frame
             HasShadow="False"
             IsClippedToBounds="True"
@@ -21,7 +20,7 @@
             OutlineColor="{Binding OutlineColor}"
             BackgroundColor="{Binding BackgroundColor}" />
 
-        <Button
+        <Frame
             IsVisible="{Binding HasEvents}"
             HorizontalOptions="Center"
             VerticalOptions="End"
@@ -29,8 +28,10 @@
             HeightRequest="8"
             CornerRadius="4"
             Margin="0,0,0,3"
+            Padding="0"
             BackgroundColor="{Binding EventColor}"
-            InputTransparent="True" />
+            InputTransparent="True"
+            HasShadow="False" />
 
         <Label
             Text="{Binding Date.Day}"
