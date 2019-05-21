@@ -28,7 +28,7 @@
                 HorizontalOptions="FillAndExpand"
                 SwipedLeft="NextMonthClicked"
                 SwipedRight="PrevMonthClicked"
-                SwipedUp="OnMonthsShowHideTapped">
+                SwipedUp="OnShowHideTapped">
                 <controls:MonthDaysView
                     x:Name="monthDaysView"
                     Month="{Binding Month, Source={x:Reference calendar}}"
@@ -55,40 +55,13 @@
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label
-                    x:Name="selectedDateLabel"
-                    VerticalOptions="CenterAndExpand"
-                    VerticalTextAlignment="Center"
-                    TextColor="{Binding SelectedDateColor, Source={x:Reference calendar}}"
-                    FontAttributes="Bold"
-                    FontSize="Medium" />
-
-                <Label
-                    Grid.Column="1"
-                    x:Name="showHideLabel"
-                    Margin="0,0,15,0"
-                    Text="↑"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="End"
-                    VerticalTextAlignment="Center"
-                    TextColor="{Binding ArrowsColor, Source={x:Reference calendar}}"
-                    FontAttributes="Bold"
-                    FontSize="Medium" />
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnMonthsShowHideTapped" />
-                </Grid.GestureRecognizers>
-            </Grid>
+            <controls:DataTemplateView
+                ItemTemplate="{Binding FooterSectionTemplate}"
+                BindingContext="{x:Reference calendar}" />
 
             <ScrollView
                 x:Name="eventsScrollView"

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<DataTemplate
+<ContentView
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Xamarin.Plugin.Calendar.Controls.DefaultHeaderSectionTemplate">
+    x:Class="Xamarin.Plugin.Calendar.Controls.DefaultHeaderSection">
 
     <!-- TODO: Controls for circle buttons -->
     <StackLayout
@@ -159,4 +159,4 @@
             </Frame>
         </Grid>
     </StackLayout>
-</DataTemplate>
+</ContentView>

@@ -214,12 +214,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty HeaderSectionTemplateProperty =
-          BindableProperty.Create(nameof(HeaderSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DefaultHeaderSectionTemplate());
+          BindableProperty.Create(nameof(HeaderSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(() => new DefaultHeaderSection()));
 
         public DataTemplate HeaderSectionTemplate
         {
             get => (DataTemplate)GetValue(HeaderSectionTemplateProperty);
             set => SetValue(HeaderSectionTemplateProperty, value);
+        }
+
+        public static readonly BindableProperty FooterSectionTemplateProperty =
+          BindableProperty.Create(nameof(FooterSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(() => new DefaultFooterSection()));
+
+        public DataTemplate FooterSectionTemplate
+        {
+            get => (DataTemplate)GetValue(FooterSectionTemplateProperty);
+            set => SetValue(FooterSectionTemplateProperty, value);
         }
 
         public static readonly BindableProperty MonthTextProperty =
@@ -229,6 +238,24 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (string)GetValue(MonthTextProperty);
             set => SetValue(MonthTextProperty, value);
+        }
+
+        public static readonly BindableProperty SelectedDateTextProperty =
+          BindableProperty.Create(nameof(SelectedDateText), typeof(string), typeof(Calendar), null);
+
+        public string SelectedDateText
+        {
+            get => (string)GetValue(SelectedDateTextProperty);
+            set => SetValue(SelectedDateTextProperty, value);
+        }
+
+        public static readonly BindableProperty SelectedDateTextFormatProperty =
+          BindableProperty.Create(nameof(SelectedDateTextFormat), typeof(string), typeof(Calendar), "d MMM yyyy");
+
+        public string SelectedDateTextFormat
+        {
+            get => (string)GetValue(SelectedDateTextFormatProperty);
+            set => SetValue(SelectedDateTextFormatProperty, value);
         }
 
         #endregion
@@ -257,10 +284,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #region Properties
 
-        public ICommand PrevMonthCommand => new Command(x => PrevMonthClicked(this, EventArgs.Empty));
-        public ICommand NextMonthCommand => new Command(x => NextMonthClicked(this, EventArgs.Empty));
-        public ICommand PrevYearCommand => new Command(x => PrevYearClicked(this, EventArgs.Empty));
-        public ICommand NextYearCommand => new Command(x => NextYearClicked(this, EventArgs.Empty));
+        public ICommand PrevMonthCommand => new Command(() => PrevMonthClicked(this, EventArgs.Empty));
+        public ICommand NextMonthCommand => new Command(() => NextMonthClicked(this, EventArgs.Empty));
+        public ICommand PrevYearCommand => new Command(() => PrevYearClicked(this, EventArgs.Empty));
+        public ICommand NextYearCommand => new Command(() => NextYearClicked(this, EventArgs.Empty));
+        public ICommand ShowHideCalendarCommand => new Command(() => OnShowHideTapped(this, EventArgs.Empty));
 
         #endregion
 
@@ -323,7 +351,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateSelectedDateLabel()
         {
-            selectedDateLabel.Text = SelectedDate.ToString("d MMM yyyy", Culture);
+            SelectedDateText = SelectedDate.ToString(SelectedDateTextFormat, Culture);
         }
 
         private void OnEventsCollectionChanged(object sender, EventCollection.EventCollectionChangedArgs e)
@@ -377,10 +405,9 @@ namespace Xamarin.Plugin.Calendar.Controls
             Year++;
         }
 
-        private void OnMonthsShowHideTapped(object sender, EventArgs e)
+        private void OnShowHideTapped(object sender, EventArgs e)
         {
             _monthViewShown = !_monthViewShown;
-            showHideLabel.Text = _monthViewShown ? "↓" : "↑";
 
             if (_monthViewAnimating)
                 return;
@@ -395,7 +422,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 _monthViewAnimating = false;
 
                 if (prevState != _monthViewShown)
-                    OnMonthsShowHideTapped(null, null);
+                    OnShowHideTapped(this, EventArgs.Empty);
             });
         }
 
@@ -407,5 +434,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             calendarContainer.TranslationY = _calendarContainerHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
         }
+
     }
 }

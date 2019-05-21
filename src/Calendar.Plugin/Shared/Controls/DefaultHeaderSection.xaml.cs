@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace Xamarin.Plugin.Calendar.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DefaultHeaderSectionTemplate : DataTemplate
+    public partial class DefaultHeaderSection : ContentView
     {
-        public DefaultHeaderSectionTemplate()
+        internal DefaultHeaderSection()
         {
             InitializeComponent();
         }
