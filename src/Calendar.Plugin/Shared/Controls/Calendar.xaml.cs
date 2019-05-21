@@ -279,11 +279,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         public Calendar()
         {
-            PrevMonthCommand = new Command(() => PrevMonthClicked(this, EventArgs.Empty));
-            NextMonthCommand = new Command(() => NextMonthClicked(this, EventArgs.Empty));
-            PrevYearCommand = new Command(() => PrevYearClicked(this, EventArgs.Empty));
-            NextYearCommand = new Command(() => NextYearClicked(this, EventArgs.Empty));
-            ShowHideCalendarCommand = new Command(() => CalendarSectionShown = !CalendarSectionShown);
+            PrevMonthCommand = new Command(PrevMonth);
+            NextMonthCommand = new Command(NextMonth);
+            PrevYearCommand = new Command(PrevYear);
+            NextYearCommand = new Command(NextYear);
+            ShowHideCalendarCommand = new Command(ToggleCalendarSectionVisibility);
 
             InitializeComponent();
             UpdateSelectedDateLabel();
@@ -387,7 +387,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 _calendarSectionAnimating = false;
 
                 if (prevState != CalendarSectionShown)
-                    OnShowHideTapped(this, EventArgs.Empty);
+                    ToggleCalendarSectionVisibility();
             });
         }
 
@@ -411,6 +411,25 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         private void PrevMonthClicked(object sender, EventArgs e)
+            => PrevMonth();
+
+        private void NextMonthClicked(object sender, EventArgs e)
+            => NextMonth();
+
+        private void PrevYearClicked(object sender, EventArgs e)
+            => PrevYear();
+
+        private void NextYearClicked(object sender, EventArgs e)
+            => NextYear();
+
+        private void OnShowHideTapped(object sender, EventArgs e)
+            => ToggleCalendarSectionVisibility();
+
+        #endregion
+
+        #region Other methods
+
+        private void PrevMonth()
         {
             if (Month - 1 == 0)
             {
@@ -421,7 +440,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 Month--;
         }
 
-        private void NextMonthClicked(object sender, EventArgs e)
+        private void NextMonth()
         {
             if (Month + 1 == 13)
             {
@@ -432,22 +451,14 @@ namespace Xamarin.Plugin.Calendar.Controls
                 Month++;
         }
 
-        private void PrevYearClicked(object sender, EventArgs e)
-        {
-            Year--;
-        }
+        private void PrevYear()
+            => Year--;
 
-        private void NextYearClicked(object sender, EventArgs e)
-        {
-            Year++;
-        }
+        private void NextYear()
+            => Year++;
 
-        private void OnShowHideTapped(object sender, EventArgs e)
-        {
-            CalendarSectionShown = !CalendarSectionShown;
-        }
-
-        #endregion
+        private void ToggleCalendarSectionVisibility()
+            => CalendarSectionShown = !CalendarSectionShown;
 
         private void AnimateMonths(double currentValue)
         {
@@ -455,6 +466,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
         }
+
+        #endregion
 
     }
 }
