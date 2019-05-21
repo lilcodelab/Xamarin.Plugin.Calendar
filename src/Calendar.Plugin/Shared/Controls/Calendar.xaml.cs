@@ -70,7 +70,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty EventsProperty =
-          BindableProperty.Create(nameof(Events), typeof(EventCollection), typeof(Calendar), new EventCollection());
+          BindableProperty.Create(nameof(Events), typeof(EventCollection), typeof(Calendar), new EventCollection(), propertyChanged: OnEventsChanged);
 
         public EventCollection Events
         {
@@ -255,7 +255,31 @@ namespace Xamarin.Plugin.Calendar.Controls
             calendarContainer.SizeChanged += OnCalendarContainerSizeChanged;
         }
 
+        #region Properties
+
+        public ICommand PrevMonthCommand => new Command(x => PrevMonthClicked(this, EventArgs.Empty));
+        public ICommand NextMonthCommand => new Command(x => NextMonthClicked(this, EventArgs.Empty));
+        public ICommand PrevYearCommand => new Command(x => PrevYearClicked(this, EventArgs.Empty));
+        public ICommand NextYearCommand => new Command(x => NextYearClicked(this, EventArgs.Empty));
+
+        #endregion
+
         #region PropertyChanged
+
+        private static void OnEventsChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar view)
+            {
+                if (oldValue is EventCollection oldEvents)
+                    oldEvents.CollectionChanged -= view.OnEventsCollectionChanged;
+
+                if (newValue is EventCollection newEvents)
+                    newEvents.CollectionChanged += view.OnEventsCollectionChanged;
+
+                view.UpdateEvents();
+                view.monthDaysView.UpdateDays();
+            }
+        }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -265,10 +289,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 case nameof(Month):
                     UpdateMonthLabel();
-                    break;
-
-                case nameof(Events):
-                    UpdateEvents();
                     break;
 
                 case nameof(SelectedDate):
@@ -288,11 +308,12 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void UpdateEvents()
         {
             if (Events.TryGetValue(SelectedDate, out var eventList))
+            {
                 SelectedDayEvents = eventList;
+                eventsScrollView.ScrollToAsync(0, 0, false);
+            }
             else
                 SelectedDayEvents = null;
-
-            eventsScrollView.ScrollToAsync(0, 0, false);
         }
 
         private void UpdateMonthLabel()
@@ -305,14 +326,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             selectedDateLabel.Text = SelectedDate.ToString("d MMM yyyy", Culture);
         }
 
+        private void OnEventsCollectionChanged(object sender, EventCollection.EventCollectionChangedArgs e)
+        {
+            UpdateEvents();
+            monthDaysView.UpdateDays();
+        }
+
         #endregion
 
         #region Event Handlers
-
-        public ICommand PrevMonthCommand => new Command(x => PrevMonthClicked(this, EventArgs.Empty));
-        public ICommand NextMonthCommand => new Command(x => NextMonthClicked(this, EventArgs.Empty));
-        public ICommand PrevYearCommand => new Command(x => PrevYearClicked(this, EventArgs.Empty));
-        public ICommand NextYearCommand => new Command(x => NextYearClicked(this, EventArgs.Empty));
 
         private void OnCalendarContainerSizeChanged(object sender, EventArgs e)
         {

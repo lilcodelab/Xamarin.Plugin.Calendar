@@ -30,6 +30,7 @@
                 SwipedRight="PrevMonthClicked"
                 SwipedUp="OnMonthsShowHideTapped">
                 <controls:MonthDaysView
+                    x:Name="monthDaysView"
                     Month="{Binding Month, Source={x:Reference calendar}}"
                     Year="{Binding Year, Source={x:Reference calendar}}"
                     SelectedDate="{Binding SelectedDate, Source={x:Reference calendar}}"

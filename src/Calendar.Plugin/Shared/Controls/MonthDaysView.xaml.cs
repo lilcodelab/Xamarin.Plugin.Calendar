@@ -207,7 +207,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        private void UpdateDays()
+        internal void UpdateDays()
         {
             if (Year == 0 || Month == 0 || Culture == null)
                 return;
