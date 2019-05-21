@@ -29,10 +29,18 @@
             VerticalTextAlignment="Center"
             TextColor="{Binding ArrowsColor}"
             FontAttributes="Bold"
-            FontSize="Medium" />
+            FontSize="Medium">
+            <Label.Triggers>
+                <DataTrigger
+                    TargetType="Label"
+                    Binding="{Binding CalendarSectionShown}"
+                    Value="False">
+                    <Setter Property="Text" Value="↓" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
         <Grid.GestureRecognizers>
             <TapGestureRecognizer
-                Tapped="OnShowHideTapped"
                 Command="{Binding ShowHideCalendarCommand}" />
         </Grid.GestureRecognizers>
     </Grid>

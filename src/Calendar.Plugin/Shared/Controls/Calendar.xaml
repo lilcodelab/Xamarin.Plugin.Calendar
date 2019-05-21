@@ -11,7 +11,7 @@
         IsClippedToBounds="True"
         Padding="0,15,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="monthsRow" Height="Auto" />
+            <RowDefinition x:Name="calendarSectionRow" Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 

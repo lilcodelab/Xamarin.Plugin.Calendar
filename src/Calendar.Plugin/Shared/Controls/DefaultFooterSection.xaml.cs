@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Xamarin.Plugin.Calendar.Controls
@@ -10,11 +9,6 @@ namespace Xamarin.Plugin.Calendar.Controls
         internal DefaultFooterSection()
         {
             InitializeComponent();
-        }
-
-        private void OnShowHideTapped(object sender, EventArgs e)
-        {
-            showHideLabel.Text = showHideLabel.Text == "↓" ? "↑" : "↓";
         }
     }
 }

@@ -258,37 +258,51 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedDateTextFormatProperty, value);
         }
 
+        public static readonly BindableProperty CalendarSectionShownProperty =
+          BindableProperty.Create(nameof(CalendarSectionShown), typeof(bool), typeof(Calendar), true);
+
+        public bool CalendarSectionShown
+        {
+            get => (bool)GetValue(CalendarSectionShownProperty);
+            set => SetValue(CalendarSectionShownProperty, value);
+        }
+
         #endregion
 
-        private const uint MonthsAnimationRate = 16;
-        private const int MonthsAnimationDuration = 200;
-        private const string MonthsAnimationId = nameof(MonthsAnimationId);
-        private readonly Animation _monthsAnimateIn;
-        private readonly Animation _monthsAnimateOut;
-        private bool _monthViewAnimating;
-        private bool _monthViewShown;
-        private double _calendarContainerHeight;
+        private const uint CalendarSectionAnimationRate = 16;
+        private const int CalendarSectionAnimationDuration = 200;
+        private const string CalendarSectionAnimationId = nameof(CalendarSectionAnimationId);
+        private readonly Animation _calendarSectionAnimateHide;
+        private readonly Animation _calendarSectionAnimateShow;
+        private bool _calendarSectionAnimating;
+        private double _calendarSectionHeight;
 
         public Calendar()
         {
+            PrevMonthCommand = new Command(() => PrevMonthClicked(this, EventArgs.Empty));
+            NextMonthCommand = new Command(() => NextMonthClicked(this, EventArgs.Empty));
+            PrevYearCommand = new Command(() => PrevYearClicked(this, EventArgs.Empty));
+            NextYearCommand = new Command(() => NextYearClicked(this, EventArgs.Empty));
+            ShowHideCalendarCommand = new Command(() => CalendarSectionShown = !CalendarSectionShown);
+
             InitializeComponent();
             UpdateSelectedDateLabel();
             UpdateMonthLabel();
             UpdateEvents();
 
-            _monthsAnimateIn = new Animation(AnimateMonths, 1, 0);
-            _monthsAnimateOut = new Animation(AnimateMonths, 0, 1);
+            _calendarSectionAnimateHide = new Animation(AnimateMonths, 1, 0);
+            _calendarSectionAnimateShow = new Animation(AnimateMonths, 0, 1);
 
             calendarContainer.SizeChanged += OnCalendarContainerSizeChanged;
         }
 
         #region Properties
 
-        public ICommand PrevMonthCommand => new Command(() => PrevMonthClicked(this, EventArgs.Empty));
-        public ICommand NextMonthCommand => new Command(() => NextMonthClicked(this, EventArgs.Empty));
-        public ICommand PrevYearCommand => new Command(() => PrevYearClicked(this, EventArgs.Empty));
-        public ICommand NextYearCommand => new Command(() => NextYearClicked(this, EventArgs.Empty));
-        public ICommand ShowHideCalendarCommand => new Command(() => OnShowHideTapped(this, EventArgs.Empty));
+        public ICommand PrevMonthCommand { get; }
+        public ICommand NextMonthCommand { get; }
+        public ICommand PrevYearCommand { get; }
+        public ICommand NextYearCommand { get; }
+        public ICommand ShowHideCalendarCommand { get; }
 
         #endregion
 
@@ -330,6 +344,10 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                     UpdateSelectedDateLabel();
                     break;
+
+                case nameof(CalendarSectionShown):
+                    ShowHideCalendarSection();
+                    break;
             }
         }
 
@@ -354,6 +372,25 @@ namespace Xamarin.Plugin.Calendar.Controls
             SelectedDateText = SelectedDate.ToString(SelectedDateTextFormat, Culture);
         }
 
+        private void ShowHideCalendarSection()
+        {
+            if (_calendarSectionAnimating)
+                return;
+
+            _calendarSectionAnimating = true;
+
+            var animation = CalendarSectionShown ? _calendarSectionAnimateShow : _calendarSectionAnimateHide;
+            var prevState = CalendarSectionShown;
+
+            animation.Commit(this, CalendarSectionAnimationId, CalendarSectionAnimationRate, CalendarSectionAnimationDuration, finished: (value, cancelled) =>
+            {
+                _calendarSectionAnimating = false;
+
+                if (prevState != CalendarSectionShown)
+                    OnShowHideTapped(this, EventArgs.Empty);
+            });
+        }
+
         private void OnEventsCollectionChanged(object sender, EventCollection.EventCollectionChangedArgs e)
         {
             UpdateEvents();
@@ -368,7 +405,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             if (calendarContainer.Height > 0)
             {
-                _calendarContainerHeight = calendarContainer.Height;
+                _calendarSectionHeight = calendarContainer.Height;
                 calendarContainer.SizeChanged -= OnCalendarContainerSizeChanged;
             }
         }
@@ -407,31 +444,15 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void OnShowHideTapped(object sender, EventArgs e)
         {
-            _monthViewShown = !_monthViewShown;
-
-            if (_monthViewAnimating)
-                return;
-
-            _monthViewAnimating = true;
-
-            var animation = _monthViewShown ? _monthsAnimateIn : _monthsAnimateOut;
-            var prevState = _monthViewShown;
-
-            animation.Commit(this, MonthsAnimationId, MonthsAnimationRate, MonthsAnimationDuration, finished: (value, cancelled) =>
-            {
-                _monthViewAnimating = false;
-
-                if (prevState != _monthViewShown)
-                    OnShowHideTapped(this, EventArgs.Empty);
-            });
+            CalendarSectionShown = !CalendarSectionShown;
         }
 
         #endregion
 
         private void AnimateMonths(double currentValue)
         {
-            monthsRow.Height = new GridLength(_calendarContainerHeight * currentValue);
-            calendarContainer.TranslationY = _calendarContainerHeight * (currentValue - 1);
+            calendarSectionRow.Height = new GridLength(_calendarSectionHeight * currentValue);
+            calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
         }
 
