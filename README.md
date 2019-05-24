@@ -130,8 +130,9 @@ TodayFillColor="Silver"
 
 ##### TODO
 * screenshot of changed colors
-* Test Install into your PCL /.NET Standard project and Client projects.
+* ~~Test Install into your PCL /.NET Standard project and Client projects.~~
 * comment public properties and methods
-* More customization, sizes, fonts etc.
+* Font size, font attributes, font familty, font style support
+* Update Readme and create wiki pages
 
 Josip Ćaleta @lilcodelab
