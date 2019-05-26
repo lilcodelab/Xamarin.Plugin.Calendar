@@ -1,5 +1,14 @@
 ## Changelog
 
+### 1.0.3.40
+Added CalendarSectionShown property
+
+Add DataTemplate for footer, add support for SelectedDateTextFormat
+
+Change sample to be more readable and add ObservableCollection sample
+
+General improvements
+
 ### 1.0.2.38
 EventCollection now reacts to changes of keys (BUGFIX: events not loading on selected date)
 
