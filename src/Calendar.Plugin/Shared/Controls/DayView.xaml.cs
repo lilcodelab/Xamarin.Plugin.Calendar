@@ -28,6 +28,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DayViewCornerRadiusProperty, value);
         }
 
+        public static readonly BindableProperty DaysLabelStyleProperty =
+          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(DayView), null);
+
+        public Style DaysLabelStyle
+        {
+            get => (Style)GetValue(DaysLabelStyleProperty);
+            set => SetValue(DaysLabelStyleProperty, value);
+        }
+
         #endregion
 
         internal DayView()

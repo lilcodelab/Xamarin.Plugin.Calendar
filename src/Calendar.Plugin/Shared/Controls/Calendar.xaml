@@ -48,6 +48,8 @@
                     DayViewSize="{Binding DayViewSize, Source={x:Reference calendar}}"
                     DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference calendar}}"
                     DaysTitleHeight="{Binding DaysTitleHeight, Source={x:Reference calendar}}"
+                    DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference calendar}}"
+                    DaysTitleLabelStyle="{Binding DaysTitleLabelStyle, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand" />
             </controls:SwipeAwareContainer>

@@ -37,7 +37,24 @@
         </controls:Calendar.EventTemplate>
     </controls:Calendar>
 
-    <!--MonthLabelColor="Red"
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="daysLabelStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Italic" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+
+            <Style x:Key="daysTitleLabelStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+
+    <!--
+        DaysLabelStyle="{StaticResource daysLabelStyle}"
+        DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
+        MonthLabelColor="Red"
         YearLabelColor="Blue"
         SelectedDateColor="Red"
         SelectedDayBackgroundColor="DarkCyan"

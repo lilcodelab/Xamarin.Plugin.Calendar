@@ -37,6 +37,7 @@
         <Label
             Text="{Binding Date.Day}"
             TextColor="{Binding TextColor}"
+            Style="{Binding DaysLabelStyle, Source={x:Reference dayView}}"
             HorizontalOptions="Center"
             VerticalOptions="Center"
             InputTransparent="True" />

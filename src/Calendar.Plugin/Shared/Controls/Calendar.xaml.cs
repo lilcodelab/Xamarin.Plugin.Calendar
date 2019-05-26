@@ -294,6 +294,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleHeightProperty, value);
         }
 
+        public static readonly BindableProperty DaysLabelStyleProperty =
+          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(Calendar), null);
+
+        public Style DaysLabelStyle
+        {
+            get => (Style)GetValue(DaysLabelStyleProperty);
+            set => SetValue(DaysLabelStyleProperty, value);
+        }
+
+        public static readonly BindableProperty DaysTitleLabelStyleProperty =
+          BindableProperty.Create(nameof(DaysTitleLabelStyle), typeof(Style), typeof(Calendar), null);
+
+        public Style DaysTitleLabelStyle
+        {
+            get => (Style)GetValue(DaysTitleLabelStyleProperty);
+            set => SetValue(DaysTitleLabelStyleProperty, value);
+        }
+
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
