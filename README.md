@@ -134,7 +134,8 @@ TodayFillColor="Silver"
 ##### TODO
 * ~~screenshot of changed colors~~
 * comment public properties and methods
-* Add deafult public template for Header with "← Month, Year →" format
+* Add default public template for Header with "← Month, Year →" format
 * Update Readme and create wiki pages
+* Create advanced sample (more real-world) in the root of the repo with referenced nuget package
 
 Josip Ćaleta @lilcodelab
