@@ -142,6 +142,33 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(TodayFillColorProperty, value);
         }
 
+        public static readonly BindableProperty DayViewSizeProperty =
+          BindableProperty.Create(nameof(DayViewSize), typeof(double), typeof(MonthDaysView), 40.0);
+
+        public double DayViewSize
+        {
+            get => (double)GetValue(DayViewSizeProperty);
+            set => SetValue(DayViewSizeProperty, value);
+        }
+
+        public static readonly BindableProperty DayViewCornerRadiusProperty =
+          BindableProperty.Create(nameof(DayViewCornerRadius), typeof(float), typeof(MonthDaysView), 20f);
+
+        public float DayViewCornerRadius
+        {
+            get => (float)GetValue(DayViewCornerRadiusProperty);
+            set => SetValue(DayViewCornerRadiusProperty, value);
+        }
+
+        public static readonly BindableProperty DaysTitleHeightProperty =
+          BindableProperty.Create(nameof(DaysTitleHeight), typeof(double), typeof(MonthDaysView), 30.0);
+
+        public double DaysTitleHeight
+        {
+            get => (double)GetValue(DaysTitleHeightProperty);
+            set => SetValue(DaysTitleHeightProperty, value);
+        }
+
         #endregion
 
         private readonly List<DayView> _dayViews = new List<DayView>();

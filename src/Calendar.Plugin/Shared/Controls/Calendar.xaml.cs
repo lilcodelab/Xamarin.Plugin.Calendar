@@ -267,6 +267,33 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(CalendarSectionShownProperty, value);
         }
 
+        public static readonly BindableProperty DayViewSizeProperty =
+          BindableProperty.Create(nameof(DayViewSize), typeof(double), typeof(Calendar), 40.0);
+
+        public double DayViewSize
+        {
+            get => (double)GetValue(DayViewSizeProperty);
+            set => SetValue(DayViewSizeProperty, value);
+        }
+
+        public static readonly BindableProperty DayViewCornerRadiusProperty =
+          BindableProperty.Create(nameof(DayViewCornerRadius), typeof(float), typeof(Calendar), 20f);
+
+        public float DayViewCornerRadius
+        {
+            get => (float)GetValue(DayViewCornerRadiusProperty);
+            set => SetValue(DayViewCornerRadiusProperty, value);
+        }
+
+        public static readonly BindableProperty DaysTitleHeightProperty =
+          BindableProperty.Create(nameof(DaysTitleHeight), typeof(double), typeof(Calendar), 30.0);
+
+        public double DaysTitleHeight
+        {
+            get => (double)GetValue(DaysTitleHeightProperty);
+            set => SetValue(DaysTitleHeightProperty, value);
+        }
+
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
@@ -391,6 +418,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             });
         }
 
+        private void UpdateCalendarSectionHeight()
+        {
+            _calendarSectionHeight = calendarContainer.Height;
+        }
+
         private void OnEventsCollectionChanged(object sender, EventCollection.EventCollectionChangedArgs e)
         {
             UpdateEvents();
@@ -403,11 +435,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void OnCalendarContainerSizeChanged(object sender, EventArgs e)
         {
-            if (calendarContainer.Height > 0)
-            {
-                _calendarSectionHeight = calendarContainer.Height;
-                calendarContainer.SizeChanged -= OnCalendarContainerSizeChanged;
-            }
+            if (calendarContainer.Height > 0 && !_calendarSectionAnimating)
+                UpdateCalendarSectionHeight();
         }
 
         private void PrevMonthClicked(object sender, EventArgs e)

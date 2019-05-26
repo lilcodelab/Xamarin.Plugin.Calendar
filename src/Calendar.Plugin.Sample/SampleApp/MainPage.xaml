@@ -49,5 +49,8 @@
         DeselectedDayTextColor="Blue"
         OtherMonthDayColor="Gray"
         TodayOutlineColor="Blue"
-        TodayFillColor="Silver"-->
+        TodayFillColor="Silver"
+        DayViewSize="40"
+        DayViewCornerRadius="3"
+        DaysTitleHeight="40"-->
 </ContentPage>
