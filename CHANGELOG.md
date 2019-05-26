@@ -1,5 +1,12 @@
 ## Changelog
 
+### 1.0.3.42
+Add support for DaysLabelStyle and DaysTitleLabelStyle
+
+Add days' size and corner radius customization
+
+Add day title size customization
+
 ### 1.0.3.40
 Added CalendarSectionShown property
 
