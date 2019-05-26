@@ -36,7 +36,7 @@ namespace Xamarin.Plugin.Calendar.Models
         #endregion
 
         /// <summary>
-        /// Removed a collection of values for specific date
+        /// Removes a collection of values for specific date
         /// </summary>
         /// <param name="key">Event DateTime</param>
         /// <returns>true if the element is successfully found and removed; otherwise, false. This method returns false if key is not found in the System.Collections.Generic.Dictionary`2.</returns>
