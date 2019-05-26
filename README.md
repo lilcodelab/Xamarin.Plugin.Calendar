@@ -15,7 +15,8 @@ Simple cross platform plugin for Calendar control featuring:
 - Customizeable colors, day view sizes/label styles, custom Header/Footer template support
 - UI reactive to EventCollection, Culture and other changes
 
-If you are coming back take a look on the [Changelog](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/CHANGELOG.md).
+We are open to any suggestions and feedback, and we got our community telegram group [here](https://t.me/XamarinPluginCalendar) :)   
+If you are coming back take a look on the [Changelog here](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/CHANGELOG.md).
 
 ### Setup
 * Available on NuGet 
