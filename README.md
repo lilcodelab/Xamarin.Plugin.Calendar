@@ -12,7 +12,8 @@
 Simple cross platform plugin for Calendar control featuring:
 - Displaying events by binding EventCollection
 - Localization support with System.Globalization.CultureInfo
-- Customizeable colors, fonts and sizes (WIP).
+- Customizeable colors, day view sizes/label styles, custom Header/Footer template support
+- UI reactive to EventCollection, Culture and other changes
 
 ### Setup
 * Available on NuGet 
@@ -129,10 +130,9 @@ TodayFillColor="Silver"
 ```
 
 ##### TODO
-* screenshot of changed colors
-* ~~Test Install into your PCL /.NET Standard project and Client projects.~~
+* ~~screenshot of changed colors~~
 * comment public properties and methods
-* Font size, font attributes, font familty, font style support
+* Add deafult public template for Header with "← Month, Year →" format
 * Update Readme and create wiki pages
 
 Josip Ćaleta @lilcodelab
