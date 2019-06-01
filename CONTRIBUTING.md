@@ -5,3 +5,8 @@
 - Any questions or anything you can ask in the group or open up an issue
 
 We are open to all suggestions and feedback :)
+
+If you want to help us with developing of plugin you can do that too :)
+Few simple rules apply:
+- Be consistent with the current implementation of the plugin
+- Clean code, formatting bla bla :)
