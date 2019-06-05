@@ -1,7 +1,7 @@
 ## Changelog
 
 ### 1.0.3.43
-Add support for DisableSwipeDetection, SwipeUpActionEnabled and SwipeUpCommand (#10)
+Add support for DisableSwipeDetection, SwipeUpActionEnabled and SwipeUpCommand ([#10](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues/10))
 
 ### 1.0.3.42
 Add support for DaysLabelStyle and DaysTitleLabelStyle
