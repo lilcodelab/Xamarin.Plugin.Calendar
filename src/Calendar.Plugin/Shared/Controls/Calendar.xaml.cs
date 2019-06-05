@@ -312,6 +312,43 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleLabelStyleProperty, value);
         }
 
+        /// <summary> Bindable propety for DisableSwipeDetection </summary>
+        public static readonly BindableProperty DisableSwipeDetectionProperty =
+          BindableProperty.Create(nameof(DisableSwipeDetection), typeof(bool), typeof(Calendar), false);
+
+        /// <summary>
+        /// <para> Disables the swipe detection (needs testing on iOS) </para>
+        /// Could be useful if your superview has its own swipe-detection logic. 
+        /// Also see if <seealso cref="SwipeUpCommand"/>, <seealso cref="SwipeUpActionEnabled"/> is useful to you.
+        /// </summary>
+        public bool DisableSwipeDetection
+        {
+            get => (bool)GetValue(DisableSwipeDetectionProperty);
+            set => SetValue(DisableSwipeDetectionProperty, value);
+        }
+
+        /// <summary> Bindable property for SwipeUpCommand </summary>
+        public static readonly BindableProperty SwipeUpCommandProperty =
+          BindableProperty.Create(nameof(SwipeUpCommand), typeof(ICommand), typeof(Calendar), null);
+
+        /// <summary> Activated when user swipes-up over days view </summary>
+        public ICommand SwipeUpCommand
+        {
+            get => (ICommand)GetValue(SwipeUpCommandProperty);
+            set => SetValue(SwipeUpCommandProperty, value);
+        }
+
+        /// <summary> Bindable property for SwipeUpActionEnabled </summary>
+        public static readonly BindableProperty SwipeUpActionEnabledProperty =
+          BindableProperty.Create(nameof(SwipeUpActionEnabled), typeof(bool), typeof(Calendar), true);
+
+        /// <summary> Enable/disable default swipe-up action for showing/hiding calendar </summary>
+        public bool SwipeUpActionEnabled
+        {
+            get => (bool)GetValue(SwipeUpActionEnabledProperty);
+            set => SetValue(SwipeUpActionEnabledProperty, value);
+        }
+
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
@@ -322,6 +359,9 @@ namespace Xamarin.Plugin.Calendar.Controls
         private bool _calendarSectionAnimating;
         private double _calendarSectionHeight;
 
+        /// <summary>
+        /// Calendar plugin for Xamarin.Forms
+        /// </summary>
         public Calendar()
         {
             PrevMonthCommand = new Command(PrevMonth);
@@ -457,20 +497,19 @@ namespace Xamarin.Plugin.Calendar.Controls
                 UpdateCalendarSectionHeight();
         }
 
-        private void PrevMonthClicked(object sender, EventArgs e)
+        private void OnSwipedRight(object sender, EventArgs e)
             => PrevMonth();
 
-        private void NextMonthClicked(object sender, EventArgs e)
+        private void OnSwipedLeft(object sender, EventArgs e)
             => NextMonth();
 
-        private void PrevYearClicked(object sender, EventArgs e)
-            => PrevYear();
+        private void OnSwipedUp(object sender, EventArgs e)
+        {
+            SwipeUpCommand?.Execute(null);
 
-        private void NextYearClicked(object sender, EventArgs e)
-            => NextYear();
-
-        private void OnShowHideTapped(object sender, EventArgs e)
-            => ToggleCalendarSectionVisibility();
+            if (SwipeUpActionEnabled)
+                ToggleCalendarSectionVisibility();
+        }
 
         #endregion
 

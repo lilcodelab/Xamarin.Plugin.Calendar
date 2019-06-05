@@ -3,8 +3,17 @@ using Xamarin.Forms;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
-    public class SwipeAwareContainer: ContentView
+    public class SwipeAwareContainer : ContentView
     {
+        public static readonly BindableProperty SwipeDetectionDisabledProperty =
+          BindableProperty.Create(nameof(SwipeDetectionDisabled), typeof(bool), typeof(SwipeAwareContainer), false);
+
+        public bool SwipeDetectionDisabled
+        {
+            get => (bool)GetValue(SwipeDetectionDisabledProperty);
+            set => SetValue(SwipeDetectionDisabledProperty, value);
+        }
+
         public SwipeAwareContainer() : base()
         { }
 

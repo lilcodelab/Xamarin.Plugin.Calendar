@@ -1,4 +1,7 @@
-﻿using UIKit;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Plugin.Calendar.Controls;
@@ -22,30 +25,77 @@ namespace Xamarin.Plugin.Calendar.iOS
             _downGestureRecognizer = new UISwipeGestureRecognizer(() => (Element as SwipeAwareContainer)?.OnSwipeDown()) { Direction = UISwipeGestureRecognizerDirection.Down};
         }
 
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (!(Element is SwipeAwareContainer element))
+                return;
+
+            switch (e.PropertyName)
+            {
+                case nameof(SwipeAwareContainer.SwipeDetectionDisabled):
+                    if (element.SwipeDetectionDisabled)
+                        RemoveGestureRecognizers();
+                    else
+                        AddGestureRecognizers();
+                    break;
+            }
+        }
+
         protected override void OnElementChanged(ElementChangedEventArgs<ContentView> e)
         {
             base.OnElementChanged(e);
 
-            var control = NativeView;
-
-            if (control == null)
+            if (NativeView == null)
                 return;
 
             if (e.NewElement != null)
-            {
-                control.AddGestureRecognizer(_rightGestureRecognizer);
-                control.AddGestureRecognizer(_leftGestureRecognizer);
-                control.AddGestureRecognizer(_upGestureRecognizer);
-                control.AddGestureRecognizer(_downGestureRecognizer);
-            }
+                AddGestureRecognizers();
 
             if (e.OldElement != null)
-            {
-                control.RemoveGestureRecognizer(_rightGestureRecognizer);
-                control.RemoveGestureRecognizer(_leftGestureRecognizer);
-                control.RemoveGestureRecognizer(_upGestureRecognizer);
-                control.RemoveGestureRecognizer(_downGestureRecognizer);
-            }
+                RemoveGestureRecognizers();
         }
+
+        private void AddGestureRecognizers()
+        {
+            try
+            {
+                if (!NativeView.GestureRecognizers.Contains(_rightGestureRecognizer))
+                    NativeView.AddGestureRecognizer(_rightGestureRecognizer);
+
+                if (!NativeView.GestureRecognizers.Contains(_leftGestureRecognizer))
+                    NativeView.AddGestureRecognizer(_leftGestureRecognizer);
+
+                if (!NativeView.GestureRecognizers.Contains(_upGestureRecognizer))
+                    NativeView.AddGestureRecognizer(_upGestureRecognizer);
+
+                if (!NativeView.GestureRecognizers.Contains(_downGestureRecognizer))
+                    NativeView.AddGestureRecognizer(_downGestureRecognizer);
+            }
+            catch (Exception)
+            { }
+        }
+
+        private void RemoveGestureRecognizers()
+        {
+            try
+            {
+                if (NativeView.GestureRecognizers.Contains(_rightGestureRecognizer))
+                    NativeView.RemoveGestureRecognizer(_rightGestureRecognizer);
+
+                if (NativeView.GestureRecognizers.Contains(_leftGestureRecognizer))
+                    NativeView.RemoveGestureRecognizer(_leftGestureRecognizer);
+
+                if (NativeView.GestureRecognizers.Contains(_upGestureRecognizer))
+                    NativeView.RemoveGestureRecognizer(_upGestureRecognizer);
+
+                if (NativeView.GestureRecognizers.Contains(_downGestureRecognizer))
+                    NativeView.RemoveGestureRecognizer(_downGestureRecognizer);
+            }
+            catch (Exception)
+            { }
+        }
+
     }
 }

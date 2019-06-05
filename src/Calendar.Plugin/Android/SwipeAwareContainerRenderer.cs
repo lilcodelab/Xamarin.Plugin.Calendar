@@ -13,7 +13,7 @@ namespace Xamarin.Plugin.Calendar.Android
     {
         private const int SwipeDistanceThreshold = 50;
         private const int SwipeVelocityThreshold = 20;
-        private readonly GestureDetector _gestureDetector; 
+        private readonly GestureDetector _gestureDetector;
 
         public SwipeAwareContainerRenderer(Context context) : base(context)
         {
@@ -22,7 +22,9 @@ namespace Xamarin.Plugin.Calendar.Android
 
         public override bool OnInterceptTouchEvent(MotionEvent ev)
         {
-            _gestureDetector.OnTouchEvent(ev);
+            if (Element is SwipeAwareContainer element && !element.SwipeDetectionDisabled)
+                _gestureDetector.OnTouchEvent(ev);
+
             return base.OnInterceptTouchEvent(ev);
         }
 

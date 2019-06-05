@@ -37,7 +37,9 @@
         </controls:Calendar.EventTemplate>
     </controls:Calendar>
 
-    <!--<ContentPage.Resources>
+    <!-- Styling
+    
+    <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="daysLabelStyle" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Italic" />
@@ -51,7 +53,15 @@
         </ResourceDictionary>
     </ContentPage.Resources>-->
 
-    <!--
+
+    <!-- Swipe handling
+    
+        DisableSwipeDetection="False"
+        SwipeUpActionEnabled="False"
+        SwipeUpCommand="{Binding SwipeUpCommand}"-->
+    
+    <!-- Customizations
+    
         DaysLabelStyle="{StaticResource daysLabelStyle}"
         DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
         MonthLabelColor="Red"

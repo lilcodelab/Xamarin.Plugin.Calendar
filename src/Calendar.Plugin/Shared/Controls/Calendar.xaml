@@ -26,9 +26,10 @@
             <controls:SwipeAwareContainer
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
-                SwipedLeft="NextMonthClicked"
-                SwipedRight="PrevMonthClicked"
-                SwipedUp="OnShowHideTapped">
+                SwipeDetectionDisabled="{Binding DisableSwipeDetection, Source={x:Reference calendar}}"
+                SwipedLeft="OnSwipedLeft"
+                SwipedRight="OnSwipedRight"
+                SwipedUp="OnSwipedUp">
                 <controls:MonthDaysView
                     x:Name="monthDaysView"
                     Month="{Binding Month, Source={x:Reference calendar}}"
