@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.0.3.44
+Fix iOS swipe renderer ([#10](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues/10))
+
 ### 1.0.3.43
 Add support for DisableSwipeDetection, SwipeUpActionEnabled and SwipeUpCommand ([#10](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues/10))
 
