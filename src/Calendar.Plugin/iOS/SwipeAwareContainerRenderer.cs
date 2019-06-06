@@ -47,10 +47,7 @@ namespace Xamarin.Plugin.Calendar.iOS
         {
             base.OnElementChanged(e);
 
-            if (NativeView == null)
-                return;
-
-            if (e.NewElement != null)
+            if (e.NewElement is SwipeAwareContainer element && !element.SwipeDetectionDisabled)
                 AddGestureRecognizers();
 
             if (e.OldElement != null)
@@ -61,16 +58,19 @@ namespace Xamarin.Plugin.Calendar.iOS
         {
             try
             {
-                if (!NativeView.GestureRecognizers.Contains(_rightGestureRecognizer))
+                if (NativeView == null)
+                    return;
+
+                if (!NativeView.GestureRecognizers?.Contains(_rightGestureRecognizer) ?? true)
                     NativeView.AddGestureRecognizer(_rightGestureRecognizer);
 
-                if (!NativeView.GestureRecognizers.Contains(_leftGestureRecognizer))
+                if (!NativeView.GestureRecognizers?.Contains(_leftGestureRecognizer) ?? true)
                     NativeView.AddGestureRecognizer(_leftGestureRecognizer);
 
-                if (!NativeView.GestureRecognizers.Contains(_upGestureRecognizer))
+                if (!NativeView.GestureRecognizers?.Contains(_upGestureRecognizer) ?? true)
                     NativeView.AddGestureRecognizer(_upGestureRecognizer);
 
-                if (!NativeView.GestureRecognizers.Contains(_downGestureRecognizer))
+                if (!NativeView.GestureRecognizers?.Contains(_downGestureRecognizer) ?? true)
                     NativeView.AddGestureRecognizer(_downGestureRecognizer);
             }
             catch (Exception)
@@ -81,16 +81,19 @@ namespace Xamarin.Plugin.Calendar.iOS
         {
             try
             {
-                if (NativeView.GestureRecognizers.Contains(_rightGestureRecognizer))
+                if (NativeView == null)
+                    return;
+
+                if (NativeView.GestureRecognizers?.Contains(_rightGestureRecognizer) ?? false)
                     NativeView.RemoveGestureRecognizer(_rightGestureRecognizer);
 
-                if (NativeView.GestureRecognizers.Contains(_leftGestureRecognizer))
+                if (NativeView.GestureRecognizers?.Contains(_leftGestureRecognizer) ?? false)
                     NativeView.RemoveGestureRecognizer(_leftGestureRecognizer);
 
-                if (NativeView.GestureRecognizers.Contains(_upGestureRecognizer))
+                if (NativeView.GestureRecognizers?.Contains(_upGestureRecognizer) ?? false)
                     NativeView.RemoveGestureRecognizer(_upGestureRecognizer);
 
-                if (NativeView.GestureRecognizers.Contains(_downGestureRecognizer))
+                if (NativeView.GestureRecognizers?.Contains(_downGestureRecognizer) ?? false)
                     NativeView.RemoveGestureRecognizer(_downGestureRecognizer);
             }
             catch (Exception)
