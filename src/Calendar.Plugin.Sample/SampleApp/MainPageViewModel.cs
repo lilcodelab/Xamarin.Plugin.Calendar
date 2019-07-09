@@ -55,6 +55,11 @@ namespace SampleApp
                     todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
                 });
             }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            Task.Delay(5000).ContinueWith(_ =>
+            {
+                SelectedDate = DateTime.Today.AddDays(35).Date;
+            });
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
@@ -69,6 +74,13 @@ namespace SampleApp
         public EventCollection Events { get; }
         public int Month { get; set; } = DateTime.Now.Month;
         public int Year { get; set; } = DateTime.Now.Year;
+
+        private DateTime _selectedDate = DateTime.Today;
+        public DateTime SelectedDate
+        {
+            get => _selectedDate;
+            set => SetProperty(ref _selectedDate, value);
+        }
 
         public CultureInfo Culture
         {

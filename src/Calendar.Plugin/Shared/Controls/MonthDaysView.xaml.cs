@@ -189,6 +189,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
+        private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
         private readonly List<DayView> _dayViews = new List<DayView>();
         private DayModel _selectedDay;
         private bool _animating;
@@ -215,8 +216,16 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             base.OnPropertyChanged(propertyName);
 
+            if (_propertyChangedNotificationSupressions.TryGetValue(propertyName, out bool isSuppressed)
+                && isSuppressed)
+                return;
+
             switch (propertyName)
             {
+                case nameof(SelectedDate):
+                    UpdateSelectedDate();
+                    break;
+
                 case nameof(Month):
                 case nameof(Year):
                 case nameof(Events):
@@ -281,6 +290,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
+        private void UpdateSelectedDate()
+        {
+            if (_selectedDay != null)
+                _selectedDay.IsSelected = false;
+
+            _selectedDay = _dayViews.Select(x => x.BindingContext as DayModel)
+                                    .FirstOrDefault(x => x.Date == SelectedDate.Date);
+
+            if (_selectedDay == null || !_selectedDay.IsThisMonth)
+            {
+                Year = SelectedDate.Date.Year;
+                Month = SelectedDate.Date.Month;
+                return;
+            }
+
+            _selectedDay.IsSelected = true;
+        }
+
         private void OnDayModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DayModel.IsSelected)
@@ -290,7 +317,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 if (newSelected.Date == SelectedDate)
                     return;
 
-                SelectedDate = newSelected.Date;
+                ChangePropertySilently(nameof(SelectedDate), () => SelectedDate = newSelected.Date);
 
                 if (!newSelected.IsThisMonth)
                 {
@@ -349,7 +376,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 // TODO: add indicator for current date (outline circle)
                 var dayModel = dayView.BindingContext as DayModel;
 
-                dayModel.Date = currentDate;
+                dayModel.Date = currentDate.Date;
                 dayModel.IsThisMonth = currentDate.Month == Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
@@ -384,6 +411,14 @@ namespace Xamarin.Plugin.Calendar.Controls
                         callAgain();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void ChangePropertySilently(string propertyName, Action propertyChangeAction)
+        {
+            _propertyChangedNotificationSupressions[propertyName] = true;
+            propertyChangeAction();
+
+            _propertyChangedNotificationSupressions[propertyName] = false;
         }
     }
 }

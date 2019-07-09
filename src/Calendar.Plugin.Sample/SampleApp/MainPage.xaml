@@ -17,7 +17,8 @@
         Events="{Binding Events}"
         Culture="{Binding Culture}"
         Month="{Binding Month}"
-        Year="{Binding Year}">
+        Year="{Binding Year}"
+        SelectedDate="{Binding SelectedDate}">
         <controls:Calendar.EventTemplate>
             <DataTemplate>
                 <StackLayout
