@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.0.3.67
+Bugfix: Substring on DayNames removed
+
 ### 1.0.3.66
 Use AbbreviatedDayNames instead of DayNames for day titles
 
