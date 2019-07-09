@@ -1,5 +1,10 @@
 ## Changelog
 
+### 1.0.3.66
+Use AbbreviatedDayNames instead of DayNames for day titles
+
+Fix TwoWay binding for SelectedDate (not updating UI from VM)
+
 ### 1.0.3.44
 Fix iOS swipe renderer ([#10](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues/10))
 
