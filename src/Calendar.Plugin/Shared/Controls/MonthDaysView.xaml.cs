@@ -256,7 +256,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             foreach (var dayLabel in daysTitleControl.Children.OfType<Label>())
             {
-                dayLabel.Text = Culture.DateTimeFormat.DayNames[dayNumber].Substring(0, 3).ToUpper();
+                dayLabel.Text = Culture.DateTimeFormat.AbbreviatedDayNames[dayNumber].Substring(0, 3).ToUpper();
                 dayNumber = (dayNumber + 1) % 7;
             }
         }
