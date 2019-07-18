@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.0.3.83
+Add properties for SwipeLeftCommand, SwipeRightCommand, SwipeToChangeMonthEnabled, rename SwipeUpActionEnabled ([#14](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues/14))
+
 ### 1.0.3.67
 Bugfix: Substring on DayNames removed
 
