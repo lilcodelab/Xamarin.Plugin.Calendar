@@ -319,7 +319,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary>
         /// <para> Disables the swipe detection (needs testing on iOS) </para>
         /// Could be useful if your superview has its own swipe-detection logic. 
-        /// Also see if <seealso cref="SwipeUpCommand"/>, <seealso cref="SwipeUpActionEnabled"/> is useful to you.
+        /// Also see if <seealso cref="SwipeUpCommand"/>, <seealso cref="SwipeUpToHideEnabled"/>, <seealso cref="SwipeLeftCommand"/>, <seealso cref="SwipeRightCommand"/> or <seealso cref="SwipeToChangeMonthEnabled"/> is useful to you.
         /// </summary>
         public bool DisableSwipeDetection
         {
@@ -338,15 +338,48 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeUpCommandProperty, value);
         }
 
-        /// <summary> Bindable property for SwipeUpActionEnabled </summary>
-        public static readonly BindableProperty SwipeUpActionEnabledProperty =
-          BindableProperty.Create(nameof(SwipeUpActionEnabled), typeof(bool), typeof(Calendar), true);
+        /// <summary> Bindable property for SwipeUpToHideEnabled </summary>
+        public static readonly BindableProperty SwipeUpToHideEnabledProperty =
+          BindableProperty.Create(nameof(SwipeUpToHideEnabled), typeof(bool), typeof(Calendar), true);
 
         /// <summary> Enable/disable default swipe-up action for showing/hiding calendar </summary>
-        public bool SwipeUpActionEnabled
+        public bool SwipeUpToHideEnabled
         {
-            get => (bool)GetValue(SwipeUpActionEnabledProperty);
-            set => SetValue(SwipeUpActionEnabledProperty, value);
+            get => (bool)GetValue(SwipeUpToHideEnabledProperty);
+            set => SetValue(SwipeUpToHideEnabledProperty, value);
+        }
+
+        /// <summary> Bindable property for SwipeLeftCommand </summary>
+        public static readonly BindableProperty SwipeLeftCommandProperty =
+          BindableProperty.Create(nameof(SwipeLeftCommand), typeof(ICommand), typeof(Calendar), null);
+
+        /// <summary> Activated when user swipes-left over days view </summary>
+        public ICommand SwipeLeftCommand
+        {
+            get => (ICommand)GetValue(SwipeLeftCommandProperty);
+            set => SetValue(SwipeLeftCommandProperty, value);
+        }
+
+        /// <summary> Bindable property for SwipeRightCommand </summary>
+        public static readonly BindableProperty SwipeRightCommandProperty =
+          BindableProperty.Create(nameof(SwipeRightCommand), typeof(ICommand), typeof(Calendar), null);
+
+        /// <summary> Activated when user swipes-right over days view </summary>
+        public ICommand SwipeRightCommand
+        {
+            get => (ICommand)GetValue(SwipeRightCommandProperty);
+            set => SetValue(SwipeRightCommandProperty, value);
+        }
+
+        /// <summary> Bindable property for SwipeToChangeMonthEnabled </summary>
+        public static readonly BindableProperty SwipeToChangeMonthEnabledProperty =
+          BindableProperty.Create(nameof(SwipeToChangeMonthEnabled), typeof(bool), typeof(Calendar), true);
+
+        /// <summary> Enable/disable default swipe actions for changing months </summary>
+        public bool SwipeToChangeMonthEnabled
+        {
+            get => (bool)GetValue(SwipeToChangeMonthEnabledProperty);
+            set => SetValue(SwipeToChangeMonthEnabledProperty, value);
         }
 
         #endregion
@@ -498,16 +531,26 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         private void OnSwipedRight(object sender, EventArgs e)
-            => PrevMonth();
+        {
+            SwipeRightCommand?.Execute(null);
+
+            if (SwipeToChangeMonthEnabled)
+                PrevMonth();
+        }
 
         private void OnSwipedLeft(object sender, EventArgs e)
-            => NextMonth();
+        {
+            SwipeLeftCommand?.Execute(null);
+
+            if (SwipeToChangeMonthEnabled)
+                NextMonth();
+        }
 
         private void OnSwipedUp(object sender, EventArgs e)
         {
             SwipeUpCommand?.Execute(null);
 
-            if (SwipeUpActionEnabled)
+            if (SwipeUpToHideEnabled)
                 ToggleCalendarSectionVisibility();
         }
 

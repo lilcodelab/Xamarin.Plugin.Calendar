@@ -58,8 +58,13 @@
     <!-- Swipe handling
     
         DisableSwipeDetection="False"
-        SwipeUpActionEnabled="False"
-        SwipeUpCommand="{Binding SwipeUpCommand}"-->
+    
+        SwipeLeftCommand="{Binding SwipeLeftCommand}"
+        SwipeRightCommand="{Binding SwipeRightCommand}"
+        SwipeUpCommand="{Binding SwipeUpCommand}"
+    
+        SwipeUpToHideEnabled="False"
+        SwipeToChangeMonthEnabled="False"-->
     
     <!-- Customizations
     
