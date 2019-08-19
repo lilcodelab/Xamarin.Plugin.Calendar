@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.0.3.200
+Fix animation repeating code (Changing Culture right after Month/Year might have caused some bugs)
+
 ### 1.0.3.83
 Add properties for SwipeLeftCommand, SwipeRightCommand, SwipeToChangeMonthEnabled, rename SwipeUpActionEnabled ([#14](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues/14))
 
