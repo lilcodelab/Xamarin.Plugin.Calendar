@@ -193,6 +193,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private readonly List<DayView> _dayViews = new List<DayView>();
         private DayModel _selectedDay;
         private bool _animating;
+        private DateTime _lastAnimationTime;
 
         internal MonthDaysView()
         {
@@ -269,7 +270,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             Animate(() => daysControl.FadeTo(0, 50),
                     () => daysControl.FadeTo(1, 200),
                     () => LoadDays(),
-                    () => Year * 100 + Month,
+                    _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateDays());
         }
 
@@ -372,8 +373,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             foreach (var dayView in _dayViews)
             {
                 var currentDate = monthStart.AddDays(addDays++);
-
-                // TODO: add indicator for current date (outline circle)
                 var dayModel = dayView.BindingContext as DayModel;
 
                 dayModel.Date = currentDate.Date;
@@ -390,7 +389,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             Func<Task> animationIn,
             Func<Task> animationOut,
             Action afterFirstAnimation,
-            Func<int> stateGetter,
+            DateTime animationTime,
             Action callAgain)
         {
             if (_animating)
@@ -400,14 +399,13 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             animationIn().ContinueWith(aIn =>
             {
-                var prevState = stateGetter();
                 afterFirstAnimation();
 
                 animationOut().ContinueWith(aOut =>
                 {
                     _animating = false;
 
-                    if (stateGetter() != prevState)
+                    if (animationTime != _lastAnimationTime)
                         callAgain();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
