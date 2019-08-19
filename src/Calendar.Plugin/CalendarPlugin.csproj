@@ -30,6 +30,7 @@
     <DefineConstants>$(DefineConstants);</DefineConstants>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <DesignTimeBuild>false</DesignTimeBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
