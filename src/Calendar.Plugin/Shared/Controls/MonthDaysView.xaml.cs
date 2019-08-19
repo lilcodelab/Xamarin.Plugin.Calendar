@@ -187,6 +187,39 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleLabelStyleProperty, value);
         }
 
+        /// <summary> Bindable property for MinimumDate </summary>
+        public static readonly BindableProperty MinimumDateProperty =
+          BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MinValue);
+
+        /// <summary> Minimum date which can be selected </summary>
+        public DateTime MinimumDate
+        {
+            get => (DateTime)GetValue(MinimumDateProperty);
+            set => SetValue(MinimumDateProperty, value);
+        }
+
+        /// <summary> Bindable property for MaximumDate </summary>
+        public static readonly BindableProperty MaximumDateProperty =
+          BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MaxValue);
+
+        /// <summary> Maximum date which can be selected </summary>
+        public DateTime MaximumDate
+        {
+            get => (DateTime)GetValue(MaximumDateProperty);
+            set => SetValue(MaximumDateProperty, value);
+        }
+
+        /// <summary> Bindable property for DisabledDayColor </summary>
+        public static readonly BindableProperty DisabledDayColorProperty =
+          BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
+
+        /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
+        public Color DisabledDayColor
+        {
+            get => (Color)GetValue(DisabledDayColorProperty);
+            set => SetValue(DisabledDayColorProperty, value);
+        }
+
         #endregion
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();

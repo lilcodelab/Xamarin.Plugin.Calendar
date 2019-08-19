@@ -382,6 +382,39 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
         }
 
+        /// <summary> Bindable property for MinimumDate </summary>
+        public static readonly BindableProperty MinimumDateProperty =
+          BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(Calendar), DateTime.MinValue);
+
+        /// <summary> Minimum date which can be selected </summary>
+        public DateTime MinimumDate
+        {
+            get => (DateTime)GetValue(MinimumDateProperty);
+            set => SetValue(MinimumDateProperty, value);
+        }
+
+        /// <summary> Bindable property for MaximumDate </summary>
+        public static readonly BindableProperty MaximumDateProperty =
+          BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(Calendar), DateTime.MaxValue);
+
+        /// <summary> Maximum date which can be selected </summary>
+        public DateTime MaximumDate
+        {
+            get => (DateTime)GetValue(MaximumDateProperty);
+            set => SetValue(MaximumDateProperty, value);
+        }
+
+        /// <summary> Bindable property for DisabledDayColor </summary>
+        public static readonly BindableProperty DisabledDayColorProperty =
+          BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(Calendar), Color.Transparent);
+
+        /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
+        public Color DisabledDayColor
+        {
+            get => (Color)GetValue(DisabledDayColorProperty);
+            set => SetValue(DisabledDayColorProperty, value);
+        }
+
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
@@ -468,6 +501,28 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
             }
         }
+
+        //private static void OnMonthChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is Calendar view
+        //        && newValue is int newMonth
+        //        && oldValue is int oldMonth)
+        //    {
+        //        if (!view.CheckMinimumDate(view.Year, newMonth) || !view.CheckMaximumDate(view.Year, newMonth))
+        //            view.Month = oldMonth;
+        //    }
+        //}
+
+        //private static void OnYearChanged(BindableObject bindable, object oldValue, object newValue)
+        //{
+        //    if (bindable is Calendar view
+        //        && newValue is int newYear
+        //        && oldValue is int oldYear)
+        //    {
+        //        if (!view.CheckMinimumDate(newYear, view.Month) || !view.CheckMaximumDate(newYear, view.Month))
+        //            view.Year = oldYear;
+        //    }
+        //}
 
         private void UpdateEvents()
         {
@@ -560,31 +615,55 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void PrevMonth()
         {
+            int newMonth;
+            int newYear = Year;
+
             if (Month - 1 == 0)
             {
-                Month = 12;
-                Year--;
+                newMonth = 12;
+                newYear = Year - 1;
             }
             else
-                Month--;
+                newMonth = Month - 1;
+
+            if (CheckMinimumDate(newYear, newMonth))
+            {
+                Month = newMonth;
+                Year = newYear;
+            }
         }
 
         private void NextMonth()
         {
+            int newMonth;
+            int newYear = Year;
+
             if (Month + 1 == 13)
             {
-                Month = 1;
-                Year++;
+                newMonth = 1;
+                newYear = Year + 1;
             }
             else
-                Month++;
+                newMonth = Month + 1;
+
+            if (CheckMaximumDate(newYear, newMonth))
+            {
+                Month = newMonth;
+                Year = newYear;
+            }
         }
 
         private void PrevYear()
-            => Year--;
+        {
+            if (CheckMinimumDate(Year - 1, Month))
+                Year--;
+        }
 
         private void NextYear()
-            => Year++;
+        {
+            if (CheckMaximumDate(Year + 1, Month))
+                Year++;
+        }
 
         private void ToggleCalendarSectionVisibility()
             => CalendarSectionShown = !CalendarSectionShown;
@@ -594,6 +673,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             calendarSectionRow.Height = new GridLength(_calendarSectionHeight * currentValue);
             calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
+        }
+
+        private bool CheckMinimumDate(int year, int month)
+        {
+            if (year < MinimumDate.Year ||
+                year == MinimumDate.Year && month < MinimumDate.Month)
+                return false;
+
+            return true;
+        }
+
+        private bool CheckMaximumDate(int year, int month)
+        {
+            if (year > MaximumDate.Year ||
+                year == MaximumDate.Year && month > MaximumDate.Month)
+                return false;
+
+            return true;
         }
 
         #endregion

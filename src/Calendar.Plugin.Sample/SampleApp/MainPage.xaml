@@ -18,7 +18,9 @@
         Culture="{Binding Culture}"
         Month="{Binding Month}"
         Year="{Binding Year}"
-        SelectedDate="{Binding SelectedDate}">
+        SelectedDate="{Binding SelectedDate}"
+        MinimumDate="{Binding MinimumDate}"
+        MaximumDate="{Binding MaximumDate}">
         <controls:Calendar.EventTemplate>
             <DataTemplate>
                 <StackLayout

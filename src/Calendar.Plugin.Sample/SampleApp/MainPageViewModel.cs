@@ -12,8 +12,6 @@ namespace SampleApp
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private CultureInfo _culture = CultureInfo.InvariantCulture;
-
         public MainPageViewModel()
         {
             Culture = CultureInfo.CreateSpecificCulture("en-US");
@@ -31,35 +29,35 @@ namespace SampleApp
             // with indexer
             Events[DateTime.Now] = new List<EventModel>(GenerateEvents(2, "Boring"));
 
-            Task.Delay(5000).ContinueWith(_ =>
-            {
-                // indexer - update later
-                Events[DateTime.Now] = new ObservableCollection<EventModel>(GenerateEvents(10, "Cool"));
+            //Task.Delay(5000).ContinueWith(_ =>
+            //{
+            //    // indexer - update later
+            //    Events[DateTime.Now] = new ObservableCollection<EventModel>(GenerateEvents(10, "Cool"));
 
-                // add later
-                Events.Add(DateTime.Now.AddDays(3), new List<EventModel>(GenerateEvents(5, "Cool")));
+            //    // add later
+            //    Events.Add(DateTime.Now.AddDays(3), new List<EventModel>(GenerateEvents(5, "Cool")));
 
-                // indexer later
-                Events[DateTime.Now.AddDays(10)] = new List<EventModel>(GenerateEvents(10, "Boring"));
+            //    // indexer later
+            //    Events[DateTime.Now.AddDays(10)] = new List<EventModel>(GenerateEvents(10, "Boring"));
 
-                // add later
-                Events.Add(DateTime.Now.AddDays(15), new List<EventModel>(GenerateEvents(10, "Cool")));
+            //    // add later
+            //    Events.Add(DateTime.Now.AddDays(15), new List<EventModel>(GenerateEvents(10, "Cool")));
 
-                Task.Delay(3000).ContinueWith(t =>
-                {
-                    // get observable collection later
-                    var todayEvents = Events[DateTime.Now] as ObservableCollection<EventModel>;
+            //    Task.Delay(3000).ContinueWith(t =>
+            //    {
+            //        // get observable collection later
+            //        var todayEvents = Events[DateTime.Now] as ObservableCollection<EventModel>;
 
-                    // insert/add items to observable collection
-                    todayEvents.Insert(0, new EventModel { Name = "Cool event insert", Description = "This is Cool event's description!" });
-                    todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
-                });
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            //        // insert/add items to observable collection
+            //        todayEvents.Insert(0, new EventModel { Name = "Cool event insert", Description = "This is Cool event's description!" });
+            //        todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
+            //    });
+            //}, TaskScheduler.FromCurrentSynchronizationContext());
 
-            Task.Delay(5000).ContinueWith(_ =>
-            {
-                SelectedDate = DateTime.Today.AddDays(35).Date;
-            });
+            //Task.Delay(5000).ContinueWith(_ =>
+            //{
+            //    SelectedDate = DateTime.Today.AddDays(35).Date;
+            //});
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
@@ -82,6 +80,21 @@ namespace SampleApp
             set => SetProperty(ref _selectedDate, value);
         }
 
+        private DateTime _minimumDate = DateTime.Today.AddMonths(-5);
+        public DateTime MinimumDate
+        {
+            get => _minimumDate;
+            set => SetProperty(ref _minimumDate, value);
+        }
+
+        private DateTime _maximumDate = DateTime.Today.AddMonths(5);
+        public DateTime MaximumDate
+        {
+            get => _maximumDate;
+            set => SetProperty(ref _maximumDate, value);
+        }
+
+        private CultureInfo _culture = CultureInfo.InvariantCulture;
         public CultureInfo Culture
         {
             get => _culture;
