@@ -10,7 +10,7 @@ using Xamarin.Plugin.Calendar.iOS;
 [assembly: ExportRenderer(typeof(SwipeAwareContainer), typeof(SwipeAwareContainerRenderer))]
 namespace Xamarin.Plugin.Calendar.iOS
 {
-    public class SwipeAwareContainerRenderer : VisualElementRenderer<ContentView>
+    internal class SwipeAwareContainerRenderer : VisualElementRenderer<ContentView>
     {
         private readonly UISwipeGestureRecognizer _rightGestureRecognizer;
         private readonly UISwipeGestureRecognizer _leftGestureRecognizer;

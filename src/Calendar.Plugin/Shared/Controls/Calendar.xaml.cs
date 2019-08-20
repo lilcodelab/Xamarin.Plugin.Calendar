@@ -406,7 +406,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         /// <summary> Bindable property for DisabledDayColor </summary>
         public static readonly BindableProperty DisabledDayColorProperty =
-          BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(Calendar), Color.Transparent);
+          BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(Calendar), Color.FromHex("#ECECEC"));
 
         /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
         public Color DisabledDayColor
@@ -501,28 +501,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
             }
         }
-
-        //private static void OnMonthChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is Calendar view
-        //        && newValue is int newMonth
-        //        && oldValue is int oldMonth)
-        //    {
-        //        if (!view.CheckMinimumDate(view.Year, newMonth) || !view.CheckMaximumDate(view.Year, newMonth))
-        //            view.Month = oldMonth;
-        //    }
-        //}
-
-        //private static void OnYearChanged(BindableObject bindable, object oldValue, object newValue)
-        //{
-        //    if (bindable is Calendar view
-        //        && newValue is int newYear
-        //        && oldValue is int oldYear)
-        //    {
-        //        if (!view.CheckMinimumDate(newYear, view.Month) || !view.CheckMaximumDate(newYear, view.Month))
-        //            view.Year = oldYear;
-        //    }
-        //}
 
         private void UpdateEvents()
         {

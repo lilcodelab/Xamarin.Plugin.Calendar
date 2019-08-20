@@ -191,8 +191,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         public static readonly BindableProperty MinimumDateProperty =
           BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MinValue);
 
-        /// <summary> Minimum date which can be selected </summary>
-        public DateTime MinimumDate
+        internal DateTime MinimumDate
         {
             get => (DateTime)GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
@@ -202,8 +201,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         public static readonly BindableProperty MaximumDateProperty =
           BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MaxValue);
 
-        /// <summary> Maximum date which can be selected </summary>
-        public DateTime MaximumDate
+        internal DateTime MaximumDate
         {
             get => (DateTime)GetValue(MaximumDateProperty);
             set => SetValue(MaximumDateProperty, value);
@@ -211,10 +209,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         /// <summary> Bindable property for DisabledDayColor </summary>
         public static readonly BindableProperty DisabledDayColorProperty =
-          BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
+          BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#ECECEC"));
 
-        /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
-        public Color DisabledDayColor
+        internal Color DisabledDayColor
         {
             get => (Color)GetValue(DisabledDayColorProperty);
             set => SetValue(DisabledDayColorProperty, value);
@@ -263,6 +260,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(Month):
                 case nameof(Year):
                 case nameof(Events):
+                case nameof(MinimumDate):
+                case nameof(MaximumDate):
                     UpdateDays();
                     break;
 
@@ -274,6 +273,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(EventIndicatorSelectedColor):
                 case nameof(TodayOutlineColor):
                 case nameof(TodayFillColor):
+                case nameof(DisabledDayColor):
                     UpdateDaysColors();
                     break;
 
@@ -321,6 +321,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.EventIndicatorSelectedColor = EventIndicatorSelectedColor;
                 dayModel.TodayOutlineColor = TodayOutlineColor;
                 dayModel.TodayFillColor = TodayFillColor;
+                dayModel.DisabledColor = DisabledDayColor;
             }
         }
 
@@ -412,6 +413,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.IsThisMonth = currentDate.Month == Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
+                dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
                 if (dayModel.IsSelected)
                     _selectedDay = dayModel;
