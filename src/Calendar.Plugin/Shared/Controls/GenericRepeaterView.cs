@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
-    public partial class GenericRepeaterView : StackLayout
+    internal class GenericRepeaterView : StackLayout
     {
         #region Bindable properties
 
@@ -30,7 +30,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
-        public GenericRepeaterView()
+        internal GenericRepeaterView()
         {
             Spacing = 0;
         }
@@ -59,7 +59,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
-        public void ResetItems()
+        private void ResetItems()
         {
             if (ItemTemplate == null)
                 return;

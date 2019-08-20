@@ -10,6 +10,9 @@ using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
+    /// <summary>
+    /// Calendar plugin for Xamarin.Forms
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Calendar : ContentView
     {
@@ -449,10 +452,34 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #region Properties
 
+        /// <summary>
+        /// When executed calendar moves to previous month.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand PrevMonthCommand { get; }
+
+        /// <summary>
+        /// When executed calendar moves to next month.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand NextMonthCommand { get; }
+
+        /// <summary>
+        /// When executed calendar moves to previous year.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand PrevYearCommand { get; }
+
+        /// <summary>
+        /// When executed calendar moves to next year.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand NextYearCommand { get; }
+
+        /// <summary>
+        /// When executed shows/hides the calendar's current month days view.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand ShowHideCalendarCommand { get; }
 
         #endregion
@@ -474,6 +501,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
+        /// <summary> Method that is called when a bound property is changed. </summary>
+        /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);

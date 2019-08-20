@@ -1,36 +1,34 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Xamarin.Plugin.Calendar.Models
 {
-    /// <summary>
-    /// Class for calendar events (extends Dictionary<DateTime, ICollection>)
+    /// <summary> 
+    /// Calendar events collection, wraps <see cref="Dictionary{DateTime, ICollection}" />
     /// </summary>
     public class EventCollection : Dictionary<DateTime, ICollection>
     {
         #region ctor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventCollection"/> class
+        /// that is empty, has the default initial capacity, and uses the default equality
+        /// comparer for the key type.
+        /// </summary>
         public EventCollection() : base()
         { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventCollection"/> class
+        /// that is empty, has the specified initial capacity, and uses the default equality
+        /// comparer for the key type.
+        /// </summary>
+        /// <param name="capacity">
+        /// The initial number of elements that the <see cref="EventCollection"/> can contain.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">capacity is less than 0.</exception>
         public EventCollection(int capacity) : base(capacity)
-        { }
-
-        public EventCollection(IEqualityComparer<DateTime> comparer) : base(comparer)
-        { }
-
-        public EventCollection(IDictionary<DateTime, ICollection> dictionary) : base(dictionary)
-        { }
-
-        public EventCollection(int capacity, IEqualityComparer<DateTime> comparer) : base(capacity, comparer)
-        { }
-
-        public EventCollection(SerializationInfo info, StreamingContext context) : base(info, context)
-        { }
-
-        public EventCollection(IDictionary<DateTime, ICollection> dictionary, IEqualityComparer<DateTime> comparer) : base(dictionary, comparer)
         { }
 
         #endregion
