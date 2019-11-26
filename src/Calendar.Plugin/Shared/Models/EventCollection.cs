@@ -75,6 +75,27 @@ namespace Xamarin.Plugin.Calendar.Models
                 CollectionChanged?.Invoke(this, new EventCollectionChangedArgs { Item = key.Date, Type = EventCollectionChangedType.Set });
             }
         }
+        
+        /// <summary>
+        /// Checks if dictionary already has collection for specific date
+        /// </summary>
+        /// <param name="key">Key DateTime</param>
+        /// <returns>true if dictionary already has the date as key; otherwise, false</returns>
+        public new bool ContainsKey(DateTime key)
+        {
+            return base.ContainsKey(key.Date);
+        }
+
+        /// <summary>
+        /// Gets the value associated with the specific date
+        /// </summary>
+        /// <param name="key">The date for the value to get</param>
+        /// <param name="value">If the date exists then this is the associated collection; otherwise, it will be the default value of ICollection</param>
+        /// <returns>true if dictionary contains an element with the specified date; otherwise false</returns>
+        public new bool TryGetValue(DateTime key, out ICollection value)
+        {
+            return base.TryGetValue(key.Date, out value);
+        }
 
         internal event EventHandler<EventCollectionChangedArgs> CollectionChanged;
 
