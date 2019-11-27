@@ -96,6 +96,18 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             return base.TryGetValue(key.Date, out value);
         }
+        
+        /// <summary>
+        /// Removes all dates and collections
+        /// </summary>
+        public new void Clear()
+        {
+            if (base.Count == 0)
+                return;
+
+            base.Clear();
+            CollectionChanged?.Invoke(this, new EventCollectionChangedArgs {Item = default(DateTime), Type = EventCollectionChangedType.Clear});
+        }
 
         internal event EventHandler<EventCollectionChangedArgs> CollectionChanged;
 
@@ -109,7 +121,8 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             Add,
             Set,
-            Remove
+            Remove,
+            Clear
         }
     }
 }
