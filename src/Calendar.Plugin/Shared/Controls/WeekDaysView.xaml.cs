@@ -12,12 +12,31 @@ using Xamarin.Forms.Xaml;
 namespace Xamarin.Plugin.Calendar.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MonthDaysView : ContentView
+    public partial class WeekDaysView : ContentView
     {
         #region Bindable properties
 
+        public static readonly BindableProperty WeekStartDateProperty =
+          BindableProperty.Create(nameof(WeekStartDate), typeof(DateTime), typeof(WeekDaysView), DateTime.Now, BindingMode.TwoWay);
+
+        public DateTime WeekStartDate
+        {
+            get => (DateTime)GetValue(WeekStartDateProperty);
+            set => SetValue(WeekStartDateProperty, value);
+        }
+
+        public static readonly BindableProperty WeekProperty =
+          BindableProperty.Create(nameof(Week), typeof(int), typeof(WeekDaysView), 1, BindingMode.TwoWay);
+
+        public int Week
+        {
+            get => (int)GetValue(WeekProperty);
+            set => SetValue(WeekProperty, value);
+        }
+
+
         public static readonly BindableProperty MonthProperty =
-          BindableProperty.Create(nameof(Month), typeof(int), typeof(MonthDaysView), DateTime.Now.Month, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Month), typeof(int), typeof(WeekDaysView), DateTime.Now.Month, BindingMode.TwoWay);
 
         public int Month
         {
@@ -26,7 +45,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty YearProperty =
-          BindableProperty.Create(nameof(Year), typeof(int), typeof(MonthDaysView), DateTime.Now.Year, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Year), typeof(int), typeof(WeekDaysView), DateTime.Now.Year, BindingMode.TwoWay);
 
         public int Year
         {
@@ -35,7 +54,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty SelectedDateProperty =
-          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(WeekDaysView), DateTime.Today, BindingMode.TwoWay);
 
         public DateTime SelectedDate
         {
@@ -44,7 +63,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty CultureProperty =
-          BindableProperty.Create(nameof(Culture), typeof(CultureInfo), typeof(MonthDaysView), CultureInfo.InvariantCulture, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Culture), typeof(CultureInfo), typeof(WeekDaysView), CultureInfo.InvariantCulture, BindingMode.TwoWay);
 
         public CultureInfo Culture
         {
@@ -53,7 +72,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty MarkDatesProperty =
-        BindableProperty.Create(nameof(MarkDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime>());
+          BindableProperty.Create(nameof(MarkDates), typeof(List<DateTime>), typeof(WeekDaysView), new List<DateTime>());
 
         public List<DateTime> MarkDates
         {
@@ -62,7 +81,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty EventsProperty =
-          BindableProperty.Create(nameof(Events), typeof(EventCollection), typeof(MonthDaysView), new EventCollection());
+          BindableProperty.Create(nameof(Events), typeof(EventCollection), typeof(WeekDaysView), new EventCollection());
 
         public EventCollection Events
         {
@@ -71,7 +90,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DaysTitleColorProperty =
-          BindableProperty.Create(nameof(DaysTitleColor), typeof(Color), typeof(MonthDaysView), Color.Default);
+          BindableProperty.Create(nameof(DaysTitleColor), typeof(Color), typeof(WeekDaysView), Color.Default);
 
         public Color DaysTitleColor
         {
@@ -80,7 +99,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty SelectedDayTextColorProperty =
-          BindableProperty.Create(nameof(SelectedDayTextColor), typeof(Color), typeof(MonthDaysView), Color.White);
+          BindableProperty.Create(nameof(SelectedDayTextColor), typeof(Color), typeof(WeekDaysView), Color.White);
 
         public Color SelectedDayTextColor
         {
@@ -89,7 +108,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DeselectedDayTextColorProperty =
-          BindableProperty.Create(nameof(DeselectedDayTextColor), typeof(Color), typeof(MonthDaysView), Color.Default);
+          BindableProperty.Create(nameof(DeselectedDayTextColor), typeof(Color), typeof(WeekDaysView), Color.Default);
 
         public Color DeselectedDayTextColor
         {
@@ -98,7 +117,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty OtherMonthDayColorProperty =
-          BindableProperty.Create(nameof(OtherMonthDayColor), typeof(Color), typeof(MonthDaysView), Color.Silver);
+          BindableProperty.Create(nameof(OtherMonthDayColor), typeof(Color), typeof(WeekDaysView), Color.Silver);
 
         public Color OtherMonthDayColor
         {
@@ -107,7 +126,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty SelectedDayBackgroundColorProperty =
-          BindableProperty.Create(nameof(SelectedDayBackgroundColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#2196F3"));
+          BindableProperty.Create(nameof(SelectedDayBackgroundColor), typeof(Color), typeof(WeekDaysView), Color.FromHex("#2196F3"));
 
         public Color SelectedDayBackgroundColor
         {
@@ -116,7 +135,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty EventIndicatorColorProperty =
-          BindableProperty.Create(nameof(EventIndicatorColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
+          BindableProperty.Create(nameof(EventIndicatorColor), typeof(Color), typeof(WeekDaysView), Color.FromHex("#FF4081"));
 
         public Color EventIndicatorColor
         {
@@ -125,7 +144,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty EventIndicatorSelectedColorProperty =
-          BindableProperty.Create(nameof(EventIndicatorSelectedColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
+          BindableProperty.Create(nameof(EventIndicatorSelectedColor), typeof(Color), typeof(WeekDaysView), Color.FromHex("#FF4081"));
 
         public Color EventIndicatorSelectedColor
         {
@@ -134,7 +153,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty TodayOutlineColorProperty =
-          BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
+          BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(WeekDaysView), Color.FromHex("#FF4081"));
 
         public Color TodayOutlineColor
         {
@@ -143,7 +162,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty TodayFillColorProperty =
-          BindableProperty.Create(nameof(TodayFillColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
+          BindableProperty.Create(nameof(TodayFillColor), typeof(Color), typeof(WeekDaysView), Color.Transparent);
 
         public Color TodayFillColor
         {
@@ -152,7 +171,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DayViewSizeProperty =
-          BindableProperty.Create(nameof(DayViewSize), typeof(double), typeof(MonthDaysView), 40.0);
+          BindableProperty.Create(nameof(DayViewSize), typeof(double), typeof(WeekDaysView), 40.0);
 
         public double DayViewSize
         {
@@ -161,7 +180,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DayViewCornerRadiusProperty =
-          BindableProperty.Create(nameof(DayViewCornerRadius), typeof(float), typeof(MonthDaysView), 20f);
+          BindableProperty.Create(nameof(DayViewCornerRadius), typeof(float), typeof(WeekDaysView), 20f);
 
         public float DayViewCornerRadius
         {
@@ -170,7 +189,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DaysTitleHeightProperty =
-          BindableProperty.Create(nameof(DaysTitleHeight), typeof(double), typeof(MonthDaysView), 30.0);
+          BindableProperty.Create(nameof(DaysTitleHeight), typeof(double), typeof(WeekDaysView), 30.0);
 
         public double DaysTitleHeight
         {
@@ -179,7 +198,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DaysLabelStyleProperty =
-          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), null);
+          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(WeekDaysView), null);
 
         public Style DaysLabelStyle
         {
@@ -188,7 +207,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DaysTitleLabelStyleProperty =
-          BindableProperty.Create(nameof(DaysTitleLabelStyle), typeof(Style), typeof(MonthDaysView), null);
+          BindableProperty.Create(nameof(DaysTitleLabelStyle), typeof(Style), typeof(WeekDaysView), null);
 
         public Style DaysTitleLabelStyle
         {
@@ -204,7 +223,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private bool _animating;
         private DateTime _lastAnimationTime;
 
-        internal MonthDaysView()
+        internal WeekDaysView()
         {
             InitializeComponent();
 
@@ -215,7 +234,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             UpdateDays();
         }
 
-        ~MonthDaysView()
+        ~WeekDaysView()
         {
             DiposeDayViews();
         }
@@ -233,12 +252,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             switch (propertyName)
             {
                 case nameof(SelectedDate):
-                    UpdateSelectedDate();
+                    //UpdateSelectedDate();
+                    UpdateDays();
                     break;
 
-                case nameof(Month):
-                case nameof(Year):
+                //case nameof(Month):
+                //case nameof(Year):
                 case nameof(Events):
+                case nameof(Week):
+                case nameof(WeekStartDate):
                     UpdateDays();
                     break;
 
@@ -334,8 +356,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 if (newSelected.Date == SelectedDate)
                     return;
-
-                ChangePropertySilently(nameof(SelectedDate), () => SelectedDate = newSelected.Date);
+                SelectedDate = newSelected.Date;
+                //ChangePropertySilently(nameof(SelectedDate), () => SelectedDate = newSelected.Date);
 
                 if (!newSelected.IsThisMonth)
                 {
@@ -379,31 +401,62 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
+
+
+        /// <summary>
+        /// 获取指定日期所在周的第一天
+        /// </summary>
+        /// <param name="datetime"></param>
+        /// <returns></returns>
+        public DateTime GetWeekFirstDay(DateTime datetime)
+        {
+            int weeknow = Convert.ToInt32(datetime.DayOfWeek);
+            int dayDiff = 0;
+            if (Culture.DateTimeFormat.FirstDayOfWeek == DayOfWeek.Sunday && !Culture.Name.Equals("zh-CN"))
+            {
+                //星期天为第一天
+                dayDiff = (-1) * weeknow;
+            }
+            else
+            {
+                //因为是以星期一为第一天，所以要判断weeknow等于0时，要向前推6天。
+                weeknow = (weeknow == 0 ? (7 - 1) : (weeknow - 1));
+                dayDiff = (-1) * weeknow;
+            }
+            //本周第一天
+            string FirstDay = datetime.AddDays(dayDiff).ToString("yyyy-MM-dd");
+            return Convert.ToDateTime(FirstDay);
+        }
+
         private void LoadDays()
         {
-            DateTime monthStart = new DateTime(Year, Month, 1);
-            var addDays = ((int)Culture.DateTimeFormat.FirstDayOfWeek) - (int)monthStart.DayOfWeek;
+            var startDate = WeekStartDate.Date.AddDays((Week - 1) * 7);
+            Month = startDate.Month;
+            Year = startDate.Year;
+            DateTime weekStart = GetWeekFirstDay(startDate);
+
+            var addDays = ((int)Culture.DateTimeFormat.FirstDayOfWeek) - (int)weekStart.DayOfWeek;
             if (Culture.Name.Equals("zh-CN"))
             {
-                addDays = ((int)DayOfWeek.Monday) - (int)monthStart.DayOfWeek;
+                addDays = ((int)DayOfWeek.Monday) - (int)weekStart.DayOfWeek;
             }
 
             if (addDays > 0)
                 addDays -= 7;
-
             foreach (var dayView in _dayViews)
             {
-                var currentDate = monthStart.AddDays(addDays++);
+                var currentDate = weekStart.AddDays(addDays++);
                 var dayModel = dayView.BindingContext as DayModel;
 
                 dayModel.Date = currentDate.Date;
                 dayModel.IsThisMonth = currentDate.Month == Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
-                dayModel.HasEvents = Events.ContainsKey(currentDate)||(MarkDates.Find(x=>x.Date==currentDate.Date)!=DateTime.MinValue);
+                dayModel.HasEvents = Events.ContainsKey(currentDate) || (MarkDates.Find(x => x.Date == currentDate.Date) != DateTime.MinValue);
 
                 if (dayModel.IsSelected)
                     _selectedDay = dayModel;
             }
+
         }
 
         private void Animate(

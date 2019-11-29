@@ -12,11 +12,11 @@ namespace SampleApp
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private CultureInfo _culture = CultureInfo.InvariantCulture;
+        private CultureInfo _culture = CultureInfo.CurrentCulture;
 
         public MainPageViewModel()
         {
-            Culture = CultureInfo.CreateSpecificCulture("en-US");
+            //Culture = CultureInfo.CreateSpecificCulture("en-US");
 
             // testing all kinds of adding events
             // when initializing collection

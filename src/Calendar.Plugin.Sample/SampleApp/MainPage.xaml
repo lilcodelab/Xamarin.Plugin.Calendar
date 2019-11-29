@@ -18,6 +18,8 @@
         Culture="{Binding Culture}"
         Month="{Binding Month}"
         Year="{Binding Year}"
+        EventIndicatorColor="#00786C"
+        SelectedDayBackgroundColor="#00786C"
         SelectedDate="{Binding SelectedDate}">
         <controls:Calendar.EventTemplate>
             <DataTemplate>

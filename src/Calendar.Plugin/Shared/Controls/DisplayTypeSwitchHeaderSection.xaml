@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Xamarin.Plugin.Calendar.Controls.DisplayTypeSwitchHeaderSection">
+    <ContentView.Resources>
+        <Style x:Key="Selected" TargetType="Label">
+            <Setter Property="TextColor" Value="#00786C"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#797979"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.Content>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding YearAndMonthText}" HorizontalOptions="StartAndExpand"/>
+            <StackLayout Orientation="Horizontal" >
+                <Label Text="今天"/>
+                <Label Text="|"/>
+                <StackLayout.Triggers>
+                    <DataTrigger TargetType="StackLayout" Binding="{Binding IsToday}" Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </StackLayout.Triggers>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToDodayCommand}"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <Label Text="周">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding DisplayType}" Value="Week">
+                        <Setter Property="Style" Value="{StaticResource Selected}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SwitchToWeekCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="|"/>
+            <Label Text="月">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding DisplayType}" Value="Month">
+                        <Setter Property="Style" Value="{StaticResource Selected}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SwitchToMonthCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
