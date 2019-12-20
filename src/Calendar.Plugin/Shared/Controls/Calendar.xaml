@@ -52,7 +52,8 @@
                     DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference calendar}}"
                     DaysTitleLabelStyle="{Binding DaysTitleLabelStyle, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand" />
+                    HorizontalOptions="FillAndExpand" 
+                    DayTapped="{Binding DayTapped, Source={x:Reference calendar}}" />
             </controls:SwipeAwareContainer>
         </StackLayout>
 

@@ -410,6 +410,21 @@ namespace Xamarin.Plugin.Calendar.Controls
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+        
+        /// <summary>
+        /// Bindable property for DayTapped
+        /// </summary>
+        public static readonly BindableProperty DayTappedProperty =
+            BindableProperty.Create(nameof(DayTapped), typeof(Action<DateTime>), typeof(MonthDaysView), null);
+
+        /// <summary>
+        /// Action to run after a day has been tapped.
+        /// </summary>
+        public Action<DateTime> DayTapped
+        {
+            get => (Action<DateTime>) GetValue(DayTappedProperty);
+            set => SetValue(DayTappedProperty, value);
+        }
 
         private void ChangePropertySilently(string propertyName, Action propertyChangeAction)
         {

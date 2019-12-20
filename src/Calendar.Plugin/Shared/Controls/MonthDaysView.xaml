@@ -111,68 +111,68 @@
                 Grid.Row="0" Grid.Column="0"
                 DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}"
                 DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-                DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+                DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView
                 Grid.Row="0" Grid.Column="1"
                 DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}"
                 DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView
                 Grid.Row="0" Grid.Column="2"
                 DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}"
                 DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView
                 Grid.Row="0" Grid.Column="3"
                 DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}"
                 DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView
                 Grid.Row="0" Grid.Column="4"
                 DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}"
                 DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="0" Grid.Column="5" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
                    
             <controls:DayView 
 				Grid.Row="0" Grid.Column="6" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             
             <controls:DayView 
 				Grid.Row="1" Grid.Column="0" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="1" Grid.Column="1" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="1" Grid.Column="2" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="1" Grid.Column="3" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}" />
 
             <controls:DayView 
 				Grid.Row="1" Grid.Column="4" 
@@ -184,185 +184,185 @@
 				Grid.Row="1" Grid.Column="5" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="1" Grid.Column="6" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
 
             <controls:DayView 
 				Grid.Row="2" Grid.Column="0" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="2" Grid.Column="1" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="2" Grid.Column="2" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="2" Grid.Column="3" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="2" Grid.Column="4" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="2" Grid.Column="5" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="2" Grid.Column="6" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
 
             <controls:DayView 
 				Grid.Row="3" Grid.Column="0" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="3" Grid.Column="1" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="3" Grid.Column="2" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="3" Grid.Column="3" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="3" Grid.Column="4" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="3" Grid.Column="5" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="3" Grid.Column="6" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
 
             <controls:DayView 
 				Grid.Row="4" Grid.Column="0" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="4" Grid.Column="1" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="4" Grid.Column="2" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="4" Grid.Column="3" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="4" Grid.Column="4" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="4" Grid.Column="5" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="4" Grid.Column="6" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
 
             <controls:DayView 
 				Grid.Row="5" Grid.Column="0" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="5" Grid.Column="1" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="5" Grid.Column="2" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="5" Grid.Column="3" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="5" Grid.Column="4" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="5" Grid.Column="5" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
 
             <controls:DayView 
 				Grid.Row="5" Grid.Column="6" 
 				DayViewSize="{Binding DayViewSize, Source={x:Reference monthsView}}" 
 				DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference monthsView}}"
-				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" />
+				DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference monthsView}}" DayTapped="{Binding DayTapped, Source={x:Reference monthsView}}"/>
         </Grid>
     </Grid>
 </ContentView>

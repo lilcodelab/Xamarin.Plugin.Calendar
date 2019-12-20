@@ -18,7 +18,8 @@
         Culture="{Binding Culture}"
         Month="{Binding Month}"
         Year="{Binding Year}"
-        SelectedDate="{Binding SelectedDate}">
+        SelectedDate="{Binding SelectedDate}"
+        DayTapped="{Binding DayTappedAction}">
         <controls:Calendar.EventTemplate>
             <DataTemplate>
                 <StackLayout

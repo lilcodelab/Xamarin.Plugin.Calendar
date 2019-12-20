@@ -371,6 +371,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeRightCommandProperty, value);
         }
 
+
         /// <summary> Bindable property for SwipeToChangeMonthEnabled </summary>
         public static readonly BindableProperty SwipeToChangeMonthEnabledProperty =
           BindableProperty.Create(nameof(SwipeToChangeMonthEnabled), typeof(bool), typeof(Calendar), true);
@@ -380,6 +381,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (bool)GetValue(SwipeToChangeMonthEnabledProperty);
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
+        }
+        
+        /// <summary>
+        /// Bindable property for DayTapped
+        /// </summary>
+        public static readonly BindableProperty DayTappedProperty =
+            BindableProperty.Create(nameof(DayTapped), typeof(Action<DateTime>), typeof(Calendar), null);
+
+        /// <summary>
+        /// Action to run after a day has been tapped.
+        /// </summary>
+        public Action<DateTime> DayTapped
+        {
+            get => (Action<DateTime>) GetValue(DayTappedProperty);
+            set => SetValue(DayTappedProperty, value);
         }
 
         #endregion
@@ -597,6 +613,5 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         #endregion
-
     }
 }

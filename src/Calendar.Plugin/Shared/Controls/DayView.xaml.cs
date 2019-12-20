@@ -43,11 +43,29 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             InitializeComponent();
         }
+        
+        /// <summary>
+        /// Bindable property for DayTapped
+        /// </summary>
+        public static readonly BindableProperty DayTappedProperty =
+            BindableProperty.Create(nameof(DayTapped), typeof(Action<DateTime>), typeof(DayView), null);
+
+        /// <summary>
+        /// Action to run after a day has been tapped.
+        /// </summary>
+        public Action<DateTime> DayTapped
+        {
+            get => (Action<DateTime>) GetValue(DayTappedProperty);
+            set => SetValue(DayTappedProperty, value);
+        }
 
         private void OnTapped(object sender, EventArgs e)
         {
             if (BindingContext is DayModel dayModel)
+            {
                 dayModel.IsSelected = true;
+                DayTapped?.Invoke(dayModel.Date);
+            }
         }
     }
 }

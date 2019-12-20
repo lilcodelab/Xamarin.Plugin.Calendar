@@ -13,6 +13,7 @@ namespace SampleApp
     public class MainPageViewModel : INotifyPropertyChanged
     {
         private CultureInfo _culture = CultureInfo.InvariantCulture;
+        public Action<DateTime> DayTappedAction { get; set; }
 
         public MainPageViewModel()
         {
@@ -60,6 +61,8 @@ namespace SampleApp
             {
                 SelectedDate = DateTime.Today.AddDays(35).Date;
             });
+
+            DayTappedAction = DayTapped;
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
@@ -86,6 +89,11 @@ namespace SampleApp
         {
             get => _culture;
             set => SetProperty(ref _culture, value);
+        }
+
+        private void DayTapped(DateTime date)
+        {
+            Console.WriteLine($"Received tap event from date: {date}");
         }
 
         #region INotifyPropertyChanged
