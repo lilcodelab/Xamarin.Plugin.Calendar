@@ -29,7 +29,8 @@
             VerticalTextAlignment="Center"
             TextColor="{Binding ArrowsColor}"
             FontAttributes="Bold"
-            FontSize="Medium">
+            FontSize="Medium"
+            IsVisible="{Binding ArrowVisible}">
             <Label.Triggers>
                 <DataTrigger
                     TargetType="Label"

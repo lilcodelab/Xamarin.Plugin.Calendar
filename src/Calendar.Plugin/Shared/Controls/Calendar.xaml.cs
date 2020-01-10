@@ -195,6 +195,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ArrowsColorProperty, value);
         }
 
+        public static readonly BindableProperty ArrowVisibleProperty =
+            BindableProperty.Create(nameof(ArrowVisible), typeof(bool), typeof(Calendar), true);
+
+        public bool ArrowVisible
+        {
+            get => (bool)GetValue(ArrowVisibleProperty);
+            set => SetValue(ArrowVisibleProperty, value);
+        }
+
         public static readonly BindableProperty TodayOutlineColorProperty =
           BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(Calendar), Color.FromHex("#FF4081"));
 
