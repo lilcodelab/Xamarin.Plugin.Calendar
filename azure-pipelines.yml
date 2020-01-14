@@ -1,0 +1,56 @@
+pool:
+  vmImage: 'macos-latest'
+
+pr:
+  branches:
+    include:
+    - master
+
+trigger:
+- master
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  nugetVersion: '1.0.3.$(Build.BuildId)'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '**/*.sln'
+
+- task: VSBuild@1
+  displayName: 'Build solution **/CalendarPlugin.csproj'
+  inputs:
+    solution: '**/CalendarPlugin.csproj'
+    vsVersion: latest
+    msbuildArgs: '/p:Version=$(nugetVersion) /p:AppendTargetFrameworkToOutputPath=true /p:BaseOutputPath=$(Build.ArtifactStagingDirectory)\'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: XamarinAndroid@1
+  displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
+  inputs:
+    projectFile: '**/SampleApp.Android.csproj'
+    outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
+    configuration: '$(BuildConfiguration)'
+    msbuildVersionOption: latest
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: nupkg'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
+    ArtifactName: nupkg
+
+- task: GitHubRelease@0
+  displayName: 'GitHub release (create)'
+  inputs:
+    gitHubConnection: lilcodelab
+    target: '$(Build.SourceBranchName)'
+    tagSource: manual
+    tag: 'v$(nugetVersion)'
+    assets: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+    isDraft: true
+  condition: 
