@@ -21,14 +21,12 @@ steps:
   inputs:
     restoreSolution: '**/*.sln'
 
-- task: VSBuild@1
-  displayName: 'Build solution **/CalendarPlugin.csproj'
+- task: MSBuild@1
   inputs:
     solution: '**/CalendarPlugin.csproj'
-    vsVersion: latest
-    msbuildArgs: '/p:Version=$(nugetVersion) /p:AppendTargetFrameworkToOutputPath=true /p:BaseOutputPath=$(Build.ArtifactStagingDirectory)\'
-    platform: '$(BuildPlatform)'
+    msbuildArchitecture: 'x64'
     configuration: '$(BuildConfiguration)'
+    msbuildArguments: '/p:Version=$(nugetVersion) /p:AppendTargetFrameworkToOutputPath=true /p:BaseOutputPath=$(Build.ArtifactStagingDirectory)\'
 
 - task: XamarinAndroid@1
   displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
@@ -43,14 +41,3 @@ steps:
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
     ArtifactName: nupkg
-
-- task: GitHubRelease@0
-  displayName: 'GitHub release (create)'
-  inputs:
-    gitHubConnection: lilcodelab
-    target: '$(Build.SourceBranchName)'
-    tagSource: manual
-    tag: 'v$(nugetVersion)'
-    assets: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
-    isDraft: true
-  condition: 
