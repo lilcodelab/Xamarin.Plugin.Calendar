@@ -30,7 +30,7 @@
             TextColor="{Binding ArrowsColor}"
             FontAttributes="Bold"
             FontSize="Medium"
-            IsVisible="{Binding ArrowVisible}">
+            IsVisible="{Binding FooterArrowVisible}">
             <Label.Triggers>
                 <DataTrigger
                     TargetType="Label"

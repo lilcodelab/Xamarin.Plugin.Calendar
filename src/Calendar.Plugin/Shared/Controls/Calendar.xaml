@@ -59,7 +59,8 @@
         <Grid
             Grid.Row="1"
             HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand">
+            VerticalOptions="FillAndExpand"
+            IsVisible="{Binding FooterSectionVisible, Source={x:Reference calendar}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
