@@ -2,7 +2,7 @@
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
-    public class DataTemplateView : ContentView
+    internal class DataTemplateView : ContentView
     {
         public static readonly BindableProperty ItemTemplateProperty =
             BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(DataTemplateView), null, propertyChanged: OnItemTemplateChanged);
@@ -13,7 +13,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ItemTemplateProperty, value);
         }
 
-        public DataTemplateView () { }
+        internal DataTemplateView () { }
 
         private static void OnItemTemplateChanged(BindableObject bindable, object oldValue, object newValue)
         {

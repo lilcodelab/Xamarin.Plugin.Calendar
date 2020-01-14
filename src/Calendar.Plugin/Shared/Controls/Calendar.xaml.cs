@@ -10,6 +10,9 @@ using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
+    /// <summary>
+    /// Calendar plugin for Xamarin.Forms
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Calendar : ContentView
     {
@@ -382,6 +385,39 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
         }
 
+        /// <summary> Bindable property for MinimumDate </summary>
+        public static readonly BindableProperty MinimumDateProperty =
+          BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(Calendar), DateTime.MinValue);
+
+        /// <summary> Minimum date which can be selected </summary>
+        public DateTime MinimumDate
+        {
+            get => (DateTime)GetValue(MinimumDateProperty);
+            set => SetValue(MinimumDateProperty, value);
+        }
+
+        /// <summary> Bindable property for MaximumDate </summary>
+        public static readonly BindableProperty MaximumDateProperty =
+          BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(Calendar), DateTime.MaxValue);
+
+        /// <summary> Maximum date which can be selected </summary>
+        public DateTime MaximumDate
+        {
+            get => (DateTime)GetValue(MaximumDateProperty);
+            set => SetValue(MaximumDateProperty, value);
+        }
+
+        /// <summary> Bindable property for DisabledDayColor </summary>
+        public static readonly BindableProperty DisabledDayColorProperty =
+          BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(Calendar), Color.FromHex("#ECECEC"));
+
+        /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
+        public Color DisabledDayColor
+        {
+            get => (Color)GetValue(DisabledDayColorProperty);
+            set => SetValue(DisabledDayColorProperty, value);
+        }
+
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
@@ -416,10 +452,34 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #region Properties
 
+        /// <summary>
+        /// When executed calendar moves to previous month.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand PrevMonthCommand { get; }
+
+        /// <summary>
+        /// When executed calendar moves to next month.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand NextMonthCommand { get; }
+
+        /// <summary>
+        /// When executed calendar moves to previous year.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand PrevYearCommand { get; }
+
+        /// <summary>
+        /// When executed calendar moves to next year.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand NextYearCommand { get; }
+
+        /// <summary>
+        /// When executed shows/hides the calendar's current month days view.
+        /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
+        /// </summary>
         public ICommand ShowHideCalendarCommand { get; }
 
         #endregion
@@ -441,6 +501,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
+        /// <summary> Method that is called when a bound property is changed. </summary>
+        /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
@@ -560,31 +622,55 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void PrevMonth()
         {
+            int newMonth;
+            int newYear = Year;
+
             if (Month - 1 == 0)
             {
-                Month = 12;
-                Year--;
+                newMonth = 12;
+                newYear = Year - 1;
             }
             else
-                Month--;
+                newMonth = Month - 1;
+
+            if (CheckMinimumDate(newYear, newMonth))
+            {
+                Month = newMonth;
+                Year = newYear;
+            }
         }
 
         private void NextMonth()
         {
+            int newMonth;
+            int newYear = Year;
+
             if (Month + 1 == 13)
             {
-                Month = 1;
-                Year++;
+                newMonth = 1;
+                newYear = Year + 1;
             }
             else
-                Month++;
+                newMonth = Month + 1;
+
+            if (CheckMaximumDate(newYear, newMonth))
+            {
+                Month = newMonth;
+                Year = newYear;
+            }
         }
 
         private void PrevYear()
-            => Year--;
+        {
+            if (CheckMinimumDate(Year - 1, Month))
+                Year--;
+        }
 
         private void NextYear()
-            => Year++;
+        {
+            if (CheckMaximumDate(Year + 1, Month))
+                Year++;
+        }
 
         private void ToggleCalendarSectionVisibility()
             => CalendarSectionShown = !CalendarSectionShown;
@@ -594,6 +680,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             calendarSectionRow.Height = new GridLength(_calendarSectionHeight * currentValue);
             calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
+        }
+
+        private bool CheckMinimumDate(int year, int month)
+        {
+            if (year < MinimumDate.Year ||
+                year == MinimumDate.Year && month < MinimumDate.Month)
+                return false;
+
+            return true;
+        }
+
+        private bool CheckMaximumDate(int year, int month)
+        {
+            if (year > MaximumDate.Year ||
+                year == MaximumDate.Year && month > MaximumDate.Month)
+                return false;
+
+            return true;
         }
 
         #endregion
