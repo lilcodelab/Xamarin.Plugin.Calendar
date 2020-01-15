@@ -294,6 +294,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             foreach (var dayView in _dayViews)
             {
                 var dayModel = dayView.BindingContext as DayModel;
+
                 dayModel.SelectedTextColor = SelectedDayTextColor;
                 dayModel.OtherMonthColor = OtherMonthDayColor;
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
@@ -353,7 +354,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void InitializeDayViews()
         {
             foreach (var dayView in daysControl.Children.OfType<DayView>())
-                _dayViews.Add(dayView);                
+                _dayViews.Add(dayView);
         }
 
         private void AssignDayViewModels()
@@ -424,8 +425,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
-        
-        
 
         private void ChangePropertySilently(string propertyName, Action propertyChangeAction)
         {
