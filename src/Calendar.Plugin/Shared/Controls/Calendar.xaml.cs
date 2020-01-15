@@ -386,16 +386,16 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary>
         /// Bindable property for DayTapped
         /// </summary>
-        public static readonly BindableProperty DayTappedProperty =
-            BindableProperty.Create(nameof(DayTapped), typeof(Action<DateTime>), typeof(Calendar), null);
+        public static readonly BindableProperty DayTappedCommandProperty =
+            BindableProperty.Create(nameof(DayTappedCommand), typeof(ICommand), typeof(Calendar), null);
 
         /// <summary>
         /// Action to run after a day has been tapped.
         /// </summary>
-        public Action<DateTime> DayTapped
+        public ICommand DayTappedCommand
         {
-            get => (Action<DateTime>) GetValue(DayTappedProperty);
-            set => SetValue(DayTappedProperty, value);
+            get => (ICommand) GetValue(DayTappedCommandProperty);
+            set => SetValue(DayTappedCommandProperty, value);
         }
 
         #endregion

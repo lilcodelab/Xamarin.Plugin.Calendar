@@ -2,6 +2,7 @@
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Windows.Input;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -37,26 +38,25 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysLabelStyleProperty, value);
         }
 
+        /// <summary>
+        /// Bindable property for DayTapped
+        /// </summary>
+        public static readonly BindableProperty DayTappedCommandProperty =
+            BindableProperty.Create(nameof(DayTapped), typeof(ICommand), typeof(DayView), null);
+
+        /// <summary>
+        /// Action to run after a day has been tapped.
+        /// </summary>
+        public ICommand DayTapped
+        {
+            get => (ICommand)GetValue(DayTappedCommandProperty);
+            set => SetValue(DayTappedCommandProperty, value);
+        }
         #endregion
 
         internal DayView()
         {
             InitializeComponent();
-        }
-        
-        /// <summary>
-        /// Bindable property for DayTapped
-        /// </summary>
-        public static readonly BindableProperty DayTappedProperty =
-            BindableProperty.Create(nameof(DayTapped), typeof(Action<DateTime>), typeof(DayView), null);
-
-        /// <summary>
-        /// Action to run after a day has been tapped.
-        /// </summary>
-        public Action<DateTime> DayTapped
-        {
-            get => (Action<DateTime>) GetValue(DayTappedProperty);
-            set => SetValue(DayTappedProperty, value);
         }
 
         private void OnTapped(object sender, EventArgs e)
@@ -64,7 +64,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (BindingContext is DayModel dayModel)
             {
                 dayModel.IsSelected = true;
-                DayTapped?.Invoke(dayModel.Date);
+                DayTapped?.Execute(dayModel.Date);
             }
         }
     }

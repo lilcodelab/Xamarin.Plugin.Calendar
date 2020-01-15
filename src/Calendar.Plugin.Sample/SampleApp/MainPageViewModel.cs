@@ -7,13 +7,15 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SampleApp
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
         private CultureInfo _culture = CultureInfo.InvariantCulture;
-        public Action<DateTime> DayTappedAction { get; set; }
+        public ICommand DayTappedCommand => new Command<DateTime>(DayTapped);
 
         public MainPageViewModel()
         {
@@ -61,8 +63,6 @@ namespace SampleApp
             {
                 SelectedDate = DateTime.Today.AddDays(35).Date;
             });
-
-            DayTappedAction = DayTapped;
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
@@ -91,7 +91,7 @@ namespace SampleApp
             set => SetProperty(ref _culture, value);
         }
 
-        private void DayTapped(DateTime date)
+        private static void DayTapped(DateTime date)
         {
             Console.WriteLine($"Received tap event from date: {date}");
         }

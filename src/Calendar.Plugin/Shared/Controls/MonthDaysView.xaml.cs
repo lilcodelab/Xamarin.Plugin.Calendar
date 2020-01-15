@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Windows.Input;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -187,6 +188,20 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleLabelStyleProperty, value);
         }
 
+        /// <summary>
+        /// Bindable property for DayTapped
+        /// </summary>
+        public static readonly BindableProperty DayTappedCommandProperty =
+            BindableProperty.Create(nameof(DayTappedCommand), typeof(ICommand), typeof(MonthDaysView), null);
+
+        /// <summary>
+        /// Action to run after a day has been tapped.
+        /// </summary>
+        public ICommand DayTappedCommand
+        {
+            get => (ICommand)GetValue(DayTappedCommandProperty);
+            set => SetValue(DayTappedCommandProperty, value);
+        }
         #endregion
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
@@ -279,7 +294,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             foreach (var dayView in _dayViews)
             {
                 var dayModel = dayView.BindingContext as DayModel;
-
                 dayModel.SelectedTextColor = SelectedDayTextColor;
                 dayModel.OtherMonthColor = OtherMonthDayColor;
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
@@ -339,7 +353,11 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void InitializeDayViews()
         {
             foreach (var dayView in daysControl.Children.OfType<DayView>())
+            {
+                dayView.DayTapped = DayTappedCommand;
                 _dayViews.Add(dayView);
+            }
+                
         }
 
         private void AssignDayViewModels()
@@ -411,20 +429,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
         
-        /// <summary>
-        /// Bindable property for DayTapped
-        /// </summary>
-        public static readonly BindableProperty DayTappedProperty =
-            BindableProperty.Create(nameof(DayTapped), typeof(Action<DateTime>), typeof(MonthDaysView), null);
-
-        /// <summary>
-        /// Action to run after a day has been tapped.
-        /// </summary>
-        public Action<DateTime> DayTapped
-        {
-            get => (Action<DateTime>) GetValue(DayTappedProperty);
-            set => SetValue(DayTappedProperty, value);
-        }
+        
 
         private void ChangePropertySilently(string propertyName, Action propertyChangeAction)
         {

@@ -19,7 +19,7 @@
         Month="{Binding Month}"
         Year="{Binding Year}"
         SelectedDate="{Binding SelectedDate}"
-        DayTapped="{Binding DayTappedAction}">
+        DayTappedCommand="{Binding DayTappedCommand}">
         <controls:Calendar.EventTemplate>
             <DataTemplate>
                 <StackLayout
