@@ -353,11 +353,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void InitializeDayViews()
         {
             foreach (var dayView in daysControl.Children.OfType<DayView>())
-            {
-                dayView.DayTapped = DayTappedCommand;
-                _dayViews.Add(dayView);
-            }
-                
+                _dayViews.Add(dayView);                
         }
 
         private void AssignDayViewModels()
