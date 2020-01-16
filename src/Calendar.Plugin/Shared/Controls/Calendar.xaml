@@ -51,6 +51,9 @@
                     DaysTitleHeight="{Binding DaysTitleHeight, Source={x:Reference calendar}}"
                     DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference calendar}}"
                     DaysTitleLabelStyle="{Binding DaysTitleLabelStyle, Source={x:Reference calendar}}"
+                    MinimumDate="{Binding MinimumDate, Source={x:Reference calendar}}"
+                    MaximumDate="{Binding MaximumDate, Source={x:Reference calendar}}"
+                    DisabledDayColor="{Binding DisabledDayColor, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand" 
                     DayTappedCommand="{Binding DayTappedCommand, Source={x:Reference calendar}}" />

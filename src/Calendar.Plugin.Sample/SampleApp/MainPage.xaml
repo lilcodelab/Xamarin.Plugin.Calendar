@@ -20,6 +20,9 @@
         Year="{Binding Year}"
         SelectedDate="{Binding SelectedDate}"
         DayTappedCommand="{Binding DayTappedCommand}">
+        MinimumDate="{Binding MinimumDate}"
+        MaximumDate="{Binding MaximumDate}">
+
         <controls:Calendar.EventTemplate>
             <DataTemplate>
                 <StackLayout

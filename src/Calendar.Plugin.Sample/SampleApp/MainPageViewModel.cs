@@ -58,11 +58,6 @@ namespace SampleApp
                     todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
                 });
             }, TaskScheduler.FromCurrentSynchronizationContext());
-
-            Task.Delay(5000).ContinueWith(_ =>
-            {
-                SelectedDate = DateTime.Today.AddDays(35).Date;
-            });
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
@@ -85,6 +80,21 @@ namespace SampleApp
             set => SetProperty(ref _selectedDate, value);
         }
 
+        private DateTime _minimumDate = new DateTime(2019, 4, 29);
+        public DateTime MinimumDate
+        {
+            get => _minimumDate;
+            set => SetProperty(ref _minimumDate, value);
+        }
+
+        private DateTime _maximumDate = DateTime.Today.AddMonths(5);
+        public DateTime MaximumDate
+        {
+            get => _maximumDate;
+            set => SetProperty(ref _maximumDate, value);
+        }
+
+        private CultureInfo _culture = CultureInfo.InvariantCulture;
         public CultureInfo Culture
         {
             get => _culture;

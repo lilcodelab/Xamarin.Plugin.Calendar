@@ -9,7 +9,7 @@ using Xamarin.Forms.Platform.Android;
 [assembly: ExportRenderer(typeof(SwipeAwareContainer), typeof(SwipeAwareContainerRenderer))]
 namespace Xamarin.Plugin.Calendar.Android
 {
-    public class SwipeAwareContainerRenderer : ViewRenderer, GestureDetector.IOnGestureListener
+    internal class SwipeAwareContainerRenderer : ViewRenderer, GestureDetector.IOnGestureListener
     {
         private const int SwipeDistanceThreshold = 50;
         private const int SwipeVelocityThreshold = 20;
