@@ -58,6 +58,7 @@ jobs:
         restoreSolution: '**/*.sln'
 
     - task: XamariniOS@2
+      continueOnError: true      
       inputs:
         solutionFile: '**/SampleApp.iOS.csproj'
         configuration: '$(buildConfiguration)'
