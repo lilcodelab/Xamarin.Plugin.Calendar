@@ -25,9 +25,10 @@ steps:
   inputs:
     solution: '**/CalendarPlugin.csproj'
     msbuildArchitecture: 'x64'
+    msbuildVersion: '16.0'
     configuration: '$(BuildConfiguration)'
     msbuildArguments: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
-
+    
 - task: XamarinAndroid@1
   displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
   inputs:
