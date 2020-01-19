@@ -34,7 +34,13 @@ steps:
     solution: '**/CalendarPlugin.csproj'
     configuration: '$(BuildConfiguration)'
     msbuildArguments: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
-    
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: nupkg'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
+    ArtifactName: nupkg
+
 - task: XamarinAndroid@1
   displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
   inputs:
@@ -42,14 +48,9 @@ steps:
     createAppPackage: true
     outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
     jdkOption: 'JDKVersion'
+    clean: true
     configuration: '$(BuildConfiguration)'
     msbuildVersionOption: latest
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: nupkg'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
-    ArtifactName: nupkg
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Android App artifacts'
