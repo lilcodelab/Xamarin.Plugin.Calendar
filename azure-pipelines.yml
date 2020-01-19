@@ -17,7 +17,11 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
+- script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
+  displayName: 'Selecting the Xamarin SDK version'
+
 - task: NuGetCommand@2
+  displayName: 'Nuget restore solution'
   inputs:
     restoreSolution: '**/*.sln'
 
@@ -31,7 +35,9 @@ steps:
   displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
   inputs:
     projectFile: '**/SampleApp.Android.csproj'
+    createAppPackage: true
     outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
+    jdkOption: 'JDKVersion'
     configuration: '$(BuildConfiguration)'
     msbuildVersionOption: latest
 
@@ -41,3 +47,8 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
     ArtifactName: nupkg
 
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Android App artifacts'
+  inputs:
+    PathToPublish: '$(build.binariesdirectory)/$(BuildConfiguration)'
+    ArtifactName: 'SampleApp.Android'
