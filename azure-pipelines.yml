@@ -14,7 +14,7 @@ variables:
 jobs:
 - job: 'Nuget'
   pool:
-    vmImage: 'macos-latest'
+    vmImage: 'windows-latest'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
@@ -41,7 +41,7 @@ jobs:
 
 - job: 'iOSSampleApp'
   pool:
-    vmImage: 'macos-latest'
+    vmImage: 'macOS-10.13'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
