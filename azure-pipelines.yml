@@ -24,8 +24,6 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '**/CalendarPlugin.csproj'
-    msbuildArchitecture: 'x64'
-    msbuildVersion: '16.0'
     configuration: '$(BuildConfiguration)'
     msbuildArguments: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
     
