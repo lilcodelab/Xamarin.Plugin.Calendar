@@ -16,6 +16,10 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+- task: UseDotNet@2
+  displayName: 'Use dotnet sdk 3.x'
+  inputs:
+    version: 3.x
 
 - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_0_0
   displayName: 'Selecting the Xamarin SDK version'
