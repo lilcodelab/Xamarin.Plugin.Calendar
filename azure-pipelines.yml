@@ -38,8 +38,15 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: nupkg'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/*.nupkg'
     ArtifactName: nupkg
+
+- task: XamariniOS@2
+  inputs:
+    solutionFile: '**/SampleApp.iOS.csproj'
+    configuration: '$(buildConfiguration)'    
+    packageApp: false
+    buildForSimulator: true
 
 - task: XamarinAndroid@1
   displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
