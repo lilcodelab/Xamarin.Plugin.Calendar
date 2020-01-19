@@ -12,6 +12,8 @@ variables:
   nugetVersion: '1.1.$(Build.BuildId)'
 jobs:
 - job: 'Nuget'
+  pool:
+    vmImage: 'macos-latest'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
@@ -49,7 +51,7 @@ jobs:
       inputs:
         version: 3.x
 
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_0_0
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
       displayName: 'Selecting the Xamarin SDK version'
 
     - task: NuGetCommand@2
@@ -60,11 +62,14 @@ jobs:
     - task: XamariniOS@2
       inputs:
         solutionFile: '**/SampleApp.iOS.csproj'
-        configuration: '$(buildConfiguration)'    
+        configuration: '$(buildConfiguration)'
         packageApp: false
+        runNugetRestore: false
         buildForSimulator: true
 
 - job: 'AndroidSampleApp'
+  pool:
+    vmImage: 'macos-latest'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
@@ -72,7 +77,7 @@ jobs:
       inputs:
         version: 3.x
 
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_0_0
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
       displayName: 'Selecting the Xamarin SDK version'
 
     - task: NuGetCommand@2
