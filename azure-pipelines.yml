@@ -10,10 +10,11 @@ variables:
   buildPlatform: 'AnyCPU'
   buildConfiguration: 'Release'
   nugetVersion: '1.1.$(Build.BuildId)'
+
 jobs:
 - job: 'Nuget'
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: 'macos-latest'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
@@ -66,7 +67,7 @@ jobs:
 
 - job: 'AndroidSampleApp'
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: 'windows-latest'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
