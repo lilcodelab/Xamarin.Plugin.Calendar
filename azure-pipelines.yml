@@ -1,0 +1,98 @@
+pr:
+  branches:
+    include:
+    - master
+
+trigger:
+- master
+
+variables:
+  buildPlatform: 'AnyCPU'
+  buildConfiguration: 'Release'
+  nugetVersion: '1.1.$(Build.BuildId)'
+
+jobs:
+- job: 'Nuget'
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+    - task: NuGetToolInstaller@1
+    - task: UseDotNet@2
+      displayName: 'Use dotnet sdk 3.x'
+      inputs:
+        version: 3.x
+
+    - task: NuGetCommand@2
+      displayName: 'Nuget restore solution'
+      inputs:
+        restoreSolution: '**/*.sln'
+
+    - task: MSBuild@1
+      inputs:
+        solution: '**/CalendarPlugin.csproj'
+        configuration: '$(BuildConfiguration)'
+        msbuildArguments: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: nupkg'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)'
+        ArtifactName: nupkg
+
+- job: 'iOSSampleApp'
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+    - task: NuGetToolInstaller@1
+    - task: UseDotNet@2
+      displayName: 'Use dotnet sdk 3.x'
+      inputs:
+        version: 3.x
+
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
+      displayName: 'Selecting the Xamarin SDK version'
+
+    - task: NuGetCommand@2
+      displayName: 'Nuget restore solution'
+      inputs:
+        restoreSolution: '**/*.sln'
+
+    - task: XamariniOS@2
+      continueOnError: true      
+      inputs:
+        solutionFile: '**/SampleApp.iOS.csproj'
+        configuration: '$(buildConfiguration)'
+        packageApp: false
+        runNugetRestore: false
+        buildForSimulator: true
+
+- job: 'AndroidSampleApp'
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+    - task: NuGetToolInstaller@1
+    - task: UseDotNet@2
+      displayName: 'Use dotnet sdk 3.x'
+      inputs:
+        version: 3.x
+
+    - task: NuGetCommand@2
+      displayName: 'Nuget restore solution'
+      inputs:
+        restoreSolution: '**/*.sln'
+    - task: XamarinAndroid@1
+      displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
+      inputs:
+        projectFile: '**/SampleApp.Android.csproj'
+        createAppPackage: true
+        outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
+        jdkOption: 'JDKVersion'
+        clean: true
+        configuration: '$(BuildConfiguration)'
+        msbuildVersionOption: latest
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Android App artifacts'
+      inputs:
+        PathToPublish: '$(build.binariesdirectory)/$(BuildConfiguration)'
+        ArtifactName: 'SampleApp.Android'
