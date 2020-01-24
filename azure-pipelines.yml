@@ -9,7 +9,7 @@ trigger:
 variables:
   buildPlatform: 'AnyCPU'
   buildConfiguration: 'Release'
-  nugetVersion: '1.1.$(Build.BuildId)'
+  nugetVersion: '2.0.$(Build.BuildId)'
 
 jobs:
 - job: 'Nuget'

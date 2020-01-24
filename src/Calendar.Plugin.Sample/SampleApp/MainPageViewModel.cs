@@ -65,8 +65,7 @@ namespace SampleApp
         }
 
         public EventCollection Events { get; }
-        public int Month { get; set; } = DateTime.Now.Month;
-        public int Year { get; set; } = DateTime.Now.Year;
+        public DateTime Month { get; set; } = DateTime.Today;
 
         private DateTime _selectedDate = DateTime.Today;
         public DateTime SelectedDate

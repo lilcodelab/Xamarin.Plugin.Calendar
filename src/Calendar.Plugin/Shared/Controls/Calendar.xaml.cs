@@ -36,22 +36,13 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ShowYearPickerProperty, value);
         }
 
-        public static readonly BindableProperty MonthProperty =
-          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Now.Month, BindingMode.TwoWay);
+        public static readonly BindableProperty DisplayedMonthProperty =
+         BindableProperty.Create(nameof(DisplayedMonth), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
 
-        public int Month
+        public DateTime DisplayedMonth
         {
-            get => (int)GetValue(MonthProperty);
-            set => SetValue(MonthProperty, value);
-        }
-
-        public static readonly BindableProperty YearProperty =
-          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Now.Year, BindingMode.TwoWay);
-
-        public int Year
-        {
-            get => (int)GetValue(YearProperty);
-            set => SetValue(YearProperty, value);
+            get => (DateTime)GetValue(DisplayedMonthProperty);
+            set => SetValue(DisplayedMonthProperty, value);
         }
 
         public static readonly BindableProperty SelectedDateProperty =
@@ -527,7 +518,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             switch (propertyName)
             {
-                case nameof(Month):
+                case nameof(DisplayedMonth):
                     UpdateMonthLabel();
                     break;
 
@@ -537,8 +528,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(Culture):
-                    if (Month > 0)
-                        UpdateMonthLabel();
+                    UpdateMonthLabel();
 
                     UpdateSelectedDateLabel();
                     break;
@@ -562,7 +552,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateMonthLabel()
         {
-            MonthText = Culture.DateTimeFormat.MonthNames[Month - 1].Capitalize();
+            MonthText = Culture.DateTimeFormat.MonthNames[DisplayedMonth.Month - 1].Capitalize();
         }
 
         private void UpdateSelectedDateLabel()
@@ -638,57 +628,30 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #region Other methods
 
-        private void PrevMonth()
+        private void ChangeDisplayedMonth(int monthsToAdd)
         {
-            int newMonth;
-            int newYear = Year;
-
-            if (Month - 1 == 0)
+            var targetDisplayedMonth = DisplayedMonth.AddMonths(monthsToAdd);
+            if (targetDisplayedMonth > MaximumDate)
             {
-                newMonth = 12;
-                newYear = Year - 1;
+                DisplayedMonth = MaximumDate;
+            }
+            else if(targetDisplayedMonth < MinimumDate)
+            {
+                DisplayedMonth = MinimumDate;
             }
             else
-                newMonth = Month - 1;
-
-            if (CheckMinimumDate(newYear, newMonth))
             {
-                Month = newMonth;
-                Year = newYear;
+                DisplayedMonth = targetDisplayedMonth;
             }
         }
 
-        private void NextMonth()
-        {
-            int newMonth;
-            int newYear = Year;
+        private void PrevMonth() => ChangeDisplayedMonth(-1);
 
-            if (Month + 1 == 13)
-            {
-                newMonth = 1;
-                newYear = Year + 1;
-            }
-            else
-                newMonth = Month + 1;
+        private void NextMonth() => ChangeDisplayedMonth(1);
 
-            if (CheckMaximumDate(newYear, newMonth))
-            {
-                Month = newMonth;
-                Year = newYear;
-            }
-        }
+        private void PrevYear() => ChangeDisplayedMonth(-12);
 
-        private void PrevYear()
-        {
-            if (CheckMinimumDate(Year - 1, Month))
-                Year--;
-        }
-
-        private void NextYear()
-        {
-            if (CheckMaximumDate(Year + 1, Month))
-                Year++;
-        }
+        private void NextYear() => ChangeDisplayedMonth(12);
 
         private void ToggleCalendarSectionVisibility()
             => CalendarSectionShown = !CalendarSectionShown;

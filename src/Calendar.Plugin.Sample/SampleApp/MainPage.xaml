@@ -16,8 +16,7 @@
         HorizontalOptions="FillAndExpand"
         Events="{Binding Events}"
         Culture="{Binding Culture}"
-        Month="{Binding Month}"
-        Year="{Binding Year}"
+        DisplayedMonth="{Binding Month}"
         SelectedDate="{Binding SelectedDate}"
         MinimumDate="{Binding MinimumDate}"
         MaximumDate="{Binding MaximumDate}">
