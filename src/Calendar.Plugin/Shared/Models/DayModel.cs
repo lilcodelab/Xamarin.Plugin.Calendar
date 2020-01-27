@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Xamarin.Plugin.Calendar.Models
@@ -11,6 +12,30 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value)
                     .Notify(nameof(BackgroundColor),
                             nameof(OutlineColor));
+        }
+
+        public double DayViewSize
+        {
+            get => GetProperty<double>();
+            set => SetProperty(value);
+        }
+        
+        public float DayViewCornerRadius
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value);
+        }
+        
+        public Style DaysLabelStyle
+        {
+            get => GetProperty<Style>(Device.Styles.TitleStyle);
+            set => SetProperty(value);
+        }
+        
+        public ICommand DayTappedCommand
+        {
+            get => GetProperty<ICommand>();
+            set => SetProperty(value);
         }
 
         public bool HasEvents

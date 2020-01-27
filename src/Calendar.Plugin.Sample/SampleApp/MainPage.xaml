@@ -19,10 +19,10 @@
         Month="{Binding Month}"
         Year="{Binding Year}"
         SelectedDate="{Binding SelectedDate}"
-        DayTappedCommand="{Binding DayTappedCommand}">
+        DayTappedCommand="{Binding DayTappedCommand}"
         MinimumDate="{Binding MinimumDate}"
         MaximumDate="{Binding MaximumDate}">
-
+        
         <controls:Calendar.EventTemplate>
             <DataTemplate>
                 <StackLayout
@@ -42,8 +42,7 @@
         </controls:Calendar.EventTemplate>
     </controls:Calendar>
 
-    <!-- Styling
-    
+<!--Styling    
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="daysLabelStyle" TargetType="Label">

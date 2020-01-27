@@ -12,9 +12,9 @@
         <Frame
             HasShadow="False"
             IsClippedToBounds="True"
-            WidthRequest="{Binding DayViewSize, Source={x:Reference dayView}}"
-            HeightRequest="{Binding DayViewSize, Source={x:Reference dayView}}"
-            CornerRadius="{Binding DayViewCornerRadius, Source={x:Reference dayView}}"
+            WidthRequest="{Binding DayViewSize}"
+            HeightRequest="{Binding DayViewSize}"
+            CornerRadius="{Binding DayViewCornerRadius}"
             VerticalOptions="CenterAndExpand"
             HorizontalOptions="CenterAndExpand"
             Padding="0"
@@ -37,7 +37,7 @@
         <Label
             Text="{Binding Date.Day}"
             TextColor="{Binding TextColor}"
-            Style="{Binding DaysLabelStyle, Source={x:Reference dayView}}"
+            Style="{Binding DaysLabelStyle}"
             HorizontalOptions="Center"
             VerticalOptions="Center"
             InputTransparent="True" />

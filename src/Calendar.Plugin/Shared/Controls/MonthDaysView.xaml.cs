@@ -192,7 +192,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         /// <summary> Bindable property for DaysLabelStyle </summary>
         public static readonly BindableProperty DaysLabelStyleProperty =
-          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), null);
+          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), Device.Styles.TitleStyle);
 
         public Style DaysLabelStyle
         {
@@ -452,6 +452,10 @@ namespace Xamarin.Plugin.Calendar.Controls
                 var dayModel = dayView.BindingContext as DayModel;
 
                 dayModel.Date = currentDate.Date;
+                dayModel.DayViewSize = DayViewSize;
+                dayModel.DayViewCornerRadius = DayViewCornerRadius;
+                dayModel.DayTappedCommand = DayTappedCommand;
+                dayModel.DaysLabelStyle = DaysLabelStyle;
                 dayModel.IsThisMonth = currentDate.Month == Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);

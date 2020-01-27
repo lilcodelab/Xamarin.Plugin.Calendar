@@ -14,7 +14,6 @@ namespace SampleApp
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private CultureInfo _culture = CultureInfo.InvariantCulture;
         public ICommand DayTappedCommand => new Command<DateTime>(DayTapped);
 
         public MainPageViewModel()
