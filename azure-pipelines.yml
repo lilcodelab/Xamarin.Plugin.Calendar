@@ -49,7 +49,7 @@ jobs:
       inputs:
         version: 3.x
 
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_6_0
       displayName: 'Selecting the Xamarin SDK version'
 
     - task: NuGetCommand@2
@@ -58,7 +58,7 @@ jobs:
         restoreSolution: '**/*.sln'
 
     - task: XamariniOS@2
-      continueOnError: true      
+      continueOnError: true
       inputs:
         solutionFile: '**/SampleApp.iOS.csproj'
         configuration: '$(buildConfiguration)'
