@@ -36,13 +36,44 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ShowYearPickerProperty, value);
         }
 
-        public static readonly BindableProperty DisplayedMonthProperty =
-         BindableProperty.Create(nameof(DisplayedMonth), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
+        public static readonly BindableProperty MonthProperty =
+          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay);
 
-        public DateTime DisplayedMonth
+        public int Month
         {
-            get => (DateTime)GetValue(DisplayedMonthProperty);
-            set => SetValue(DisplayedMonthProperty, value);
+            get => (int)GetValue(MonthProperty);
+            set
+            {
+                SetValue(MonthProperty, value);
+                SetValue(MonthYearProperty, new DateTime(Year, value, 1));
+            }
+        }
+
+        public static readonly BindableProperty YearProperty =
+          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Today.Year, BindingMode.TwoWay);
+
+        public int Year
+        {
+            get => (int)GetValue(YearProperty);
+            set
+            {
+                SetValue(YearProperty, value);
+                SetValue(MonthYearProperty, new DateTime(value, Month, 1));
+            }
+        }
+
+        public static readonly BindableProperty MonthYearProperty =
+          BindableProperty.Create(nameof(MonthYear), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay);
+
+        public DateTime MonthYear
+        {
+            get => (DateTime)GetValue(MonthYearProperty);
+            set
+            {
+                SetValue(MonthYearProperty, value);
+                SetValue(YearProperty, value.Year);
+                SetValue(MonthProperty, value.Month);
+            }
         }
 
         public static readonly BindableProperty SelectedDateProperty =
@@ -518,7 +549,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             switch (propertyName)
             {
-                case nameof(DisplayedMonth):
+                case nameof(MonthYear):
                     UpdateMonthLabel();
                     break;
 
@@ -528,7 +559,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(Culture):
-                    UpdateMonthLabel();
+                    if (MonthYear.Month > 0)
+                        UpdateMonthLabel();
 
                     UpdateSelectedDateLabel();
                     break;
@@ -552,7 +584,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateMonthLabel()
         {
-            MonthText = Culture.DateTimeFormat.MonthNames[DisplayedMonth.Month - 1].Capitalize();
+            MonthText = Culture.DateTimeFormat.MonthNames[MonthYear.Month - 1].Capitalize();
         }
 
         private void UpdateSelectedDateLabel()
@@ -630,18 +662,29 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void ChangeDisplayedMonth(int monthsToAdd)
         {
-            var targetDisplayedMonth = DisplayedMonth.AddMonths(monthsToAdd);
-            if (targetDisplayedMonth > MaximumDate)
+            var targetDisplayedMonth = MonthYear.AddMonths(monthsToAdd);
+            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate || 
+                targetDisplayedMonth.Month == MaximumDate.Month || 
+                targetDisplayedMonth.Month == MinimumDate.Month)
             {
-                DisplayedMonth = MaximumDate;
+                MonthYear = targetDisplayedMonth;
             }
-            else if(targetDisplayedMonth < MinimumDate)
+        }
+
+        private void ChangeDisplayedYear(int yearsToAdd)
+        {
+            var targetDisplayedMonth = MonthYear.AddYears(yearsToAdd);
+            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate)
             {
-                DisplayedMonth = MinimumDate;
+                MonthYear = targetDisplayedMonth;
             }
-            else
+            else if (targetDisplayedMonth.Year == MaximumDate.Year)
             {
-                DisplayedMonth = targetDisplayedMonth;
+                MonthYear = MaximumDate;
+            }
+            else if (targetDisplayedMonth.Year == MinimumDate.Year)
+            {
+                MonthYear = MinimumDate;
             }
         }
 
@@ -649,9 +692,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void NextMonth() => ChangeDisplayedMonth(1);
 
-        private void PrevYear() => ChangeDisplayedMonth(-12);
+        private void PrevYear() => ChangeDisplayedYear(-1);
 
-        private void NextYear() => ChangeDisplayedMonth(12);
+        private void NextYear() => ChangeDisplayedYear(1);
 
         private void ToggleCalendarSectionVisibility()
             => CalendarSectionShown = !CalendarSectionShown;
@@ -661,24 +704,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             calendarSectionRow.Height = new GridLength(_calendarSectionHeight * currentValue);
             calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
-        }
-
-        private bool CheckMinimumDate(int year, int month)
-        {
-            if (year < MinimumDate.Year ||
-                year == MinimumDate.Year && month < MinimumDate.Month)
-                return false;
-
-            return true;
-        }
-
-        private bool CheckMaximumDate(int year, int month)
-        {
-            if (year > MaximumDate.Year ||
-                year == MaximumDate.Year && month > MaximumDate.Month)
-                return false;
-
-            return true;
         }
 
         #endregion

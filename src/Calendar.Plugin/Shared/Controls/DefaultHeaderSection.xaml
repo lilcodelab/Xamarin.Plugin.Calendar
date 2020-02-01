@@ -2,14 +2,8 @@
 <ContentView
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Xamarin.Plugin.Calendar.Converters"
     x:Class="Xamarin.Plugin.Calendar.Controls.DefaultHeaderSection">
-    
-    <ContentView.Resources>
-        <ResourceDictionary>
-            <local:DateTimeToYearConverter x:Key="dateTimeToYear" />
-        </ResourceDictionary>
-    </ContentView.Resources>
+
     
     <!-- TODO: Controls for circle buttons -->
     <StackLayout
@@ -132,7 +126,7 @@
 
             <Label
                 Grid.Column="1"
-                Text="{Binding DisplayedMonth, Converter={StaticResource dateTimeToYear}}"
+                Text="{Binding Year}"
                 TextColor="{Binding YearLabelColor}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"

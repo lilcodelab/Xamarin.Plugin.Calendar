@@ -19,13 +19,13 @@ namespace Xamarin.Plugin.Calendar.Controls
     {
         #region Bindable properties
 
-        public static readonly BindableProperty DisplayedMonthProperty =
-          BindableProperty.Create(nameof(DisplayedMonth), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
+        public static readonly BindableProperty DisplayedMonthYearProperty =
+          BindableProperty.Create(nameof(DisplayedMonthYear), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
 
-        public DateTime DisplayedMonth
+        public DateTime DisplayedMonthYear
         {
-            get => (DateTime)GetValue(DisplayedMonthProperty);
-            set => SetValue(DisplayedMonthProperty, value);
+            get => (DateTime)GetValue(DisplayedMonthYearProperty);
+            set => SetValue(DisplayedMonthYearProperty, value);
         }
 
         /// <summary> Bindable property for SelectedDate </summary>
@@ -271,7 +271,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     UpdateSelectedDate();
                     break;
 
-                case nameof(DisplayedMonth):
+                case nameof(DisplayedMonthYear):
                 case nameof(Events):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
@@ -348,7 +348,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             if (_selectedDay == null || !_selectedDay.IsThisMonth)
             {
-                DisplayedMonth = new DateTime(SelectedDate.Date.Year, SelectedDate.Date.Month, 1);
+                DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
                 return;
             }
 
@@ -368,7 +368,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 if (!newSelected.IsThisMonth)
                 {
-                    DisplayedMonth = new DateTime(SelectedDate.Date.Year, SelectedDate.Date.Month, 1);
+                    DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
                     return;
                 }
 
@@ -409,7 +409,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void LoadDays()
         {
-            var monthStart = new DateTime(DisplayedMonth.Year, DisplayedMonth.Month, 1);
+            var monthStart = new DateTime(DisplayedMonthYear.Year, DisplayedMonthYear.Month, 1);
             var addDays = ((int)Culture.DateTimeFormat.FirstDayOfWeek) - (int)monthStart.DayOfWeek;
 
             if (addDays > 0)
@@ -421,7 +421,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 var dayModel = dayView.BindingContext as DayModel;
 
                 dayModel.Date = currentDate.Date;
-                dayModel.IsThisMonth = currentDate.Month == DisplayedMonth.Month;
+                dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
