@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
+using Xamarin.Forms;
 
 namespace SampleApp
 {
@@ -21,6 +22,7 @@ namespace SampleApp
             Events = new EventCollection
             {
                 [DateTime.Now.AddDays(-3)] = new List<EventModel>(GenerateEvents(10, "Cool")),
+                EventIndicatorColor = Color.DarkRed
             };
 
             // with add method

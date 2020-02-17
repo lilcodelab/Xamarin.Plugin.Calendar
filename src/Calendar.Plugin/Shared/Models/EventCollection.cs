@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace Xamarin.Plugin.Calendar.Models
 {
@@ -122,5 +123,19 @@ namespace Xamarin.Plugin.Calendar.Models
             Remove,
             Clear
         }
+
+        #region PersonalizableProperties
+        /// <summary>
+        /// Color to use in the dot when there are events on the day
+        /// if the EventIndicatorColor is null then the general EventIndicatorColor of the Calendar will be used
+        /// </summary>
+        public Color EventIndicatorColor { get; set; }
+
+        /// <summary>
+        /// Color to use in the dot when the day is selected and there are events on the day if this is null then the EventIndicator color is used,
+        /// if the EventIndicatorColor is null then the general EventIndicatorSelectedColor of the Calendar will be used
+        /// </summary>
+        public Color EventIndicatorSelectedColor { get; set; }
+        #endregion
     }
 }

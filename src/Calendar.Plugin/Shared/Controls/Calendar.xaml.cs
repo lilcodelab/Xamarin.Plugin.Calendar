@@ -235,7 +235,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty HeaderSectionTemplateProperty =
-          BindableProperty.Create(nameof(HeaderSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(() => new DefaultHeaderSection()));
+          BindableProperty.Create(nameof(HeaderSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(()=> new DefaultHeaderSection()));
 
         public DataTemplate HeaderSectionTemplate
         {
@@ -244,7 +244,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty FooterSectionTemplateProperty =
-          BindableProperty.Create(nameof(FooterSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(() => new DefaultFooterSection()));
+          BindableProperty.Create(nameof(FooterSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(()=> new DefaultFooterSection()));
 
         public DataTemplate FooterSectionTemplate
         {
@@ -344,7 +344,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// </summary>
         public bool DisableSwipeDetection
         {
-            get => (bool)GetValue(DisableSwipeDetectionProperty);
+            get => (bool) GetValue(DisableSwipeDetectionProperty);
             set => SetValue(DisableSwipeDetectionProperty, value);
         }
 
@@ -355,7 +355,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Activated when user swipes-up over days view </summary>
         public ICommand SwipeUpCommand
         {
-            get => (ICommand)GetValue(SwipeUpCommandProperty);
+            get => (ICommand) GetValue(SwipeUpCommandProperty);
             set => SetValue(SwipeUpCommandProperty, value);
         }
 
@@ -366,7 +366,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Enable/disable default swipe-up action for showing/hiding calendar </summary>
         public bool SwipeUpToHideEnabled
         {
-            get => (bool)GetValue(SwipeUpToHideEnabledProperty);
+            get => (bool) GetValue(SwipeUpToHideEnabledProperty);
             set => SetValue(SwipeUpToHideEnabledProperty, value);
         }
 
@@ -377,7 +377,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Activated when user swipes-left over days view </summary>
         public ICommand SwipeLeftCommand
         {
-            get => (ICommand)GetValue(SwipeLeftCommandProperty);
+            get => (ICommand) GetValue(SwipeLeftCommandProperty);
             set => SetValue(SwipeLeftCommandProperty, value);
         }
 
@@ -388,7 +388,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Activated when user swipes-right over days view </summary>
         public ICommand SwipeRightCommand
         {
-            get => (ICommand)GetValue(SwipeRightCommandProperty);
+            get => (ICommand) GetValue(SwipeRightCommandProperty);
             set => SetValue(SwipeRightCommandProperty, value);
         }
 
@@ -399,7 +399,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Enable/disable default swipe actions for changing months </summary>
         public bool SwipeToChangeMonthEnabled
         {
-            get => (bool)GetValue(SwipeToChangeMonthEnabledProperty);
+            get => (bool) GetValue(SwipeToChangeMonthEnabledProperty);
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
         }
 
@@ -410,7 +410,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Minimum date which can be selected </summary>
         public DateTime MinimumDate
         {
-            get => (DateTime)GetValue(MinimumDateProperty);
+            get => (DateTime) GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
         }
 
@@ -421,7 +421,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Maximum date which can be selected </summary>
         public DateTime MaximumDate
         {
-            get => (DateTime)GetValue(MaximumDateProperty);
+            get => (DateTime) GetValue(MaximumDateProperty);
             set => SetValue(MaximumDateProperty, value);
         }
 
@@ -432,10 +432,121 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
         public Color DisabledDayColor
         {
-            get => (Color)GetValue(DisabledDayColorProperty);
+            get => (Color) GetValue(DisabledDayColorProperty);
             set => SetValue(DisabledDayColorProperty, value);
         }
 
+        #endregion
+
+        #region Bindable personalizable properties
+        public static readonly BindableProperty ArrowsFontFamilyProperty = BindableProperty.Create(nameof(ArrowsFontFamily), typeof(string), typeof(Calendar), string.Empty);
+
+        public string ArrowsFontFamily
+        {
+            get => (string) GetValue(ArrowsFontFamilyProperty);
+            set => SetValue(ArrowsFontFamilyProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowLeftTextProperty =
+          BindableProperty.Create(nameof(ArrowLeftText), typeof(string), typeof(Calendar), "←");
+
+        public string ArrowLeftText
+        {
+            get => (string) GetValue(ArrowLeftTextProperty);
+            set => SetValue(ArrowLeftTextProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowRightTextProperty =
+          BindableProperty.Create(nameof(ArrowRightText), typeof(string), typeof(Calendar), "→");
+
+        public string ArrowRightText
+        {
+            get => (string) GetValue(ArrowRightTextProperty);
+            set => SetValue(ArrowRightTextProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowUpTextProperty =
+          BindableProperty.Create(nameof(ArrowUpText), typeof(string), typeof(Calendar), "↑");
+
+        public string ArrowUpText
+        {
+            get => (string) GetValue(ArrowUpTextProperty);
+            set => SetValue(ArrowUpTextProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowDownTextProperty =
+          BindableProperty.Create(nameof(ArrowDownText), typeof(string), typeof(Calendar), "↓");
+
+        public string ArrowDownText
+        {
+            get => (string) GetValue(ArrowDownTextProperty);
+            set => SetValue(ArrowDownTextProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowsFontSizeProperty =
+            BindableProperty.Create(nameof(ArrowsFontSize), typeof(double), typeof(Calendar), Device.GetNamedSize(NamedSize.Medium, typeof(Label)));
+
+        public double ArrowsFontSize
+        {
+            get => (double) GetValue(ArrowsFontSizeProperty);
+            set => SetValue(ArrowsFontSizeProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowsBackgroundColorProperty =
+          BindableProperty.Create(nameof(ArrowsBackgroundColor), typeof(Color), typeof(Calendar), Color.White);
+
+        public Color ArrowsBackgroundColor
+        {
+            get => (Color) GetValue(ArrowsBackgroundColorProperty);
+            set => SetValue(ArrowsBackgroundColorProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowsBorderColorProperty =
+          BindableProperty.Create(nameof(ArrowsBorderColor), typeof(Color), typeof(Calendar), Color.White);
+
+        public Color ArrowsBorderColor
+        {
+            get => (Color) GetValue(ArrowsBorderColorProperty);
+            set => SetValue(ArrowsBorderColorProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowsHasShadowProperty = 
+            BindableProperty.Create(nameof(ArrowsHasShadow), typeof(bool), typeof(Calendar), true);
+
+        public bool ArrowsHasShadow
+        {
+            get => (bool)GetValue(ArrowsHasShadowProperty);
+            set => SetValue(ArrowsHasShadowProperty, value);
+        }
+
+        public static readonly BindableProperty ArrowsHasShadowProperty =
+            BindableProperty.Create(nameof(ArrowsHasShadow), typeof(bool), typeof(Calendar), true);
+
+        public bool ArrowsHasShadow
+        {
+            get => (bool) GetValue(ArrowsHasShadowProperty);
+            set => SetValue(ArrowsHasShadowProperty, value);
+        }
+
+        private static bool animateCalendar = true;
+        public static readonly BindableProperty AnimateCalendarProperty =
+            BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
+
+        public bool AnimateCalendar
+        {
+            get => (bool) GetValue(AnimateCalendarProperty);
+            set { animateCalendar = value; SetValue(AnimateCalendarProperty, value); }
+        }
+        #endregion
+
+        #region Bindable personalizable actions
+        public static readonly BindableProperty TappedDayCommandProperty =
+            BindableProperty.Create(nameof(TappedDayCommand), typeof(Command<DateTime>), typeof(Calendar));
+        public Command<DateTime> TappedDayCommand
+        {
+            get => (Command<DateTime>)GetValue(TappedDayCommandProperty);
+            set => SetValue(TappedDayCommandProperty, value);
+        }
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
@@ -515,7 +626,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     newEvents.CollectionChanged += view.OnEventsCollectionChanged;
 
                 view.UpdateEvents();
-                view.monthDaysView.UpdateDays();
+                view.monthDaysView.UpdateDays(animateCalendar);
             }
         }
 
@@ -597,7 +708,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void OnEventsCollectionChanged(object sender, EventCollection.EventCollectionChangedArgs e)
         {
             UpdateEvents();
-            monthDaysView.UpdateDays();
+            monthDaysView.UpdateDays(animateCalendar);
         }
 
         #endregion

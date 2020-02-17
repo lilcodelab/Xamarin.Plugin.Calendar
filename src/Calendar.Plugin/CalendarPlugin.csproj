@@ -56,6 +56,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Shared\Models\PersonalizableCollection.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Shared\Controls\Calendar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

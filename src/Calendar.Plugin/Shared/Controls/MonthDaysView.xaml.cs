@@ -244,6 +244,28 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
+        #region Bindable personalizable properties
+        private static bool animateCalendar = true;
+        public static readonly BindableProperty AnimateCalendarProperty =
+            BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
+
+        public bool AnimateCalendar
+        {
+            get => (bool) GetValue(AnimateCalendarProperty);
+            set { animateCalendar = value; SetValue(AnimateCalendarProperty, value); }
+        }
+        #endregion
+
+        #region Bindable personalizable actions
+        public static readonly BindableProperty TappedDayCommandProperty =
+            BindableProperty.Create(nameof(TappedDayCommand), typeof(Command<DateTime>), typeof(Calendar));
+        public Command<DateTime> TappedDayCommand
+        {
+            get => (Command<DateTime>) GetValue(TappedDayCommandProperty);
+            set => SetValue(TappedDayCommandProperty, value);
+        }
+        #endregion
+
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
         private readonly List<DayView> _dayViews = new List<DayView>();
         private DayModel _selectedDay;
@@ -258,7 +280,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             AssignDayViewModels();
             UpdateDaysColors();
             UpdateDayTitles();
-            UpdateDays();
+            UpdateDays(animateCalendar);
         }
 
         /// <summary> ??? </summary>
@@ -288,7 +310,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(Events):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
-                    UpdateDays();
+                    UpdateDays(animateCalendar);
                     break;
 
                 case nameof(SelectedDayTextColor):
@@ -305,7 +327,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 case nameof(Culture):
                     UpdateDayTitles();
-                    UpdateDays();
+                    UpdateDays(animateCalendar);
                     break;
             }
         }
@@ -321,16 +343,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        internal void UpdateDays()
+        internal void UpdateDays(bool animate)
         {
             if (Year == 0 || Month == 0 || Culture == null)
                 return;
 
-            Animate(() => daysControl.FadeTo(0, 50),
+            Animate(() => daysControl.FadeTo(animate? 0 : 1, 50),
                     () => daysControl.FadeTo(1, 200),
                     () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
-                    () => UpdateDays());
+                    () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
         }
 
         private void UpdateDaysColors()
