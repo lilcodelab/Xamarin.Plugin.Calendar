@@ -198,6 +198,24 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ArrowsColorProperty, value);
         }
 
+        public static readonly BindableProperty FooterArrowVisibleProperty =
+            BindableProperty.Create(nameof(FooterArrowVisible), typeof(bool), typeof(Calendar), true);
+
+        public bool FooterArrowVisible
+        {
+            get => (bool)GetValue(FooterArrowVisibleProperty);
+            set => SetValue(FooterArrowVisibleProperty, value);
+        }
+
+        public static readonly BindableProperty FooterSectionVisibleProperty =
+            BindableProperty.Create(nameof(FooterSectionVisible), typeof(bool), typeof(Calendar), true);
+
+        public bool FooterSectionVisible
+        {
+            get => (bool)GetValue(FooterSectionVisibleProperty);
+            set => SetValue(FooterSectionVisibleProperty, value);
+        }
+
         public static readonly BindableProperty TodayOutlineColorProperty =
           BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(Calendar), Color.FromHex("#FF4081"));
 

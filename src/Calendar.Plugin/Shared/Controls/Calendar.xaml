@@ -70,6 +70,7 @@
             </Grid.RowDefinitions>
 
             <controls:DataTemplateView
+                IsVisible="{Binding FooterSectionVisible, Source={x:Reference calendar}}"
                 ItemTemplate="{Binding FooterSectionTemplate}"
                 BindingContext="{x:Reference calendar}" />
 

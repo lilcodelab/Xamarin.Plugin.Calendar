@@ -25,7 +25,7 @@ If you are coming back take a look on the [Changelog here](https://github.com/li
 #### Supported versions
 | Platform | Version |
 | -------- | ------- |
-| Xamarin.Forms | 3.0+ |
+| Xamarin.Forms | 4.4+ |
 | Xamarin.Android | ? |
 | Xamarin.iOS | ? |
 
