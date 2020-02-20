@@ -192,7 +192,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         /// <summary> Bindable property for DaysLabelStyle </summary>
         public static readonly BindableProperty DaysLabelStyleProperty =
-          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), Device.Styles.TitleStyle);
+          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), Device.Styles.BodyStyle);
 
         public Style DaysLabelStyle
         {

@@ -28,7 +28,7 @@ namespace Xamarin.Plugin.Calendar.Models
         
         public Style DaysLabelStyle
         {
-            get => GetProperty<Style>(Device.Styles.TitleStyle);
+            get => GetProperty(Device.Styles.BodyStyle);
             set => SetProperty(value);
         }
         
