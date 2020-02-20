@@ -96,13 +96,13 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)'=='Debug' ">
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj">
       <Project>{81e938f4-a11c-4726-a13f-0d7ecc84ca66}</Project>
       <Name>CalendarPlugin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)'!='Debug' ">
+  <ItemGroup Condition=" '$(Configuration)' != 'Debug' ">
     <PackageReference Include="Xamarin.Plugin.Calendar" Version="1.0.3.200" />
   </ItemGroup>
   <ItemGroup>
