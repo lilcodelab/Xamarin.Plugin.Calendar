@@ -102,7 +102,7 @@
       <Name>CalendarPlugin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+  <ItemGroup Condition=" '$(Configuration)'!='Debug' ">
     <PackageReference Include="Xamarin.Plugin.Calendar" Version="1.0.3.200" />
   </ItemGroup>
   <ItemGroup>
