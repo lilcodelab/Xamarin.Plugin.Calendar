@@ -49,13 +49,24 @@ jobs:
       inputs:
         version: 3.x
 
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_6_0
       displayName: 'Selecting the Xamarin SDK version'
 
-    - task: NuGetCommand@2
-      displayName: 'Nuget restore solution'
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download PackNugetPackage artifacts"
       inputs:
-        restoreSolution: '**/*.sln'
+        buildType: 'current'
+        downloadType: 'single'
+        downloadPath: '$(build.binariesDirectory)/nuget/'
+        artifactName: 'nupkg'
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |          
+          sed -E -i .bak -e 's/<PackageReference Include="Xamarin.Plugin.Calendar" Version="[0-9a-z.-]+"/<PackageReference Include="ASAPP.SDK" Version="'$nugetVersion'"/g' **/SampleApp*.csproj
+
+          nuget restore **/*.sln -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
     - task: XamariniOS@2
       continueOnError: true      
@@ -76,10 +87,22 @@ jobs:
       inputs:
         version: 3.x
 
-    - task: NuGetCommand@2
-      displayName: 'Nuget restore solution'
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download PackNugetPackage artifacts"
       inputs:
-        restoreSolution: '**/*.sln'
+        buildType: 'current'
+        downloadType: 'single'
+        downloadPath: '$(build.binariesDirectory)/nuget/'
+        artifactName: 'nupkg'
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |          
+          sed -E -i .bak -e 's/<PackageReference Include="Xamarin.Plugin.Calendar" Version="[0-9a-z.-]+"/<PackageReference Include="ASAPP.SDK" Version="'$nugetVersion'"/g' **/SampleApp*.csproj
+
+          nuget restore **/*.sln -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
+          
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
       inputs:
