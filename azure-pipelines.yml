@@ -73,7 +73,7 @@ jobs:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '**/SampleApp.iOS.csproj'
+        projects: 'src'
         restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json"
 
     - task: XamariniOS@2
@@ -121,7 +121,7 @@ jobs:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '**/SampleApp.Android.csproj'
+        projects: 'src/'
         restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json /p:Configuration=Release"
 
     - task: XamarinAndroid@1
