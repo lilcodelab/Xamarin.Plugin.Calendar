@@ -70,14 +70,10 @@ jobs:
           sed -E -i .bak -e 's/<PackageReference Include="Xamarin.Plugin.Calendar" Version="[0-9a-z.-]+"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'"/g' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
           sed -E -i .bak -e 's/<PackageReference Include="Xamarin.Plugin.Calendar" Version="[0-9a-z.-]+"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'"/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
 
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'restore'
-        projects: 'src'
-        restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json"
+          dotnet restore src -s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json /p:Configuration=Release
 
     - task: XamariniOS@2
-      continueOnError: true      
+      continueOnError: true
       inputs:
         solutionFile: '**/SampleApp.iOS.csproj'
         configuration: '$(buildConfiguration)'
@@ -117,12 +113,8 @@ jobs:
           sed -E -i .bak -e 's/<PackageReference Include="Xamarin.Plugin.Calendar" Version="[0-9a-z.-]+"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'"/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
 
           cat src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj
-
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'restore'
-        projects: 'src/'
-        restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json /p:Configuration=Release"
+          
+          dotnet msbuild /t:restore /p:Configuration=Release src -p:RestoreSources=$(build.binariesDirectory)/nuget/nupkg/;https://api.nuget.org/v3/index.json
 
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
