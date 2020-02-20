@@ -54,7 +54,8 @@
                     MaximumDate="{Binding MaximumDate, Source={x:Reference calendar}}"
                     DisabledDayColor="{Binding DisabledDayColor, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand" />
+                    HorizontalOptions="FillAndExpand" 
+                    DayTappedCommand="{Binding DayTappedCommand, Source={x:Reference calendar}}" />
             </controls:SwipeAwareContainer>
         </StackLayout>
 

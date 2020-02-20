@@ -338,7 +338,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DaysLabelStyleProperty =
-          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(Calendar), null);
+          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(Calendar), Device.Styles.BodyStyle);
 
         public Style DaysLabelStyle
         {
@@ -414,6 +414,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeRightCommandProperty, value);
         }
 
+
         /// <summary> Bindable property for SwipeToChangeMonthEnabled </summary>
         public static readonly BindableProperty SwipeToChangeMonthEnabledProperty =
           BindableProperty.Create(nameof(SwipeToChangeMonthEnabled), typeof(bool), typeof(Calendar), true);
@@ -423,6 +424,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (bool)GetValue(SwipeToChangeMonthEnabledProperty);
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
+        }
+        
+        /// <summary>
+        /// Bindable property for DayTapped
+        /// </summary>
+        public static readonly BindableProperty DayTappedCommandProperty =
+            BindableProperty.Create(nameof(DayTappedCommand), typeof(ICommand), typeof(Calendar), null);
+
+        /// <summary>
+        /// Action to run after a day has been tapped.
+        /// </summary>
+        public ICommand DayTappedCommand
+        {
+            get => (ICommand) GetValue(DayTappedCommandProperty);
+            set => SetValue(DayTappedCommandProperty, value);
         }
 
         /// <summary> Bindable property for MinimumDate </summary>
@@ -707,6 +723,5 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         #endregion
-
     }
 }
