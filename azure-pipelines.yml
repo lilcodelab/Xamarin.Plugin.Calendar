@@ -74,7 +74,7 @@ jobs:
       inputs:
         command: 'restore'
         projects: '**/SampleApp.iOS.csproj'
-        restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json --verbosity detailed"
+        restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json"
 
     - task: XamariniOS@2
       continueOnError: true      
@@ -122,7 +122,7 @@ jobs:
       inputs:
         command: 'restore'
         projects: '**/SampleApp.Android.csproj'
-        restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json --verbosity detailed"
+        restoreArguments: "-s $(build.binariesDirectory)/nuget/nupkg/ -s https://api.nuget.org/v3/index.json /p:Configuration=Release"
 
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
