@@ -41,7 +41,7 @@ jobs:
 
 - job: 'iOSSampleApp'
   pool:
-    vmImage: 'macOS-10.13'
+    vmImage: 'macOS-latest'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
