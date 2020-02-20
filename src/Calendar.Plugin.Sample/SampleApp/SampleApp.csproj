@@ -19,17 +19,8 @@
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
   </ItemGroup>
 
-  <Choose>
-    <When Condition=" '$(Configuration)' == 'Debug' ">
-      <ItemGroup>
-        <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="Xamarin.Plugin.Calendar" Version="1.0.3.200" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj" />
+  </ItemGroup>
 
 </Project>
