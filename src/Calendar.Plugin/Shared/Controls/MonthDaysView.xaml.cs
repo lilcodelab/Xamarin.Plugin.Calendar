@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Windows.Input;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -191,7 +192,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         /// <summary> Bindable property for DaysLabelStyle </summary>
         public static readonly BindableProperty DaysLabelStyleProperty =
-          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), null);
+          BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), Device.Styles.TitleStyle);
 
         public Style DaysLabelStyle
         {
@@ -207,6 +208,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (Style)GetValue(DaysTitleLabelStyleProperty);
             set => SetValue(DaysTitleLabelStyleProperty, value);
+        }
+
+        /// <summary>
+        /// Bindable property for DayTapped
+        /// </summary>
+        public static readonly BindableProperty DayTappedCommandProperty =
+            BindableProperty.Create(nameof(DayTappedCommand), typeof(ICommand), typeof(MonthDaysView), null);
+
+        /// <summary>
+        /// Action to run after a day has been tapped.
+        /// </summary>
+        public ICommand DayTappedCommand
+        {
+            get => (ICommand)GetValue(DayTappedCommandProperty);
+            set => SetValue(DayTappedCommandProperty, value);
         }
 
         /// <summary> Bindable property for MinimumDate </summary>
@@ -241,7 +257,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (Color)GetValue(DisabledDayColorProperty);
             set => SetValue(DisabledDayColorProperty, value);
         }
-
+        
         #endregion
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
@@ -436,6 +452,10 @@ namespace Xamarin.Plugin.Calendar.Controls
                 var dayModel = dayView.BindingContext as DayModel;
 
                 dayModel.Date = currentDate.Date;
+                dayModel.DayViewSize = DayViewSize;
+                dayModel.DayViewCornerRadius = DayViewCornerRadius;
+                dayModel.DayTappedCommand = DayTappedCommand;
+                dayModel.DaysLabelStyle = DaysLabelStyle;
                 dayModel.IsThisMonth = currentDate.Month == Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);

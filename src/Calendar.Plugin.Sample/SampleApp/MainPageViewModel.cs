@@ -7,11 +7,15 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SampleApp
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
+        public ICommand DayTappedCommand => new Command<DateTime>(DayTapped);
+
         public MainPageViewModel()
         {
             Culture = CultureInfo.CreateSpecificCulture("en-US");
@@ -94,6 +98,11 @@ namespace SampleApp
         {
             get => _culture;
             set => SetProperty(ref _culture, value);
+        }
+
+        private static void DayTapped(DateTime date)
+        {
+            Console.WriteLine($"Received tap event from date: {date}");
         }
 
         #region INotifyPropertyChanged
