@@ -19,11 +19,11 @@
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(Configuration)'=='Debug' ">
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(Configuration)'!='Debug' ">
+  <ItemGroup Condition=" '$(Configuration)' != 'Debug' ">
     <PackageReference Include="Xamarin.Plugin.Calendar" Version="1.0.3.200" />
   </ItemGroup>
   
