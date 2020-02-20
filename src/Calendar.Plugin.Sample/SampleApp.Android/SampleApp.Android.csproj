@@ -97,22 +97,14 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
 
-  <Choose>
-    <When Condition=" '$(Configuration)' == 'Debug' ">
-      <ItemGroup>
-        <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj">
-          <Project>{81e938f4-a11c-4726-a13f-0d7ecc84ca66}</Project>
-          <Name>CalendarPlugin</Name>
-        </ProjectReference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="Xamarin.Plugin.Calendar" Version="1.0.3.200" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  
+  <ItemGroup>
+    <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj">
+      <Project>{81e938f4-a11c-4726-a13f-0d7ecc84ca66}</Project>
+      <Name>CalendarPlugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+
+
   <ItemGroup>
     <ProjectReference Include="..\SampleApp\SampleApp.csproj">
       <Project>{E4FB5119-AAD4-43E4-8741-1759FAF4083B}</Project>
