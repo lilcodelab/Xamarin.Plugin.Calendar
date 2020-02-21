@@ -57,7 +57,8 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 FontSize="Medium"
-                FontAttributes="Bold" />
+                FontAttributes="Bold"
+                LineBreakMode="TailTruncation"/>
 
             <Frame
                 Grid.Column="2"
@@ -97,7 +98,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
