@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:SampleApp"
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
     x:Class="SampleApp.MainPage"
-    Title="CALENDATRON-9000K">
+    Title="Calendar Sample">
     <ContentPage.BindingContext>
         <local:MainPageViewModel />
     </ContentPage.BindingContext>
@@ -87,5 +87,18 @@
         TodayFillColor="Silver"
         DayViewSize="40"
         DayViewCornerRadius="3"
-        DaysTitleHeight="40"-->
+        DaysTitleHeight="40"
+        ArrowDownText="&#xf063;"
+        ArrowLeftText="&#xf060;"
+        ArrowRightText="&#xf061;"
+        ArrowUpText="&#xf062;"
+        ArrowsFontFamily="{StaticResource FontAwesomeSolid}"
+        ArrowsFontFamily="{StaticResource FontAwesomeRegular}"
+        ArrowsFontSize="25"
+        ArrowsBackgroundColor="Transparent"
+        ArrowsHasShadow="False"
+        ArrowsBorderColor="Transparent"
+        AnimateCalendar="False"
+        TappedDayCommand="OnTappedDayCommand"
+    -->
 </ContentPage>
