@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using Xamarin.Plugin.Calendar.Shared.Models;
 
 namespace SampleApp
 {
@@ -22,8 +23,17 @@ namespace SampleApp
             Events = new EventCollection
             {
                 [DateTime.Now.AddDays(-3)] = new List<EventModel>(GenerateEvents(10, "Cool")),
-                EventIndicatorColor = Color.DarkRed
+                [DateTime.Now.AddDays(-6)] = new DayEventCollection<EventModel>(Color.Purple, Color.Purple)
+                {
+                    new EventModel { Name = "Cool event1", Description = "This is Cool event1's description!" },
+                    new EventModel { Name = "Cool event2", Description = "This is Cool event2's description!" }
+                }
             };
+
+            //Adding a day with a different dot color
+            Events.Add(DateTime.Now.AddDays(-2), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Blue, EventIndicatorSelectedColor = Color.Blue });
+            Events.Add(DateTime.Now.AddDays(-4), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Green, EventIndicatorSelectedColor = Color.Green });
+            Events.Add(DateTime.Now.AddDays(-5), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Orange, EventIndicatorSelectedColor = Color.Orange });
 
             // with add method
             Events.Add(DateTime.Now.AddDays(-1), new List<EventModel>(GenerateEvents(5, "Cool")));

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Plugin.Calendar.Shared.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -365,8 +366,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.OtherMonthColor = OtherMonthDayColor;
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
-                dayModel.EventIndicatorColor = EventIndicatorColor;
-                dayModel.EventIndicatorSelectedColor = EventIndicatorSelectedColor;
+                AssignIndicatorColors(ref dayModel);
                 dayModel.TodayOutlineColor = TodayOutlineColor;
                 dayModel.TodayFillColor = TodayFillColor;
                 dayModel.DisabledColor = DisabledDayColor;
@@ -463,6 +463,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
+                AssignIndicatorColors(ref dayModel);
+
                 if (dayModel.IsSelected)
                     _selectedDay = dayModel;
             }
@@ -500,6 +502,44 @@ namespace Xamarin.Plugin.Calendar.Controls
             propertyChangeAction();
 
             _propertyChangedNotificationSupressions[propertyName] = false;
+        }
+
+        private void AssignIndicatorColors(ref DayModel dayModel)
+        {
+            if (dayModel.HasEvents)
+            {
+                var dayEventCollection = GetDayEventCollection(dayModel.Date);
+                if (dayEventCollection != null)
+                {
+                    dayModel.EventIndicatorColor = GetSpecialEventIndicatorColor(dayEventCollection) ?? EventIndicatorColor;
+                    dayModel.EventIndicatorSelectedColor = GetSpecialEventIndicatorSelectedColor(dayEventCollection) ?? EventIndicatorSelectedColor;
+                }
+            }
+        }
+
+        private Color? GetSpecialEventIndicatorColor(object value)
+        {
+            return (Color?) GetPropertyFromGenericType(value, "EventIndicatorColor");
+        }
+
+        private Color? GetSpecialEventIndicatorSelectedColor(object value)
+        {
+            return (Color?) GetPropertyFromGenericType(value, "EventIndicatorSelectedColor");
+        }
+
+        private object GetDayEventCollection(DateTime date)
+        {
+            Events.TryGetValue(date, out var dayEventCollection);
+            if (dayEventCollection?.GetType().GetGenericTypeDefinition() == typeof(DayEventCollection<>))
+            {
+                return dayEventCollection;
+            }
+            return null;
+        }
+
+        private object GetPropertyFromGenericType(object value, string propertyName)
+        {
+            return value.GetType().GetProperty(propertyName).GetValue(value);
         }
     }
 }
