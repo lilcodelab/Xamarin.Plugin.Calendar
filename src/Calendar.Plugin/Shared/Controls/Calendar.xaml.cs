@@ -235,7 +235,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty HeaderSectionTemplateProperty =
-          BindableProperty.Create(nameof(HeaderSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(()=> new DefaultHeaderSection()));
+          BindableProperty.Create(nameof(HeaderSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(() => new DefaultHeaderSection()));
 
         public DataTemplate HeaderSectionTemplate
         {
@@ -244,7 +244,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty FooterSectionTemplateProperty =
-          BindableProperty.Create(nameof(FooterSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(()=> new DefaultFooterSection()));
+          BindableProperty.Create(nameof(FooterSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(() => new DefaultFooterSection()));
 
         public DataTemplate FooterSectionTemplate
         {
@@ -344,7 +344,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// </summary>
         public bool DisableSwipeDetection
         {
-            get => (bool) GetValue(DisableSwipeDetectionProperty);
+            get => (bool)GetValue(DisableSwipeDetectionProperty);
             set => SetValue(DisableSwipeDetectionProperty, value);
         }
 
@@ -355,7 +355,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Activated when user swipes-up over days view </summary>
         public ICommand SwipeUpCommand
         {
-            get => (ICommand) GetValue(SwipeUpCommandProperty);
+            get => (ICommand)GetValue(SwipeUpCommandProperty);
             set => SetValue(SwipeUpCommandProperty, value);
         }
 
@@ -366,7 +366,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Enable/disable default swipe-up action for showing/hiding calendar </summary>
         public bool SwipeUpToHideEnabled
         {
-            get => (bool) GetValue(SwipeUpToHideEnabledProperty);
+            get => (bool)GetValue(SwipeUpToHideEnabledProperty);
             set => SetValue(SwipeUpToHideEnabledProperty, value);
         }
 
@@ -377,7 +377,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Activated when user swipes-left over days view </summary>
         public ICommand SwipeLeftCommand
         {
-            get => (ICommand) GetValue(SwipeLeftCommandProperty);
+            get => (ICommand)GetValue(SwipeLeftCommandProperty);
             set => SetValue(SwipeLeftCommandProperty, value);
         }
 
@@ -388,7 +388,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Activated when user swipes-right over days view </summary>
         public ICommand SwipeRightCommand
         {
-            get => (ICommand) GetValue(SwipeRightCommandProperty);
+            get => (ICommand)GetValue(SwipeRightCommandProperty);
             set => SetValue(SwipeRightCommandProperty, value);
         }
 
@@ -399,7 +399,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Enable/disable default swipe actions for changing months </summary>
         public bool SwipeToChangeMonthEnabled
         {
-            get => (bool) GetValue(SwipeToChangeMonthEnabledProperty);
+            get => (bool)GetValue(SwipeToChangeMonthEnabledProperty);
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
         }
 
@@ -410,7 +410,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Minimum date which can be selected </summary>
         public DateTime MinimumDate
         {
-            get => (DateTime) GetValue(MinimumDateProperty);
+            get => (DateTime)GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
         }
 
@@ -421,7 +421,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Maximum date which can be selected </summary>
         public DateTime MaximumDate
         {
-            get => (DateTime) GetValue(MaximumDateProperty);
+            get => (DateTime)GetValue(MaximumDateProperty);
             set => SetValue(MaximumDateProperty, value);
         }
 
@@ -432,7 +432,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
         public Color DisabledDayColor
         {
-            get => (Color) GetValue(DisabledDayColorProperty);
+            get => (Color)GetValue(DisabledDayColorProperty);
             set => SetValue(DisabledDayColorProperty, value);
         }
 
@@ -515,7 +515,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         public bool ArrowsHasShadow
         {
-            get => (bool)GetValue(ArrowsHasShadowProperty);
+            get => (bool) GetValue(ArrowsHasShadowProperty);
             set => SetValue(ArrowsHasShadowProperty, value);
         }
 
