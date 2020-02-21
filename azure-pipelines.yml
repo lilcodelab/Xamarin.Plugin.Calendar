@@ -67,8 +67,8 @@ jobs:
         targetType: 'inline'
         script: |
           sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'"/g' src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj
-          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"(.|\n)*<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
-          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj".*?<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">(.*|\n)+<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">\n.*\n.*\n<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
          
           cat src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
           cat src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj 
@@ -112,8 +112,8 @@ jobs:
         targetType: 'inline'
         script: |
           sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'"/g' src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj
-          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"[\s\S]+<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
-          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"[\s\S]<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">[\n\r0-9A-Za-z<>-]\{1,\}<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">[\n.*]+<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
           
           cat src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
           cat src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
