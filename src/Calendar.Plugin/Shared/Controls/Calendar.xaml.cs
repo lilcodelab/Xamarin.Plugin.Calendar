@@ -519,15 +519,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ArrowsHasShadowProperty, value);
         }
 
-        public static readonly BindableProperty ArrowsHasShadowProperty =
-            BindableProperty.Create(nameof(ArrowsHasShadow), typeof(bool), typeof(Calendar), true);
-
-        public bool ArrowsHasShadow
-        {
-            get => (bool) GetValue(ArrowsHasShadowProperty);
-            set => SetValue(ArrowsHasShadowProperty, value);
-        }
-
         private static bool animateCalendar = true;
         public static readonly BindableProperty AnimateCalendarProperty =
             BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
