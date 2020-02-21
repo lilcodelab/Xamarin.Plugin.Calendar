@@ -32,7 +32,8 @@
             Padding="0"
             BackgroundColor="{Binding EventColor}"
             InputTransparent="True"
-            HasShadow="False" />
+            HasShadow="False"
+            OutlineColor="Transparent"/>
 
         <Label
             Text="{Binding Date.Day}"
