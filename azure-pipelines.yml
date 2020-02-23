@@ -121,7 +121,8 @@ jobs:
 
           sed -i .bak -e '/81e938f4-a11c-4726-a13f-0d7ecc84ca66/d' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj 
           sed -i .bak -e '/<Name>CalendarPlugin/d' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj 
-          sed -E -i .bak -e 'N;s/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj".*<\/ProjectReference>/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+          sed -i .bak '/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/{n;s/<\/ProjectReference>/ /}'
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
 
           sed -i .bak -e '/81e938f4-a11c-4726-a13f-0d7ecc84ca66/d' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
           sed -i .bak -e '/<Name>CalendarPlugin/d' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
