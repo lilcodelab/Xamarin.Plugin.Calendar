@@ -81,6 +81,7 @@ jobs:
           cat src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
           cat src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj 
 
+          nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
           nuget restore src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
     - task: XamariniOS@2
@@ -134,6 +135,7 @@ jobs:
           cat src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
           cat src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj          
           
+          nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
           nuget restore src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
     - task: XamarinAndroid@1
