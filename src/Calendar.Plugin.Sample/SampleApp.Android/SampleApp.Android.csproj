@@ -100,6 +100,8 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj">
+     <Project>{81e938f4-a11c-4726-a13f-0d7ecc84ca66}</Project>	
+      <Name>CalendarPlugin</Name>
     </ProjectReference>
   </ItemGroup>
 
