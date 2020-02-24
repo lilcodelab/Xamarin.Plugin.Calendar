@@ -27,10 +27,10 @@ jobs:
       inputs:
         restoreSolution: '**/*.sln'
 
-    - task: VSBuild@1
+    - task: MSBuild@1
       inputs:
         solution: '**/CalendarPlugin.csproj'
-        msbuildArgs: '/p:Version=$(nugetVersion)'
+        msbuildArguments: '/p:Version=$(nugetVersion)'
         configuration: '$(BuildConfiguration)'
 
     - task: PublishBuildArtifacts@1
