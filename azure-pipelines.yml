@@ -27,11 +27,11 @@ jobs:
       inputs:
         restoreSolution: '**/*.sln'
 
-    - task: MSBuild@1
+    - task: VSBuild@1
       inputs:
         solution: '**/CalendarPlugin.csproj'
+        msbuildArgs: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
         configuration: '$(BuildConfiguration)'
-        msbuildArguments: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: nupkg'
