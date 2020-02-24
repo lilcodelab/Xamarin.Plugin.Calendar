@@ -100,4 +100,5 @@
     <Compile Include="iOS\*.cs" />
   </ItemGroup>
 
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
