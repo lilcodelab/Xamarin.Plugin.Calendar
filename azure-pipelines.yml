@@ -25,7 +25,7 @@ jobs:
     - task: NuGetCommand@2
       displayName: 'Nuget restore solution'
       inputs:
-        restoreSolution: '**/*.sln'
+        restoreSolution: '**/CalendarPlugin.csproj'
 
     - task: MSBuild@1
       inputs:
@@ -36,7 +36,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: nupkg'
       inputs:
-        PathtoPublish: 'src/CalendarPlugin/bin/Release'
+        PathtoPublish: 'src\Calendar.Plugin\bin\Release\'
         ArtifactName: nupkg
 
 - job: 'iOSSampleApp'
