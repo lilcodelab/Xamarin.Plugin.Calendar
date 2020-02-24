@@ -25,21 +25,23 @@ jobs:
     - task: NuGetCommand@2
       displayName: 'Nuget restore solution'
       inputs:
-        restoreSolution: '**/*.sln'
+        restoreSolution: '**/CalendarPlugin.csproj'
 
     - task: MSBuild@1
       inputs:
         solution: '**/CalendarPlugin.csproj'
+        msbuildArguments: '/p:Version=$(nugetVersion)'
         configuration: '$(BuildConfiguration)'
-        msbuildArguments: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: nupkg'
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)'
+        PathtoPublish: 'src\Calendar.Plugin\bin\Release\'
         ArtifactName: nupkg
 
 - job: 'iOSSampleApp'
+  dependsOn:
+    - Nuget
   pool:
     vmImage: 'macOS-latest'
   steps:
@@ -49,16 +51,41 @@ jobs:
       inputs:
         version: 3.x
 
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_6_0
       displayName: 'Selecting the Xamarin SDK version'
 
-    - task: NuGetCommand@2
-      displayName: 'Nuget restore solution'
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download PackNugetPackage artifacts"
       inputs:
-        restoreSolution: '**/*.sln'
+        buildType: 'current'
+        downloadType: 'single'
+        downloadPath: '$(build.binariesDirectory)/nuget/'
+        artifactName: 'nupkg'
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'"/g' src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj
+
+          sed -i .bak -e '/81e938f4-a11c-4726-a13f-0d7ecc84ca66/d' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj 
+          sed -i .bak -e '/<Name>CalendarPlugin/d' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj 
+          sed -E -i .bak -e '/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/{N;s/\n.*//;}' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+
+          sed -i .bak -e '/81e938f4-a11c-4726-a13f-0d7ecc84ca66/d' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -i .bak -e '/<Name>CalendarPlugin/d' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -E -i .bak -e '/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/{N;s/\n.*//;}' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+        
+          cat src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+          cat src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj 
+
+          nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
+          nuget restore src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
     - task: XamariniOS@2
-      continueOnError: true      
+      continueOnError: true
       inputs:
         solutionFile: '**/SampleApp.iOS.csproj'
         configuration: '$(buildConfiguration)'
@@ -67,8 +94,10 @@ jobs:
         buildForSimulator: true
 
 - job: 'AndroidSampleApp'
+  dependsOn:
+    - Nuget
   pool:
-    vmImage: 'windows-latest'
+    vmImage: 'macOS-latest'
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
@@ -76,10 +105,39 @@ jobs:
       inputs:
         version: 3.x
 
-    - task: NuGetCommand@2
-      displayName: 'Nuget restore solution'
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_6_0
+      displayName: 'Selecting the Xamarin SDK version'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download PackNugetPackage artifacts"
       inputs:
-        restoreSolution: '**/*.sln'
+        buildType: 'current'
+        downloadType: 'single'
+        downloadPath: '$(build.binariesDirectory)/nuget/'
+        artifactName: 'nupkg'
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'"/g' src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj
+
+          sed -i .bak -e '/81e938f4-a11c-4726-a13f-0d7ecc84ca66/d' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj 
+          sed -i .bak -e '/<Name>CalendarPlugin/d' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj 
+          sed -E -i .bak -e '/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/{N;s/\n.*//;}' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+
+          sed -i .bak -e '/81e938f4-a11c-4726-a13f-0d7ecc84ca66/d' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -i .bak -e '/<Name>CalendarPlugin/d' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -E -i .bak -e '/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/{N;s/\n.*//;}' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+          sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj">/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(nugetVersion)'" \/>/g' src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj
+            
+          cat src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj
+          cat src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj          
+          
+          nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
+          nuget restore src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
+
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
       inputs:
@@ -87,7 +145,7 @@ jobs:
         createAppPackage: true
         outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
         jdkOption: 'JDKVersion'
-        clean: true
+        clean: false
         configuration: '$(BuildConfiguration)'
         msbuildVersionOption: latest
 

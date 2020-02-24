@@ -1,5 +1,5 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
-
+  
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10</TargetFrameworks>
     <Authors>Josip Caleta</Authors>
@@ -48,7 +48,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
+    <PackageReference Include="Xamarin.Forms" Version="3.3.0.912540" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
@@ -100,5 +100,5 @@
     <Compile Include="iOS\*.cs" />
   </ItemGroup>
 
-
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
