@@ -30,13 +30,13 @@ jobs:
     - task: VSBuild@1
       inputs:
         solution: '**/CalendarPlugin.csproj'
-        msbuildArgs: '/p:Version=$(nugetVersion) /p:OutputPath=$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)/'
+        msbuildArgs: '/p:Version=$(nugetVersion)'
         configuration: '$(BuildConfiguration)'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: nupkg'
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)'
+        PathtoPublish: 'src/CalendarPlugin/bin/Release'
         ArtifactName: nupkg
 
 - job: 'iOSSampleApp'
