@@ -126,14 +126,18 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991477" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+
   <ItemGroup>
     <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj">
       <Project>{81e938f4-a11c-4726-a13f-0d7ecc84ca66}</Project>
       <Name>CalendarPlugin</Name>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SampleApp\SampleApp.csproj">
       <Project>{E4FB5119-AAD4-43E4-8741-1759FAF4083B}</Project>
       <Name>SampleApp</Name>
