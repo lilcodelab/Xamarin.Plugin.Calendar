@@ -8,6 +8,7 @@
 | Android | iPhone |
 | ------- | ------ |
 | ![Android Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/Android.jpg) | ![iPhone Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iPhone_XS.png) |
+| ![Android Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/AndroidCustom.png) | ![iPhone Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iPhone6sCustom.png) |
 
 Simple cross platform plugin for Calendar control featuring:
 - Displaying events by binding EventCollection
@@ -107,12 +108,35 @@ Events = new EventCollection
     {
         new EventModel { Name = "Cool event5", Description = "This is Cool event5's description!" }
     }
-},
+};
+```
+
+Initialize Events with your data and a different dot color per day:
+```csharp
+Events = new EventCollection
+{
+    //2 days ago
+    [DateTime.Now.AddDays(-2)] = new DayEventCollection<EventModel>(Color.Purple, Color.Purple)
+    {
+        new EventModel { Name = "Cool event1", Description = "This is Cool event1's description!" },
+        new EventModel { Name = "Cool event2", Description = "This is Cool event2's description!" }
+    },
+    // 5 days ago
+    [DateTime.Now.AddDays(-5)] = new DayEventCollection<EventModel>(Color.Blue, Color.Blue)
+    {
+        new EventModel { Name = "Cool event3", Description = "This is Cool event3's description!" },
+        new EventModel { Name = "Cool event4", Description = "This is Cool event4's description!" }
+    },
+};
+//4 days ago
+Events.Add(DateTime.Now.AddDays(-4), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Green, EventIndicatorSelectedColor = Color.Green });
 ```
 
 Where `EventModel` is just an example, it can be replaced by any data model you desire.
 
 `EventsCollection` is just a wrapper over `Dictionary<DateTime, ICollection>` exposing custom `Add` method and `this[DateTime]` indexer which internally extracts the `.Date` component of `DateTime` values and uses it as a key in this dictionary.
+
+`DayEventCollection` is just a wrapper over `List<T>` exposing custom properties `EventIndicatorColor` and `EventIndicatorSelectedColor` for assigning a custom color to the dot.
 
 #### Available color customization
 Sample properties:
@@ -123,13 +147,31 @@ SelectedDateColor="Red"
 SelectedDayBackgroundColor="DarkCyan"
 EventIndicatorColor="Red"
 EventIndicatorSelectedColor="White"
-ArrowsColor="DarkCyan"
 DaysTitleColor="Orange"
 SelectedDayTextColor="Cyan"
 DeselectedDayTextColor="Blue"
 OtherMonthDayColor="Gray"
 TodayOutlineColor="Blue"
 TodayFillColor="Silver"
+```
+
+#### Available other customization properties
+Sample properties:
+```xml
+ArrowDownText="&#xf063;"<!--Font awesome solid text-->
+ArrowLeftText="&#xf060;"<!--Font awesome solid text-->
+ArrowRightText="&#xf061;"<!--Font awesome solid text-->
+ArrowUpText="&#xf062;"<!--Font awesome solid text-->
+ArrowsFontFamily="{StaticResource FontAwesomeSolid}"
+ArrowsFontFamily="{StaticResource FontAwesomeRegular}"
+ArrowsFontSize="25"
+ArrowsBackgroundColor="Transparent"
+ArrowsBorderColor="Transparent"
+ArrowsColor="DarkCyan"
+ArrowsHasShadow="False"
+ArrowsBorderColor="Transparent"
+AnimateCalendar="False"<!--Enable/Disable animation when calendar is loaded or refreshed-->
+TappedDayCommand="OnTappedDayCommand"
 ```
 
 ##### TODO
