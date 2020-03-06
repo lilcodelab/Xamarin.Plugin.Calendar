@@ -257,7 +257,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (Color)GetValue(DisabledDayColorProperty);
             set => SetValue(DisabledDayColorProperty, value);
         }
-        
+
         #endregion
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
@@ -454,7 +454,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.Date = currentDate.Date;
                 dayModel.DayViewSize = DayViewSize;
                 dayModel.DayViewCornerRadius = DayViewCornerRadius;
-                dayModel.DayTappedCommand = DayTappedCommand;
                 dayModel.DaysLabelStyle = DaysLabelStyle;
                 dayModel.IsThisMonth = currentDate.Month == Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
@@ -463,6 +462,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 if (dayModel.IsSelected)
                     _selectedDay = dayModel;
+
+                if (DayTappedCommand is object)
+                    dayModel.DayTappedCommand = DayTappedCommand;
             }
         }
 
