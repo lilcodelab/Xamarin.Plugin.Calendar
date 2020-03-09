@@ -257,7 +257,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (Color)GetValue(DisabledDayColorProperty);
             set => SetValue(DisabledDayColorProperty, value);
         }
-        
+
         #endregion
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
