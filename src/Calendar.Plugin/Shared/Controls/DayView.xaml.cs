@@ -12,6 +12,16 @@ namespace Xamarin.Plugin.Calendar.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DayView : ContentView
     {
+        #region Bindable personalizable actions
+        public static readonly BindableProperty TappedDayCommandProperty =
+            BindableProperty.Create(nameof(TappedDayCommand), typeof(Command<DateTime>), typeof(Calendar));
+        public Command<DateTime> TappedDayCommand
+        {
+            get => (Command<DateTime>) GetValue(TappedDayCommandProperty);
+            set => SetValue(TappedDayCommandProperty, value);
+        }
+        #endregion
+
         internal DayView()
         {
             InitializeComponent();
@@ -20,7 +30,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void OnTapped(object sender, EventArgs e)
         {
             if (BindingContext is DayModel dayModel && !dayModel.IsDisabled)
-            { 
+            {
                 dayModel.IsSelected = true;
                 dayModel.DayTappedCommand?.Execute(dayModel.Date);
             }

@@ -34,5 +34,10 @@
 	<string>SampleApp</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+		<key>UIAppFonts</key>
+	<array>
+		<string>font-awesome-5-free-regular.otf</string>
+		<string>font-awesome-5-free-solid.otf</string>
+	</array>
 </dict>
 </plist>

@@ -18,30 +18,32 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Frame
                 Grid.Column="0"
-                BackgroundColor="White"
-                HasShadow="True"
+                BackgroundColor="{Binding ArrowsBackgroundColor}"
+                HasShadow="{Binding ArrowsHasShadow}"
                 Padding="0"
                 WidthRequest="36"
                 HeightRequest="36"
                 CornerRadius="18"
                 VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
+                HorizontalOptions="CenterAndExpand"
+                BorderColor="{Binding ArrowsBorderColor}">
                 <Label
                     TextColor="{Binding ArrowsColor}"
                     FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="←"
+                    FontSize="{Binding ArrowsFontSize}"
+                    Text="{Binding ArrowLeftText}"
                     VerticalOptions="CenterAndExpand"
                     VerticalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
                     HorizontalTextAlignment="Center"
-                    InputTransparent="True"/>
+                    InputTransparent="True"
+                    FontFamily="{Binding ArrowsFontFamily}"/>
 
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
@@ -55,28 +57,31 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 FontSize="Medium"
-                FontAttributes="Bold" />
+                FontAttributes="Bold"
+                LineBreakMode="TailTruncation"/>
 
             <Frame
                 Grid.Column="2"
-                BackgroundColor="White"
-                HasShadow="True"
+                BackgroundColor="{Binding ArrowsBackgroundColor}"
+                HasShadow="{Binding ArrowsHasShadow}"
                 Padding="0"
                 WidthRequest="36"
                 HeightRequest="36"
                 CornerRadius="18"
                 VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
+                HorizontalOptions="CenterAndExpand"
+                BorderColor="{Binding ArrowsBorderColor}">
                 <Label
                     TextColor="{Binding ArrowsColor}"
                     FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="→"
+                    FontSize="{Binding ArrowsFontSize}"
+                    Text="{Binding ArrowRightText}"
                     VerticalOptions="CenterAndExpand"
                     VerticalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
                     HorizontalTextAlignment="Center"
-                    InputTransparent="True"/>
+                    InputTransparent="True"
+                    FontFamily="{Binding ArrowsFontFamily}"/>
 
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
@@ -93,30 +98,32 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Frame
                 Grid.Column="0"
-                BackgroundColor="White"
-                HasShadow="True"
+                BackgroundColor="{Binding ArrowsBackgroundColor}"
+                HasShadow="{Binding ArrowsHasShadow}"
                 Padding="0"
                 WidthRequest="36"
                 HeightRequest="36"
                 CornerRadius="18"
                 VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
+                HorizontalOptions="CenterAndExpand"
+                BorderColor="{Binding ArrowsBorderColor}">
                 <Label
                     TextColor="{Binding ArrowsColor}"
                     FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="←"
+                    FontSize="{Binding ArrowsFontSize}"
+                    Text="{Binding ArrowLeftText}"
                     VerticalOptions="CenterAndExpand"
                     VerticalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
                     HorizontalTextAlignment="Center"
-                    InputTransparent="True" />
+                    InputTransparent="True"
+                    FontFamily="{Binding ArrowsFontFamily}"/>
 
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding PrevYearCommand}" />
@@ -134,24 +141,26 @@
 
             <Frame
                 Grid.Column="2"
-                BackgroundColor="White"
-                HasShadow="True"
+                BackgroundColor="{Binding ArrowsBackgroundColor}"
+                HasShadow="{Binding ArrowsHasShadow}"
                 Padding="0"
                 WidthRequest="36"
                 HeightRequest="36"
                 CornerRadius="18"
                 VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
+                HorizontalOptions="CenterAndExpand"
+                BorderColor="{Binding ArrowsBorderColor}">
                 <Label
                     TextColor="{Binding ArrowsColor}"
                     FontAttributes="Bold"
-                    FontSize="Medium"
-                    Text="→"
+                    FontSize="{Binding ArrowsFontSize}"
+                    Text="{Binding ArrowRightText}"
                     VerticalOptions="CenterAndExpand"
                     VerticalTextAlignment="Center"
                     HorizontalOptions="CenterAndExpand"
                     HorizontalTextAlignment="Center"
-                    InputTransparent="True" />
+                    InputTransparent="True"
+                    FontFamily="{Binding ArrowsFontFamily}"/>
 
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NextYearCommand}" />
