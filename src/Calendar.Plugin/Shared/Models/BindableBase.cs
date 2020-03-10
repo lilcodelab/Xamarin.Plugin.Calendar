@@ -26,7 +26,7 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             if (!_properties.TryGetValue(propertyName, out object storedValue))
                 AddProperty(propertyName, value);
-            else if (storedValue.Equals(value))
+            else if (storedValue is object && storedValue.Equals(value))
                 return this;
 
             _properties[propertyName] = value;
