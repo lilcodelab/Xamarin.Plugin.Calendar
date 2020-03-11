@@ -37,7 +37,8 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty MonthProperty =
-          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay, (view, newValue) => { return newValue is int val && val > 0 && val <= 12; },
+          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay,
+              (view, newValue) => { return newValue is int val && val > 0 && val <= 12; },
               (cal, oldValue, newValue) =>
               {
                   if (cal is Calendar calendar && calendar.MonthYear.Month != (int)newValue)
@@ -48,10 +49,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         public int Month
         {
             get => (int)GetValue(MonthProperty);
-            set
-            {
-                SetValue(MonthProperty, value);
-            }
+            set => SetValue(MonthProperty, value);
         }
 
         public static readonly BindableProperty YearProperty =
@@ -65,10 +63,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         public int Year
         {
             get => (int)GetValue(YearProperty);
-            set
-            {
-                SetValue(YearProperty, value);
-            }
+            set => SetValue(YearProperty, value);
         }
 
         public static readonly BindableProperty MonthYearProperty =
@@ -88,10 +83,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         public DateTime MonthYear
         {
             get => (DateTime)GetValue(MonthYearProperty);
-            set
-            {
-                SetValue(MonthYearProperty, value);
-            }
+            set => SetValue(MonthYearProperty, value);
         }
 
         public static readonly BindableProperty SelectedDateProperty =
