@@ -37,7 +37,13 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty MonthProperty =
-          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay, (view, newValue) => { return newValue is int val && val > 0 && val <= 12; },
+              (cal, oldValue, newValue) =>
+              {
+                  if (cal is Calendar calendar && calendar.MonthYear.Month != (int)newValue)
+                      calendar.MonthYear = new DateTime(calendar.Year, (int)newValue, 1);
+              });
+
 
         public int Month
         {
@@ -45,12 +51,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(MonthProperty, value);
-                SetValue(MonthYearProperty, new DateTime(Year, value, 1));
             }
         }
 
         public static readonly BindableProperty YearProperty =
-          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Today.Year, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Today.Year, BindingMode.TwoWay, null,
+              (cal, oldValue, newValue) =>
+              {
+                  if (cal is Calendar calendar && calendar.MonthYear.Year != (int)newValue)
+                      calendar.MonthYear = new DateTime((int)newValue, calendar.Month, 1);
+              });
 
         public int Year
         {
@@ -58,12 +68,22 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(YearProperty, value);
-                SetValue(MonthYearProperty, new DateTime(value, Month, 1));
             }
         }
 
         public static readonly BindableProperty MonthYearProperty =
-          BindableProperty.Create(nameof(MonthYear), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(MonthYear), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, null,
+              (cal, oldValue, newValue) =>
+              {
+                  if (cal is Calendar calendar)
+                  {
+                      if (calendar.Month != ((DateTime)newValue).Month)
+                          calendar.Month = ((DateTime)newValue).Month;
+
+                      if (calendar.Year != ((DateTime)newValue).Year)
+                          calendar.Year = ((DateTime)newValue).Year;
+                  }
+              });
 
         public DateTime MonthYear
         {
@@ -71,8 +91,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(MonthYearProperty, value);
-                SetValue(YearProperty, value.Year);
-                SetValue(MonthProperty, value.Month);
             }
         }
 
@@ -425,7 +443,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (bool)GetValue(SwipeToChangeMonthEnabledProperty);
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
         }
-        
+
         /// <summary>
         /// Bindable property for DayTapped
         /// </summary>
@@ -437,7 +455,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// </summary>
         public ICommand DayTappedCommand
         {
-            get => (ICommand) GetValue(DayTappedCommandProperty);
+            get => (ICommand)GetValue(DayTappedCommandProperty);
             set => SetValue(DayTappedCommandProperty, value);
         }
 
@@ -679,8 +697,8 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void ChangeDisplayedMonth(int monthsToAdd)
         {
             var targetDisplayedMonth = MonthYear.AddMonths(monthsToAdd);
-            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate || 
-                targetDisplayedMonth.Month == MaximumDate.Month || 
+            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate ||
+                targetDisplayedMonth.Month == MaximumDate.Month ||
                 targetDisplayedMonth.Month == MinimumDate.Month)
             {
                 MonthYear = targetDisplayedMonth;
