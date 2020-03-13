@@ -555,10 +555,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (!(newValue is int newMonth) || newMonth <= 0 || newMonth > 12)
                 throw new ArgumentException("Month must be between 1 and 12.");
 
-
             if (bindable is Calendar calendar && calendar.MonthYear.Month != newMonth)
                 calendar.MonthYear = new DateTime(calendar.Year, newMonth, 1);
-
         }
 
         private static void OnMonthYearChanged(BindableObject bindable, object oldValue, object newValue)
