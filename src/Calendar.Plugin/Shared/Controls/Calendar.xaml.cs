@@ -37,7 +37,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty MonthProperty =
-          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Now.Month, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay, propertyChanged: OnMonthChanged);
 
         public int Month
         {
@@ -46,12 +46,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty YearProperty =
-          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Now.Year, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Today.Year, BindingMode.TwoWay, propertyChanged: OnYearChanged);
 
         public int Year
         {
             get => (int)GetValue(YearProperty);
             set => SetValue(YearProperty, value);
+        }
+
+        public static readonly BindableProperty MonthYearProperty =
+          BindableProperty.Create(nameof(MonthYear), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, propertyChanged: OnMonthYearChanged);
+
+        public DateTime MonthYear
+        {
+            get => (DateTime)GetValue(MonthYearProperty);
+            set => SetValue(MonthYearProperty, value);
         }
 
         public static readonly BindableProperty SelectedDateProperty =
@@ -403,7 +412,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (bool)GetValue(SwipeToChangeMonthEnabledProperty);
             set => SetValue(SwipeToChangeMonthEnabledProperty, value);
         }
-        
+
         /// <summary>
         /// Bindable property for DayTapped
         /// </summary>
@@ -415,7 +424,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// </summary>
         public ICommand DayTappedCommand
         {
-            get => (ICommand) GetValue(DayTappedCommandProperty);
+            get => (ICommand)GetValue(DayTappedCommandProperty);
             set => SetValue(DayTappedCommandProperty, value);
         }
 
@@ -535,6 +544,33 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
+        private static void OnYearChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar calendar && calendar.MonthYear.Year != (int)newValue)
+                calendar.MonthYear = new DateTime((int)newValue, calendar.Month, 1);
+        }
+
+        private static void OnMonthChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(newValue is int newMonth) || newMonth <= 0 || newMonth > 12)
+                throw new ArgumentException("Month must be between 1 and 12.");
+
+            if (bindable is Calendar calendar && calendar.MonthYear.Month != newMonth)
+                calendar.MonthYear = new DateTime(calendar.Year, newMonth, 1);
+        }
+
+        private static void OnMonthYearChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar calendar && newValue is DateTime newDateTime)
+            {
+                if (calendar.Month != newDateTime.Month)
+                    calendar.Month = newDateTime.Month;
+
+                if (calendar.Year != newDateTime.Year)
+                    calendar.Year = newDateTime.Year;
+            }
+        }
+
         /// <summary> Method that is called when a bound property is changed. </summary>
         /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -543,7 +579,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             switch (propertyName)
             {
-                case nameof(Month):
+                case nameof(MonthYear):
                     UpdateMonthLabel();
                     break;
 
@@ -553,7 +589,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(Culture):
-                    if (Month > 0)
+                    if (MonthYear.Month > 0)
                         UpdateMonthLabel();
 
                     UpdateSelectedDateLabel();
@@ -578,7 +614,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateMonthLabel()
         {
-            MonthText = Culture.DateTimeFormat.MonthNames[Month - 1].Capitalize();
+            MonthText = Culture.DateTimeFormat.MonthNames[MonthYear.Month - 1].Capitalize();
         }
 
         private void UpdateSelectedDateLabel()
@@ -654,57 +690,41 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #region Other methods
 
-        private void PrevMonth()
+        private void ChangeDisplayedMonth(int monthsToAdd)
         {
-            int newMonth;
-            int newYear = Year;
-
-            if (Month - 1 == 0)
+            var targetDisplayedMonth = MonthYear.AddMonths(monthsToAdd);
+            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate ||
+                targetDisplayedMonth.Month == MaximumDate.Month ||
+                targetDisplayedMonth.Month == MinimumDate.Month)
             {
-                newMonth = 12;
-                newYear = Year - 1;
-            }
-            else
-                newMonth = Month - 1;
-
-            if (CheckMinimumDate(newYear, newMonth))
-            {
-                Month = newMonth;
-                Year = newYear;
+                MonthYear = targetDisplayedMonth;
             }
         }
 
-        private void NextMonth()
+        private void ChangeDisplayedYear(int yearsToAdd)
         {
-            int newMonth;
-            int newYear = Year;
-
-            if (Month + 1 == 13)
+            var targetDisplayedMonth = MonthYear.AddYears(yearsToAdd);
+            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate)
             {
-                newMonth = 1;
-                newYear = Year + 1;
+                MonthYear = targetDisplayedMonth;
             }
-            else
-                newMonth = Month + 1;
-
-            if (CheckMaximumDate(newYear, newMonth))
+            else if (targetDisplayedMonth.Year == MaximumDate.Year)
             {
-                Month = newMonth;
-                Year = newYear;
+                MonthYear = MaximumDate;
+            }
+            else if (targetDisplayedMonth.Year == MinimumDate.Year)
+            {
+                MonthYear = MinimumDate;
             }
         }
 
-        private void PrevYear()
-        {
-            if (CheckMinimumDate(Year - 1, Month))
-                Year--;
-        }
+        private void PrevMonth() => ChangeDisplayedMonth(-1);
 
-        private void NextYear()
-        {
-            if (CheckMaximumDate(Year + 1, Month))
-                Year++;
-        }
+        private void NextMonth() => ChangeDisplayedMonth(1);
+
+        private void PrevYear() => ChangeDisplayedYear(-1);
+
+        private void NextYear() => ChangeDisplayedYear(1);
 
         private void ToggleCalendarSectionVisibility()
             => CalendarSectionShown = !CalendarSectionShown;
@@ -714,24 +734,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             calendarSectionRow.Height = new GridLength(_calendarSectionHeight * currentValue);
             calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
-        }
-
-        private bool CheckMinimumDate(int year, int month)
-        {
-            if (year < MinimumDate.Year ||
-                year == MinimumDate.Year && month < MinimumDate.Month)
-                return false;
-
-            return true;
-        }
-
-        private bool CheckMaximumDate(int year, int month)
-        {
-            if (year > MaximumDate.Year ||
-                year == MaximumDate.Year && month > MaximumDate.Month)
-                return false;
-
-            return true;
         }
 
         #endregion

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Xamarin.Plugin.Calendar.Controls.DefaultHeaderSection">
 
+    
     <!-- TODO: Controls for circle buttons -->
     <StackLayout
         Grid.Row="0"
