@@ -37,14 +37,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty MonthProperty =
-          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay,
-              (view, newValue) => { return newValue is int val && val > 0 && val <= 12; },
-              (cal, oldValue, newValue) =>
-              {
-                  if (cal is Calendar calendar && calendar.MonthYear.Month != (int)newValue)
-                      calendar.MonthYear = new DateTime(calendar.Year, (int)newValue, 1);
-              });
-
+          BindableProperty.Create(nameof(Month), typeof(int), typeof(Calendar), DateTime.Today.Month, BindingMode.TwoWay, propertyChanged: OnMonthChanged);
 
         public int Month
         {
@@ -53,12 +46,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty YearProperty =
-          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Today.Year, BindingMode.TwoWay, null,
-              (cal, oldValue, newValue) =>
-              {
-                  if (cal is Calendar calendar && calendar.MonthYear.Year != (int)newValue)
-                      calendar.MonthYear = new DateTime((int)newValue, calendar.Month, 1);
-              });
+          BindableProperty.Create(nameof(Year), typeof(int), typeof(Calendar), DateTime.Today.Year, BindingMode.TwoWay, propertyChanged: OnYearChanged);
 
         public int Year
         {
@@ -67,18 +55,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty MonthYearProperty =
-          BindableProperty.Create(nameof(MonthYear), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, null,
-              (cal, oldValue, newValue) =>
-              {
-                  if (cal is Calendar calendar)
-                  {
-                      if (calendar.Month != ((DateTime)newValue).Month)
-                          calendar.Month = ((DateTime)newValue).Month;
-
-                      if (calendar.Year != ((DateTime)newValue).Year)
-                          calendar.Year = ((DateTime)newValue).Year;
-                  }
-              });
+          BindableProperty.Create(nameof(MonthYear), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, propertyChanged: OnMonthYearChanged);
 
         public DateTime MonthYear
         {
@@ -564,6 +541,35 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 view.UpdateEvents();
                 view.monthDaysView.UpdateDays();
+            }
+        }
+
+        private static void OnYearChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar calendar && calendar.MonthYear.Year != (int)newValue)
+                calendar.MonthYear = new DateTime((int)newValue, calendar.Month, 1);
+        }
+
+        private static void OnMonthChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(newValue is int newMonth) || newMonth <= 0 || newMonth > 12)
+                throw new ArgumentException("Month must be between 1 and 12.");
+
+
+            if (bindable is Calendar calendar && calendar.MonthYear.Month != newMonth)
+                calendar.MonthYear = new DateTime(calendar.Year, newMonth, 1);
+
+        }
+
+        private static void OnMonthYearChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar calendar && newValue is DateTime newDateTime)
+            {
+                if (calendar.Month != newDateTime.Month)
+                    calendar.Month = newDateTime.Month;
+
+                if (calendar.Year != newDateTime.Year)
+                    calendar.Year = newDateTime.Year;
             }
         }
 
