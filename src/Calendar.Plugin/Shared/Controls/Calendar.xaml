@@ -32,8 +32,7 @@
                 SwipedUp="OnSwipedUp">
                 <controls:MonthDaysView
                     x:Name="monthDaysView"
-                    Month="{Binding Month, Source={x:Reference calendar}}"
-                    Year="{Binding Year, Source={x:Reference calendar}}"
+                    DisplayedMonthYear="{Binding MonthYear, Source={x:Reference calendar}}"
                     SelectedDate="{Binding SelectedDate, Source={x:Reference calendar}}"
                     Events="{Binding Events, Source={x:Reference calendar}}"
                     Culture="{Binding Culture, Source={x:Reference calendar}}"

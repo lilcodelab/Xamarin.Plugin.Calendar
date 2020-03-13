@@ -58,6 +58,8 @@ namespace SampleApp
                 // add later
                 Events.Add(DateTime.Now.AddDays(15), new List<EventModel>(GenerateEvents(10, "Cool")));
 
+                Month += 1;
+
                 Task.Delay(3000).ContinueWith(t =>
                 {
                     // get observable collection later
@@ -66,7 +68,9 @@ namespace SampleApp
                     // insert/add items to observable collection
                     todayEvents.Insert(0, new EventModel { Name = "Cool event insert", Description = "This is Cool event's description!" });
                     todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
-                });
+
+                    Month += 1;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -80,8 +84,15 @@ namespace SampleApp
         }
 
         public EventCollection Events { get; }
-        public int Month { get; set; } = DateTime.Now.Month;
-        public int Year { get; set; } = DateTime.Now.Year;
+
+        private int _month = DateTime.Today.Month;
+        public int Month
+        {
+            get => _month;
+            set => SetProperty(ref _month, value);
+        }
+
+        public int Year { get; set; } = DateTime.Today.Year;
 
         private DateTime _selectedDate = DateTime.Today;
         public DateTime SelectedDate

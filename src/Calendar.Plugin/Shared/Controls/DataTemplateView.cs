@@ -13,11 +13,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ItemTemplateProperty, value);
         }
 
-        internal DataTemplateView () { }
+        internal DataTemplateView() { }
 
         private static void OnItemTemplateChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is DataTemplateView  view)
+            if (bindable is DataTemplateView view)
                 view.CreateContent();
         }
 

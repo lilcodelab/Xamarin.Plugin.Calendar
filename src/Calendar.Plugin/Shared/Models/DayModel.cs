@@ -145,16 +145,22 @@ namespace Xamarin.Plugin.Calendar.Models
                                    ? TodayOutlineColor
                                    : Color.Transparent;
 
-        public Color BackgroundColor => IsSelected
-                                      ? SelectedBackgroundColor
-                                      : IsToday() ? TodayFillColor
-                                                  : DeselectedBackgroundColor;
+        public Color BackgroundColor =>
+            (IsSelected, IsToday()) switch
+            {
+                (true, _) => SelectedBackgroundColor,
+                (false, true) => TodayFillColor,
+                (_, _) => DeselectedBackgroundColor
+            };
 
-        public Color TextColor => IsDisabled
-                                ? DisabledColor
-                                : IsSelected ? SelectedTextColor
-                                             : IsThisMonth ? DeselectedTextColor   
-                                                           : OtherMonthColor;
+        public Color TextColor =>
+            (IsDisabled, IsSelected, IsThisMonth) switch
+            {
+                (true, _, _) => DisabledColor,
+                (false, true, _) => SelectedTextColor,
+                (false, false, true) => DeselectedTextColor,
+                (_, _, _) => OtherMonthColor
+            };
 
         private bool IsToday()
             => Date.Date == DateTime.Today && !IsSelected;
