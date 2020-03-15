@@ -463,88 +463,6 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
-        #region Bindable personalizable properties
-        public static readonly BindableProperty ArrowsFontFamilyProperty = BindableProperty.Create(nameof(ArrowsFontFamily), typeof(string), typeof(Calendar), string.Empty);
-
-        public string ArrowsFontFamily
-        {
-            get => (string) GetValue(ArrowsFontFamilyProperty);
-            set => SetValue(ArrowsFontFamilyProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowLeftTextProperty =
-          BindableProperty.Create(nameof(ArrowLeftText), typeof(string), typeof(Calendar), "←");
-
-        public string ArrowLeftText
-        {
-            get => (string) GetValue(ArrowLeftTextProperty);
-            set => SetValue(ArrowLeftTextProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowRightTextProperty =
-          BindableProperty.Create(nameof(ArrowRightText), typeof(string), typeof(Calendar), "→");
-
-        public string ArrowRightText
-        {
-            get => (string) GetValue(ArrowRightTextProperty);
-            set => SetValue(ArrowRightTextProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowUpTextProperty =
-          BindableProperty.Create(nameof(ArrowUpText), typeof(string), typeof(Calendar), "↑");
-
-        public string ArrowUpText
-        {
-            get => (string) GetValue(ArrowUpTextProperty);
-            set => SetValue(ArrowUpTextProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowDownTextProperty =
-          BindableProperty.Create(nameof(ArrowDownText), typeof(string), typeof(Calendar), "↓");
-
-        public string ArrowDownText
-        {
-            get => (string) GetValue(ArrowDownTextProperty);
-            set => SetValue(ArrowDownTextProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowsFontSizeProperty =
-            BindableProperty.Create(nameof(ArrowsFontSize), typeof(double), typeof(Calendar), Device.GetNamedSize(NamedSize.Medium, typeof(Label)));
-
-        public double ArrowsFontSize
-        {
-            get => (double) GetValue(ArrowsFontSizeProperty);
-            set => SetValue(ArrowsFontSizeProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowsBackgroundColorProperty =
-          BindableProperty.Create(nameof(ArrowsBackgroundColor), typeof(Color), typeof(Calendar), Color.White);
-
-        public Color ArrowsBackgroundColor
-        {
-            get => (Color) GetValue(ArrowsBackgroundColorProperty);
-            set => SetValue(ArrowsBackgroundColorProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowsBorderColorProperty =
-          BindableProperty.Create(nameof(ArrowsBorderColor), typeof(Color), typeof(Calendar), Color.White);
-
-        public Color ArrowsBorderColor
-        {
-            get => (Color) GetValue(ArrowsBorderColorProperty);
-            set => SetValue(ArrowsBorderColorProperty, value);
-        }
-
-        public static readonly BindableProperty ArrowsHasShadowProperty = 
-            BindableProperty.Create(nameof(ArrowsHasShadow), typeof(bool), typeof(Calendar), true);
-
-        public bool ArrowsHasShadow
-        {
-            get => (bool) GetValue(ArrowsHasShadowProperty);
-            set => SetValue(ArrowsHasShadowProperty, value);
-        }
-
-        private static bool animateCalendar = true;
         public static readonly BindableProperty AnimateCalendarProperty =
             BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
 
@@ -553,8 +471,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (bool) GetValue(AnimateCalendarProperty);
             set { animateCalendar = value; SetValue(AnimateCalendarProperty, value); }
         }
-        #endregion
 
+        private static bool animateCalendar = true;
         private const uint CalendarSectionAnimationRate = 16;
         private const int CalendarSectionAnimationDuration = 200;
         private const string CalendarSectionAnimationId = nameof(CalendarSectionAnimationId);

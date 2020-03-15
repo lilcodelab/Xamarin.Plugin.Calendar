@@ -15,6 +15,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         #region Bindable personalizable actions
         public static readonly BindableProperty TappedDayCommandProperty =
             BindableProperty.Create(nameof(TappedDayCommand), typeof(Command<DateTime>), typeof(Calendar));
+
         public Command<DateTime> TappedDayCommand
         {
             get => (Command<DateTime>) GetValue(TappedDayCommandProperty);

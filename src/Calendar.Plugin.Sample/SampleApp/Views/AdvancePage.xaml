@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.Views.AdvancePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:SampleApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:SampleApp.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+    mc:Ignorable="d">
+
+    <ContentPage.BindingContext>
+        <local:AdvancePageViewModel />
+    </ContentPage.BindingContext>
+
+    <plugin:Calendar
+        Padding="10,0"
+        AnimateCalendar="False"
+        Culture="{Binding Culture}"
+        DayTappedCommand="{Binding DayTappedCommand}"
+        DayViewCornerRadius="3"
+        DayViewSize="40"
+        DaysLabelStyle="{StaticResource daysLabelStyle}"
+        DaysTitleColor="Orange"
+        DaysTitleHeight="40"
+        DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
+        DeselectedDayTextColor="Blue"
+        DisableSwipeDetection="False"
+        EventIndicatorColor="Red"
+        EventIndicatorSelectedColor="White"
+        Events="{Binding Events}"
+        HorizontalOptions="FillAndExpand"
+        MonthLabelColor="Red"
+        MonthYear="{Binding MonthYear}"
+        OtherMonthDayColor="Gray"
+        SelectedDate="{Binding SelectedDate}"
+        SelectedDateColor="Red"
+        SelectedDayBackgroundColor="DarkCyan"
+        SelectedDayTextColor="Cyan"
+        SwipeLeftCommand="{Binding SwipeLeftCommand}"
+        SwipeRightCommand="{Binding SwipeRightCommand}"
+        SwipeToChangeMonthEnabled="False"
+        SwipeUpCommand="{Binding SwipeUpCommand}"
+        SwipeUpToHideEnabled="False"
+        TodayFillColor="Silver"
+        TodayOutlineColor="Blue"
+        VerticalOptions="FillAndExpand"
+        YearLabelColor="Blue">
+
+        <plugin:Calendar.HeaderSectionTemplate>
+            <controls:CalendarHeader />
+        </plugin:Calendar.HeaderSectionTemplate>
+
+        <plugin:Calendar.FooterSectionTemplate>
+            <DataTemplate>
+                <controls:CalendarFooter />
+            </DataTemplate>
+        </plugin:Calendar.FooterSectionTemplate>
+
+        <plugin:Calendar.EventTemplate>
+            <controls:CalenderEvent />
+        </plugin:Calendar.EventTemplate>
+    </plugin:Calendar>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="daysTitleLabelStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+</ContentPage>

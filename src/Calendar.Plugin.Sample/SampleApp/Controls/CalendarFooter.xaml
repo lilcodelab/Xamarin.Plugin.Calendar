@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
-    x:Class="Xamarin.Plugin.Calendar.Controls.DefaultFooterSection"
+    x:Class="SampleApp.Controls.CalendarFooter"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Grid
@@ -23,12 +23,14 @@
             x:Name="showHideLabel"
             Grid.Column="1"
             Margin="0,0,15,0"
+            BackgroundColor="Transparent"
             FontAttributes="Bold"
-            FontSize="Medium"
+            FontFamily="{StaticResource FontAwesomeSolid}"
+            FontSize="25"
             HorizontalOptions="End"
             IsVisible="{Binding FooterArrowVisible}"
-            Text="↑"
-            TextColor="{Binding ArrowsColor}"
+            Text="&#xf062;"
+            TextColor="DarkCyan"
             VerticalOptions="CenterAndExpand"
             VerticalTextAlignment="Center">
             <Label.Triggers>
@@ -36,7 +38,7 @@
                     Binding="{Binding CalendarSectionShown}"
                     TargetType="Label"
                     Value="False">
-                    <Setter Property="Text" Value="↓" />
+                    <Setter Property="Text" Value="&#xf063;" />
                 </DataTrigger>
             </Label.Triggers>
         </Label>
