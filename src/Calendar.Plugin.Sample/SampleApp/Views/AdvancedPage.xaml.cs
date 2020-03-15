@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace SampleApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AdvancePage : ContentPage
+    public partial class AdvancedPage : ContentPage
     {
-        public AdvancePage()
+        public AdvancedPage()
         {
             InitializeComponent();
         }

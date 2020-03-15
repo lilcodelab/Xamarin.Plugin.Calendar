@@ -8,20 +8,19 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Xamarin.Plugin.Calendar.Shared.Models;
 using Xamarin.Forms;
 using SampleApp.Model;
 
 namespace SampleApp.ViewModels
 {
-    public class AdvancePageViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class AdvancedPageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
         public ICommand DayTappedCommand => new Command<DateTime>(DayTapped);
-        public ICommand SwipeLeftCommand => new Command(()=>{ MonthYear= MonthYear.AddMonths(2); });
+        public ICommand SwipeLeftCommand => new Command(() => { MonthYear = MonthYear.AddMonths(2); });
         public ICommand SwipeRightCommand => new Command(() => { MonthYear = MonthYear.AddMonths(-2); });
         public ICommand SwipeUpCommand => new Command(() => { MonthYear = DateTime.Today; });
 
-        public AdvancePageViewModel(): base()
+        public AdvancedPageViewModel() : base()
         {
             Culture = CultureInfo.CreateSpecificCulture("en-GB");
 
@@ -39,15 +38,15 @@ namespace SampleApp.ViewModels
 
             //Adding a day with a different dot color
             Events.Add(DateTime.Now.AddDays(-2), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Blue, EventIndicatorSelectedColor = Color.Blue });
-            Events.Add(DateTime.Now.AddDays(-4), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Green, EventIndicatorSelectedColor = Color.Green });
+            Events.Add(DateTime.Now.AddDays(-4), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Green, EventIndicatorSelectedColor = Color.White });
             Events.Add(DateTime.Now.AddDays(-5), new DayEventCollection<EventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Orange, EventIndicatorSelectedColor = Color.Orange });
 
             // with add method
             Events.Add(DateTime.Now.AddDays(-1), new List<EventModel>(GenerateEvents(5, "Cool")));
-            
+
             // with indexer
             Events[DateTime.Now] = new List<EventModel>(GenerateEvents(2, "Boring"));
-            
+
             MonthYear = MonthYear.AddMonths(1);
 
             Task.Delay(5000).ContinueWith(_ =>
@@ -97,7 +96,7 @@ namespace SampleApp.ViewModels
             get => _monthYear;
             set => SetProperty(ref _monthYear, value);
         }
-        
+
         private DateTime _selectedDate = DateTime.Today;
         public DateTime SelectedDate
         {

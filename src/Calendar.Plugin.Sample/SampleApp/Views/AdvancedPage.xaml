@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="SampleApp.Views.AdvancePage"
+    x:Class="SampleApp.Views.AdvancedPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:SampleApp.Controls"
@@ -11,12 +11,12 @@
     mc:Ignorable="d">
 
     <ContentPage.BindingContext>
-        <local:AdvancePageViewModel />
+        <local:AdvancedPageViewModel />
     </ContentPage.BindingContext>
 
     <plugin:Calendar
         Padding="10,0"
-        AnimateCalendar="False"
+        AnimateCalendar="True"
         Culture="{Binding Culture}"
         DayTappedCommand="{Binding DayTappedCommand}"
         DayViewCornerRadius="3"
@@ -36,6 +36,7 @@
         OtherMonthDayColor="Gray"
         SelectedDate="{Binding SelectedDate}"
         SelectedDateColor="Red"
+        SelectedDateTextFormat="ddd, dd MMM yyyy"
         SelectedDayBackgroundColor="DarkCyan"
         SelectedDayTextColor="Cyan"
         SwipeLeftCommand="{Binding SwipeLeftCommand}"

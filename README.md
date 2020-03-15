@@ -25,9 +25,9 @@ If you are coming back take a look on the [Changelog here](https://github.com/li
 
 #### Supported versions
 | Platform | Version |
-| -------- | ------- |
-| Xamarin.Forms | 4.4+ |
-| Xamarin.Android | ? |
+| -------- | ------- 
+| Xamarin.Forms | 3.3+ |
+| Xamarin.Android | 8.1+ |
 | Xamarin.iOS | ? |
 
 ### Usage
@@ -158,18 +158,6 @@ TodayFillColor="Silver"
 #### Available other customization properties
 Sample properties:
 ```xml
-ArrowDownText="&#xf063;"<!--Font awesome solid text-->
-ArrowLeftText="&#xf060;"<!--Font awesome solid text-->
-ArrowRightText="&#xf061;"<!--Font awesome solid text-->
-ArrowUpText="&#xf062;"<!--Font awesome solid text-->
-ArrowsFontFamily="{StaticResource FontAwesomeSolid}"
-ArrowsFontFamily="{StaticResource FontAwesomeRegular}"
-ArrowsFontSize="25"
-ArrowsBackgroundColor="Transparent"
-ArrowsBorderColor="Transparent"
-ArrowsColor="DarkCyan"
-ArrowsHasShadow="False"
-ArrowsBorderColor="Transparent"
 AnimateCalendar="False"<!--Enable/Disable animation when calendar is loaded or refreshed-->
 TappedDayCommand="OnTappedDayCommand"
 ```

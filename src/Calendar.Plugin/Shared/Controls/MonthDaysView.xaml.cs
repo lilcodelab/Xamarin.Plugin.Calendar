@@ -9,7 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Models;
 using System.Windows.Input;
-using Xamarin.Plugin.Calendar.Shared.Models;
+using Xamarin.Plugin.Calendar.Interfaces;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -248,17 +248,13 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DisabledDayColorProperty, value);
         }
 
-        #endregion
-
-        #region Bindable personalizable properties
-        private static bool animateCalendar = true;
         public static readonly BindableProperty AnimateCalendarProperty =
             BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
 
         public bool AnimateCalendar
         {
             get => (bool) GetValue(AnimateCalendarProperty);
-            set { animateCalendar = value; SetValue(AnimateCalendarProperty, value); }
+            set { SetValue(AnimateCalendarProperty, value); }
         }
         #endregion
 
@@ -276,7 +272,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             AssignDayViewModels();
             UpdateDaysColors();
             UpdateDayTitles();
-            UpdateDays(animateCalendar);
+            UpdateDays(AnimateCalendar);
         }
 
         /// <summary> ??? </summary>
@@ -304,7 +300,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(Events):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
-                    UpdateDays(animateCalendar);
+                    UpdateDays(AnimateCalendar);
                     break;
 
                 case nameof(SelectedDayTextColor):
@@ -321,7 +317,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 case nameof(Culture):
                     UpdateDayTitles();
-                    UpdateDays(animateCalendar);
+                    UpdateDays(AnimateCalendar);
                     break;
             }
         }
@@ -359,10 +355,11 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.OtherMonthColor = OtherMonthDayColor;
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
-                AssignIndicatorColors(ref dayModel);
                 dayModel.TodayOutlineColor = TodayOutlineColor;
                 dayModel.TodayFillColor = TodayFillColor;
                 dayModel.DisabledColor = DisabledDayColor;
+
+                AssignIndicatorColors(ref dayModel);
             }
         }
 
@@ -501,40 +498,18 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void AssignIndicatorColors(ref DayModel dayModel)
         {
-            if (dayModel.HasEvents)
+            Color? eventIndicatorColor = EventIndicatorColor;
+            Color? eventIndicatorSelectedColor = EventIndicatorSelectedColor;
+
+
+            if (Events.TryGetValue(dayModel.Date, out var dayEventCollection) && dayEventCollection is IPersonalizableDayEvent personalizableDay)
             {
-                var dayEventCollection = GetDayEventCollection(dayModel.Date);
-                if (dayEventCollection != null)
-                {
-                    dayModel.EventIndicatorColor = GetSpecialEventIndicatorColor(dayEventCollection) ?? EventIndicatorColor;
-                    dayModel.EventIndicatorSelectedColor = GetSpecialEventIndicatorSelectedColor(dayEventCollection) ?? EventIndicatorSelectedColor;
-                }
+                eventIndicatorColor = personalizableDay?.EventIndicatorColor;
+                eventIndicatorSelectedColor = personalizableDay?.EventIndicatorSelectedColor;
             }
-        }
 
-        private Color? GetSpecialEventIndicatorColor(object value)
-        {
-            return (Color?) GetPropertyFromGenericType(value, "EventIndicatorColor");
-        }
-
-        private Color? GetSpecialEventIndicatorSelectedColor(object value)
-        {
-            return (Color?) GetPropertyFromGenericType(value, "EventIndicatorSelectedColor");
-        }
-
-        private object GetDayEventCollection(DateTime date)
-        {
-            Events.TryGetValue(date, out var dayEventCollection);
-            if (dayEventCollection?.GetType().GetGenericTypeDefinition() == typeof(DayEventCollection<>))
-            {
-                return dayEventCollection;
-            }
-            return null;
-        }
-
-        private object GetPropertyFromGenericType(object value, string propertyName)
-        {
-            return value.GetType().GetProperty(propertyName).GetValue(value);
-        }
+            dayModel.EventIndicatorColor = eventIndicatorColor ?? EventIndicatorColor;
+            dayModel.EventIndicatorSelectedColor = eventIndicatorSelectedColor ?? EventIndicatorSelectedColor;
+        }        
     }
 }

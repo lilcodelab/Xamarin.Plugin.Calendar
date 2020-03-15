@@ -11,18 +11,7 @@ namespace Xamarin.Plugin.Calendar.Controls
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DayView : ContentView
-    {
-        #region Bindable personalizable actions
-        public static readonly BindableProperty TappedDayCommandProperty =
-            BindableProperty.Create(nameof(TappedDayCommand), typeof(Command<DateTime>), typeof(Calendar));
-
-        public Command<DateTime> TappedDayCommand
-        {
-            get => (Command<DateTime>) GetValue(TappedDayCommandProperty);
-            set => SetValue(TappedDayCommandProperty, value);
-        }
-        #endregion
-
+    {        
         internal DayView()
         {
             InitializeComponent();

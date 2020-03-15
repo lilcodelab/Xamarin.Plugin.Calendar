@@ -461,18 +461,18 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DisabledDayColorProperty, value);
         }
 
-        #endregion
 
         public static readonly BindableProperty AnimateCalendarProperty =
             BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
 
         public bool AnimateCalendar
         {
-            get => (bool) GetValue(AnimateCalendarProperty);
-            set { animateCalendar = value; SetValue(AnimateCalendarProperty, value); }
+            get => (bool)GetValue(AnimateCalendarProperty);
+            set => SetValue(AnimateCalendarProperty, value);
         }
 
-        private static bool animateCalendar = true;
+        #endregion
+
         private const uint CalendarSectionAnimationRate = 16;
         private const int CalendarSectionAnimationDuration = 200;
         private const string CalendarSectionAnimationId = nameof(CalendarSectionAnimationId);
@@ -550,7 +550,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     newEvents.CollectionChanged += view.OnEventsCollectionChanged;
 
                 view.UpdateEvents();
-                view.monthDaysView.UpdateDays(animateCalendar);
+                view.monthDaysView.UpdateDays(view.AnimateCalendar);
             }
         }
 
@@ -659,7 +659,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void OnEventsCollectionChanged(object sender, EventCollection.EventCollectionChangedArgs e)
         {
             UpdateEvents();
-            monthDaysView.UpdateDays(animateCalendar);
+            monthDaysView.UpdateDays(AnimateCalendar);
         }
 
         #endregion

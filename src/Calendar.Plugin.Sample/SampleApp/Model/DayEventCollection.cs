@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Xamarin.Forms;
+using Xamarin.Plugin.Calendar.Interfaces;
 
-namespace Xamarin.Plugin.Calendar.Shared.Models
+namespace SampleApp.Model
 {
     /// <summary>
     /// Wrapper to allow change the dot color
     /// </summary>
-    public class DayEventCollection<T> : List<T>
+    public class DayEventCollection<T> : List<T>, IPersonalizableDayEvent
     {
         /// <summary>
         /// Empty contructor extends from base()
@@ -57,6 +58,7 @@ namespace Xamarin.Plugin.Calendar.Shared.Models
         /// if the EventIndicatorColor is null then the general EventIndicatorSelectedColor of the Calendar will be used
         /// </summary>
         public Color? EventIndicatorSelectedColor { get; set; }
+
         #endregion
 
         #region Implemented
