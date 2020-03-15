@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Xamarin.Forms;
 
 namespace Xamarin.Plugin.Calendar.Models
 {

@@ -501,7 +501,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             Color? eventIndicatorColor = EventIndicatorColor;
             Color? eventIndicatorSelectedColor = EventIndicatorSelectedColor;
 
-
             if (Events.TryGetValue(dayModel.Date, out var dayEventCollection) && dayEventCollection is IPersonalizableDayEvent personalizableDay)
             {
                 eventIndicatorColor = personalizableDay?.EventIndicatorColor;

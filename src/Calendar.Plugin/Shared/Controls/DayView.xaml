@@ -20,18 +20,18 @@
             WidthRequest="{Binding DayViewSize}" />
 
         <Frame
-            Margin="0,0,0,2"
+            Margin="0,0,0,3"
             Padding="0"
             BackgroundColor="{Binding EventColor}"
-            CornerRadius="5"
+            CornerRadius="4"
             HasShadow="False"
-            HeightRequest="10"
+            HeightRequest="8"
             HorizontalOptions="Center"
             InputTransparent="True"
             IsVisible="{Binding HasEvents}"
             OutlineColor="Transparent"
             VerticalOptions="End"
-            WidthRequest="10" />
+            WidthRequest="8" />
 
         <Label
             HorizontalOptions="Center"
