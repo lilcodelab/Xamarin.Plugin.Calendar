@@ -73,40 +73,40 @@
     <BundleResource Include="Resources\font-awesome-5-free-solid.otf" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24pt.imageset\baseline_calendar_today_black_24pt_1x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24.imageset\baseline_calendar_today_black_24pt_1x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24pt.imageset\baseline_calendar_today_black_24pt_2x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24.imageset\baseline_calendar_today_black_24pt_2x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24pt.imageset\baseline_calendar_today_black_24pt_3x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24.imageset\baseline_calendar_today_black_24pt_3x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24pt.imageset\Contents.json">
+    <ImageAsset Include="Assets.xcassets\baseline_calendar_today_black_24.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24pt.imageset\baseline_date_range_black_24pt_1x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24.imageset\baseline_date_range_black_24pt_1x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24pt.imageset\baseline_date_range_black_24pt_2x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24.imageset\baseline_date_range_black_24pt_2x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24pt.imageset\baseline_date_range_black_24pt_3x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24.imageset\baseline_date_range_black_24pt_3x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24pt.imageset\Contents.json">
+    <ImageAsset Include="Assets.xcassets\baseline_date_range_black_24.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_event_black_24pt.imageset\baseline_event_black_24pt_1x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_event_black_24.imageset\baseline_event_black_24pt_1x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_event_black_24pt.imageset\baseline_event_black_24pt_2x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_event_black_24.imageset\baseline_event_black_24pt_2x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_event_black_24pt.imageset\baseline_event_black_24pt_3x.png">
+    <ImageAsset Include="Assets.xcassets\baseline_event_black_24.imageset\baseline_event_black_24pt_3x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline_event_black_24pt.imageset\Contents.json">
+    <ImageAsset Include="Assets.xcassets\baseline_event_black_24.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

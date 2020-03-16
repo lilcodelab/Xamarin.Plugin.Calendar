@@ -5,19 +5,25 @@
 [![Chat](https://img.shields.io/badge/Telegram-chat-blue.svg)](https://t.me/XamarinPluginCalendar)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/LICENSE)
 
-| Android | iPhone |
-| ------- | ------ |
-| ![Android Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/Android.jpg) | ![iPhone Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iPhone_XS.png) |
-| ![Android Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/AndroidCustom.png) | ![iPhone Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iPhone6sCustom.png) |
-
 Simple cross platform plugin for Calendar control featuring:
 - Displaying events by binding EventCollection
 - Localization support with System.Globalization.CultureInfo
-- Customizeable colors, day view sizes/label styles, custom Header/Footer template support
+- Customizable colors, day view sizes/label styles, custom Header/Footer template support
 - UI reactive to EventCollection, Culture and other changes
 
 We are open to any suggestions and feedback, and we got our community telegram group [here](https://t.me/XamarinPluginCalendar) :)   
 If you are coming back take a look on the [Changelog here](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/CHANGELOG.md).
+
+## Simple Implementation
+| Android | iPhone |
+| ------- | ------ |
+| ![Android Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/android-simple.png) | ![iPhone Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iphone-simple.png) |
+
+## Advanced implementation
+| Android | iPhone |
+| ------- | ------ |
+| ![Android Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/android-advanced.png) | ![iPhone Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iphone-advanced.png) |
+
 
 ### Setup
 * Available on NuGet 
@@ -49,10 +55,10 @@ Basic control usage:
 ```
 
 Bindable properties:
-* `Culture` (CultureInfo)
-* `Month` (int)
-* `Year` (int)
-* `Events` (EventCollection - from package)
+* `Culture` CultureInfo
+* `Month` int
+* `Year` int
+* `Events` EventCollection (from package)
 * Custom colors, fonts, sizes ...
 
 #### Binding events:
@@ -85,7 +91,7 @@ using Xamarin.Plugin.Calendar.Models;
 
 Add property for Events:
 ```csharp
-public EventCollection Events { get; private set; }
+public EventCollection Events { get; set; }
 ```
 
 Initialize Events with your data:
@@ -107,6 +113,11 @@ Events = new EventCollection
     [DateTime.Now.AddDays(-3)] = new List<EventModel>
     {
         new EventModel { Name = "Cool event5", Description = "This is Cool event5's description!" }
+    },
+    // custom date
+    [new DateTime(2020, 3, 16))] = new List<EventModel>
+    {
+        new EventModel { Name = "Cool event6", Description = "This is Cool event6's description!" }
     }
 };
 ```
@@ -116,7 +127,7 @@ Initialize Events with your data and a different dot color per day:
 Events = new EventCollection
 {
     //2 days ago
-    [DateTime.Now.AddDays(-2)] = new DayEventCollection<EventModel>(Color.Purple, Color.Purple)
+    [DateTime.Now.AddDays(-2)] = new DayEventCollection<EventModel>{ Color.Purple, Color.Purple)
     {
         new EventModel { Name = "Cool event1", Description = "This is Cool event1's description!" },
         new EventModel { Name = "Cool event2", Description = "This is Cool event2's description!" }
@@ -159,7 +170,6 @@ TodayFillColor="Silver"
 Sample properties:
 ```xml
 AnimateCalendar="False"<!--Enable/Disable animation when calendar is loaded or refreshed-->
-TappedDayCommand="OnTappedDayCommand"
 ```
 
 ##### TODO
@@ -167,6 +177,6 @@ TappedDayCommand="OnTappedDayCommand"
 * comment public properties and methods
 * Add default public template for Header with "← Month, Year →" format
 * Update Readme and create wiki pages
-* Create advanced sample (more real-world) in the root of the repo with referenced nuget package
+* ~~Create advanced sample (more real-world) in the root of the repo with referenced nuget package~~
 
 Josip Ćaleta @lilcodelab
