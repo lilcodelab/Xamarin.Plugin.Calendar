@@ -14,7 +14,8 @@ namespace SampleApp.ViewModels
     public class SimplePageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
         public ICommand TodayCommand => new Command(() => { Year = DateTime.Today.Year; Month = DateTime.Today.Month;  });
-
+        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
+        
         public SimplePageViewModel() : base()
         {
             // testing all kinds of adding events
@@ -106,6 +107,13 @@ namespace SampleApp.ViewModels
             get => _maximumDate;
             set => SetProperty(ref _maximumDate, value);
         }
-        
+
+        private async Task ExecuteEventSelectedCommand(object item)
+        {
+            if(item is EventModel eventModel)
+            {
+                await App.Current.MainPage.DisplayAlert(eventModel.Name, eventModel.Description, "Ok");
+            }
+        }
     }
 }

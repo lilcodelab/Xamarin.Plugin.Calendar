@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:SampleApp.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+    x:Name="advancedCalendarPage"
     mc:Ignorable="d">
 
     <ContentPage.BindingContext>
@@ -60,7 +61,9 @@
         </plugin:Calendar.FooterSectionTemplate>
 
         <plugin:Calendar.EventTemplate>
-            <controls:CalenderEvent />
+            <DataTemplate>
+                <controls:CalenderEvent CalenderEventCommand="{Binding BindingContext.EventSelectedCommand, Source={x:Reference advancedCalendarPage}}" />
+            </DataTemplate>
         </plugin:Calendar.EventTemplate>
     </plugin:Calendar>
 

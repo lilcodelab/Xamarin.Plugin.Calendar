@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:SampleApp.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+    x:Name="simpleCalendarPage"
     mc:Ignorable="d">
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding TodayCommand}" Text="Today" />
@@ -39,6 +40,10 @@
                         FontSize="Small"
                         LineBreakMode="WordWrap"
                         Text="{Binding Description}" />
+
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BindingContext.EventSelectedCommand, Source={x:Reference simpleCalendarPage}}" CommandParameter="{Binding .}" />
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </DataTemplate>
         </plugin:Calendar.EventTemplate>

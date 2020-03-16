@@ -1,19 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<DataTemplate
+<ContentView
     x:Class="SampleApp.Controls.CalenderEvent"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
     <StackLayout
         Padding="15,0,0,0"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
-        <Label
-            FontAttributes="Bold"
-            FontSize="Medium"
-            Text="{Binding Name}" />
+        <Label FontAttributes="Bold" FontSize="Medium">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Starting, StringFormat='{0:HH\\:mm}'}" TextColor="Black" />
+                    <Span Text=" - " />
+                    <Span Text="{Binding Name}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
         <Label
             FontSize="Small"
             LineBreakMode="WordWrap"
             Text="{Binding Description}" />
+        <StackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+        </StackLayout.GestureRecognizers>
     </StackLayout>
-</DataTemplate>
+</ContentView>
