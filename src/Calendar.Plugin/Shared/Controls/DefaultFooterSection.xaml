@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
-    xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Xamarin.Plugin.Calendar.Controls.DefaultFooterSection">
+    x:Class="Xamarin.Plugin.Calendar.Controls.DefaultFooterSection"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Grid
         HeightRequest="40"
         HorizontalOptions="FillAndExpand"
@@ -12,37 +12,36 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label
+            FontAttributes="Bold"
+            FontSize="Medium"
             Text="{Binding SelectedDateText}"
             TextColor="{Binding SelectedDateColor}"
             VerticalOptions="CenterAndExpand"
-            VerticalTextAlignment="Center"
-            FontAttributes="Bold"
-            FontSize="Medium" />
+            VerticalTextAlignment="Center" />
 
         <Label
-            Grid.Column="1"
             x:Name="showHideLabel"
+            Grid.Column="1"
             Margin="0,0,15,0"
-            Text="↑"
-            VerticalOptions="CenterAndExpand"
-            HorizontalOptions="End"
-            VerticalTextAlignment="Center"
-            TextColor="{Binding ArrowsColor}"
             FontAttributes="Bold"
             FontSize="Medium"
-            IsVisible="{Binding FooterArrowVisible}">
+            HorizontalOptions="End"
+            IsVisible="{Binding FooterArrowVisible}"
+            Text="↑"
+            TextColor="{Binding ArrowsColor}"
+            VerticalOptions="CenterAndExpand"
+            VerticalTextAlignment="Center">
             <Label.Triggers>
                 <DataTrigger
-                    TargetType="Label"
                     Binding="{Binding CalendarSectionShown}"
+                    TargetType="Label"
                     Value="False">
                     <Setter Property="Text" Value="↓" />
                 </DataTrigger>
             </Label.Triggers>
         </Label>
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer
-                Command="{Binding ShowHideCalendarCommand}" />
+            <TapGestureRecognizer Command="{Binding ShowHideCalendarCommand}" />
         </Grid.GestureRecognizers>
     </Grid>
 </ContentView>

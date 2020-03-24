@@ -1,13 +1,12 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView 
-    xmlns="http://xamarin.com/schemas/2014/forms" 
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Xamarin.Plugin.Calendar.Controls.MonthDaysView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
-    x:Class="Xamarin.Plugin.Calendar.Controls.MonthDaysView"
     x:Name="monthsView">
 
-    <Grid
-        RowSpacing="0">
+    <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -16,8 +15,8 @@
         <Grid
             x:Name="daysTitleControl"
             ColumnSpacing="0"
-            VerticalOptions="FillAndExpand"
-            HeightRequest="{Binding DaysTitleHeight, Source={x:Reference monthsView}}">
+            HeightRequest="{Binding DaysTitleHeight, Source={x:Reference monthsView}}"
+            VerticalOptions="FillAndExpand">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -30,59 +29,59 @@
 
             <Label
                 Grid.Column="0"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
                 TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" />
-            
+                VerticalOptions="CenterAndExpand" />
+
             <Label
                 Grid.Column="1"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
                 TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" />
-            
+                VerticalOptions="CenterAndExpand" />
+
             <Label
                 Grid.Column="2"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
                 TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-				Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" />
-            
+                VerticalOptions="CenterAndExpand" />
+
             <Label
                 Grid.Column="3"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
                 TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-				Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" />
-            
+                VerticalOptions="CenterAndExpand" />
+
             <Label
                 Grid.Column="4"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
                 TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-				Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" />
-            
+                VerticalOptions="CenterAndExpand" />
+
             <Label
                 Grid.Column="5"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
                 TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-				Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" />
-            
+                VerticalOptions="CenterAndExpand" />
+
             <Label
                 Grid.Column="6"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
                 TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-				Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" />
+                VerticalOptions="CenterAndExpand" />
         </Grid>
 
         <Grid
@@ -105,53 +104,53 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions> 
-            <controls:DayView Grid.Row="0" Grid.Column="0" /> 
-            <controls:DayView Grid.Row="0" Grid.Column="1" /> 
-            <controls:DayView Grid.Row="0" Grid.Column="2" /> 
-            <controls:DayView Grid.Row="0" Grid.Column="3" /> 
-            <controls:DayView Grid.Row="0" Grid.Column="4" /> 
-            <controls:DayView Grid.Row="0" Grid.Column="5" /> 
+            </Grid.ColumnDefinitions>
+            <controls:DayView Grid.Row="0" Grid.Column="0" />
+            <controls:DayView Grid.Row="0" Grid.Column="1" />
+            <controls:DayView Grid.Row="0" Grid.Column="2" />
+            <controls:DayView Grid.Row="0" Grid.Column="3" />
+            <controls:DayView Grid.Row="0" Grid.Column="4" />
+            <controls:DayView Grid.Row="0" Grid.Column="5" />
             <controls:DayView Grid.Row="0" Grid.Column="6" />
 
-            <controls:DayView Grid.Row="1" Grid.Column="0" /> 
-            <controls:DayView Grid.Row="1" Grid.Column="1" /> 
-            <controls:DayView Grid.Row="1" Grid.Column="2" /> 
-            <controls:DayView Grid.Row="1" Grid.Column="3" /> 
-            <controls:DayView Grid.Row="1" Grid.Column="4" /> 
-            <controls:DayView Grid.Row="1" Grid.Column="5" /> 
+            <controls:DayView Grid.Row="1" Grid.Column="0" />
+            <controls:DayView Grid.Row="1" Grid.Column="1" />
+            <controls:DayView Grid.Row="1" Grid.Column="2" />
+            <controls:DayView Grid.Row="1" Grid.Column="3" />
+            <controls:DayView Grid.Row="1" Grid.Column="4" />
+            <controls:DayView Grid.Row="1" Grid.Column="5" />
             <controls:DayView Grid.Row="1" Grid.Column="6" />
-                              
-            <controls:DayView Grid.Row="2" Grid.Column="0" /> 
-            <controls:DayView Grid.Row="2" Grid.Column="1" /> 
-            <controls:DayView Grid.Row="2" Grid.Column="2" /> 
-            <controls:DayView Grid.Row="2" Grid.Column="3" /> 
-            <controls:DayView Grid.Row="2" Grid.Column="4" /> 
-            <controls:DayView Grid.Row="2" Grid.Column="5" /> 
+
+            <controls:DayView Grid.Row="2" Grid.Column="0" />
+            <controls:DayView Grid.Row="2" Grid.Column="1" />
+            <controls:DayView Grid.Row="2" Grid.Column="2" />
+            <controls:DayView Grid.Row="2" Grid.Column="3" />
+            <controls:DayView Grid.Row="2" Grid.Column="4" />
+            <controls:DayView Grid.Row="2" Grid.Column="5" />
             <controls:DayView Grid.Row="2" Grid.Column="6" />
 
-            <controls:DayView Grid.Row="3" Grid.Column="0" /> 
-            <controls:DayView Grid.Row="3" Grid.Column="1" /> 
-            <controls:DayView Grid.Row="3" Grid.Column="2" /> 
-            <controls:DayView Grid.Row="3" Grid.Column="3" /> 
-            <controls:DayView Grid.Row="3" Grid.Column="4" /> 
-            <controls:DayView Grid.Row="3" Grid.Column="5" /> 
-            <controls:DayView Grid.Row="3" Grid.Column="6" /> 
-            
-            <controls:DayView Grid.Row="4" Grid.Column="0" /> 
-            <controls:DayView Grid.Row="4" Grid.Column="1" /> 
-            <controls:DayView Grid.Row="4" Grid.Column="2" /> 
-            <controls:DayView Grid.Row="4" Grid.Column="3" /> 
-            <controls:DayView Grid.Row="4" Grid.Column="4" /> 
-            <controls:DayView Grid.Row="4" Grid.Column="5" /> 
-            <controls:DayView Grid.Row="4" Grid.Column="6" /> 
-            
-            <controls:DayView Grid.Row="5" Grid.Column="0" /> 
-            <controls:DayView Grid.Row="5" Grid.Column="1" /> 
-            <controls:DayView Grid.Row="5" Grid.Column="2" /> 
-            <controls:DayView Grid.Row="5" Grid.Column="3" /> 
-            <controls:DayView Grid.Row="5" Grid.Column="4" /> 
-            <controls:DayView Grid.Row="5" Grid.Column="5" /> 
+            <controls:DayView Grid.Row="3" Grid.Column="0" />
+            <controls:DayView Grid.Row="3" Grid.Column="1" />
+            <controls:DayView Grid.Row="3" Grid.Column="2" />
+            <controls:DayView Grid.Row="3" Grid.Column="3" />
+            <controls:DayView Grid.Row="3" Grid.Column="4" />
+            <controls:DayView Grid.Row="3" Grid.Column="5" />
+            <controls:DayView Grid.Row="3" Grid.Column="6" />
+
+            <controls:DayView Grid.Row="4" Grid.Column="0" />
+            <controls:DayView Grid.Row="4" Grid.Column="1" />
+            <controls:DayView Grid.Row="4" Grid.Column="2" />
+            <controls:DayView Grid.Row="4" Grid.Column="3" />
+            <controls:DayView Grid.Row="4" Grid.Column="4" />
+            <controls:DayView Grid.Row="4" Grid.Column="5" />
+            <controls:DayView Grid.Row="4" Grid.Column="6" />
+
+            <controls:DayView Grid.Row="5" Grid.Column="0" />
+            <controls:DayView Grid.Row="5" Grid.Column="1" />
+            <controls:DayView Grid.Row="5" Grid.Column="2" />
+            <controls:DayView Grid.Row="5" Grid.Column="3" />
+            <controls:DayView Grid.Row="5" Grid.Column="4" />
+            <controls:DayView Grid.Row="5" Grid.Column="5" />
             <controls:DayView Grid.Row="5" Grid.Column="6" />
         </Grid>
     </Grid>

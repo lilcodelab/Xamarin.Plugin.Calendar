@@ -55,6 +55,7 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
   </ItemGroup>
 
+
   <ItemGroup>
     <EmbeddedResource Update="Shared\Controls\Calendar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

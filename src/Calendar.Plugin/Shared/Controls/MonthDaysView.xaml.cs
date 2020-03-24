@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Models;
 using System.Windows.Input;
+using Xamarin.Plugin.Calendar.Interfaces;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -247,6 +248,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DisabledDayColorProperty, value);
         }
 
+        public static readonly BindableProperty AnimateCalendarProperty =
+            BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
+
+        public bool AnimateCalendar
+        {
+            get => (bool) GetValue(AnimateCalendarProperty);
+            set { SetValue(AnimateCalendarProperty, value); }
+        }
         #endregion
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
@@ -263,7 +272,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             AssignDayViewModels();
             UpdateDaysColors();
             UpdateDayTitles();
-            UpdateDays();
+            UpdateDays(AnimateCalendar);
         }
 
         /// <summary> ??? </summary>
@@ -291,7 +300,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(Events):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
-                    UpdateDays();
+                    UpdateDays(AnimateCalendar);
                     break;
 
                 case nameof(SelectedDayTextColor):
@@ -308,7 +317,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 case nameof(Culture):
                     UpdateDayTitles();
-                    UpdateDays();
+                    UpdateDays(AnimateCalendar);
                     break;
             }
         }
@@ -324,16 +333,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        internal void UpdateDays()
+        internal void UpdateDays(bool animate)
         {
             if (Culture == null)
                 return;
 
-            Animate(() => daysControl.FadeTo(0, 50),
+            Animate(() => daysControl.FadeTo(animate? 0 : 1, 50),
                     () => daysControl.FadeTo(1, 200),
                     () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
-                    () => UpdateDays());
+                    () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
         }
 
         private void UpdateDaysColors()
@@ -346,11 +355,11 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.OtherMonthColor = OtherMonthDayColor;
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
-                dayModel.EventIndicatorColor = EventIndicatorColor;
-                dayModel.EventIndicatorSelectedColor = EventIndicatorSelectedColor;
                 dayModel.TodayOutlineColor = TodayOutlineColor;
                 dayModel.TodayFillColor = TodayFillColor;
                 dayModel.DisabledColor = DisabledDayColor;
+
+                AssignIndicatorColors(ref dayModel);
             }
         }
 
@@ -446,6 +455,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
+                AssignIndicatorColors(ref dayModel);
+
                 if (dayModel.IsSelected)
                     _selectedDay = dayModel;
             }
@@ -484,5 +495,20 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             _propertyChangedNotificationSupressions[propertyName] = false;
         }
+
+        private void AssignIndicatorColors(ref DayModel dayModel)
+        {
+            Color? eventIndicatorColor = EventIndicatorColor;
+            Color? eventIndicatorSelectedColor = EventIndicatorSelectedColor;
+
+            if (Events.TryGetValue(dayModel.Date, out var dayEventCollection) && dayEventCollection is IPersonalizableDayEvent personalizableDay)
+            {
+                eventIndicatorColor = personalizableDay?.EventIndicatorColor;
+                eventIndicatorSelectedColor = personalizableDay?.EventIndicatorSelectedColor;
+            }
+
+            dayModel.EventIndicatorColor = eventIndicatorColor ?? EventIndicatorColor;
+            dayModel.EventIndicatorSelectedColor = eventIndicatorSelectedColor ?? EventIndicatorSelectedColor;
+        }        
     }
 }

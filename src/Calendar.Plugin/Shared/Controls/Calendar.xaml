@@ -1,15 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
-    xmlns="http://xamarin.com/schemas/2014/forms" 
+    x:Class="Xamarin.Plugin.Calendar.Controls.Calendar"
+    xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
-    x:Class="Xamarin.Plugin.Calendar.Controls.Calendar"
     x:Name="calendar">
-    <!-- TODO: Binding size for monthsView, text etc. -->
+    <!--  TODO: Binding size for monthsView, text etc.  -->
     <Grid
-        RowSpacing="5"
+        Padding="0,15,0,0"
         IsClippedToBounds="True"
-        Padding="0,15,0,0">
+        RowSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="calendarSectionRow" Height="Auto" />
             <RowDefinition Height="*" />
@@ -19,43 +19,42 @@
             x:Name="calendarContainer"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
-            <controls:DataTemplateView
-                ItemTemplate="{Binding HeaderSectionTemplate}"
-                BindingContext="{x:Reference calendar}" />
+            <controls:DataTemplateView BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" />
 
             <controls:SwipeAwareContainer
-                VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 SwipeDetectionDisabled="{Binding DisableSwipeDetection, Source={x:Reference calendar}}"
                 SwipedLeft="OnSwipedLeft"
                 SwipedRight="OnSwipedRight"
-                SwipedUp="OnSwipedUp">
+                SwipedUp="OnSwipedUp"
+                VerticalOptions="FillAndExpand">
                 <controls:MonthDaysView
                     x:Name="monthDaysView"
-                    DisplayedMonthYear="{Binding MonthYear, Source={x:Reference calendar}}"
-                    SelectedDate="{Binding SelectedDate, Source={x:Reference calendar}}"
-                    Events="{Binding Events, Source={x:Reference calendar}}"
+                    AnimateCalendar="{Binding AnimateCalendar, Source={x:Reference calendar}}"
                     Culture="{Binding Culture, Source={x:Reference calendar}}"
-                    SelectedDayBackgroundColor="{Binding SelectedDayBackgroundColor, Source={x:Reference calendar}}"
+                    DayTappedCommand="{Binding DayTappedCommand, Source={x:Reference calendar}}"
+                    DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference calendar}}"
+                    DayViewSize="{Binding DayViewSize, Source={x:Reference calendar}}"
+                    DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference calendar}}"
+                    DaysTitleColor="{Binding DaysTitleColor, Source={x:Reference calendar}}"
+                    DaysTitleHeight="{Binding DaysTitleHeight, Source={x:Reference calendar}}"
+                    DaysTitleLabelStyle="{Binding DaysTitleLabelStyle, Source={x:Reference calendar}}"
+                    DeselectedDayTextColor="{Binding DeselectedDayTextColor, Source={x:Reference calendar}}"
+                    DisabledDayColor="{Binding DisabledDayColor, Source={x:Reference calendar}}"
+                    DisplayedMonthYear="{Binding MonthYear, Source={x:Reference calendar}}"
                     EventIndicatorColor="{Binding EventIndicatorColor, Source={x:Reference calendar}}"
                     EventIndicatorSelectedColor="{Binding EventIndicatorSelectedColor, Source={x:Reference calendar}}"
-                    DaysTitleColor="{Binding DaysTitleColor, Source={x:Reference calendar}}"
-                    SelectedDayTextColor="{Binding SelectedDayTextColor, Source={x:Reference calendar}}"
-                    DeselectedDayTextColor="{Binding DeselectedDayTextColor, Source={x:Reference calendar}}"
+                    Events="{Binding Events, Source={x:Reference calendar}}"
+                    HorizontalOptions="FillAndExpand"
+                    MaximumDate="{Binding MaximumDate, Source={x:Reference calendar}}"
+                    MinimumDate="{Binding MinimumDate, Source={x:Reference calendar}}"
                     OtherMonthDayColor="{Binding OtherMonthDayColor, Source={x:Reference calendar}}"
+                    SelectedDate="{Binding SelectedDate, Source={x:Reference calendar}}"
+                    SelectedDayBackgroundColor="{Binding SelectedDayBackgroundColor, Source={x:Reference calendar}}"
+                    SelectedDayTextColor="{Binding SelectedDayTextColor, Source={x:Reference calendar}}"
                     TodayFillColor="{Binding TodayFillColor, Source={x:Reference calendar}}"
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
-                    DayViewSize="{Binding DayViewSize, Source={x:Reference calendar}}"
-                    DayViewCornerRadius="{Binding DayViewCornerRadius, Source={x:Reference calendar}}"
-                    DaysTitleHeight="{Binding DaysTitleHeight, Source={x:Reference calendar}}"
-                    DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference calendar}}"
-                    DaysTitleLabelStyle="{Binding DaysTitleLabelStyle, Source={x:Reference calendar}}"
-                    MinimumDate="{Binding MinimumDate, Source={x:Reference calendar}}"
-                    MaximumDate="{Binding MaximumDate, Source={x:Reference calendar}}"
-                    DisabledDayColor="{Binding DisabledDayColor, Source={x:Reference calendar}}"
-                    VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand" 
-                    DayTappedCommand="{Binding DayTappedCommand, Source={x:Reference calendar}}" />
+                    VerticalOptions="FillAndExpand" />
             </controls:SwipeAwareContainer>
         </StackLayout>
 
@@ -69,9 +68,9 @@
             </Grid.RowDefinitions>
 
             <controls:DataTemplateView
+                BindingContext="{x:Reference calendar}"
                 IsVisible="{Binding FooterSectionVisible, Source={x:Reference calendar}}"
-                ItemTemplate="{Binding FooterSectionTemplate}"
-                BindingContext="{x:Reference calendar}" />
+                ItemTemplate="{Binding FooterSectionTemplate}" />
 
             <ScrollView
                 x:Name="eventsScrollView"
@@ -80,9 +79,9 @@
                 VerticalOptions="StartAndExpand">
                 <controls:GenericRepeaterView
                     HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand"
                     ItemTemplate="{Binding EventTemplate, Source={x:Reference calendar}}"
-                    ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}" />
+                    ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}"
+                    VerticalOptions="FillAndExpand" />
             </ScrollView>
         </Grid>
 

@@ -1,8 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SampleApp.App">
+<Application
+    x:Class="SampleApp.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
+        <ResourceDictionary>
+            <!--  Fonts  -->
+            <OnPlatform x:Key="FontAwesomeSolid" x:TypeArguments="x:String">
+                <On Platform="Android" Value="font-awesome-5-free-solid.otf#Font Awesome 5 Free Solid" />
+                <On Platform="iOS" Value="FontAwesome5FreeSolid" />
+            </OnPlatform>
+            <OnPlatform x:Key="FontAwesomeRegular" x:TypeArguments="x:String">
+                <On Platform="Android" Value="font-awesome-5-free-regular.otf#Font Awesome 5 Free Regular" />
+                <On Platform="iOS" Value="FontAwesome5FreeRegular" />
+            </OnPlatform>
 
+            <Style x:Key="daysLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="5,2" />
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,46 +1,45 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView
-    xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Xamarin.Plugin.Calendar.Controls.DayView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="dayView">
 
-    <Grid
-        HorizontalOptions="FillAndExpand"
-        VerticalOptions="FillAndExpand">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
         <Frame
-            HasShadow="False"
-            IsClippedToBounds="True"
-            WidthRequest="{Binding DayViewSize}"
-            HeightRequest="{Binding DayViewSize}"
-            CornerRadius="{Binding DayViewCornerRadius}"
-            VerticalOptions="CenterAndExpand"
-            HorizontalOptions="CenterAndExpand"
             Padding="0"
+            BackgroundColor="{Binding BackgroundColor}"
+            CornerRadius="{Binding DayViewCornerRadius}"
+            HasShadow="False"
+            HeightRequest="{Binding DayViewSize}"
+            HorizontalOptions="CenterAndExpand"
+            IsClippedToBounds="True"
             OutlineColor="{Binding OutlineColor}"
-            BackgroundColor="{Binding BackgroundColor}" />
+            VerticalOptions="CenterAndExpand"
+            WidthRequest="{Binding DayViewSize}" />
 
         <Frame
-            IsVisible="{Binding HasEvents}"
-            HorizontalOptions="Center"
-            VerticalOptions="End"
-            WidthRequest="8"
-            HeightRequest="8"
-            CornerRadius="4"
             Margin="0,0,0,3"
             Padding="0"
             BackgroundColor="{Binding EventColor}"
+            CornerRadius="4"
+            HasShadow="False"
+            HeightRequest="8"
+            HorizontalOptions="Center"
             InputTransparent="True"
-            HasShadow="False" />
+            IsVisible="{Binding HasEvents}"
+            OutlineColor="Transparent"
+            VerticalOptions="End"
+            WidthRequest="8" />
 
         <Label
+            HorizontalOptions="Center"
+            InputTransparent="True"
+            Style="{Binding DaysLabelStyle}"
             Text="{Binding Date.Day}"
             TextColor="{Binding TextColor}"
-            Style="{Binding DaysLabelStyle}"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            InputTransparent="True" />
+            VerticalOptions="Center" />
 
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnTapped" />

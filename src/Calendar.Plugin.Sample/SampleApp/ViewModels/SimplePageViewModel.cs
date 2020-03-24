@@ -2,24 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
+using SampleApp.Model;
 
-namespace SampleApp
+namespace SampleApp.ViewModels
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class SimplePageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
-        public ICommand DayTappedCommand => new Command<DateTime>(DayTapped);
-
-        public MainPageViewModel()
+        public ICommand TodayCommand => new Command(() => { Year = DateTime.Today.Year; Month = DateTime.Today.Month;  });
+        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
+        
+        public SimplePageViewModel() : base()
         {
-            Culture = CultureInfo.CreateSpecificCulture("en-US");
-
             // testing all kinds of adding events
             // when initializing collection
             Events = new EventCollection
@@ -29,7 +27,7 @@ namespace SampleApp
 
             // with add method
             Events.Add(DateTime.Now.AddDays(-1), new List<EventModel>(GenerateEvents(5, "Cool")));
-            
+
             // with indexer
             Events[DateTime.Now] = new List<EventModel>(GenerateEvents(2, "Boring"));
 
@@ -81,7 +79,13 @@ namespace SampleApp
             set => SetProperty(ref _month, value);
         }
 
-        public int Year { get; set; } = DateTime.Today.Year;
+        public int _year = DateTime.Today.Year;
+        public int Year
+        {
+            get => _year;
+            set => SetProperty(ref _year, value);
+        }
+
 
         private DateTime _selectedDate = DateTime.Today;
         public DateTime SelectedDate
@@ -104,33 +108,12 @@ namespace SampleApp
             set => SetProperty(ref _maximumDate, value);
         }
 
-        private CultureInfo _culture = CultureInfo.InvariantCulture;
-        public CultureInfo Culture
+        private async Task ExecuteEventSelectedCommand(object item)
         {
-            get => _culture;
-            set => SetProperty(ref _culture, value);
+            if(item is EventModel eventModel)
+            {
+                await App.Current.MainPage.DisplayAlert(eventModel.Name, eventModel.Description, "Ok");
+            }
         }
-
-        private static void DayTapped(DateTime date)
-        {
-            Console.WriteLine($"Received tap event from date: {date}");
-        }
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void SetProperty<TData>(ref TData storage, TData value, [CallerMemberName] string propertyName = "")
-        {
-            if (storage.Equals(value))
-                return;
-
-            storage = value;
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
     }
 }

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="SampleApp.Controls.CalendarFooter"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Grid
+        HeightRequest="40"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label
+            FontAttributes="Bold"
+            FontSize="Medium"
+            Text="{Binding SelectedDateText}"
+            TextColor="{Binding SelectedDateColor}"
+            VerticalOptions="CenterAndExpand"
+            VerticalTextAlignment="Center" />
+
+        <Label
+            x:Name="showHideLabel"
+            Grid.Column="1"
+            Margin="0,0,15,0"
+            BackgroundColor="Transparent"
+            FontAttributes="Bold"
+            FontFamily="{StaticResource FontAwesomeSolid}"
+            FontSize="25"
+            HorizontalOptions="End"
+            IsVisible="{Binding FooterArrowVisible}"
+            Text="&#xf062;"
+            TextColor="DarkCyan"
+            VerticalOptions="CenterAndExpand"
+            VerticalTextAlignment="Center">
+            <Label.Triggers>
+                <DataTrigger
+                    Binding="{Binding CalendarSectionShown}"
+                    TargetType="Label"
+                    Value="False">
+                    <Setter Property="Text" Value="&#xf063;" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ShowHideCalendarCommand}" />
+        </Grid.GestureRecognizers>
+    </Grid>
+</ContentView>

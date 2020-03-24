@@ -32,7 +32,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (BindingContext == null)
                 return;
 
-            var itemContent = ItemTemplate.CreateContent(BindingContext);
+            var itemContent = ItemTemplate?.CreateContent(BindingContext);
 
             Content = itemContent as View ?? (itemContent as ViewCell)?.View;
         }

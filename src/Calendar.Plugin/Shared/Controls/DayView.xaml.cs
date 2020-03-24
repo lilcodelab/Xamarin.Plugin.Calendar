@@ -11,7 +11,7 @@ namespace Xamarin.Plugin.Calendar.Controls
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DayView : ContentView
-    {
+    {        
         internal DayView()
         {
             InitializeComponent();
@@ -20,7 +20,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void OnTapped(object sender, EventArgs e)
         {
             if (BindingContext is DayModel dayModel && !dayModel.IsDisabled)
-            { 
+            {
                 dayModel.IsSelected = true;
                 dayModel.DayTappedCommand?.Execute(dayModel.Date);
             }
