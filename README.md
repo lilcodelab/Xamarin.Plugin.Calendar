@@ -1,5 +1,5 @@
 ## Calendar Plugin for Xamarin.Forms
-[![Build status](https://dev.azure.com/lilcodelab/Xamarin.Plugin.Calendar/_apis/build/status/Xamarin.Plugin.Calendar-Xamarin.Android-CI)](https://github.com/lilcodelab/Xamarin.Plugin.Calendar) 
+[![Build Status](https://dev.azure.com/lilcodelab/Xamarin.Plugin.Calendar/_apis/build/status/lilcodelab.Xamarin.Plugin.Calendar?branchName=master)](https://dev.azure.com/lilcodelab/Xamarin.Plugin.Calendar/_build/latest?definitionId=20&branchName=master) 
 [![Nuget](https://img.shields.io/nuget/v/Xamarin.Plugin.Calendar.svg?label=nuget)](https://www.nuget.org/packages/Xamarin.Plugin.Calendar/)
 [![Issues](https://img.shields.io/github/issues/lilcodelab/Xamarin.Plugin.Calendar.svg)](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/issues)
 [![Chat](https://img.shields.io/badge/Telegram-chat-blue.svg)](https://t.me/XamarinPluginCalendar)
