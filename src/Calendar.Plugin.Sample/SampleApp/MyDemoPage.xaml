@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+             mc:Ignorable="d"
+             xmlns:local="clr-namespace:SampleApp"
+             x:Class="SampleApp.MyDemoPage">
+    <ContentPage.BindingContext>
+        <local:MyDemoViewModel />
+    </ContentPage.BindingContext>
+
+    <controls:Calendar
+        Padding="10,0"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        MarkDates="{Binding MarkDates}"
+        SelectedDate="{Binding SelectedDate}"
+        EventIndicatorColor="#00786C"
+        SelectedDayBackgroundColor="#00786C"
+        EventIndicatorSelectedColor="#00786C"
+        >
+    </controls:Calendar>
+</ContentPage>

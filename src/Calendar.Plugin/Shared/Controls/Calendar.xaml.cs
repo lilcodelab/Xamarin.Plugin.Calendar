@@ -15,6 +15,24 @@ namespace Xamarin.Plugin.Calendar.Controls
     {
         #region Bindable properties
 
+        public static readonly BindableProperty WeekStartDateProperty =
+          BindableProperty.Create(nameof(WeekStartDate), typeof(DateTime), typeof(WeekDaysView), DateTime.Now, BindingMode.TwoWay);
+
+        public DateTime WeekStartDate
+        {
+            get => (DateTime)GetValue(WeekStartDateProperty);
+            set => SetValue(WeekStartDateProperty, value);
+        }
+
+        public static readonly BindableProperty DisplayTypeProperty =
+         BindableProperty.Create(nameof(ShowMonthPicker), typeof(DisplayMode), typeof(Calendar), DisplayMode.Week);
+
+        public DisplayMode DisplayType
+        {
+            get => (DisplayMode)GetValue(DisplayTypeProperty);
+            set => SetValue(DisplayTypeProperty, value);
+        }
+
         public static readonly BindableProperty ShowMonthPickerProperty =
           BindableProperty.Create(nameof(ShowMonthPicker), typeof(bool), typeof(Calendar), true);
 
@@ -31,6 +49,15 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (bool)GetValue(ShowYearPickerProperty);
             set => SetValue(ShowYearPickerProperty, value);
+        }
+
+        public static readonly BindableProperty WeekProperty =
+         BindableProperty.Create(nameof(Week), typeof(int), typeof(Calendar), 1, BindingMode.TwoWay);
+
+        public int Week
+        {
+            get => (int)GetValue(WeekProperty);
+            set => SetValue(WeekProperty, value);
         }
 
         public static readonly BindableProperty MonthProperty =
@@ -61,12 +88,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty CultureProperty =
-          BindableProperty.Create(nameof(Culture), typeof(CultureInfo), typeof(Calendar), CultureInfo.InvariantCulture, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(Culture), typeof(CultureInfo), typeof(Calendar), CultureInfo.CurrentCulture, BindingMode.TwoWay);
 
         public CultureInfo Culture
         {
             get => (CultureInfo)GetValue(CultureProperty);
             set => SetValue(CultureProperty, value);
+        }
+
+        public static readonly BindableProperty MarkDatesProperty =
+         BindableProperty.Create(nameof(MarkDates), typeof(List<DateTime>), typeof(Calendar), new List<DateTime>(), propertyChanged: OnMarkDatesChanged);
+
+        public List<DateTime> MarkDates
+        {
+            get => (List<DateTime>)GetValue(MarkDatesProperty);
+            set => SetValue(MarkDatesProperty, value);
         }
 
         public static readonly BindableProperty EventsProperty =
@@ -142,7 +178,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty DeselectedDayTextColorProperty =
-          BindableProperty.Create(nameof(DeselectedDayTextColor), typeof(Color), typeof(Calendar), Color.Default);
+          BindableProperty.Create(nameof(DeselectedDayTextColor), typeof(Color), typeof(Calendar), Color.Black);
 
         public Color DeselectedDayTextColor
         {
@@ -247,6 +283,15 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (string)GetValue(SelectedDateTextProperty);
             set => SetValue(SelectedDateTextProperty, value);
+        }
+
+        public static readonly BindableProperty YearAndMonthTextFormatProperty =
+          BindableProperty.Create(nameof(YearAndMonthTextFormatProperty), typeof(string), typeof(Calendar), "y");
+
+        public string YearAndMonthTextFormat
+        {
+            get => (string)GetValue(YearAndMonthTextFormatProperty);
+            set => SetValue(YearAndMonthTextFormatProperty, value);
         }
 
         public static readonly BindableProperty SelectedDateTextFormatProperty =
@@ -402,7 +447,9 @@ namespace Xamarin.Plugin.Calendar.Controls
             PrevYearCommand = new Command(PrevYear);
             NextYearCommand = new Command(NextYear);
             ShowHideCalendarCommand = new Command(ToggleCalendarSectionVisibility);
-
+            GoToDodayCommand = new Command(GoToToday);
+            SwitchToMonthCommand = new Command(SwitchToMonth);
+            SwitchToWeekCommand = new Command(SwitchToWeek);
             InitializeComponent();
             UpdateSelectedDateLabel();
             UpdateMonthLabel();
@@ -421,6 +468,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         public ICommand PrevYearCommand { get; }
         public ICommand NextYearCommand { get; }
         public ICommand ShowHideCalendarCommand { get; }
+        public ICommand GoToDodayCommand { get; }
+        public ICommand SwitchToWeekCommand { get; }
+        public ICommand SwitchToMonthCommand { get; }
+
+        
+
+        public bool IsToday
+        {
+            get => DateTime.Now.Date == SelectedDate;
+        }
+
+        public string YearAndMonthText
+        {
+            get => new DateTime(Year,Month,1).ToString(YearAndMonthTextFormat, Culture);
+        }
 
         #endregion
 
@@ -438,6 +500,16 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 view.UpdateEvents();
                 view.monthDaysView.UpdateDays();
+                view.weekDaysView.UpdateDays();
+            }
+        }
+
+        private static void OnMarkDatesChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar view)
+            {
+                view.monthDaysView.UpdateDays();
+                view.weekDaysView.UpdateDays();
             }
         }
 
@@ -449,11 +521,17 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 case nameof(Month):
                     UpdateMonthLabel();
+                    OnPropertyChanged(nameof(YearAndMonthText));
+                    break;
+
+                case nameof(Year):
+                    OnPropertyChanged(nameof(YearAndMonthText));
                     break;
 
                 case nameof(SelectedDate):
                     UpdateSelectedDateLabel();
                     UpdateEvents();
+                    OnPropertyChanged(nameof(IsToday));
                     break;
 
                 case nameof(Culture):
@@ -535,7 +613,17 @@ namespace Xamarin.Plugin.Calendar.Controls
             SwipeRightCommand?.Execute(null);
 
             if (SwipeToChangeMonthEnabled)
-                PrevMonth();
+            {
+                if (DisplayType == DisplayMode.Month)
+                {
+                    PrevMonth();
+                }
+                else
+                {
+                    PrevWeek();
+                }
+            }
+
         }
 
         private void OnSwipedLeft(object sender, EventArgs e)
@@ -543,7 +631,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             SwipeLeftCommand?.Execute(null);
 
             if (SwipeToChangeMonthEnabled)
-                NextMonth();
+            {
+                if (DisplayType == DisplayMode.Month)
+                {
+                    NextMonth();
+                }
+                else
+                {
+                    NextWeek();
+                }
+            }
         }
 
         private void OnSwipedUp(object sender, EventArgs e)
@@ -557,7 +654,15 @@ namespace Xamarin.Plugin.Calendar.Controls
         #endregion
 
         #region Other methods
+        private void PrevWeek()
+        {
+            --Week;
+        }
 
+        private void NextWeek()
+        {
+            ++Week;
+        }
         private void PrevMonth()
         {
             if (Month - 1 == 0)
@@ -586,6 +691,32 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void NextYear()
             => Year++;
 
+        private void GoToToday()
+        {
+            Week = 1;
+            Year = DateTime.Now.Year;
+            Month = DateTime.Now.Month;
+            SelectedDate = DateTime.Now.Date;
+            WeekStartDate = DateTime.Now.Date;
+            OnPropertyChanged(nameof(WeekStartDate));
+        }
+
+        private void SwitchToWeek()
+        {
+            DisplayType = DisplayMode.Week;
+            Week = 1;
+            WeekStartDate = new DateTime(Year, Month, 1);
+            OnPropertyChanged(nameof(DisplayType));
+            OnPropertyChanged(nameof(Week));
+            OnPropertyChanged(nameof(WeekStartDate));
+        }
+
+        private void SwitchToMonth()
+        {
+            DisplayType = DisplayMode.Month;
+            OnPropertyChanged(nameof(DisplayType));
+        }
+
         private void ToggleCalendarSectionVisibility()
             => CalendarSectionShown = !CalendarSectionShown;
 
@@ -598,5 +729,10 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
+        public enum DisplayMode
+        {
+            Week,
+            Month
+        }
     }
 }
