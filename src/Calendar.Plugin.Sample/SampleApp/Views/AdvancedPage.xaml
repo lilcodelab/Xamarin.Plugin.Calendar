@@ -11,6 +11,10 @@
     x:Name="advancedCalendarPage"
     mc:Ignorable="d">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding OpenPickerCommand}" Text="Picker" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.BindingContext>
         <local:AdvancedPageViewModel />
     </ContentPage.BindingContext>
