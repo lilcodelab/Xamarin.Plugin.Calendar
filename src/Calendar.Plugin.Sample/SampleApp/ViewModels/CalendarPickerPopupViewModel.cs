@@ -9,17 +9,17 @@ namespace SampleApp.ViewModels
 {
     public class CalendarPickerPopupViewModel : BasePageViewModel, INotifyPropertyChanged
     {
-        public event Action<DateResult> Closed;
+        public event Action<CalendarPickerResult> Closed;
 
         public ICommand SuccessCommand => new Command(async () =>
         {
-            Closed?.Invoke(new DateResult() { IsSuccess = true, SelectedDate = SelectedDate });
+            Closed?.Invoke(new CalendarPickerResult() { IsSuccess = true, SelectedDate = SelectedDate });
             await PopupNavigation.Instance.PopAsync();
         });
 
         public ICommand CancelCommand => new Command(async () =>
         {
-            Closed?.Invoke(new DateResult() { IsSuccess = false });
+            Closed?.Invoke(new CalendarPickerResult() { IsSuccess = false });
             await PopupNavigation.Instance.PopAsync();
         });
 
