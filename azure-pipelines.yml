@@ -10,6 +10,7 @@ variables:
   buildPlatform: 'AnyCPU'
   buildConfiguration: 'Release'
   nugetVersion: '1.2.$(Build.BuildId)'
+  MonoVersion: 6_8_0
 
 jobs:
 - job: 'Nuget'
@@ -47,7 +48,7 @@ jobs:
   steps:
     - task: NuGetToolInstaller@1
 
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_6_0
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $MonoVersion
       displayName: 'Selecting the Xamarin SDK version'
 
     - task: DownloadBuildArtifacts@0
@@ -101,7 +102,7 @@ jobs:
       inputs:
         version: 3.x
 
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_6_0
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $MonoVersion
       displayName: 'Selecting the Xamarin SDK version'
 
     - task: DownloadBuildArtifacts@0
