@@ -3,7 +3,8 @@
     x:Class="Xamarin.Plugin.Calendar.Controls.DayView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Name="dayView">
+    x:Name="dayView"
+    BackgroundColor="{Binding BackgroundFullEventColor}">
 
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
@@ -20,6 +21,20 @@
             WidthRequest="{Binding DayViewSize}" />
 
         <Frame
+            Margin="0,4,0,0"
+            Padding="0"
+            BackgroundColor="{Binding EventColor}"
+            CornerRadius="4"
+            HasShadow="False"
+            HeightRequest="8"
+            HorizontalOptions="Center"
+            InputTransparent="True"
+            IsVisible="{Binding TopDotVisible}"
+            OutlineColor="Transparent"
+            VerticalOptions="Start"
+            WidthRequest="8" />
+
+        <Frame
             Margin="0,0,0,3"
             Padding="0"
             BackgroundColor="{Binding EventColor}"
@@ -28,7 +43,7 @@
             HeightRequest="8"
             HorizontalOptions="Center"
             InputTransparent="True"
-            IsVisible="{Binding HasEvents}"
+            IsVisible="{Binding BottomDotVisible}"
             OutlineColor="Transparent"
             VerticalOptions="End"
             WidthRequest="8" />

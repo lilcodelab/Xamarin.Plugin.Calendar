@@ -111,6 +111,16 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary> Bindable property for EventIndicatorColor </summary>
+        public static readonly BindableProperty EventIndicatorTypeProperty =
+          BindableProperty.Create(nameof(EventIndicatorType), typeof(EventIndicatorType), typeof(MonthDaysView), EventIndicatorType.BottomDot);
+
+        public EventIndicatorType EventIndicatorType
+        {
+            get => (EventIndicatorType)GetValue(EventIndicatorTypeProperty);
+            set => SetValue(EventIndicatorTypeProperty, value);
+        }
+
+        /// <summary> Bindable property for EventIndicatorColor </summary>
         public static readonly BindableProperty EventIndicatorColorProperty =
           BindableProperty.Create(nameof(EventIndicatorColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
 
@@ -128,6 +138,26 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (Color)GetValue(EventIndicatorSelectedColorProperty);
             set => SetValue(EventIndicatorSelectedColorProperty, value);
+        }
+
+        /// <summary> Bindable property for EventIndicatorTextColor </summary>
+        public static readonly BindableProperty EventIndicatorTextColorProperty =
+         BindableProperty.Create(nameof(EventIndicatorTextColor), typeof(Color?), typeof(Calendar), Color.Default);
+
+        public Color EventIndicatorTextColor
+        {
+            get => (Color)GetValue(EventIndicatorTextColorProperty);
+            set => SetValue(EventIndicatorTextColorProperty, value);
+        }
+
+        /// <summary> Bindable property for EventIndicatorSelectedTextColor </summary>
+        public static readonly BindableProperty EventIndicatorSelectedTextColorProperty =
+          BindableProperty.Create(nameof(EventIndicatorSelectedTextColor), typeof(Color), typeof(Calendar), Color.Default);
+
+        public Color EventIndicatorSelectedTextColor
+        {
+            get => (Color)GetValue(EventIndicatorSelectedTextColorProperty);
+            set => SetValue(EventIndicatorSelectedTextColorProperty, value);
         }
 
         /// <summary> Bindable property for TodayOutlineColor </summary>
@@ -309,6 +339,9 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(SelectedDayBackgroundColor):
                 case nameof(EventIndicatorColor):
                 case nameof(EventIndicatorSelectedColor):
+                case nameof(EventIndicatorTextColor):
+                case nameof(EventIndicatorSelectedTextColor):
+                case nameof(EventIndicatorType):
                 case nameof(TodayOutlineColor):
                 case nameof(TodayFillColor):
                 case nameof(DisabledDayColor):
@@ -450,6 +483,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.DayViewCornerRadius = DayViewCornerRadius;
                 dayModel.DayTappedCommand = DayTappedCommand;
                 dayModel.DaysLabelStyle = DaysLabelStyle;
+                dayModel.EventIndicatorType = EventIndicatorType;
                 dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
@@ -500,15 +534,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             Color? eventIndicatorColor = EventIndicatorColor;
             Color? eventIndicatorSelectedColor = EventIndicatorSelectedColor;
+            Color? eventIndicatorTextColor = EventIndicatorTextColor;
+            Color? eventIndicatorSelectedTextColor = EventIndicatorSelectedTextColor;
 
             if (Events.TryGetValue(dayModel.Date, out var dayEventCollection) && dayEventCollection is IPersonalizableDayEvent personalizableDay)
             {
                 eventIndicatorColor = personalizableDay?.EventIndicatorColor;
-                eventIndicatorSelectedColor = personalizableDay?.EventIndicatorSelectedColor;
+                eventIndicatorSelectedColor = personalizableDay?.EventIndicatorSelectedColor ?? personalizableDay?.EventIndicatorColor;
+                eventIndicatorTextColor = personalizableDay?.EventIndicatorTextColor;
+                eventIndicatorSelectedTextColor = personalizableDay?.EventIndicatorSelectedTextColor ?? personalizableDay?.EventIndicatorTextColor;
             }
 
             dayModel.EventIndicatorColor = eventIndicatorColor ?? EventIndicatorColor;
             dayModel.EventIndicatorSelectedColor = eventIndicatorSelectedColor ?? EventIndicatorSelectedColor;
+            dayModel.EventIndicatorTextColor = eventIndicatorTextColor ?? EventIndicatorTextColor;
+            dayModel.EventIndicatorSelectedTextColor = eventIndicatorSelectedTextColor ?? EventIndicatorSelectedTextColor;
         }        
     }
 }
