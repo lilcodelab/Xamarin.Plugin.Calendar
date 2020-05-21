@@ -17,7 +17,7 @@ namespace Xamarin.Plugin.Calendar.Models
         protected TProperty GetProperty<TProperty>(TProperty defaultValue = default, [CallerMemberName] string propertyName = "")
         {
             if (!_properties.ContainsKey(propertyName))
-                AddProperty(propertyName, defaultValue);
+                return defaultValue;
 
             return (TProperty)_properties[propertyName];
         }
