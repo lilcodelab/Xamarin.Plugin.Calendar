@@ -129,7 +129,7 @@ namespace Xamarin.Plugin.Calendar.Models
 
         public Color EventIndicatorSelectedColor
         {
-            get => GetProperty(Color.FromHex("#FF4081"));
+            get => GetProperty(SelectedBackgroundColor);
             set => SetProperty(value)
                     .Notify(nameof(EventColor),
                             nameof(BackgroundColor),
@@ -138,13 +138,13 @@ namespace Xamarin.Plugin.Calendar.Models
 
         public Color EventIndicatorTextColor
         {
-            get => GetProperty(Color.Default);
+            get => GetProperty(DeselectedTextColor);
             set => SetProperty(value);
         }
 
         public Color EventIndicatorSelectedTextColor
         {
-            get => GetProperty(Color.Default);
+            get => GetProperty(SelectedTextColor);
             set => SetProperty(value);
         }
 
@@ -168,13 +168,13 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value);
         }
 
-        public bool BottomDotVisible => EventIndicatorType == EventIndicatorType.BottomDot && HasEvents;
+        public bool BottomDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.BottomDot;
 
-        public bool TopDotVisible => EventIndicatorType == EventIndicatorType.TopDot && HasEvents;
+        public bool TopDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.TopDot;
 
-        public bool BackgroundEventIndicator => EventIndicatorType == EventIndicatorType.Background && HasEvents;
+        public bool BackgroundEventIndicator => HasEvents && EventIndicatorType == EventIndicatorType.Background;
 
-        public Color BackgroundFullEventColor => EventIndicatorType == EventIndicatorType.BackgroundFull && HasEvents
+        public Color BackgroundFullEventColor => HasEvents && EventIndicatorType == EventIndicatorType.BackgroundFull
                                                ? EventColor
                                                : Color.Default;
 
@@ -182,34 +182,28 @@ namespace Xamarin.Plugin.Calendar.Models
                                  ? EventIndicatorSelectedColor
                                  : EventIndicatorColor;
 
-        public Color EventTextColor => IsSelected
-                                 ? EventIndicatorSelectedTextColor == Color.Default ? SelectedTextColor : EventIndicatorSelectedTextColor
-                                 : EventIndicatorTextColor == Color.Default ? DeselectedTextColor : EventIndicatorTextColor;
-
         public Color OutlineColor => IsToday()
                                    ? TodayOutlineColor
                                    : Color.Transparent;
 
-        private Color EventIndicatorBackgroundSelectedColor => EventIndicatorSelectedColor == Color.Transparent
-                                                            ? SelectedBackgroundColor
-                                                            : EventIndicatorSelectedColor;
 
         public Color BackgroundColor =>
             (BackgroundEventIndicator, IsSelected, IsToday()) switch
             {
                 (true, false, _) => EventIndicatorColor,
-                (true, true, _) => EventIndicatorBackgroundSelectedColor,
+                (true, true, _) => EventIndicatorSelectedColor,
                 (false, true, _) => SelectedBackgroundColor,
                 (false, false, true) => TodayFillColor,
                 (_, _, _) => DeselectedBackgroundColor
             };
 
         public Color TextColor =>
-            (IsDisabled, HasEvents, IsSelected, IsThisMonth) switch
+            (IsDisabled, IsSelected, HasEvents, IsThisMonth) switch
             {
                 (true, _, _, _) => DisabledColor,
-                (false, true, _, _) => EventTextColor,
-                (false, false, true, _) => SelectedTextColor,
+                (false, true, false, _) => SelectedTextColor,
+                (false, true, true, _) => EventIndicatorSelectedTextColor,
+                (false, false, true, _) => EventIndicatorTextColor,
                 (false, false, false, true) => DeselectedTextColor,
                 (_, _, _, _) => OtherMonthColor
             };
@@ -218,13 +212,5 @@ namespace Xamarin.Plugin.Calendar.Models
 
         private bool IsToday()
             => Date.Date == DateTime.Today && !IsSelected;
-    }
-
-    public enum EventIndicatorType
-    {
-        BottomDot,
-        TopDot,
-        Background,
-        BackgroundFull,
     }
 }

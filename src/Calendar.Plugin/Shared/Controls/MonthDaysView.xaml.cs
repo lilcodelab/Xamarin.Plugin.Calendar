@@ -283,7 +283,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         public bool AnimateCalendar
         {
-            get => (bool) GetValue(AnimateCalendarProperty);
+            get => (bool)GetValue(AnimateCalendarProperty);
             set { SetValue(AnimateCalendarProperty, value); }
         }
         #endregion
@@ -298,8 +298,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             InitializeComponent();
 
-            InitializeDayViews();
-            AssignDayViewModels();
+            InitializeDays();
             UpdateDaysColors();
             UpdateDayTitles();
             UpdateDays(AnimateCalendar);
@@ -371,7 +370,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (Culture == null)
                 return;
 
-            Animate(() => daysControl.FadeTo(animate? 0 : 1, 50),
+            Animate(() => daysControl.FadeTo(animate ? 0 : 1, 50),
                     () => daysControl.FadeTo(1, 200),
                     () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
@@ -439,13 +438,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
-        private void InitializeDayViews()
-        {
-            foreach (var dayView in daysControl.Children.OfType<DayView>())
-                _dayViews.Add(dayView);
-        }
-
-        private void AssignDayViewModels()
+        private void InitializeDays()
         {
             foreach (var dayView in daysControl.Children.OfType<DayView>())
             {
@@ -453,6 +446,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 dayView.BindingContext = dayModel;
                 dayModel.PropertyChanged += OnDayModelPropertyChanged;
+
+                _dayViews.Add(dayView);
             }
         }
 
@@ -549,6 +544,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             dayModel.EventIndicatorSelectedColor = eventIndicatorSelectedColor ?? EventIndicatorSelectedColor;
             dayModel.EventIndicatorTextColor = eventIndicatorTextColor ?? EventIndicatorTextColor;
             dayModel.EventIndicatorSelectedTextColor = eventIndicatorSelectedTextColor ?? EventIndicatorSelectedTextColor;
-        }        
+        }
     }
 }
