@@ -69,6 +69,13 @@
                 <controls:CalenderEvent CalenderEventCommand="{Binding BindingContext.EventSelectedCommand, Source={x:Reference advancedCalendarPage}}" />
             </DataTemplate>
         </plugin:Calendar.EventTemplate>
+        <plugin:Calendar.EmptyTemplate>
+            <DataTemplate>
+                <StackLayout>
+                    <Label Text="NO EVENTS FOR THE SELECTED DATE" HorizontalTextAlignment="Center" Margin="0,5,0,5" />
+                </StackLayout>
+            </DataTemplate>
+        </plugin:Calendar.EmptyTemplate>
     </plugin:Calendar>
 
     <ContentPage.Resources>
