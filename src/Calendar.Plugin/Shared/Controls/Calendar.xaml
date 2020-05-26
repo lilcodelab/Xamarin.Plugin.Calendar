@@ -13,13 +13,14 @@
         <Grid.RowDefinitions>
             <RowDefinition x:Name="calendarSectionRow" Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackLayout
             x:Name="calendarContainer"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
-            <controls:DataTemplateView BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" />
+            <controls:DataTemplateView BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" IsVisible="{Binding ShowHeaderAtTop}" />
 
             <controls:SwipeAwareContainer
                 HorizontalOptions="FillAndExpand"
@@ -84,6 +85,6 @@
                     VerticalOptions="FillAndExpand" />
             </ScrollView>
         </Grid>
-
+        <controls:DataTemplateView Grid.Row="2" BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" IsVisible="{Binding ShowHeaderAtBottom}" />
     </Grid>
 </ContentView>

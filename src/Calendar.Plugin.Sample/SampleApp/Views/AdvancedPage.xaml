@@ -52,7 +52,9 @@
         TodayFillColor="Silver"
         TodayOutlineColor="Blue"
         VerticalOptions="FillAndExpand"
-        YearLabelColor="Blue">
+        YearLabelColor="Blue"
+        ShowHeaderAtTop="False"
+        ShowHeaderAtBottom="False">
 
         <plugin:Calendar.HeaderSectionTemplate>
             <controls:CalendarHeader />

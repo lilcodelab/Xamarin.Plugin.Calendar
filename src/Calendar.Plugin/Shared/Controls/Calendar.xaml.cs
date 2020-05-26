@@ -471,6 +471,28 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(AnimateCalendarProperty, value);
         }
 
+        /// <summary>Bindable property for ShowHeaderAtBottom </summary>
+        public static readonly BindableProperty ShowHeaderAtBottomProperty =
+            BindableProperty.Create(nameof(ShowHeaderAtBottom), typeof(bool), typeof(Calendar), false);
+
+        /// <summary>Show header at bottom of calendaer</summary>
+        public bool ShowHeaderAtBottom
+        {
+            get => (bool)GetValue(ShowHeaderAtBottomProperty);
+            set => SetValue(ShowHeaderAtBottomProperty, value);
+        }
+
+        /// <summary>Bindable property for ShowHeaderAtTop </summary>
+        public static readonly BindableProperty ShowHeaderAtTopProperty =
+            BindableProperty.Create(nameof(ShowHeaderAtTop), typeof(bool), typeof(Calendar), true);
+
+        /// <summary>Show header at the top of the calendar</summary>
+        public bool ShowHeaderAtTop
+        {
+            get => (bool)GetValue(ShowHeaderAtTopProperty);
+            set => SetValue(ShowHeaderAtTopProperty, value);
+        }
+
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
