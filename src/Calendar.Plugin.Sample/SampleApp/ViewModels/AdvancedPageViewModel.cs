@@ -21,16 +21,26 @@ namespace SampleApp.ViewModels
         public ICommand SwipeRightCommand => new Command(() => { MonthYear = MonthYear.AddMonths(-2); });
         public ICommand SwipeUpCommand => new Command(() => { MonthYear = DateTime.Today; });
 
-        public ICommand OpenPickerCommand => new Command(async () =>
+        public ICommand OpenPickerCommand => new Command(async () => await ExecuteOpenPickerCommand());
+
+        private async Task ExecuteOpenPickerCommand()
         {
-            await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) =>
+            System.Diagnostics.Stopwatch s = new System.Diagnostics.Stopwatch();
+            s.Start();
+            Console.WriteLine("###################################");
+            var calendarPicker = new CalendarPickerPopup(async (calendarPickerResult) =>
             {
                 string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "CalendarPicker Canceled!";
 
-                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
+                //await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
                 Console.WriteLine(message);
-            }));
-        });
+            });
+
+            await PopupNavigation.Instance.PushAsync(calendarPicker);
+            Console.WriteLine("###################################2");
+            s.Stop();
+            await App.Current.MainPage.DisplayAlert("time", (s.ElapsedMilliseconds).ToString(), "Ok");
+        }
 
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 

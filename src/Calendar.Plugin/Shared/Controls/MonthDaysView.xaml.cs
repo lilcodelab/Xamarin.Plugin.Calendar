@@ -296,12 +296,14 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         internal MonthDaysView()
         {
+            Console.WriteLine("################################### MonthDaysView");
             InitializeComponent();
 
             InitializeDays();
             UpdateDaysColors();
             UpdateDayTitles();
             UpdateDays(AnimateCalendar);
+            Console.WriteLine("################################### MonthDaysView2");
         }
 
         /// <summary> ??? </summary>
@@ -462,6 +464,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void LoadDays()
         {
+            Console.WriteLine("################################### LoadDays START");
             var monthStart = new DateTime(DisplayedMonthYear.Year, DisplayedMonthYear.Month, 1);
             var addDays = ((int)Culture.DateTimeFormat.FirstDayOfWeek) - (int)monthStart.DayOfWeek;
 
@@ -473,6 +476,9 @@ namespace Xamarin.Plugin.Calendar.Controls
                 var currentDate = monthStart.AddDays(addDays++);
                 var dayModel = dayView.BindingContext as DayModel;
 
+                dayModel.PropertyChanged -= OnDayModelPropertyChanged;
+
+                Console.WriteLine($"################################### LoadDays 1 {currentDate}");
                 dayModel.Date = currentDate.Date;
                 dayModel.DayViewSize = DayViewSize;
                 dayModel.DayViewCornerRadius = DayViewCornerRadius;
@@ -481,14 +487,20 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.EventIndicatorType = EventIndicatorType;
                 dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
-                dayModel.HasEvents = Events.ContainsKey(currentDate);
+                dayModel.HasEvents = Events.Count > 0 && Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
+                Console.WriteLine($"################################### LoadDays 2 {currentDate}");
                 AssignIndicatorColors(ref dayModel);
+
+                dayModel.PropertyChanged += OnDayModelPropertyChanged;
 
                 if (dayModel.IsSelected)
                     _selectedDay = dayModel;
+
+                Console.WriteLine($"################################### LoadDays 3 {currentDate}");
             }
+            Console.WriteLine("################################### LoadDays END");
         }
 
         private void Animate(
@@ -532,7 +544,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             Color? eventIndicatorTextColor = EventIndicatorTextColor;
             Color? eventIndicatorSelectedTextColor = EventIndicatorSelectedTextColor;
 
-            if (Events.TryGetValue(dayModel.Date, out var dayEventCollection) && dayEventCollection is IPersonalizableDayEvent personalizableDay)
+            if (Events.Count > 0 && Events.TryGetValue(dayModel.Date, out var dayEventCollection) && dayEventCollection is IPersonalizableDayEvent personalizableDay)
             {
                 eventIndicatorColor = personalizableDay?.EventIndicatorColor;
                 eventIndicatorSelectedColor = personalizableDay?.EventIndicatorSelectedColor ?? personalizableDay?.EventIndicatorColor;
