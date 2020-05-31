@@ -19,19 +19,19 @@ namespace Xamarin.Plugin.Calendar.Models
             get => GetProperty<double>();
             set => SetProperty(value);
         }
-        
+
         public float DayViewCornerRadius
         {
             get => GetProperty<float>();
             set => SetProperty(value);
         }
-        
+
         public Style DaysLabelStyle
         {
             get => GetProperty(Device.Styles.BodyStyle);
             set => SetProperty(value);
         }
-        
+
         public ICommand DayTappedCommand
         {
             get => GetProperty<ICommand>();
@@ -41,7 +41,11 @@ namespace Xamarin.Plugin.Calendar.Models
         public bool HasEvents
         {
             get => GetProperty<bool>();
-            set => SetProperty(value);
+            set => SetProperty(value)
+                    .Notify(nameof(BottomDotVisible),
+                            nameof(TopDotVisible),
+                            nameof(BackgroundEventIndicator),
+                            nameof(BackgroundFullEventColor));
         }
 
         public bool IsThisMonth
@@ -58,7 +62,8 @@ namespace Xamarin.Plugin.Calendar.Models
                     .Notify(nameof(TextColor),
                             nameof(BackgroundColor),
                             nameof(OutlineColor),
-                            nameof(EventColor));
+                            nameof(EventColor),
+                            nameof(BackgroundFullEventColor));
         }
 
         public bool IsDisabled
@@ -103,18 +108,44 @@ namespace Xamarin.Plugin.Calendar.Models
                     .Notify(nameof(BackgroundColor));
         }
 
+        public EventIndicatorType EventIndicatorType
+        {
+            get => GetProperty(EventIndicatorType.BottomDot);
+            set => SetProperty(value)
+                    .Notify(nameof(BottomDotVisible),
+                            nameof(TopDotVisible),
+                            nameof(BackgroundEventIndicator),
+                            nameof(BackgroundColor));
+        }
+
         public Color EventIndicatorColor
         {
             get => GetProperty(Color.FromHex("#FF4081"));
             set => SetProperty(value)
-                    .Notify(nameof(EventColor));
+                    .Notify(nameof(EventColor),
+                            nameof(BackgroundColor),
+                            nameof(BackgroundFullEventColor));
         }
 
         public Color EventIndicatorSelectedColor
         {
-            get => GetProperty(Color.FromHex("#FF4081"));
+            get => GetProperty(SelectedBackgroundColor);
             set => SetProperty(value)
-                    .Notify(nameof(EventColor));
+                    .Notify(nameof(EventColor),
+                            nameof(BackgroundColor),
+                            nameof(BackgroundFullEventColor));
+        }
+
+        public Color EventIndicatorTextColor
+        {
+            get => GetProperty(DeselectedTextColor);
+            set => SetProperty(value);
+        }
+
+        public Color EventIndicatorSelectedTextColor
+        {
+            get => GetProperty(SelectedTextColor);
+            set => SetProperty(value);
         }
 
         public Color TodayOutlineColor
@@ -137,6 +168,16 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value);
         }
 
+        public bool BottomDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.BottomDot;
+
+        public bool TopDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.TopDot;
+
+        public bool BackgroundEventIndicator => HasEvents && EventIndicatorType == EventIndicatorType.Background;
+
+        public Color BackgroundFullEventColor => HasEvents && EventIndicatorType == EventIndicatorType.BackgroundFull
+                                               ? EventColor
+                                               : Color.Default;
+
         public Color EventColor => IsSelected
                                  ? EventIndicatorSelectedColor
                                  : EventIndicatorColor;
@@ -145,22 +186,29 @@ namespace Xamarin.Plugin.Calendar.Models
                                    ? TodayOutlineColor
                                    : Color.Transparent;
 
+
         public Color BackgroundColor =>
-            (IsSelected, IsToday()) switch
+            (BackgroundEventIndicator, IsSelected, IsToday()) switch
             {
-                (true, _) => SelectedBackgroundColor,
-                (false, true) => TodayFillColor,
-                (_, _) => DeselectedBackgroundColor
+                (true, false, _) => EventIndicatorColor,
+                (true, true, _) => EventIndicatorSelectedColor,
+                (false, true, _) => SelectedBackgroundColor,
+                (false, false, true) => TodayFillColor,
+                (_, _, _) => DeselectedBackgroundColor
             };
 
         public Color TextColor =>
-            (IsDisabled, IsSelected, IsThisMonth) switch
+            (IsDisabled, IsSelected, HasEvents, IsThisMonth) switch
             {
-                (true, _, _) => DisabledColor,
-                (false, true, _) => SelectedTextColor,
-                (false, false, true) => DeselectedTextColor,
-                (_, _, _) => OtherMonthColor
+                (true, _, _, _) => DisabledColor,
+                (false, true, false, _) => SelectedTextColor,
+                (false, true, true, _) => EventIndicatorSelectedTextColor,
+                (false, false, true, _) => EventIndicatorTextColor,
+                (false, false, false, true) => DeselectedTextColor,
+                (_, _, _, _) => OtherMonthColor
             };
+
+
 
         private bool IsToday()
             => Date.Date == DateTime.Today && !IsSelected;

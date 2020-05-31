@@ -180,6 +180,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedDayBackgroundColorProperty, value);
         }
 
+        public static readonly BindableProperty EventIndicatorTypeProperty =
+          BindableProperty.Create(nameof(EventIndicatorType), typeof(EventIndicatorType), typeof(MonthDaysView), EventIndicatorType.BottomDot);
+
+        public EventIndicatorType EventIndicatorType
+        {
+            get => (EventIndicatorType)GetValue(EventIndicatorTypeProperty);
+            set => SetValue(EventIndicatorTypeProperty, value);
+        }
+
         public static readonly BindableProperty EventIndicatorColorProperty =
           BindableProperty.Create(nameof(EventIndicatorColor), typeof(Color), typeof(Calendar), Color.FromHex("#FF4081"));
 
@@ -196,6 +205,24 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (Color)GetValue(EventIndicatorSelectedColorProperty);
             set => SetValue(EventIndicatorSelectedColorProperty, value);
+        }
+
+        public static readonly BindableProperty EventIndicatorTextColorProperty =
+         BindableProperty.Create(nameof(EventIndicatorTextColor), typeof(Color), typeof(Calendar), Color.Default);
+
+        public Color EventIndicatorTextColor
+        {
+            get => (Color)GetValue(EventIndicatorTextColorProperty);
+            set => SetValue(EventIndicatorTextColorProperty, value);
+        }
+
+        public static readonly BindableProperty EventIndicatorSelectedTextColorProperty =
+          BindableProperty.Create(nameof(EventIndicatorSelectedTextColor), typeof(Color), typeof(Calendar), Color.Default);
+
+        public Color EventIndicatorSelectedTextColor
+        {
+            get => (Color)GetValue(EventIndicatorSelectedTextColorProperty);
+            set => SetValue(EventIndicatorSelectedTextColorProperty, value);
         }
 
         public static readonly BindableProperty ArrowsColorProperty =

@@ -12,12 +12,11 @@ namespace Xamarin.Plugin.Calendar.Models
 
         private readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
         private readonly Dictionary<string, PropertyChangedEventArgs> _propertyChangedArgs = new Dictionary<string, PropertyChangedEventArgs>();
-        private readonly Dictionary<string, List<PropertyChangedEventArgs>> _propertyDependencies = new Dictionary<string, List<PropertyChangedEventArgs>>();
-
+     
         protected TProperty GetProperty<TProperty>(TProperty defaultValue = default, [CallerMemberName] string propertyName = "")
         {
             if (!_properties.ContainsKey(propertyName))
-                AddProperty(propertyName, defaultValue);
+                return defaultValue;
 
             return (TProperty)_properties[propertyName];
         }
@@ -32,12 +31,6 @@ namespace Xamarin.Plugin.Calendar.Models
             _properties[propertyName] = value;
             PropertyChanged?.Invoke(this, _propertyChangedArgs[propertyName]);
             onChanged?.Invoke(value);
-
-            if (_propertyDependencies.TryGetValue(propertyName, out List<PropertyChangedEventArgs> alsoNotifyFor))
-            {
-                foreach (var dependentPropertyArgs in alsoNotifyFor)
-                    PropertyChanged?.Invoke(this, dependentPropertyArgs);
-            }
 
             return this;
         }
