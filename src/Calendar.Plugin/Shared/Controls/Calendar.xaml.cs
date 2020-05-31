@@ -108,6 +108,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventTemplateProperty, value);
         }
 
+        public static readonly BindableProperty EmptyTemplateProperty =
+            BindableProperty.Create(nameof(EmptyTemplate), typeof(DataTemplate), typeof(Calendar), null);
+
+        public DataTemplate EmptyTemplate
+        {
+            get => (DataTemplate)GetValue(EmptyTemplateProperty);
+            set => SetValue(EmptyTemplateProperty, value);
+        }
+
         public static readonly BindableProperty MonthLabelColorProperty =
           BindableProperty.Create(nameof(MonthLabelColor), typeof(Color), typeof(Calendar), Color.FromHex("#2196F3"));
 
