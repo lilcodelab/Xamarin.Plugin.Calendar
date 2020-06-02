@@ -13,7 +13,7 @@ namespace SampleApp.ViewModels
 {
     public class SimplePageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
-        public ICommand TodayCommand => new Command(() => { Year = DateTime.Today.Year; Month = DateTime.Today.Month;  });
+        public ICommand TodayCommand => new Command(() => { Year = DateTime.Today.Year; Month = DateTime.Today.Month; SelectedDate = DateTime.Today;});
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
         
         public SimplePageViewModel() : base()
