@@ -172,6 +172,63 @@ Sample properties:
 AnimateCalendar="False"<!--Enable/Disable animation when calendar is loaded or refreshed-->
 ```
 
+#### Section templates
+There are several templates that can be used to customize the calendar. You can find an example for each one in the AdvancedPage.xaml.
+
+##### Calendar control sections
+These sections provide customization over appearance of the controls of the calendar, like showing the selected month and year, month selection controls etc.
+
+###### HeaderSectionTemplate
+Customize the header section (top of the calendar control). Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.HeaderSectionTemplate>
+    <controls:CalendarHeader />
+</plugin:Calendar.HeaderSectionTemplate>
+```
+
+###### FooterSectionTemplate
+Customize the footer section (under the calendar part, above the events list). Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.FooterSectionTemplate>
+    <DataTemplate>
+        <controls:CalendarFooter />
+    </DataTemplate>
+</plugin:Calendar.FooterSectionTemplate>
+```
+
+###### BottomSectionTemplate
+Customize the bottom section (at the bottom of the calendar control, below the events list). Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.BottomSectionTemplate>
+    <controls:CalendarBottom />
+</plugin:Calendar.BottomSectionTemplate>
+```
+
+##### Event templates
+These templates provide customization for the events list.
+
+###### EventTemplate
+Customize the appearance of the events section. Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.EventTemplate>
+    <DataTemplate>
+        <controls:CalenderEvent CalenderEventCommand="{Binding BindingContext.EventSelectedCommand, Source={x:Reference advancedCalendarPage}}" />
+    </DataTemplate>
+</plugin:Calendar.EventTemplate>
+```
+
+###### EmptyTemplate
+Customize what to show in case the selected date has no events. Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.EmptyTemplate>
+    <DataTemplate>
+        <StackLayout>
+            <Label Text="NO EVENTS FOR THE SELECTED DATE" HorizontalTextAlignment="Center" Margin="0,5,0,5" />
+        </StackLayout>
+    </DataTemplate>
+</plugin:Calendar.EmptyTemplate>
+```
+
 ##### TODO
 * ~~screenshot of changed colors~~
 * comment public properties and methods
