@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Models;
+using Xamarin.Plugin.Calendar.Shared.Controls;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -261,6 +262,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(FooterSectionVisibleProperty, value);
         }
 
+        public static readonly BindableProperty BottomSectionVisibleProperty =
+            BindableProperty.Create(nameof(BottomSectionVisible), typeof(bool), typeof(Calendar), false);
+
+        public bool BottomSectionVisible
+        {
+            get => (bool)GetValue(BottomSectionVisibleProperty);
+            set => SetValue(BottomSectionVisibleProperty, value);
+        }
+
         public static readonly BindableProperty TodayOutlineColorProperty =
           BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(Calendar), Color.FromHex("#FF4081"));
 
@@ -295,6 +305,15 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (DataTemplate)GetValue(FooterSectionTemplateProperty);
             set => SetValue(FooterSectionTemplateProperty, value);
+        }
+
+        public static readonly BindableProperty BottomSectionTemplateProperty =
+            BindableProperty.Create(nameof(BottomSectionTemplate), typeof(DataTemplate), typeof(Calendar), new DataTemplate(() => new DefaultBottomSection()));
+
+        public DataTemplate BottomSectionTemplate
+        {
+            get => (DataTemplate)GetValue(BottomSectionTemplateProperty);
+            set => SetValue(BottomSectionTemplateProperty, value);
         }
 
         public static readonly BindableProperty MonthTextProperty =

@@ -102,4 +102,14 @@
   </ItemGroup>
   
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+  
+  <ItemGroup>
+    <None Remove="Shared\Controls\DefaultHeaderSection - Copy.xaml.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Shared\Controls\DefaultBottomSection.xaml.cs">
+      <DependentUpon>DefaultBottomSection.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
