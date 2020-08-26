@@ -108,6 +108,21 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _maximumDate, value);
         }
 
+        private DateTime? _rangeStart = DateTime.Today.AddDays(5);
+        public DateTime? RangeStart
+        {
+            get => _rangeStart;
+            set => SetProperty(ref _rangeStart, value);
+        }
+
+        private DateTime? _rangeEnd = DateTime.Today.AddDays(13);
+        public DateTime? RangeEnd
+        {
+            get => _rangeEnd;
+            set => SetProperty(ref _rangeEnd, value);
+        }
+
+
         private async Task ExecuteEventSelectedCommand(object item)
         {
             if(item is EventModel eventModel)

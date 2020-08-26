@@ -507,6 +507,37 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(AnimateCalendarProperty, value);
         }
 
+
+        #region Range Selection
+        public static readonly BindableProperty RangeSelectionStartDateProperty =
+          BindableProperty.Create(nameof(RangeSelectionStartDate), typeof(DateTime?), typeof(Calendar), null, BindingMode.TwoWay);
+
+        public DateTime? RangeSelectionStartDate
+        {
+            get => (DateTime?)GetValue(RangeSelectionStartDateProperty);
+            set => SetValue(RangeSelectionStartDateProperty, value);
+        }
+
+
+        public static readonly BindableProperty RangeSelectionEndDateProperty =
+          BindableProperty.Create(nameof(RangeSelectionEndDate), typeof(DateTime?), typeof(Calendar), null, BindingMode.TwoWay);
+
+        public DateTime? RangeSelectionEndDate
+        {
+            get => (DateTime?)GetValue(RangeSelectionEndDateProperty);
+            set => SetValue(RangeSelectionEndDateProperty, value);
+        }
+
+
+        public static readonly BindableProperty RangeSelectionEnabledProperty =
+            BindableProperty.Create(nameof(RangeSelectionEnabled), typeof(bool), typeof(Calendar), false);
+
+        public bool RangeSelectionEnabled
+        {
+            get => (bool)GetValue(RangeSelectionEnabledProperty);
+            set => SetValue(RangeSelectionEnabledProperty, value);
+        }
+        #endregion
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
