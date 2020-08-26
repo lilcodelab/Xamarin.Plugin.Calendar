@@ -60,6 +60,9 @@
                     SelectedDayTextColor="{Binding SelectedDayTextColor, Source={x:Reference calendar}}"
                     TodayFillColor="{Binding TodayFillColor, Source={x:Reference calendar}}"
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
+                    RangeSelectionEnabled="{Binding RangeSelectionEnabled, Source={x:Reference calendar}}"
+                    RangeSelectionStartDate="{Binding RangeSelectionStartDate, Source={x:Reference calendar}}"
+                    RangeSelectionEndDate="{Binding RangeSelectionEndDate, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand" />
             </controls:SwipeAwareContainer>
         </StackLayout>
