@@ -12,6 +12,11 @@ namespace SampleApp.Views
             InitializeComponent();
             AndroidSpecific.TabbedPage.SetToolbarPlacement(this, AndroidSpecific.ToolbarPlacement.Bottom);
             AndroidSpecific.TabbedPage.SetIsSwipePagingEnabled(this, false);
+
+            var pages = Children.GetEnumerator();
+            pages.MoveNext();
+            pages.MoveNext();
+            CurrentPage = pages.Current;
         }
     }
 }

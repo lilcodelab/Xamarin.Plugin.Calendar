@@ -32,7 +32,7 @@ namespace SampleApp.ViewModels
             {
                 string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "CalendarPicker Canceled!";
 
-                //await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
+                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
                 Console.WriteLine(message);
             });
 

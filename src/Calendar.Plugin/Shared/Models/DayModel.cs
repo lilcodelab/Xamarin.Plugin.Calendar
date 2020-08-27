@@ -168,13 +168,13 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value);
         }
 
-        public bool BottomDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.BottomDot;
+        public bool BottomDotVisible => EventIndicatorType == EventIndicatorType.BottomDot && HasEvents;
 
-        public bool TopDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.TopDot;
+        public bool TopDotVisible => EventIndicatorType == EventIndicatorType.TopDot && HasEvents;
 
-        public bool BackgroundEventIndicator => HasEvents && EventIndicatorType == EventIndicatorType.Background;
+        public bool BackgroundEventIndicator => EventIndicatorType == EventIndicatorType.Background && HasEvents;
 
-        public Color BackgroundFullEventColor => HasEvents && EventIndicatorType == EventIndicatorType.BackgroundFull
+        public Color BackgroundFullEventColor => EventIndicatorType == EventIndicatorType.BackgroundFull && HasEvents
                                                ? EventColor
                                                : Color.Default;
 
@@ -188,7 +188,7 @@ namespace Xamarin.Plugin.Calendar.Models
 
 
         public Color BackgroundColor =>
-            (BackgroundEventIndicator, IsSelected, IsToday()) switch
+            (BackgroundEventIndicator, IsSelected, Date.Date == DateTime.Today) switch
             {
                 (true, false, _) => EventIndicatorColor,
                 (true, true, _) => EventIndicatorSelectedColor,

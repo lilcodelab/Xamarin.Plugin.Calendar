@@ -10,7 +10,7 @@ namespace Xamarin.Plugin.Calendar.Controls
     /// Internal class used by Xamarin.Plugin.Calendar
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DayView : ContentView
+    public partial class DayView : Grid
     {        
         internal DayView()
         {

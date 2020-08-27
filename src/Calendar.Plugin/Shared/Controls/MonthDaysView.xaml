@@ -6,11 +6,7 @@
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
     x:Name="monthsView">
 
-    <Grid RowSpacing="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackLayout Orientation="Vertical" Spacing="0">
 
         <Grid
             x:Name="daysTitleControl"
@@ -86,7 +82,6 @@
 
         <Grid
             x:Name="daysControl"
-            Grid.Row="1"
             ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -105,6 +100,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            
             <controls:DayView Grid.Row="0" Grid.Column="0" />
             <controls:DayView Grid.Row="0" Grid.Column="1" />
             <controls:DayView Grid.Row="0" Grid.Column="2" />
@@ -153,5 +149,5 @@
             <controls:DayView Grid.Row="5" Grid.Column="5" />
             <controls:DayView Grid.Row="5" Grid.Column="6" />
         </Grid>
-    </Grid>
+    </StackLayout>
 </ContentView>

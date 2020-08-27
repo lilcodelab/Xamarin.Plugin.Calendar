@@ -26,6 +26,7 @@ namespace Xamarin.Plugin.Calendar.Models
 
         protected BindableBase<TData> SetProperty<TProperty>(TProperty value, [CallerMemberName] string propertyName = "")
             => SetProperty<TProperty>(value, new NotifyOther(null), propertyName);
+
         protected BindableBase<TData> SetProperty<TProperty>(TProperty value, NotifyOther notifyOther, [CallerMemberName] string propertyName = "")
         {
             if (!_properties.TryGetValue(propertyName, out object storedValue))
@@ -51,7 +52,6 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             return new NotifyOther(otherPropertyNames?.ToList());
         }
-
 
         private void AddProperty(string propertyName, object defaultValue)
         {
