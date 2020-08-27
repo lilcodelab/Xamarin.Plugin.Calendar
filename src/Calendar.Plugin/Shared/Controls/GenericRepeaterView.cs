@@ -28,6 +28,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(ItemTemplateProperty, value);
         }
 
+        public static readonly BindableProperty EmptyTemplateProperty =
+            BindableProperty.Create(nameof(EmptyTemplate), typeof(DataTemplate), typeof(GenericRepeaterView), null, propertyChanged: OnItemTemplateChanged);
+
+        public DataTemplate EmptyTemplate
+        {
+            get => (DataTemplate)GetValue(EmptyTemplateProperty);
+            set => SetValue(EmptyTemplateProperty, value);
+        }
+
         #endregion
 
         internal GenericRepeaterView()
@@ -67,7 +76,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             Children.Clear();
 
             if (ItemsSource == null)
+            {
+                if (EmptyTemplate == null)
+                {
+                    return;
+                }
+
+                Children.Add(GetEmptyView());
                 return;
+            }
 
             foreach (var itemModel in ItemsSource)
                 Children.Add(GetItemView(itemModel));
@@ -78,6 +95,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             var itemContent = ItemTemplate.CreateContent(itemModel);
 
             var view = itemContent as View ?? (itemContent as ViewCell)?.View;
+            return view;
+        }
+
+        private View GetEmptyView()
+        {
+            var emptyContent = EmptyTemplate.CreateContent();
+
+            var view = emptyContent as View ?? (emptyContent as ViewCell)?.View;
             return view;
         }
 
