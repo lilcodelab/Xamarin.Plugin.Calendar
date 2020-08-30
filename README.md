@@ -166,14 +166,45 @@ TodayOutlineColor="Blue"
 TodayFillColor="Silver"
 ```
 
-#### Available other customization properties
+#### Available customization properties
+
+##### Event indicator customizations
+You can customize how will look event indication with property `EventIndicatorType`
+
+- Available indicator are: 
+`BottomDot` - event indicator as dot bellow of date in calendar (default value)
+`TopDot` - event indicator as dot on top of date in calendar
+`Background` - event indicator as colored background in calendar
+`BackgroundFull` // event indicator as larger size colored background in calendar
+
+```xml
+EventIndicatorType="Background"
+```
+
+##### Calender swipe customizations
+You can write your own customizations commands for swipe. 
+```xml
+SwipeLeftCommand="{Binding SwipeLeftCommand}"
+SwipeRightCommand="{Binding SwipeRightCommand}"
+SwipeUpCommand="{Binding SwipeUpCommand}"
+```
+
+You can also disable default swipe actions.
+```xml
+SwipeToChangeMonthEnabled="False"
+SwipeUpToHideEnabled="False"
+```
+
+##### Other customizations
+Enable/Disable animation when calendar is loaded or refreshed
 Sample properties:
 ```xml
-AnimateCalendar="False"<!--Enable/Disable animation when calendar is loaded or refreshed-->
+AnimateCalendar="False"
 ```
 
 #### Section templates
 There are several templates that can be used to customize the calendar. You can find an example for each one in the AdvancedPage.xaml.
+You can create your own custom control file or you can also write customization directly inside of Templates.
 
 ##### Calendar control sections
 These sections provide customization over appearance of the controls of the calendar, like showing the selected month and year, month selection controls etc.
@@ -228,12 +259,3 @@ Customize what to show in case the selected date has no events. Example from Adv
     </DataTemplate>
 </plugin:Calendar.EmptyTemplate>
 ```
-
-##### TODO
-* ~~screenshot of changed colors~~
-* comment public properties and methods
-* Add default public template for Header with "← Month, Year →" format
-* Update Readme and create wiki pages
-* ~~Create advanced sample (more real-world) in the root of the repo with referenced nuget package~~
-
-Josip Ćaleta @lilcodelab
