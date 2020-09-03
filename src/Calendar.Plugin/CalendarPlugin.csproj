@@ -1,8 +1,7 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
-    <Authors>Josip Caleta</Authors>
+    <TargetFrameworks>netstandard2.0;MonoAndroid10.0;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <PackageId>Xamarin.Plugin.Calendar</PackageId>
     <PackageTags>events calendar, calendar, xamarin forms, custom calendar</PackageTags>
@@ -12,8 +11,6 @@
     <Copyright>Copyright 2020 lilcodelab</Copyright>
     <Company>lilcodelab</Company>
     <Owners>lilcodelab</Owners>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <Version>1.0.0.0</Version>
     <Description>Customized calendar plugin for Xamarin.Forms</Description>
     <Summary>Customized calendar plugin for Xamarin.Forms.</Summary>
@@ -48,7 +45,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
@@ -72,25 +69,24 @@
     <EmbeddedResource Update="Shared\Controls\MonthDaysView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-
-    <None Update="Shared\Controls\Calendar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Shared\Controls\DayView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Shared\Controls\DefaultFooterSection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Shared\Controls\DefaultHeaderSection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Shared\Controls\DefaultHeaderSectionTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="Shared\Controls\MonthDaysView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
+    <EmbeddedResource Update="Shared\Controls\Calendar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DayView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultFooterSection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultHeaderSection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultHeaderSectionTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\MonthDaysView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">

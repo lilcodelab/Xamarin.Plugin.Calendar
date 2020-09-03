@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg:PopupPage
+    x:Class="SampleApp.Views.CalendarRangePickerPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:SampleApp.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+    xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    CloseWhenBackgroundIsClicked="False"
+    mc:Ignorable="d">
+
+    <rg:PopupPage.BindingContext>
+        <local:CalendarRangePickerPopupViewModel />
+    </rg:PopupPage.BindingContext>
+
+    <rg:PopupPage.Content>
+        <Frame
+            BackgroundColor="White"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <StackLayout
+                IsClippedToBounds="True"
+                Orientation="Vertical"
+                Spacing="3">
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Center"
+                    Text="Choose Date Range"
+                    VerticalOptions="Center" />
+
+                <plugin:Calendar
+                    Padding="10,0"
+                    FooterSectionVisible="False"
+                    HorizontalOptions="Center"
+                    MaximumDate="{Binding MaximumDate}"
+                    MinimumDate="{Binding MinimumDate}"
+                    MonthYear="{Binding MonthYear}"
+                    RangeSelectionEnabled="True"
+                    RangeSelectionEndDate="{Binding SelectedEndDate}"
+                    RangeSelectionStartDate="{Binding SelectedStartDate}"
+                    VerticalOptions="Center"
+                    WidthRequest="320">
+                    <plugin:Calendar.HeaderSectionTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Margin="0,2"
+                                Padding="0"
+                                HorizontalOptions="FillAndExpand"
+                                IsVisible="{Binding ShowMonthPicker}"
+                                VerticalOptions="Start">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Frame
+                                    Grid.Column="0"
+                                    Padding="0"
+                                    BackgroundColor="Transparent"
+                                    HasShadow="False"
+                                    HeightRequest="36"
+                                    HorizontalOptions="CenterAndExpand"
+                                    VerticalOptions="Center"
+                                    WidthRequest="36">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="25"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        InputTransparent="True"
+                                        Text="&#xf060;"
+                                        TextColor="Gray"
+                                        VerticalOptions="CenterAndExpand"
+                                        VerticalTextAlignment="Center" />
+
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+
+                                <Label
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    FontSize="Medium"
+                                    HorizontalOptions="Center"
+                                    TextColor="Blue"
+                                    VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding MonthText, Mode=TwoWay}" />
+                                            <Span Text=", " />
+                                            <Span Text="{Binding Year, Mode=TwoWay}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+
+                                </Label>
+
+                                <Frame
+                                    Grid.Column="2"
+                                    Padding="0"
+                                    BackgroundColor="Transparent"
+                                    HasShadow="False"
+                                    HeightRequest="36"
+                                    HorizontalOptions="CenterAndExpand"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="36">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        FontSize="25"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        InputTransparent="True"
+                                        Text="&#xf061;"
+                                        TextColor="Gray"
+                                        VerticalOptions="CenterAndExpand"
+                                        VerticalTextAlignment="Center" />
+
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </plugin:Calendar.HeaderSectionTemplate>
+                </plugin:Calendar>
+
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Horizontal"
+                    Spacing="15"
+                    VerticalOptions="Center">
+                    <Button
+                        Command="{Binding SuccessCommand}"
+                        HorizontalOptions="EndAndExpand"
+                        Text="Select" />
+                    <Button Command="{Binding CancelCommand}" Text="Cancel" />
+                </StackLayout>
+            </StackLayout>
+
+        </Frame>
+    </rg:PopupPage.Content>
+</rg:PopupPage>

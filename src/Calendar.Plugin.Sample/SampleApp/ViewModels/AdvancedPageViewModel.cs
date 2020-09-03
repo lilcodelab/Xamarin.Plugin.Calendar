@@ -25,7 +25,20 @@ namespace SampleApp.ViewModels
         {
             await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) =>
             {
-                string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "CalendarPicker Canceled!";
+                string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "Calendar Picker Canceled!";
+
+                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
+                Console.WriteLine(message);
+            }));
+        });
+
+        public ICommand OpenRangePickerCommand => new Command(async () =>
+        {
+            await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
+            {
+                string message = calendarPickerResult.IsSuccess ? 
+                    $"Received date range from popup: {calendarPickerResult.SelectedStartDate:dd.MM.yyyy} - {calendarPickerResult.SelectedEndDate:dd.MM.yyyy}" : 
+                    "Calendar Range Picker Canceled!";
 
                 await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
                 Console.WriteLine(message);

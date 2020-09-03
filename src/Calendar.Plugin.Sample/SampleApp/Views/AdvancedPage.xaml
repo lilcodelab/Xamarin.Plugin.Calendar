@@ -12,6 +12,7 @@
     mc:Ignorable="d">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding OpenRangePickerCommand}" Text="Range" />
         <ToolbarItem Command="{Binding OpenPickerCommand}" Text="Picker" />
     </ContentPage.ToolbarItems>
 
@@ -78,7 +79,10 @@
         <plugin:Calendar.EmptyTemplate>
             <DataTemplate>
                 <StackLayout>
-                    <Label Text="NO EVENTS FOR THE SELECTED DATE" HorizontalTextAlignment="Center" Margin="0,5,0,5" />
+                    <Label
+                        Margin="0,5,0,5"
+                        HorizontalTextAlignment="Center"
+                        Text="NO EVENTS FOR THE SELECTED DATE" />
                 </StackLayout>
             </DataTemplate>
         </plugin:Calendar.EmptyTemplate>
