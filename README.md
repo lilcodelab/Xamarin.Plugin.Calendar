@@ -127,7 +127,7 @@ Initialize Events with your data and a different dot color per day:
 Events = new EventCollection
 {
     //2 days ago
-    [DateTime.Now.AddDays(-2)] = new DayEventCollection<EventModel>{ Color.Purple, Color.Purple)
+    [DateTime.Now.AddDays(-2)] = new DayEventCollection<EventModel>( Color.Purple, Color.Purple)
     {
         new EventModel { Name = "Cool event1", Description = "This is Cool event1's description!" },
         new EventModel { Name = "Cool event2", Description = "This is Cool event2's description!" }
