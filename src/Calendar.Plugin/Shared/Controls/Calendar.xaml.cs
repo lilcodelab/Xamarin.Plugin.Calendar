@@ -180,6 +180,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(OtherMonthDayColorProperty, value);
         }
 
+        public static readonly BindableProperty OtherMonthDayIsVisibleProperty =
+          BindableProperty.Create(nameof(OtherMonthDayIsVisible), typeof(bool), typeof(Calendar), true);
+
+        public bool OtherMonthDayIsVisible
+        {
+            get => (bool)GetValue(OtherMonthDayIsVisibleProperty);
+            set => SetValue(OtherMonthDayIsVisibleProperty, value);
+        }
+
         public static readonly BindableProperty SelectedDayBackgroundColorProperty =
           BindableProperty.Create(nameof(SelectedDayBackgroundColor), typeof(Color), typeof(Calendar), Color.FromHex("#2196F3"));
 

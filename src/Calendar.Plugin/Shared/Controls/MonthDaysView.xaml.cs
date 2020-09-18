@@ -100,6 +100,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(OtherMonthDayColorProperty, value);
         }
 
+        /// <summary> Bindable property for OtherMonthDayIsVisible </summary>
+        public static readonly BindableProperty OtherMonthDayIsVisibleProperty =
+          BindableProperty.Create(nameof(OtherMonthDayIsVisible), typeof(bool), typeof(MonthDaysView), true);
+
+        public bool OtherMonthDayIsVisible
+        {
+            get => (bool)GetValue(OtherMonthDayIsVisibleProperty);
+            set => SetValue(OtherMonthDayIsVisibleProperty, value);
+        }
+
         /// <summary> Bindable property for SelectedDayBackgroundColor </summary>
         public static readonly BindableProperty SelectedDayBackgroundColorProperty =
           BindableProperty.Create(nameof(SelectedDayBackgroundColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#2196F3"));
@@ -351,6 +361,10 @@ namespace Xamarin.Plugin.Calendar.Controls
                     UpdateDayTitles();
                     UpdateDays(AnimateCalendar);
                     break;
+
+                case nameof(OtherMonthDayIsVisible):
+                    UpdateDaysIsVisible();
+                    break;
             }
         }
 
@@ -375,6 +389,18 @@ namespace Xamarin.Plugin.Calendar.Controls
                     () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
+        }
+
+        private void UpdateDaysIsVisible()
+        {
+            foreach (var dayView in _dayViews)
+            {
+                var dayModel = dayView.BindingContext as DayModel;
+
+                dayModel.OtherMonthIsVisible = OtherMonthDayIsVisible;
+
+                AssignIndicatorColors(ref dayModel);
+            }
         }
 
         private void UpdateDaysColors()

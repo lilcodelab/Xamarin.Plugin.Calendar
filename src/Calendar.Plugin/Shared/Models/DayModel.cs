@@ -52,7 +52,8 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             get => GetProperty<bool>();
             set => SetProperty(value)
-                    .Notify(nameof(TextColor));
+                    .Notify(nameof(TextColor))
+                    .Notify(nameof(IsVisible));
         }
 
         public bool IsSelected
@@ -64,6 +65,13 @@ namespace Xamarin.Plugin.Calendar.Models
                             nameof(OutlineColor),
                             nameof(EventColor),
                             nameof(BackgroundFullEventColor));
+        }
+
+        public bool OtherMonthIsVisible
+        {
+            get => GetProperty(true);
+            set => SetProperty(value)
+                    .Notify(nameof(IsVisible));
         }
 
         public bool IsDisabled
@@ -208,7 +216,12 @@ namespace Xamarin.Plugin.Calendar.Models
                 (_, _, _, _) => OtherMonthColor
             };
 
-
+        public bool IsVisible =>
+            (IsDisabled, IsThisMonth) switch
+            {
+                (_, true) => true,
+                (_, false) => OtherMonthIsVisible
+            };
 
         private bool IsToday()
             => Date.Date == DateTime.Today && !IsSelected;
