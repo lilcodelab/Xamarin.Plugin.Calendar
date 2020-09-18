@@ -36,9 +36,7 @@ namespace SampleApp.ViewModels
 
         public AdvancedPageViewModel() : base()
         {
-            var culture = CultureInfo.CreateSpecificCulture("es-ES");
-            culture.DateTimeFormat.AbbreviatedDayNames = new string[] { "D", "L", "M", "X", "J", "V", "S" };
-            Culture = culture;
+            Culture = CultureInfo.CreateSpecificCulture("en-GB");
             // testing all kinds of adding events
             // when initializing collection
             Events = new EventCollection
