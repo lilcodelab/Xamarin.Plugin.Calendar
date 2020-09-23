@@ -216,12 +216,7 @@ namespace Xamarin.Plugin.Calendar.Models
                 (_, _, _, _) => OtherMonthColor
             };
 
-        public bool IsVisible =>
-            (IsDisabled, IsThisMonth) switch
-            {
-                (_, true) => true,
-                (_, false) => OtherMonthIsVisible
-            };
+        public bool IsVisible => IsThisMonth ? true : OtherMonthIsVisible;
 
         private bool IsToday()
             => Date.Date == DateTime.Today && !IsSelected;
