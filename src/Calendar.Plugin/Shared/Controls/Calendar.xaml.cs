@@ -351,6 +351,21 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DayViewCornerRadiusProperty, value);
         }
 
+        public static readonly BindableProperty DaysTitleMaximumLengthProperty =
+          BindableProperty.Create(nameof(DaysTitleMaximumLength), typeof(DaysTitleMaxLength), typeof(Calendar), DaysTitleMaxLength.Three, propertyChanged: T);
+
+        private static void T(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar vm)
+                vm.monthDaysView.DaysTitleMaximumLength = (DaysTitleMaxLength)newValue;
+        }
+
+        public DaysTitleMaxLength DaysTitleMaximumLength
+        {
+            get => (DaysTitleMaxLength)GetValue(DaysTitleMaximumLengthProperty);
+            set => SetValue(DaysTitleMaximumLengthProperty, value);
+        }
+
         public static readonly BindableProperty DaysTitleHeightProperty =
           BindableProperty.Create(nameof(DaysTitleHeight), typeof(double), typeof(Calendar), 30.0);
 
@@ -378,13 +393,13 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleLabelStyleProperty, value);
         }
 
-        /// <summary> Bindable propety for DisableSwipeDetection </summary>
+        /// <summary> Bindable property for DisableSwipeDetection </summary>
         public static readonly BindableProperty DisableSwipeDetectionProperty =
           BindableProperty.Create(nameof(DisableSwipeDetection), typeof(bool), typeof(Calendar), false);
 
         /// <summary>
         /// <para> Disables the swipe detection (needs testing on iOS) </para>
-        /// Could be useful if your superview has its own swipe-detection logic. 
+        /// Could be useful if your superview has its own swipe-detection logic.
         /// Also see if <seealso cref="SwipeUpCommand"/>, <seealso cref="SwipeUpToHideEnabled"/>, <seealso cref="SwipeLeftCommand"/>, <seealso cref="SwipeRightCommand"/> or <seealso cref="SwipeToChangeMonthEnabled"/> is useful to you.
         /// </summary>
         public bool DisableSwipeDetection
