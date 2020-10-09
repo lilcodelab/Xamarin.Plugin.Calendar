@@ -212,11 +212,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         /// <summary> Bindable property for DaysTitleMaximumLength </summary>
         public static readonly BindableProperty DaysTitleMaximumLengthProperty =
-        BindableProperty.Create(nameof(DaysTitleMaximumLength), typeof(DayTitleLength), typeof(MonthDaysView), DayTitleLength.Three);
+        BindableProperty.Create(nameof(DaysTitleMaximumLength), typeof(DaysTitleMaxLength), typeof(MonthDaysView), DaysTitleMaxLength.ThreeChars);
 
-        public DayTitleLength DaysTitleMaximumLength
+        public DaysTitleMaxLength DaysTitleMaximumLength
         {
-            get => (DayTitleLength)GetValue(DaysTitleMaximumLengthProperty);
+            get => (DaysTitleMaxLength)GetValue(DaysTitleMaximumLengthProperty);
             set => SetValue(DaysTitleMaximumLengthProperty, value);
         }
 
