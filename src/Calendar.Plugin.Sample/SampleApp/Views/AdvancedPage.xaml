@@ -38,7 +38,7 @@
         EventIndicatorTextColor="WhiteSmoke"
         EventIndicatorType="Background"
         Events="{Binding Events}"
-        HeaderSectionVisible="False"
+        HeaderSectionVisible="True"
         HorizontalOptions="FillAndExpand"
         MonthLabelColor="Red"
         MonthYear="{Binding MonthYear}"
