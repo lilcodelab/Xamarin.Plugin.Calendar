@@ -19,7 +19,7 @@
             x:Name="calendarContainer"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
-            <controls:DataTemplateView BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" />
+            <controls:DataTemplateView BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" IsVisible="{Binding HeaderSectionVisible}" />
 
             <controls:SwipeAwareContainer
                 HorizontalOptions="FillAndExpand"
