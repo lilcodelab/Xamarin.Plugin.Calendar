@@ -127,7 +127,7 @@ Initialize Events with your data and a different dot color per day:
 Events = new EventCollection
 {
     //2 days ago
-    [DateTime.Now.AddDays(-2)] = new DayEventCollection<EventModel>{ Color.Purple, Color.Purple)
+    [DateTime.Now.AddDays(-2)] = new DayEventCollection<EventModel>( Color.Purple, Color.Purple)
     {
         new EventModel { Name = "Cool event1", Description = "This is Cool event1's description!" },
         new EventModel { Name = "Cool event2", Description = "This is Cool event2's description!" }
@@ -166,17 +166,96 @@ TodayOutlineColor="Blue"
 TodayFillColor="Silver"
 ```
 
-#### Available other customization properties
-Sample properties:
+#### Available customization properties
+
+##### Event indicator customizations
+You can customize how will look event indication with property `EventIndicatorType`
+
+- Available indicator are: 
+`BottomDot` - event indicator as dot bellow of date in calendar (default value)
+`TopDot` - event indicator as dot on top of date in calendar
+`Background` - event indicator as colored background in calendar
+`BackgroundFull` // event indicator as larger size colored background in calendar
+
 ```xml
-AnimateCalendar="False"<!--Enable/Disable animation when calendar is loaded or refreshed-->
+EventIndicatorType="Background"
 ```
 
-##### TODO
-* ~~screenshot of changed colors~~
-* comment public properties and methods
-* Add default public template for Header with "← Month, Year →" format
-* Update Readme and create wiki pages
-* ~~Create advanced sample (more real-world) in the root of the repo with referenced nuget package~~
+##### Calender swipe customizations
+You can write your own customizations commands for swipe. 
+```xml
+SwipeLeftCommand="{Binding SwipeLeftCommand}"
+SwipeRightCommand="{Binding SwipeRightCommand}"
+SwipeUpCommand="{Binding SwipeUpCommand}"
+```
 
-Josip Ćaleta @lilcodelab
+You can also disable default swipe actions.
+```xml
+SwipeToChangeMonthEnabled="False"
+SwipeUpToHideEnabled="False"
+```
+
+##### Other customizations
+Enable/Disable animation when calendar is loaded or refreshed
+Sample properties:
+```xml
+AnimateCalendar="False"
+```
+
+#### Section templates
+There are several templates that can be used to customize the calendar. You can find an example for each one in the AdvancedPage.xaml.
+You can create your own custom control file or you can also write customization directly inside of Templates.
+
+##### Calendar control sections
+These sections provide customization over appearance of the controls of the calendar, like showing the selected month and year, month selection controls etc.
+
+###### HeaderSectionTemplate
+Customize the header section (top of the calendar control). Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.HeaderSectionTemplate>
+    <controls:CalendarHeader />
+</plugin:Calendar.HeaderSectionTemplate>
+```
+
+###### FooterSectionTemplate
+Customize the footer section (under the calendar part, above the events list). Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.FooterSectionTemplate>
+    <DataTemplate>
+        <controls:CalendarFooter />
+    </DataTemplate>
+</plugin:Calendar.FooterSectionTemplate>
+```
+
+###### BottomSectionTemplate
+Customize the bottom section (at the bottom of the calendar control, below the events list). Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.BottomSectionTemplate>
+    <controls:CalendarBottom />
+</plugin:Calendar.BottomSectionTemplate>
+```
+
+##### Event templates
+These templates provide customization for the events list.
+
+###### EventTemplate
+Customize the appearance of the events section. Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.EventTemplate>
+    <DataTemplate>
+        <controls:CalenderEvent CalenderEventCommand="{Binding BindingContext.EventSelectedCommand, Source={x:Reference advancedCalendarPage}}" />
+    </DataTemplate>
+</plugin:Calendar.EventTemplate>
+```
+
+###### EmptyTemplate
+Customize what to show in case the selected date has no events. Example from AdvancedPage.xaml
+```xml
+<plugin:Calendar.EmptyTemplate>
+    <DataTemplate>
+        <StackLayout>
+            <Label Text="NO EVENTS FOR THE SELECTED DATE" HorizontalTextAlignment="Center" Margin="0,5,0,5" />
+        </StackLayout>
+    </DataTemplate>
+</plugin:Calendar.EmptyTemplate>
+```
