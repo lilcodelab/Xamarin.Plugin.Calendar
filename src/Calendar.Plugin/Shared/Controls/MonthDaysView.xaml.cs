@@ -100,6 +100,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(OtherMonthDayColorProperty, value);
         }
 
+        /// <summary> Bindable property for OtherMonthDayIsVisible </summary>
+        public static readonly BindableProperty OtherMonthDayIsVisibleProperty =
+          BindableProperty.Create(nameof(OtherMonthDayIsVisible), typeof(bool), typeof(MonthDaysView), true);
+
+        public bool OtherMonthDayIsVisible
+        {
+            get => (bool)GetValue(OtherMonthDayIsVisibleProperty);
+            set => SetValue(OtherMonthDayIsVisibleProperty, value);
+        }
+
         /// <summary> Bindable property for SelectedDayBackgroundColor </summary>
         public static readonly BindableProperty SelectedDayBackgroundColorProperty =
           BindableProperty.Create(nameof(SelectedDayBackgroundColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#2196F3"));
@@ -339,6 +349,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(Events):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
+                case nameof(OtherMonthDayIsVisible):
                     UpdateDays(AnimateCalendar);
                     break;
 
@@ -389,6 +400,17 @@ namespace Xamarin.Plugin.Calendar.Controls
                     () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
+        }
+
+        private void UpdateDaysIsVisible()
+        {
+            foreach (var dayView in _dayViews)
+            {
+                var dayModel = dayView.BindingContext as DayModel;
+
+
+                AssignIndicatorColors(ref dayModel);
+            }
         }
 
         private void UpdateDaysColors()
@@ -494,6 +516,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.DaysLabelStyle = DaysLabelStyle;
                 dayModel.EventIndicatorType = EventIndicatorType;
                 dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
+                dayModel.OtherMonthIsVisible = OtherMonthDayIsVisible;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;

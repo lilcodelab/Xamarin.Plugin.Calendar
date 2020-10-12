@@ -37,7 +37,6 @@ namespace SampleApp.ViewModels
         public AdvancedPageViewModel() : base()
         {
             Culture = CultureInfo.CreateSpecificCulture("en-GB");
-
             // testing all kinds of adding events
             // when initializing collection
             Events = new EventCollection

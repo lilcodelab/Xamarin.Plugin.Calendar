@@ -43,6 +43,7 @@
         MonthLabelColor="Red"
         MonthYear="{Binding MonthYear}"
         OtherMonthDayColor="Gray"
+        OtherMonthDayIsVisible="False"
         SelectedDate="{Binding SelectedDate}"
         SelectedDateColor="Red"
         SelectedDateTextFormat="ddd, dd MMM yyyy"

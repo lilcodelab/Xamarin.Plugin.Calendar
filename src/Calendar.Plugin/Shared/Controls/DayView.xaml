@@ -6,7 +6,7 @@
     x:Name="dayView"
     BackgroundColor="{Binding BackgroundFullEventColor}">
 
-    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding IsVisible}">
 
         <Frame
             Padding="0"
