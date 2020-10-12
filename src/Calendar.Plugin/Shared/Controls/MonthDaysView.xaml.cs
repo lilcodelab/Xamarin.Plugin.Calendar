@@ -349,6 +349,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(Events):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
+                case nameof(OtherMonthDayIsVisible):
                     UpdateDays(AnimateCalendar);
                     break;
 
@@ -370,10 +371,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(Culture):
                     UpdateDayTitles();
                     UpdateDays(AnimateCalendar);
-                    break;
-
-                case nameof(OtherMonthDayIsVisible):
-                    UpdateDaysIsVisible();
                     break;
 
                 case nameof(DaysTitleMaximumLength):
@@ -411,7 +408,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 var dayModel = dayView.BindingContext as DayModel;
 
-                dayModel.OtherMonthIsVisible = OtherMonthDayIsVisible;
 
                 AssignIndicatorColors(ref dayModel);
             }
@@ -520,6 +516,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.DaysLabelStyle = DaysLabelStyle;
                 dayModel.EventIndicatorType = EventIndicatorType;
                 dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
+                dayModel.OtherMonthIsVisible = OtherMonthDayIsVisible;
                 dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;

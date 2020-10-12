@@ -21,7 +21,7 @@ namespace Xamarin.Plugin.Calendar.Models
             return (TProperty)_properties[propertyName];
         }
 
-        protected BindableBase<TData> SetProperty<TProperty>(TProperty value, Action<TProperty> onChanged = null, [CallerMemberName] string propertyName = "")
+        protected BindableBase<TData> SetProperty<TProperty>(TProperty value, [CallerMemberName] string propertyName = "")
         {
             if (!_properties.TryGetValue(propertyName, out object storedValue))
                 AddProperty(propertyName, value);
@@ -30,7 +30,6 @@ namespace Xamarin.Plugin.Calendar.Models
 
             _properties[propertyName] = value;
             PropertyChanged?.Invoke(this, _propertyChangedArgs[propertyName]);
-            onChanged?.Invoke(value);
 
             return this;
         }

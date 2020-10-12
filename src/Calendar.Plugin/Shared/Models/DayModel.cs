@@ -52,8 +52,8 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             get => GetProperty<bool>();
             set => SetProperty(value)
-                    .Notify(nameof(TextColor))
-                    .Notify(nameof(IsVisible));
+                    .Notify(nameof(TextColor),
+                            nameof(IsVisible));
         }
 
         public bool IsSelected
@@ -195,28 +195,41 @@ namespace Xamarin.Plugin.Calendar.Models
                                    : Color.Transparent;
 
 
-        public Color BackgroundColor =>
-            (BackgroundEventIndicator, IsSelected, IsToday()) switch
+        public Color BackgroundColor
+        {
+            get
             {
-                (true, false, _) => EventIndicatorColor,
-                (true, true, _) => EventIndicatorSelectedColor,
-                (false, true, _) => SelectedBackgroundColor,
-                (false, false, true) => TodayFillColor,
-                (_, _, _) => DeselectedBackgroundColor
-            };
+                if (!IsVisible) return DeselectedBackgroundColor;
 
-        public Color TextColor =>
-            (IsDisabled, IsSelected, HasEvents, IsThisMonth) switch
+                return (BackgroundEventIndicator, IsSelected, IsToday()) switch
+                {
+                    (true, false, _) => EventIndicatorColor,
+                    (true, true, _) => EventIndicatorSelectedColor,
+                    (false, true, _) => SelectedBackgroundColor,
+                    (false, false, true) => TodayFillColor,
+                    (_, _, _) => DeselectedBackgroundColor
+                };
+            }
+        }
+
+        public Color TextColor
+        {
+            get
             {
-                (true, _, _, _) => DisabledColor,
-                (false, true, false, _) => SelectedTextColor,
-                (false, true, true, _) => EventIndicatorSelectedTextColor,
-                (false, false, true, _) => EventIndicatorTextColor,
-                (false, false, false, true) => DeselectedTextColor,
-                (_, _, _, _) => OtherMonthColor
-            };
+                if (!IsVisible) return OtherMonthColor;
 
-        public bool IsVisible => IsThisMonth ? true : OtherMonthIsVisible;
+                return (IsDisabled, IsSelected, HasEvents, IsThisMonth) switch
+                {
+                    (true, _, _, _) => DisabledColor,
+                    (false, true, false, _) => SelectedTextColor,
+                    (false, true, true, _) => EventIndicatorSelectedTextColor,
+                    (false, false, true, _) => EventIndicatorTextColor,
+                    (false, false, false, true) => DeselectedTextColor,
+                    (_, _, _, _) => OtherMonthColor
+                };
+            }
+        }
+        public bool IsVisible => IsThisMonth || OtherMonthIsVisible;
 
         private bool IsToday()
             => Date.Date == DateTime.Today && !IsSelected;
