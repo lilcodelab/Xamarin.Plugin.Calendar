@@ -220,6 +220,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleHeightProperty, value);
         }
 
+        /// <summary> Bindable property for DaysTitleMaximumLength </summary>
+        public static readonly BindableProperty DaysTitleMaximumLengthProperty =
+        BindableProperty.Create(nameof(DaysTitleMaximumLength), typeof(DaysTitleMaxLength), typeof(MonthDaysView), DaysTitleMaxLength.ThreeChars);
+
+        public DaysTitleMaxLength DaysTitleMaximumLength
+        {
+            get => (DaysTitleMaxLength)GetValue(DaysTitleMaximumLengthProperty);
+            set => SetValue(DaysTitleMaximumLengthProperty, value);
+        }
+
         /// <summary> Bindable property for DaysLabelStyle </summary>
         public static readonly BindableProperty DaysLabelStyleProperty =
           BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), Device.Styles.BodyStyle);
@@ -365,6 +375,10 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(OtherMonthDayIsVisible):
                     UpdateDaysIsVisible();
                     break;
+
+                case nameof(DaysTitleMaximumLength):
+                    UpdateDayTitles();
+                    break;
             }
         }
 
@@ -374,7 +388,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             foreach (var dayLabel in daysTitleControl.Children.OfType<Label>())
             {
-                dayLabel.Text = Culture.DateTimeFormat.AbbreviatedDayNames[dayNumber].ToUpper();
+                dayLabel.Text = Culture.DateTimeFormat.AbbreviatedDayNames[dayNumber].ToUpper().Substring(0, (int)DaysTitleMaximumLength);
                 dayNumber = (dayNumber + 1) % 7;
             }
         }

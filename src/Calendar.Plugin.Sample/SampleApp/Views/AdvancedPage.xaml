@@ -30,6 +30,7 @@
         DaysTitleColor="Orange"
         DaysTitleHeight="40"
         DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
+        DaysTitleMaximumLength="ThreeChars"
         DeselectedDayTextColor="Blue"
         DisableSwipeDetection="False"
         EventIndicatorColor="Red"
