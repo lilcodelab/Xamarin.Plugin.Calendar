@@ -261,6 +261,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(FooterArrowVisibleProperty, value);
         }
 
+        public static readonly BindableProperty HeaderSectionVisibleProperty =
+            BindableProperty.Create(nameof(HeaderSectionVisible), typeof(bool), typeof(Calendar), true);
+
+        public bool HeaderSectionVisible
+        {
+            get => (bool)GetValue(HeaderSectionVisibleProperty);
+            set => SetValue(HeaderSectionVisibleProperty, value);
+        }
+
         public static readonly BindableProperty FooterSectionVisibleProperty =
             BindableProperty.Create(nameof(FooterSectionVisible), typeof(bool), typeof(Calendar), true);
 
