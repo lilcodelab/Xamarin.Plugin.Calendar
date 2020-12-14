@@ -253,7 +253,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty HeaderSectionVisibleProperty =
-            BindableProperty.Create(nameof(HeaderSectionVisible), typeof(bool), typeof(Calendar), false);
+            BindableProperty.Create(nameof(HeaderSectionVisible), typeof(bool), typeof(Calendar), true);
 
         public bool HeaderSectionVisible
         {
