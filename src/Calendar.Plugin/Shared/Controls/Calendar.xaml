@@ -18,6 +18,7 @@
         <StackLayout
             x:Name="calendarContainer"
             HorizontalOptions="FillAndExpand"
+            Orientation="Vertical"
             VerticalOptions="FillAndExpand">
             <controls:DataTemplateView BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" IsVisible="{Binding HeaderSectionVisible}" />
 
@@ -84,6 +85,7 @@
                 VerticalOptions="StartAndExpand">
                 <controls:GenericRepeaterView
                     HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical"
                     ItemTemplate="{Binding EventTemplate, Source={x:Reference calendar}}"
                     ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}"
                     EmptyTemplate="{Binding EmptyTemplate, Source={x:Reference calendar}}"
