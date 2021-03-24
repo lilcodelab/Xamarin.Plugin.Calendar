@@ -24,7 +24,10 @@
         Month="{Binding Month}"
         SelectedDate="{Binding SelectedDate}"
         VerticalOptions="FillAndExpand"
-        Year="{Binding Year}">
+        Year="{Binding Year}"
+        RangeSelectionEnabled="True"
+        RangeSelectionStartDate="{Binding SelectedStartDate}"
+        RangeSelectionEndDate="{Binding SelectedEndDate}">
 
         <plugin:Calendar.EventTemplate>
             <DataTemplate>

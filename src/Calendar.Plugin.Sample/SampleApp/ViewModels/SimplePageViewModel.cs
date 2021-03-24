@@ -86,7 +86,6 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _year, value);
         }
 
-
         private DateTime _selectedDate = DateTime.Today;
         public DateTime SelectedDate
         {
@@ -108,20 +107,19 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _maximumDate, value);
         }
 
-        private DateTime? _rangeStart = DateTime.Today.AddDays(5);
-        public DateTime? RangeStart
+        private DateTime _selectedStartDate = DateTime.Today;
+        public DateTime SelectedStartDate
         {
-            get => _rangeStart;
-            set => SetProperty(ref _rangeStart, value);
+            get => _selectedStartDate;
+            set => SetProperty(ref _selectedStartDate, value);
         }
 
-        private DateTime? _rangeEnd = DateTime.Today.AddDays(13);
-        public DateTime? RangeEnd
+        private DateTime _selectedEndDate = DateTime.Today;
+        public DateTime SelectedEndDate
         {
-            get => _rangeEnd;
-            set => SetProperty(ref _rangeEnd, value);
+            get => _selectedEndDate;
+            set => SetProperty(ref _selectedEndDate, value);
         }
-
 
         private async Task ExecuteEventSelectedCommand(object item)
         {

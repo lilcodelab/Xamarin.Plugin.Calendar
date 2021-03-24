@@ -25,7 +25,7 @@
             Padding="0"
             BackgroundColor="{Binding EventColor}"
             CornerRadius="4"
-            HasShadow="False"
+            HasShadow="True"
             HeightRequest="8"
             HorizontalOptions="Center"
             InputTransparent="True"

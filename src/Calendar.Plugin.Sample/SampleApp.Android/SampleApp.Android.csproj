@@ -163,4 +163,9 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\baseline_event_black_24.png" />
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

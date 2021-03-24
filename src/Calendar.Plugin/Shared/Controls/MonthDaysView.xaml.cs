@@ -342,10 +342,12 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
         private readonly List<DayView> _dayViews = new List<DayView>();
-        private DayModel _selectedDay, _rangeSelectionStartDay, _rangeSelectionEndDay;
         private List<DayModel> _selectedRange = new List<DayModel>();
-        private bool _animating;
+        private DayModel _selectedDay;
+        private DayModel _rangeSelectionStartDay;
+        private DayModel _rangeSelectionEndDay;
         private DateTime _lastAnimationTime;
+        private bool _animating;
 
         internal MonthDaysView()
         {
@@ -470,13 +472,14 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             if (RangeSelectionEnabled)
                 return;
-            if (_selectedDay != null)
+
+            if (_selectedDay is null)
                 _selectedDay.IsSelected = false;
 
             _selectedDay = _dayViews.Select(x => x.BindingContext as DayModel)
                                     .FirstOrDefault(x => x.Date == SelectedDate.Date);
 
-            if (_selectedDay == null || !_selectedDay.IsThisMonth)
+            if (_selectedDay is null || !_selectedDay.IsThisMonth)
             {
                 DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
                 return;
@@ -487,82 +490,99 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void OnDayModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DayModel.IsSelected)
-                && sender is DayModel newSelected
-                && newSelected.IsSelected
-                && !(_propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed)
-                && isSuppressed))
+            if (e.PropertyName != nameof(DayModel.IsSelected) || sender is not DayModel newSelected ||
+                (_propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
+                return;
+
+            if (!RangeSelectionEnabled)
+                SelectSingleDate(newSelected);
+            else
+                SelectDateRange(newSelected);
+        }
+
+        private void SelectSingleDate(DayModel newSelected)
+        {
+            ChangePropertySilently(nameof(SelectedDate), () => SelectedDate = newSelected.Date);
+
+            if (!newSelected.IsThisMonth)
+                DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
+            else
             {
-                if (RangeSelectionEnabled)
-                {
-                    //New selection - reset old range and set new start
-                    if (_rangeSelectionStartDay != null && _rangeSelectionEndDay != null)
-                    {
-                        ChangePropertySilently(nameof(RangeSelectionStartDate), () => RangeSelectionStartDate = newSelected.Date);
-                        ChangePropertySilently(nameof(RangeSelectionEndDate), () => RangeSelectionEndDate = null);
-                        
-                        _dayViews.Select(x => x.BindingContext as DayModel).ToList().ForEach(a=>
-                            ChangePropertySilently(nameof(DayModel.IsSelected), () => a.IsSelected = false));
-                        _selectedRange.Clear();
-                        ChangePropertySilently(nameof(DayModel.IsSelected), () => newSelected.IsSelected = true);
-                        _rangeSelectionStartDay.IsSelected = false;
-                        _rangeSelectionEndDay.IsSelected = false;
-                        _rangeSelectionStartDay = newSelected;
-                        _rangeSelectionEndDay = null;
-                    }
-                    //First selection or moving selection to earlier date
-                    else if (_rangeSelectionStartDay == null ||
-                       (_rangeSelectionStartDay != null && newSelected.Date < _rangeSelectionStartDay.Date))
-                    {
-                        ChangePropertySilently(nameof(RangeSelectionStartDate), () => RangeSelectionStartDate = newSelected.Date);
-                        
-                        if (_rangeSelectionStartDay != null)
-                            _rangeSelectionStartDay.IsSelected = false;
+                if (_selectedDay is null)
+                    _selectedDay.IsSelected = false;
 
-                        _rangeSelectionStartDay = newSelected;
-                    }
-                    //Completing range selection
-                    else if (_rangeSelectionStartDay != null && _rangeSelectionEndDay == null) //no need
-                    {
-                        ChangePropertySilently(nameof(RangeSelectionEndDate), () => RangeSelectionEndDate = newSelected.Date);
-                        
-                        _rangeSelectionEndDay = newSelected;
+                _selectedDay = newSelected;
+            }
+        }
 
-                        var DATELIST = Enumerable.Range(0, 0 + RangeSelectionEndDate.Value.Subtract(RangeSelectionStartDate.Value).Days)
-                          .Select(offset => RangeSelectionStartDate.Value.AddDays(offset))
-                                         .Select(a => a.Date).ToList();
-                        DATELIST.RemoveAt(0);
-                        _selectedRange.Clear();
-                        foreach (var d in DATELIST)
-                        {
-                            var _d = _dayViews.Select(x => x.BindingContext as DayModel)
-                                    .FirstOrDefault(x => x.Date == d.Date);
-                            if (_d == null)
-                                continue;
-                            _selectedRange.Add(_d);
-                            ChangePropertySilently(nameof(DayModel.IsSelected), () => _d.IsSelected = true);
-                        }
-                    }
+        private void SelectDateRange(DayModel newSelected)
+        {
+            if (_rangeSelectionStartDay is not null && _rangeSelectionEndDay is null)
+                SelectRangeEndDate(newSelected);
+            else
+                SelectRangeStartDate(newSelected);
+        }
 
-                }
-                else
-                {
-                    if (newSelected.Date == SelectedDate)
-                        return;
+        private void SelectRangeStartDate(DayModel newSelected)
+        {
+            ChangePropertySilently(nameof(RangeSelectionStartDate), () => RangeSelectionStartDate = newSelected.Date);
+            ChangePropertySilently(nameof(RangeSelectionEndDate), () => RangeSelectionEndDate = null);
 
-                    ChangePropertySilently(nameof(SelectedDate), () => SelectedDate = newSelected.Date);
+            _dayViews.Select(x => x.BindingContext as DayModel).ToList().ForEach(a =>
+               ChangePropertySilently(nameof(DayModel.IsSelected), () => a.IsSelected = false));
 
-                    if (!newSelected.IsThisMonth)
-                    {
-                        DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
-                        return;
-                    }
+            _selectedRange.Clear();
+            ChangePropertySilently(nameof(DayModel.IsSelected), () => newSelected.IsSelected = true);
 
-                    if (_selectedDay != null)
-                        _selectedDay.IsSelected = false;
+            _rangeSelectionStartDay.IsSelected = false;
+            _rangeSelectionEndDay.IsSelected = false;
+            _rangeSelectionStartDay = newSelected;
+            _rangeSelectionEndDay = null;
+        }
 
-                    _selectedDay = newSelected;
-                }
+        private void SelectRangeEndDate(DayModel newSelected)
+        {
+            SetRangeSelectionBorderDates(newSelected);
+
+            if (!newSelected.IsThisMonth)
+                DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
+
+            var dateList = Enumerable.Range(0, RangeSelectionEndDate.Value.Subtract(RangeSelectionStartDate.Value).Days)
+                                 .Select(offset => RangeSelectionStartDate.Value.AddDays(offset))
+                                 .Select(a => a.Date).ToList();
+
+            dateList.RemoveAt(0);
+            _selectedRange.Clear();
+            SelectDatesInList(dateList);
+        }
+
+        private void SetRangeSelectionBorderDates(DayModel newSelected)
+        {
+            if (DateTime.Compare(newSelected.Date, _rangeSelectionStartDay.Date) > 0)
+            {
+                ChangePropertySilently(nameof(RangeSelectionEndDate), () => RangeSelectionEndDate = newSelected.Date);
+                _rangeSelectionEndDay = newSelected;
+                return;
+            }
+
+            ChangePropertySilently(nameof(RangeSelectionEndDate), () => RangeSelectionEndDate = _rangeSelectionStartDay.Date);
+            _rangeSelectionEndDay = _rangeSelectionStartDay;
+
+            ChangePropertySilently(nameof(RangeSelectionStartDate), () => RangeSelectionStartDate = newSelected.Date);
+            _rangeSelectionStartDay = newSelected;
+        }
+
+        private void SelectDatesInList(List<DateTime> listOfDates)
+        {
+            foreach (var date in listOfDates)
+            {
+                var dateToAdd = _dayViews.Select(x => x.BindingContext as DayModel).FirstOrDefault(x => x.Date == date.Date);
+
+                if (dateToAdd is null)
+                    continue;
+
+                _selectedRange.Add(dateToAdd);
+                ChangePropertySilently(nameof(DayModel.IsSelected), () => dateToAdd.IsSelected = true);
             }
         }
 
