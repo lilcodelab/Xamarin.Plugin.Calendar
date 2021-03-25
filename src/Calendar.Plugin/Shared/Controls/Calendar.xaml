@@ -57,6 +57,8 @@
                     SelectedDate="{Binding SelectedDate, Source={x:Reference calendar}}"
                     SelectedDayBackgroundColor="{Binding SelectedDayBackgroundColor, Source={x:Reference calendar}}"
                     SelectedDayTextColor="{Binding SelectedDayTextColor, Source={x:Reference calendar}}"
+                    SelectedTodayTextColor="{Binding SelectedTodayTextColor, Source={x:Reference calendar}}"
+                    TodayTextColor="{Binding TodayTextColor, Source={x:Reference calendar}}"
                     TodayFillColor="{Binding TodayFillColor, Source={x:Reference calendar}}"
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand" />

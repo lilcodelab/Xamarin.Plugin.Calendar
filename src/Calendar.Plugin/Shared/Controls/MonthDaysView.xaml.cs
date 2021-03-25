@@ -84,10 +84,34 @@ namespace Xamarin.Plugin.Calendar.Controls
         public static readonly BindableProperty DeselectedDayTextColorProperty =
           BindableProperty.Create(nameof(DeselectedDayTextColor), typeof(Color), typeof(MonthDaysView), Color.Default);
 
+        /// <summary> Bindable property for DeselectedDayTextColor </summary>
         public Color DeselectedDayTextColor
         {
             get => (Color)GetValue(DeselectedDayTextColorProperty);
             set => SetValue(DeselectedDayTextColorProperty, value);
+        }
+
+        /// <summary> Bindable property for SelectedTodayTextColorProperty </summary>
+        public static readonly BindableProperty SelectedTodayTextColorProperty =
+            BindableProperty.Create(nameof(SelectedTodayTextColor), typeof(Color), typeof(MonthDaysView), Color.White);
+
+        /// <summary> Bindable property for SelectedTodayTextColor </summary>
+        public Color SelectedTodayTextColor 
+        { 
+            get => (Color)GetValue(SelectedTodayTextColorProperty); 
+            set => SetValue(SelectedTodayTextColorProperty, value); 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly BindableProperty DeselectedTodayTextColorProperty =
+            BindableProperty.Create(nameof(DeselectedTodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Default);
+
+        public Color DeselectedTodayTextColor 
+        { 
+            get => (Color)GetValue(DeselectedTodayTextColorProperty); 
+            set => SetValue(DeselectedTodayTextColorProperty, value); 
         }
 
         /// <summary> Bindable property for OtherMonthDayColor </summary>
@@ -178,6 +202,15 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (Color)GetValue(TodayOutlineColorProperty);
             set => SetValue(TodayOutlineColorProperty, value);
+        }
+
+        public static readonly BindableProperty TodayTextColorProperty =
+            BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(MonthDaysView), Color.White);
+
+        public Color TodayTextColor
+        {
+            get => (Color)GetValue(TodayTextColorProperty);
+            set => SetValue(TodayTextColorProperty, value);
         }
 
         /// <summary> Bindable property for TodayFillColor </summary>
@@ -353,9 +386,12 @@ namespace Xamarin.Plugin.Calendar.Controls
                     UpdateDays(AnimateCalendar);
                     break;
 
+                case nameof(TodayTextColor):
                 case nameof(SelectedDayTextColor):
+                case nameof(SelectedTodayTextColor):
                 case nameof(OtherMonthDayColor):
                 case nameof(DeselectedDayTextColor):
+                case nameof(DeselectedTodayTextColor):
                 case nameof(SelectedDayBackgroundColor):
                 case nameof(EventIndicatorColor):
                 case nameof(EventIndicatorSelectedColor):
@@ -420,9 +456,12 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 var dayModel = dayView.BindingContext as DayModel;
 
+                dayModel.TodayTextColor = TodayTextColor;
                 dayModel.SelectedTextColor = SelectedDayTextColor;
+                dayModel.SelectedTodayTextColor = SelectedTodayTextColor;
                 dayModel.OtherMonthColor = OtherMonthDayColor;
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
+                dayModel.DeselectedTodayTextColor = DeselectedTodayTextColor;
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
                 dayModel.TodayOutlineColor = TodayOutlineColor;
                 dayModel.TodayFillColor = TodayFillColor;
