@@ -75,19 +75,15 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             Children.Clear();
 
-            if (ItemsSource == null)
+            if (ItemsSource != null || ItemsSource?.Count > 0)
             {
-                if (EmptyTemplate == null)
-                {
-                    return;
-                }
-
-                Children.Add(GetEmptyView());
-                return;
+                foreach (var itemModel in ItemsSource)
+                    Children.Add(GetItemView(itemModel));
             }
-
-            foreach (var itemModel in ItemsSource)
-                Children.Add(GetItemView(itemModel));
+            else if (EmptyTemplate != null)
+            {
+                Children.Add(GetEmptyView());
+            }
         }
 
         private View GetItemView(object itemModel)
@@ -141,6 +137,5 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
             }
         }
-
     }
 }

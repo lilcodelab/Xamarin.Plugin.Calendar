@@ -25,7 +25,7 @@
         SelectedDate="{Binding SelectedDate}"
         VerticalOptions="FillAndExpand"
         Year="{Binding Year}"
-        RangeSelectionEnabled="True"
+        RangeSelectionEnabled="False"
         RangeSelectionStartDate="{Binding SelectedStartDate}"
         RangeSelectionEndDate="{Binding SelectedEndDate}">
 

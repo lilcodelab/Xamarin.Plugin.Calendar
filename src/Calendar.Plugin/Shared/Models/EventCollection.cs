@@ -73,7 +73,7 @@ namespace Xamarin.Plugin.Calendar.Models
                 CollectionChanged?.Invoke(this, new EventCollectionChangedArgs { Item = key.Date, Type = EventCollectionChangedType.Set });
             }
         }
-        
+
         /// <summary>
         /// Checks if dictionary already has collection for specific date
         /// </summary>
@@ -94,7 +94,39 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             return base.TryGetValue(key.Date, out value);
         }
-        
+
+        /// <summary>
+        /// Gets the values associated with the specific date range
+        /// </summary>
+        /// <param name="startKey"></param>
+        /// <param name="endKey"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public bool TryGetValues(DateTime? startKey, DateTime? endKey, out ICollection values)
+        {
+            if (!startKey.HasValue && !endKey.HasValue)
+            {
+                values = null;
+                return false;
+            }
+            else if (!endKey.HasValue)
+            {
+                endKey = startKey;
+            }
+
+            var listToReturn = new List<object>();
+
+            for (var currentDate = startKey.Value.Date; DateTime.Compare(currentDate, endKey.Value.Date) <= 0; currentDate = currentDate.AddDays(1))
+            {
+                if (base.TryGetValue(currentDate, out var dayEvents))
+                    foreach (var singleEvent in dayEvents)
+                        listToReturn.Add(singleEvent);
+            }
+
+            values = listToReturn;
+            return true;
+        }
+
         /// <summary>
         /// Removes all dates and collections
         /// </summary>
@@ -104,7 +136,7 @@ namespace Xamarin.Plugin.Calendar.Models
                 return;
 
             base.Clear();
-            CollectionChanged?.Invoke(this, new EventCollectionChangedArgs {Item = default(DateTime), Type = EventCollectionChangedType.Clear});
+            CollectionChanged?.Invoke(this, new EventCollectionChangedArgs { Item = default(DateTime), Type = EventCollectionChangedType.Clear });
         }
 
         internal event EventHandler<EventCollectionChangedArgs> CollectionChanged;

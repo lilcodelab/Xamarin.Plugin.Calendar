@@ -508,7 +508,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
             else
             {
-                if (_selectedDay is null)
+                if (_selectedDay is not null)
                     _selectedDay.IsSelected = false;
 
                 _selectedDay = newSelected;
@@ -525,7 +525,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void SelectRangeStartDate(DayModel newSelected)
         {
-            ChangePropertySilently(nameof(RangeSelectionStartDate), () => RangeSelectionStartDate = newSelected.Date);
+            if (!Equals(newSelected.Date, _rangeSelectionStartDay.Date))
+                ChangePropertySilently(nameof(RangeSelectionStartDate), () => RangeSelectionStartDate = newSelected.Date);
+
             ChangePropertySilently(nameof(RangeSelectionEndDate), () => RangeSelectionEndDate = null);
 
             _dayViews.Select(x => x.BindingContext as DayModel).ToList().ForEach(a =>
@@ -534,9 +536,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             _selectedRange.Clear();
             ChangePropertySilently(nameof(DayModel.IsSelected), () => newSelected.IsSelected = true);
 
-            _rangeSelectionStartDay.IsSelected = false;
-            _rangeSelectionEndDay.IsSelected = false;
-            _rangeSelectionStartDay = newSelected;
+            if (!DateTime.Equals(newSelected.Date, _rangeSelectionStartDay.Date))
+            {
+                _rangeSelectionStartDay.IsSelected = false;
+                _rangeSelectionStartDay = newSelected;
+            }
+
+            if (!DateTime.Equals(newSelected.Date, _rangeSelectionEndDay.Date))
+                _rangeSelectionEndDay.IsSelected = false;
+
             _rangeSelectionEndDay = null;
         }
 
@@ -551,7 +559,9 @@ namespace Xamarin.Plugin.Calendar.Controls
                                  .Select(offset => RangeSelectionStartDate.Value.AddDays(offset))
                                  .Select(a => a.Date).ToList();
 
-            dateList.RemoveAt(0);
+            if(dateList.Count > 0)
+                dateList.RemoveAt(0);
+
             _selectedRange.Clear();
             SelectDatesInList(dateList);
         }
@@ -617,7 +627,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             if (addDays > 0)
                 addDays -= 7;
+
             _rangeSelectionStartDay = _rangeSelectionEndDay = null;
+
             foreach (var dayView in _dayViews)
             {
                 var currentDate = monthStart.AddDays(addDays++);
@@ -660,10 +672,10 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 if (_rangeSelectionStartDay == null && RangeSelectionStartDate != null) 
                     _rangeSelectionStartDay = new DayModel() { Date = RangeSelectionStartDate.Value };
+
                 if (_rangeSelectionEndDay == null && RangeSelectionEndDate != null)
                     _rangeSelectionEndDay = new DayModel() { Date = RangeSelectionEndDate.Value };
             }
-
         }
 
         private void Animate(

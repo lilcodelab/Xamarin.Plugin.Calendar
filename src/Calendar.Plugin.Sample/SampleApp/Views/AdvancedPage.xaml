@@ -27,7 +27,7 @@
         DayViewCornerRadius="3"
         DayViewSize="40"
         DaysLabelStyle="{StaticResource daysLabelStyle}"
-        DaysTitleColor="LightBlue"
+        DaysTitleColor="Orange"
         DaysTitleHeight="40"
         DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
         DaysTitleMaximumLength="ThreeChars"
@@ -48,8 +48,8 @@
         SelectedDate="{Binding SelectedDate}"
         SelectedDateColor="Red"
         SelectedDateTextFormat="ddd, dd MMM yyyy"
-        SelectedDayBackgroundColor="Red"
-        SelectedDayTextColor="White"
+        SelectedDayBackgroundColor="DarkCyan"
+        SelectedDayTextColor="Cyan"
         SwipeLeftCommand="{Binding SwipeLeftCommand}"
         SwipeRightCommand="{Binding SwipeRightCommand}"
         SwipeToChangeMonthEnabled="False"
@@ -58,7 +58,10 @@
         TodayFillColor="Silver"
         TodayOutlineColor="Blue"
         VerticalOptions="FillAndExpand"
-        YearLabelColor="Blue">
+        YearLabelColor="Blue"
+        RangeSelectionEnabled="False"
+        RangeSelectionStartDate="{Binding SelectedStartDate}"
+        RangeSelectionEndDate="{Binding SelectedEndDate}">
 
         <plugin:Calendar.HeaderSectionTemplate>
             <controls:CalendarHeader />

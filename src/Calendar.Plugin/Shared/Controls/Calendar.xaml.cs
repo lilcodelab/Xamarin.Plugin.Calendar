@@ -694,6 +694,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(SelectedDate):
+                case nameof(RangeSelectionStartDate):
+                case nameof(RangeSelectionEndDate):
                     UpdateSelectedDateLabel();
                     UpdateEvents();
                     break;
@@ -713,9 +715,14 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateEvents()
         {
-            if (Events.TryGetValue(SelectedDate, out var eventList))
+            if(RangeSelectionEnabled && Events.TryGetValues(RangeSelectionStartDate, RangeSelectionEndDate, out var dayEvents))
             {
-                SelectedDayEvents = eventList;
+                SelectedDayEvents = dayEvents;
+                eventsScrollView.ScrollToAsync(0, 0, false);
+            } 
+            else if (!RangeSelectionEnabled && Events.TryGetValue(SelectedDate, out var rangeEvents))
+            {
+                SelectedDayEvents = rangeEvents;
                 eventsScrollView.ScrollToAsync(0, 0, false);
             }
             else
@@ -729,7 +736,12 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateSelectedDateLabel()
         {
-            SelectedDateText = SelectedDate.ToString(SelectedDateTextFormat, Culture);
+            if (RangeSelectionStartDate is not null && RangeSelectionEndDate is not null && !Equals(RangeSelectionStartDate, RangeSelectionEndDate)) 
+                SelectedDateText = RangeSelectionStartDate?.ToString(SelectedDateTextFormat, Culture) + " - " + RangeSelectionEndDate?.ToString(SelectedDateTextFormat, Culture);
+            else if (RangeSelectionStartDate is not null)
+                SelectedDateText = RangeSelectionStartDate?.ToString(SelectedDateTextFormat, Culture);
+            else
+                SelectedDateText = SelectedDate.ToString(SelectedDateTextFormat, Culture);
         }
 
         private void ShowHideCalendarSection()

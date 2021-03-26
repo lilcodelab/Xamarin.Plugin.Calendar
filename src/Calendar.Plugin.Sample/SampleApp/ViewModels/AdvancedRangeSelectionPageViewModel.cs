@@ -58,14 +58,13 @@ namespace SampleApp.ViewModels
                 [DateTime.Now.AddDays(-3)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool")),
                 [DateTime.Now.AddDays(-6)] = new DayEventCollection<AdvancedEventModel>(Color.Purple, Color.Purple)
                 {
-                    new AdvancedEventModel { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= new DateTime() },
+                    new AdvancedEventModel { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= new DateTime()},
                     new AdvancedEventModel { Name = "Cool event2", Description = "This is Cool event2's description!", Starting= new DateTime()}
                 }
             };
 
             //Adding a day with a different dot color
-            //Adding a day with a different dot color
-            Events.Add(DateTime.Now.AddDays(-2), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Blue, EventIndicatorSelectedColor = Color.Blue });
+            Events.Add(DateTime.Now.AddDays(-2), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now.AddDays(-2))) { EventIndicatorColor = Color.Blue, EventIndicatorSelectedColor = Color.Blue });
             Events.Add(DateTime.Now.AddDays(-4), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Green, EventIndicatorSelectedColor = Color.White });
             Events.Add(DateTime.Now.AddDays(-5), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Orange, EventIndicatorSelectedColor = Color.Orange });
 
@@ -80,13 +79,13 @@ namespace SampleApp.ViewModels
             Task.Delay(5000).ContinueWith(_ =>
             {
                 // indexer - update later
-                Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool"));
+                Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now));
 
                 // add later
-                Events.Add(DateTime.Now.AddDays(3), new List<AdvancedEventModel>(GenerateEvents(5, "Cool")));
+                Events.Add(DateTime.Now.AddDays(3), new List<AdvancedEventModel>(GenerateEvents(5, "Cool", DateTime.Now.AddDays(3))));
 
                 // indexer later
-                Events[DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Boring"));
+                Events[DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Boring", DateTime.Now.AddDays(10)));
 
                 // add later
                 Events.Add(DateTime.Now.AddDays(15), new List<AdvancedEventModel>(GenerateEvents(10, "Cool")));
@@ -114,6 +113,16 @@ namespace SampleApp.ViewModels
                 Name = $"{name} event{x}",
                 Description = $"This is {name} event{x}'s description!",
                 Starting = new DateTime(2000, 1, 1, (x * 2) % 24, (x * 3) % 60, 0)
+            });
+        }
+
+        private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name, DateTime timeOfEvent)
+        {
+            return Enumerable.Range(1, count).Select(x => new AdvancedEventModel
+            {
+                Name = $"{name} event{x}",
+                Description = $"This is {name} event{x}'s description!",
+                Starting = new DateTime(timeOfEvent.Year, timeOfEvent.Month, timeOfEvent.Day, (x * 2) % 24, (x * 3) % 60, 0)
             });
         }
 
