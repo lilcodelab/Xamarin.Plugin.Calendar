@@ -109,13 +109,6 @@ namespace Xamarin.Plugin.Calendar.Models
                     .Notify(nameof(TextColor));
         }
 
-        public Color DeselectedTodayTextColor
-        {
-            get => GetProperty(Color.Default);
-            set => SetProperty(value)
-                    .Notify(nameof(TextColor));
-        }
-
         public Color SelectedBackgroundColor
         {
             get => GetProperty(Color.FromHex("#2196F3"));
@@ -179,7 +172,7 @@ namespace Xamarin.Plugin.Calendar.Models
 
         public Color TodayTextColor 
         { 
-            get => GetProperty(Color.White); 
+            get => GetProperty(Color.Blue); 
             set => SetProperty(value)
                     .Notify(nameof(TextColor)); 
         }

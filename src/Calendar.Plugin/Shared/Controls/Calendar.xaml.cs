@@ -180,15 +180,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedTodayTextColorProperty, value);
         }
 
-        public static readonly BindableProperty DeselectedTodayTextColorProperty =
-            BindableProperty.Create(nameof(DeselectedTodayTextColor), typeof(Color), typeof(Calendar), Color.Default);
-
-        public Color DeselectedTodayTextColor 
-        { 
-            get => (Color)GetValue(DeselectedTodayTextColorProperty); 
-            set => SetValue(DeselectedTodayTextColorProperty, value); 
-        }
-
         public static readonly BindableProperty OtherMonthDayColorProperty =
           BindableProperty.Create(nameof(OtherMonthDayColor), typeof(Color), typeof(Calendar), Color.Silver);
 
@@ -307,7 +298,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty TodayTextColorProperty =
-            BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(Calendar), Color.White);
+            BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(Calendar), Color.Blue);
 
         public Color TodayTextColor 
         { 

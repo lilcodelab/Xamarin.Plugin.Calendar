@@ -102,18 +102,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedTodayTextColorProperty, value); 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly BindableProperty DeselectedTodayTextColorProperty =
-            BindableProperty.Create(nameof(DeselectedTodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Default);
-
-        public Color DeselectedTodayTextColor 
-        { 
-            get => (Color)GetValue(DeselectedTodayTextColorProperty); 
-            set => SetValue(DeselectedTodayTextColorProperty, value); 
-        }
-
         /// <summary> Bindable property for OtherMonthDayColor </summary>
         public static readonly BindableProperty OtherMonthDayColorProperty =
           BindableProperty.Create(nameof(OtherMonthDayColor), typeof(Color), typeof(MonthDaysView), Color.Silver);
@@ -205,7 +193,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty TodayTextColorProperty =
-            BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(MonthDaysView), Color.White);
+            BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Blue);
 
         public Color TodayTextColor
         {
@@ -391,7 +379,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(SelectedTodayTextColor):
                 case nameof(OtherMonthDayColor):
                 case nameof(DeselectedDayTextColor):
-                case nameof(DeselectedTodayTextColor):
                 case nameof(SelectedDayBackgroundColor):
                 case nameof(EventIndicatorColor):
                 case nameof(EventIndicatorSelectedColor):
@@ -461,7 +448,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.SelectedTodayTextColor = SelectedTodayTextColor;
                 dayModel.OtherMonthColor = OtherMonthDayColor;
                 dayModel.DeselectedTextColor = DeselectedDayTextColor;
-                dayModel.DeselectedTodayTextColor = DeselectedTodayTextColor;
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
                 dayModel.TodayOutlineColor = TodayOutlineColor;
                 dayModel.TodayFillColor = TodayFillColor;
