@@ -93,7 +93,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         /// <summary> Bindable property for SelectedTodayTextColorProperty </summary>
         public static readonly BindableProperty SelectedTodayTextColorProperty =
-            BindableProperty.Create(nameof(SelectedTodayTextColor), typeof(Color), typeof(MonthDaysView), Color.White);
+            BindableProperty.Create(nameof(SelectedTodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
 
         /// <summary> Bindable property for SelectedTodayTextColor </summary>
         public Color SelectedTodayTextColor 
@@ -193,7 +193,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         public static readonly BindableProperty TodayTextColorProperty =
-            BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Blue);
+            BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
 
         public Color TodayTextColor
         {
@@ -443,11 +443,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 var dayModel = dayView.BindingContext as DayModel;
 
+                dayModel.DeselectedTextColor = DeselectedDayTextColor;
                 dayModel.TodayTextColor = TodayTextColor;
                 dayModel.SelectedTextColor = SelectedDayTextColor;
                 dayModel.SelectedTodayTextColor = SelectedTodayTextColor;
                 dayModel.OtherMonthColor = OtherMonthDayColor;
-                dayModel.DeselectedTextColor = DeselectedDayTextColor;
                 dayModel.SelectedBackgroundColor = SelectedDayBackgroundColor;
                 dayModel.TodayOutlineColor = TodayOutlineColor;
                 dayModel.TodayFillColor = TodayFillColor;
