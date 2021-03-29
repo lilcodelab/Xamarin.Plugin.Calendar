@@ -10,6 +10,12 @@ namespace SampleApp.ViewModels
     {
         public event Action<CalendarRangePickerResult> Closed;
 
+        public ICommand ClearCommand => new Command(() =>
+        {
+            SelectedStartDate = DateTime.Today;
+            SelectedEndDate = DateTime.Today;
+        });
+
         public ICommand SuccessCommand => new Command(async () =>
         {
             Closed?.Invoke(new CalendarRangePickerResult()

@@ -11,6 +11,11 @@ namespace SampleApp.ViewModels
     {
         public event Action<CalendarPickerResult> Closed;
 
+        public ICommand ClearCommand => new Command(() =>
+        {
+            SelectedDate = DateTime.Today;
+        });
+
         public ICommand SuccessCommand => new Command(async () =>
         {
             Closed?.Invoke(new CalendarPickerResult() { IsSuccess = true, SelectedDate = SelectedDate });

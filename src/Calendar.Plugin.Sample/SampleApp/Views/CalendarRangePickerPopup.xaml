@@ -24,7 +24,6 @@
                 IsClippedToBounds="True"
                 Orientation="Vertical"
                 Spacing="3">
-
                 <Label
                     FontAttributes="Bold"
                     FontSize="Large"
@@ -32,7 +31,6 @@
                     HorizontalTextAlignment="Center"
                     Text="Choose Date Range"
                     VerticalOptions="Center" />
-
                 <plugin:Calendar
                     Padding="10,0"
                     FooterSectionVisible="False"
@@ -87,7 +85,6 @@
                                         <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
                                     </Frame.GestureRecognizers>
                                 </Frame>
-
                                 <Label
                                     Grid.Column="1"
                                     FontAttributes="Bold"
@@ -102,9 +99,7 @@
                                             <Span Text="{Binding Year, Mode=TwoWay}" />
                                         </FormattedString>
                                     </Label.FormattedText>
-
                                 </Label>
-
                                 <Frame
                                     Grid.Column="2"
                                     Padding="0"
@@ -125,7 +120,6 @@
                                         TextColor="Gray"
                                         VerticalOptions="CenterAndExpand"
                                         VerticalTextAlignment="Center" />
-
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
                                     </Frame.GestureRecognizers>
@@ -134,20 +128,21 @@
                         </DataTemplate>
                     </plugin:Calendar.HeaderSectionTemplate>
                 </plugin:Calendar>
-
-                <StackLayout
-                    HorizontalOptions="FillAndExpand"
-                    Orientation="Horizontal"
-                    Spacing="15"
-                    VerticalOptions="Center">
+                
+                <FlexLayout
+                    JustifyContent="SpaceBetween">
+                    <Button
+                        Command="{Binding ClearCommand}"
+                        HorizontalOptions="EndAndExpand"
+                        Text="Clear" />
                     <Button
                         Command="{Binding SuccessCommand}"
                         HorizontalOptions="EndAndExpand"
                         Text="Select" />
                     <Button Command="{Binding CancelCommand}" Text="Cancel" />
-                </StackLayout>
+                </FlexLayout>
             </StackLayout>
-
+            
         </Frame>
     </rg:PopupPage.Content>
 </rg:PopupPage>
