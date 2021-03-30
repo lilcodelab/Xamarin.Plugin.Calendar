@@ -21,7 +21,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             if (BindingContext is DayModel dayModel && !dayModel.IsDisabled && dayModel.IsVisible)
             {
-                dayModel.IsSelected = !dayModel.IsSelected;
+                dayModel.IsSelected = true;
                 dayModel.DayTappedCommand?.Execute(dayModel.Date);
             }
         }

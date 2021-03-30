@@ -377,9 +377,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             switch (propertyName)
             {
                 case nameof(SelectedDate):
-                    UpdateSelectedDate();
-                    break;
-
                 case nameof(DisplayedMonthYear):
                 case nameof(Events):
                 case nameof(MinimumDate):
@@ -468,30 +465,13 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        private void UpdateSelectedDate()
-        {
-            if (RangeSelectionEnabled)
-                return;
-
-            if (_selectedDay is null)
-                _selectedDay.IsSelected = false;
-
-            _selectedDay = _dayViews.Select(x => x.BindingContext as DayModel)
-                                    .FirstOrDefault(x => x.Date == SelectedDate.Date);
-
-            if (_selectedDay is null || !_selectedDay.IsThisMonth)
-            {
-                DisplayedMonthYear = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
-                return;
-            }
-
-            _selectedDay.IsSelected = true;
-        }
-
         private void OnDayModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(DayModel.IsSelected) || sender is not DayModel newSelected ||
                 (_propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
+                return;
+
+            if (!newSelected.IsSelected)
                 return;
 
             if (!RangeSelectionEnabled)
@@ -512,6 +492,9 @@ namespace Xamarin.Plugin.Calendar.Controls
                     _selectedDay.IsSelected = false;
 
                 _selectedDay = newSelected;
+
+                if (_selectedDay is not null)
+                    _selectedDay.IsSelected = true;
             }
         }
 

@@ -736,12 +736,12 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateSelectedDateLabel()
         {
-            if (RangeSelectionStartDate is not null && RangeSelectionEndDate is not null && !Equals(RangeSelectionStartDate, RangeSelectionEndDate)) 
-                SelectedDateText = RangeSelectionStartDate?.ToString(SelectedDateTextFormat, Culture) + " - " + RangeSelectionEndDate?.ToString(SelectedDateTextFormat, Culture);
-            else if (RangeSelectionStartDate is not null)
-                SelectedDateText = RangeSelectionStartDate?.ToString(SelectedDateTextFormat, Culture);
-            else
+            if(!RangeSelectionEnabled)
                 SelectedDateText = SelectedDate.ToString(SelectedDateTextFormat, Culture);
+            else if (RangeSelectionStartDate is not null && RangeSelectionEndDate is not null && !Equals(RangeSelectionStartDate, RangeSelectionEndDate)) 
+                SelectedDateText = RangeSelectionStartDate?.ToString(SelectedDateTextFormat, Culture) + " - " + RangeSelectionEndDate?.ToString(SelectedDateTextFormat, Culture);
+            else
+                SelectedDateText = RangeSelectionStartDate?.ToString(SelectedDateTextFormat, Culture);
         }
 
         private void ShowHideCalendarSection()
