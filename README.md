@@ -24,6 +24,11 @@ If you are coming back take a look on the [Changelog here](https://github.com/li
 | ------- | ------ |
 | ![Android Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/android-advanced.png) | ![iPhone Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iphone-advanced.png) |
 
+## Range implementation
+| Android | iPhone |
+| ------- | ------ |
+| ![Android Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/android-range.png) | ![iPhone Custom Calendar Screenshot](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/art/iphone-range.png) |
+
 
 ### Setup
 * Available on NuGet 

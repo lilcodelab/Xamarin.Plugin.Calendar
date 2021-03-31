@@ -28,7 +28,6 @@ namespace SampleApp.ViewModels
                 string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "Calendar Picker Canceled!";
 
                 await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
-                Console.WriteLine(message);
             }));
         });
 
@@ -130,7 +129,6 @@ namespace SampleApp.ViewModels
         {
             var message = $"Received tap event from date: {date}";
             await App.Current.MainPage.DisplayAlert("DayTapped", message, "Ok");
-            Console.WriteLine(message);
         }
 
         private async Task ExecuteEventSelectedCommand(object item)
@@ -140,7 +138,6 @@ namespace SampleApp.ViewModels
                 var title = $"Selected: {eventModel.Name}";
                 var message = $"Starts: {eventModel.Starting:HH:mm}{Environment.NewLine}Details: {eventModel.Description}";
                 await App.Current.MainPage.DisplayAlert(title, message, "Ok");
-                Console.WriteLine(message);
             }
         }
     }

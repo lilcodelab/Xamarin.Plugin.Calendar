@@ -1,16 +1,16 @@
 ﻿namespace Xamarin.Plugin.Calendar.Enums
 {
     /// <summary>
-    /// Set type of event indicator on calendar
+    /// Set type of event selection on calendar
     /// </summary>
     public enum SelectionType
     {
         /// <summary>
-        /// Day title maximum length of one character. 
+        /// Default selection of one date at a time. 
         /// </summary>
         Day,
         /// <summary>
-        /// Day title maximum length of two characters.
+        /// Selection of range of dates using start and end date.
         /// </summary>
         Range,
     }
