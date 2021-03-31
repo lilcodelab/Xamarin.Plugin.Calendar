@@ -88,6 +88,13 @@ namespace Xamarin.Plugin.Calendar.Models
                     .Notify(nameof(TextColor));
         }
 
+        public Color SelectedTodayTextColor 
+        {
+            get => GetProperty(Color.Transparent);
+            set => SetProperty(value)
+                    .Notify(nameof(TextColor));
+        }
+
         public Color OtherMonthColor
         {
             get => GetProperty(Color.Silver);
@@ -163,6 +170,13 @@ namespace Xamarin.Plugin.Calendar.Models
                     .Notify(nameof(OutlineColor));
         }
 
+        public Color TodayTextColor 
+        { 
+            get => GetProperty(Color.Transparent); 
+            set => SetProperty(value)
+                    .Notify(nameof(TextColor)); 
+        }
+
         public Color TodayFillColor
         {
             get => GetProperty(Color.Transparent);
@@ -190,7 +204,7 @@ namespace Xamarin.Plugin.Calendar.Models
                                  ? EventIndicatorSelectedColor
                                  : EventIndicatorColor;
 
-        public Color OutlineColor => IsToday()
+        public Color OutlineColor => IsToday && !IsSelected
                                    ? TodayOutlineColor
                                    : Color.Transparent;
 
@@ -201,7 +215,7 @@ namespace Xamarin.Plugin.Calendar.Models
             {
                 if (!IsVisible) return DeselectedBackgroundColor;
 
-                return (BackgroundEventIndicator, IsSelected, IsToday()) switch
+                return (BackgroundEventIndicator, IsSelected, IsToday) switch
                 {
                     (true, false, _) => EventIndicatorColor,
                     (true, true, _) => EventIndicatorSelectedColor,
@@ -218,20 +232,23 @@ namespace Xamarin.Plugin.Calendar.Models
             {
                 if (!IsVisible) return OtherMonthColor;
 
-                return (IsDisabled, IsSelected, HasEvents, IsThisMonth) switch
+                return (IsDisabled, IsSelected, HasEvents, IsThisMonth, IsToday) switch
                 {
-                    (true, _, _, _) => DisabledColor,
-                    (false, true, false, _) => SelectedTextColor,
-                    (false, true, true, _) => EventIndicatorSelectedTextColor,
-                    (false, false, true, _) => EventIndicatorTextColor,
-                    (false, false, false, true) => DeselectedTextColor,
-                    (_, _, _, _) => OtherMonthColor
+                    (true, _, _, _, _) => DisabledColor,
+                    (false, true, false, true, true) => SelectedTodayTextColor == Color.Transparent? SelectedTextColor : SelectedTodayTextColor,
+                    (false, true, false, true, false) => SelectedTextColor,
+                    (false, true, true, true, _) => EventIndicatorSelectedTextColor,
+                    (false, false, true, true, _) => EventIndicatorTextColor,
+                    (false, false, _, false, _) => OtherMonthColor,
+                    (false, false, false, true, true) => TodayTextColor == Color.Transparent? DeselectedTextColor : TodayTextColor,
+                    (false, false, false, true, false) => DeselectedTextColor,
+                    (_, _, _, _, _) => Color.Default
                 };
             }
         }
         public bool IsVisible => IsThisMonth || OtherMonthIsVisible;
 
-        private bool IsToday()
-            => Date.Date == DateTime.Today && !IsSelected;
+        private bool IsToday
+            => Date.Date == DateTime.Today;
     }
 }

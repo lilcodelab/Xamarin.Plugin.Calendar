@@ -164,6 +164,8 @@ DeselectedDayTextColor="Blue"
 OtherMonthDayColor="Gray"
 TodayOutlineColor="Blue"
 TodayFillColor="Silver"
+SelectedTodayTextColor="Green"
+TodayTextColor="Yellow"
 ```
 
 #### Available customization properties
