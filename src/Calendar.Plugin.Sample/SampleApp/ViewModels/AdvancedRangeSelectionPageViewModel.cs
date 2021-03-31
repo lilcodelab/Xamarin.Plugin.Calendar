@@ -14,23 +14,9 @@ using SampleApp.Views;
 
 namespace SampleApp.ViewModels
 {
-    public class AdvancedRangeSelectionPageViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class RangeSelectionPageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
         public ICommand DayTappedCommand => new Command<DateTime>(async (date) => await DayTapped(date));
-        public ICommand SwipeLeftCommand => new Command(() => { MonthYear = MonthYear.AddMonths(2); });
-        public ICommand SwipeRightCommand => new Command(() => { MonthYear = MonthYear.AddMonths(-2); });
-        public ICommand SwipeUpCommand => new Command(() => { MonthYear = DateTime.Today; });
-
-        public ICommand OpenPickerCommand => new Command(async () =>
-        {
-            await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) =>
-            {
-                string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "Calendar Picker Canceled!";
-
-                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
-                Console.WriteLine(message);
-            }));
-        });
 
         public ICommand OpenRangePickerCommand => new Command(async () =>
         {
@@ -47,10 +33,8 @@ namespace SampleApp.ViewModels
 
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
-        public AdvancedRangeSelectionPageViewModel() : base()
+        public RangeSelectionPageViewModel() : base()
         {
-            Culture = CultureInfo.CreateSpecificCulture("en-GB");
-
             // testing all kinds of adding events
             // when initializing collection
             Events = new EventCollection
@@ -140,13 +124,6 @@ namespace SampleApp.ViewModels
         {
             get => _selectedDate;
             set => SetProperty(ref _selectedDate, value);
-        }
-
-        private CultureInfo _culture = CultureInfo.InvariantCulture;
-        public CultureInfo Culture
-        {
-            get => _culture;
-            set => SetProperty(ref _culture, value);
         }
 
         private DateTime _selectedStartDate = DateTime.Today;

@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls
@@ -562,13 +563,13 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
 
-        public static readonly BindableProperty RangeSelectionEnabledProperty =
-            BindableProperty.Create(nameof(RangeSelectionEnabled), typeof(bool), typeof(Calendar), false);
+        public static readonly BindableProperty SelectionTypeProperty =
+            BindableProperty.Create(nameof(SelectionType), typeof(SelectionType), typeof(Calendar), SelectionType.Day);
 
-        public bool RangeSelectionEnabled
+        public SelectionType SelectionType
         {
-            get => (bool)GetValue(RangeSelectionEnabledProperty);
-            set => SetValue(RangeSelectionEnabledProperty, value);
+            get => (SelectionType)GetValue(SelectionTypeProperty);
+            set => SetValue(SelectionTypeProperty, value);
         }
         #endregion
         #endregion
@@ -715,12 +716,12 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateEvents()
         {
-            if(RangeSelectionEnabled && Events.TryGetValues(RangeSelectionStartDate, RangeSelectionEndDate, out var dayEvents))
+            if(SelectionType == SelectionType.Range && Events.TryGetValues(RangeSelectionStartDate, RangeSelectionEndDate, out var dayEvents))
             {
                 SelectedDayEvents = dayEvents;
                 eventsScrollView.ScrollToAsync(0, 0, false);
             } 
-            else if (!RangeSelectionEnabled && Events.TryGetValue(SelectedDate, out var rangeEvents))
+            else if (SelectionType == SelectionType.Day && Events.TryGetValue(SelectedDate, out var rangeEvents))
             {
                 SelectedDayEvents = rangeEvents;
                 eventsScrollView.ScrollToAsync(0, 0, false);
@@ -736,7 +737,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateSelectedDateLabel()
         {
-            if(!RangeSelectionEnabled)
+            if(SelectionType == SelectionType.Day)
                 SelectedDateText = SelectedDate.ToString(SelectedDateTextFormat, Culture);
             else if (RangeSelectionStartDate is not null && RangeSelectionEndDate is not null && !Equals(RangeSelectionStartDate, RangeSelectionEndDate)) 
                 SelectedDateText = RangeSelectionStartDate?.ToString(SelectedDateTextFormat, Culture) + " - " + RangeSelectionEndDate?.ToString(SelectedDateTextFormat, Culture);

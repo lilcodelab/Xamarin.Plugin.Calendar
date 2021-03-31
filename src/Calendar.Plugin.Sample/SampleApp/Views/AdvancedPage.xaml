@@ -58,10 +58,7 @@
         TodayFillColor="Silver"
         TodayOutlineColor="Blue"
         VerticalOptions="FillAndExpand"
-        YearLabelColor="Blue"
-        RangeSelectionEnabled="False"
-        RangeSelectionStartDate="{Binding SelectedStartDate}"
-        RangeSelectionEndDate="{Binding SelectedEndDate}">
+        YearLabelColor="Blue">
 
         <plugin:Calendar.HeaderSectionTemplate>
             <controls:CalendarHeader />

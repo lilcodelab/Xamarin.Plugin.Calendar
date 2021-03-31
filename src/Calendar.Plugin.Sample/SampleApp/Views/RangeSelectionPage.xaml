@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="SampleApp.Views.AdvancedRangeSelectionPage"
+    x:Class="SampleApp.Views.RangeSelectionPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:SampleApp.Controls"
@@ -16,47 +16,17 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.BindingContext>
-        <local:AdvancedRangeSelectionPageViewModel />
+        <local:RangeSelectionPageViewModel />
     </ContentPage.BindingContext>
 
     <plugin:Calendar
         Padding="10,0"
         AnimateCalendar="True"
-        Culture="{Binding Culture}"
         DayTappedCommand="{Binding DayTappedCommand}"
-        DayViewCornerRadius="3"
-        DayViewSize="40"
-        DaysLabelStyle="{StaticResource daysLabelStyle}"
-        DaysTitleColor="Blue"
-        DaysTitleHeight="40"
-        DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
-        DeselectedDayTextColor="Black"
-        DisableSwipeDetection="False"
-        EventIndicatorColor="IndianRed"
-        EventIndicatorSelectedColor="Red"
-        EventIndicatorSelectedTextColor="WhiteSmoke"
-        EventIndicatorTextColor="LightGray"
-        EventIndicatorType="Background"
         Events="{Binding Events}"
-        HorizontalOptions="FillAndExpand"
-        MonthLabelColor="Red"
         MonthYear="{Binding MonthYear}"
-        OtherMonthDayColor="Gray"
         SelectedDate="{Binding SelectedDate}"
-        SelectedDateColor="DarkCyan"
-        SelectedDateTextFormat="ddd, dd MMM yyyy"
-        SelectedDayBackgroundColor="Black"
-        SelectedDayTextColor="White"
-        SwipeLeftCommand="{Binding SwipeLeftCommand}"
-        SwipeRightCommand="{Binding SwipeRightCommand}"
-        SwipeToChangeMonthEnabled="False"
-        SwipeUpCommand="{Binding SwipeUpCommand}"
-        SwipeUpToHideEnabled="False"
-        TodayFillColor="Blue"
-        TodayOutlineColor="Blue"
-        VerticalOptions="FillAndExpand"
-        YearLabelColor="Blue"
-        RangeSelectionEnabled="True"
+        SelectionType="Range"
         RangeSelectionStartDate="{Binding SelectedStartDate}"
         RangeSelectionEndDate="{Binding SelectedEndDate}">
 

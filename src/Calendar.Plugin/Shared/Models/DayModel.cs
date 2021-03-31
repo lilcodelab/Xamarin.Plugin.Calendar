@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Plugin.Calendar.Enums;
 
 namespace Xamarin.Plugin.Calendar.Models
 {

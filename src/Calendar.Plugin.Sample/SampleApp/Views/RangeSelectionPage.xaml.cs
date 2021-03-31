@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace SampleApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AdvancedRangeSelectionPage : ContentPage
+    public partial class RangeSelectionPage : ContentPage
     {
-        public AdvancedRangeSelectionPage()
+        public RangeSelectionPage()
         {
             InitializeComponent();
         }

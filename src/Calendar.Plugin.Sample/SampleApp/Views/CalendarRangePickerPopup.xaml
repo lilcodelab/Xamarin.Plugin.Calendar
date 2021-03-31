@@ -38,7 +38,7 @@
                     MaximumDate="{Binding MaximumDate}"
                     MinimumDate="{Binding MinimumDate}"
                     MonthYear="{Binding MonthYear}"
-                    RangeSelectionEnabled="True"
+                    SelectionType="Range"
                     RangeSelectionEndDate="{Binding SelectedEndDate}"
                     RangeSelectionStartDate="{Binding SelectedStartDate}"
                     VerticalOptions="Center"

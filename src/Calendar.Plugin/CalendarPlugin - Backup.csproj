@@ -1,0 +1,101 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;MonoAndroid10.0;Xamarin.iOS10</TargetFrameworks>
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <PackageId>Xamarin.Plugin.Calendar</PackageId>
+    <PackageTags>events calendar, calendar, xamarin forms, custom calendar</PackageTags>
+    <PackageProjectUrl>https://github.com/lilcodelab/XamarinForms-Calendar</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lilcodelab/XamarinForms-Calendar</RepositoryUrl>
+    <PackageReleaseNotes />
+    <Copyright>Copyright 2020 lilcodelab</Copyright>
+    <Company>lilcodelab</Company>
+    <Owners>lilcodelab</Owners>
+    <Version>1.0.0.0</Version>
+    <Description>Customized calendar plugin for Xamarin.Forms</Description>
+    <Summary>Customized calendar plugin for Xamarin.Forms.</Summary>
+    <PackOnBuild>true</PackOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyName>Xamarin.Plugin.Calendar</AssemblyName>
+    <RootNamespace>Xamarin.Plugin.Calendar</RootNamespace>
+
+    <NeutralLanguage>en</NeutralLanguage>
+    <LangVersion>latest</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DefineConstants>$(DefineConstants);</DefineConstants>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <DesignTimeBuild>false</DesignTimeBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)'=='Release' And '$(OS)' == 'Windows_NT' ">
+    <DebugType>pdbonly</DebugType>
+    <!-- sourcelink: Declare that the Repository URL can be published to NuSpec -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- sourcelink: Embed source files that are not tracked by the source control manager to the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- sourcelink: Include PDB in the built .nupkg -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
+    <Compile Include="Shared\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="Shared\Controls\Calendar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DayView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultFooterSection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultHeaderSection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\MonthDaysView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\Calendar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DayView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultFooterSection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultHeaderSection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\DefaultHeaderSectionTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\Controls\MonthDaysView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <Compile Include="Android\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <Compile Include="iOS\*.cs" />
+  </ItemGroup>
+  
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+</Project>

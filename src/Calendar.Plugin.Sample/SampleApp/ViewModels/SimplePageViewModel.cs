@@ -107,20 +107,6 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _maximumDate, value);
         }
 
-        private DateTime _selectedStartDate = DateTime.Today;
-        public DateTime SelectedStartDate
-        {
-            get => _selectedStartDate;
-            set => SetProperty(ref _selectedStartDate, value);
-        }
-
-        private DateTime _selectedEndDate = DateTime.Today;
-        public DateTime SelectedEndDate
-        {
-            get => _selectedEndDate;
-            set => SetProperty(ref _selectedEndDate, value);
-        }
-
         private async Task ExecuteEventSelectedCommand(object item)
         {
             if(item is EventModel eventModel)

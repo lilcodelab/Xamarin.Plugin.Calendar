@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Models;
 using System.Windows.Input;
 using Xamarin.Plugin.Calendar.Interfaces;
+using Xamarin.Plugin.Calendar.Enums;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -329,13 +330,13 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
 
-        public static readonly BindableProperty RangeSelectionEnabledProperty =
-            BindableProperty.Create(nameof(RangeSelectionEnabled), typeof(bool), typeof(MonthDaysView), false);
+        public static readonly BindableProperty SelectionTypeProperty =
+            BindableProperty.Create(nameof(SelectionType), typeof(SelectionType), typeof(MonthDaysView), SelectionType.Day);
 
-        public bool RangeSelectionEnabled
+        public SelectionType SelectionType
         {
-            get => (bool)GetValue(RangeSelectionEnabledProperty);
-            set => SetValue(RangeSelectionEnabledProperty, value);
+            get => (SelectionType)GetValue(SelectionTypeProperty);
+            set => SetValue(SelectionTypeProperty, value);
         }
         #endregion
         #endregion
@@ -383,7 +384,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(MaximumDate):
                 case nameof(OtherMonthDayIsVisible):
                 case nameof(RangeSelectionStartDate):
-                case nameof(RangeSelectionEndDate):                    UpdateDays(AnimateCalendar);
+                case nameof(RangeSelectionEndDate):
+                    UpdateDays(AnimateCalendar);
                     break;
 
                 case nameof(SelectedDayTextColor):
@@ -474,7 +476,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (!newSelected.IsSelected)
                 return;
 
-            if (!RangeSelectionEnabled)
+            if (SelectionType == SelectionType.Day)
                 SelectSingleDate(newSelected);
             else
                 SelectDateRange(newSelected);
@@ -508,9 +510,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void SelectRangeStartDate(DayModel newSelected)
         {
-            if (!Equals(newSelected.Date, _rangeSelectionStartDay.Date))
+            if (_rangeSelectionStartDay != null && !Equals(newSelected.Date, _rangeSelectionStartDay.Date))
                 ChangePropertySilently(nameof(RangeSelectionStartDate), () => RangeSelectionStartDate = newSelected.Date);
-
+            else
+                _rangeSelectionStartDay = newSelected;
+            
             ChangePropertySilently(nameof(RangeSelectionEndDate), () => RangeSelectionEndDate = null);
 
             _dayViews.Select(x => x.BindingContext as DayModel).ToList().ForEach(a =>
@@ -525,7 +529,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 _rangeSelectionStartDay = newSelected;
             }
 
-            if (!DateTime.Equals(newSelected.Date, _rangeSelectionEndDay.Date))
+            if (_rangeSelectionEndDay != null && !DateTime.Equals(newSelected.Date, _rangeSelectionEndDay.Date))
                 _rangeSelectionEndDay.IsSelected = false;
 
             _rangeSelectionEndDay = null;
@@ -630,7 +634,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
-                if (RangeSelectionEnabled)
+                if (SelectionType == SelectionType.Range)
                 {
                     if (currentDate <= RangeSelectionEndDate && currentDate >= RangeSelectionStartDate ||
                         currentDate == RangeSelectionStartDate)
@@ -651,7 +655,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 if (dayModel.IsSelected)
                     _selectedDay = dayModel;
             }
-            if (RangeSelectionEnabled)
+            if (SelectionType == SelectionType.Range)
             {
                 if (_rangeSelectionStartDay == null && RangeSelectionStartDate != null) 
                     _rangeSelectionStartDay = new DayModel() { Date = RangeSelectionStartDate.Value };

@@ -1,4 +1,4 @@
-﻿namespace Xamarin.Plugin.Calendar
+﻿namespace Xamarin.Plugin.Calendar.Enums
 {
     /// <summary>
     /// Set type of event indicator on calendar

@@ -32,19 +32,6 @@ namespace SampleApp.ViewModels
             }));
         });
 
-        public ICommand OpenRangePickerCommand => new Command(async () =>
-        {
-            await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
-            {
-                string message = calendarPickerResult.IsSuccess ? 
-                    $"Received date range from popup: {calendarPickerResult.SelectedStartDate:dd.MM.yyyy} - {calendarPickerResult.SelectedEndDate:dd.MM.yyyy}" : 
-                    "Calendar Range Picker Canceled!";
-
-                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
-                Console.WriteLine(message);
-            }));
-        });
-
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
         public AdvancedPageViewModel() : base()
