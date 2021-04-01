@@ -186,7 +186,7 @@ You can customize how will look event indication with property `EventIndicatorTy
 EventIndicatorType="Background"
 ```
 
-##### Calender swipe customizations
+##### Calendar swipe customizations
 You can write your own customizations commands for swipe. 
 ```xml
 SwipeLeftCommand="{Binding SwipeLeftCommand}"
@@ -198,6 +198,20 @@ You can also disable default swipe actions.
 ```xml
 SwipeToChangeMonthEnabled="False"
 SwipeUpToHideEnabled="False"
+```
+
+##### Selection type customization
+
+You can either use the default single selection mode with the 'Day' SelectionType enum value, where the date value binds to the SelectedDate property.
+```xml
+SelectionType="Day"
+SelectedDate="{Binding SelectedDate}"
+```
+or the Range selection mode, where StartDate and EndDate bindings are required.
+```xml
+SelectionType="Range"
+RangeSelectionStartDate="{Binding SelectedStartDate}"
+RangeSelectionEndDate="{Binding SelectedEndDate}"
 ```
 
 ##### Other customizations
