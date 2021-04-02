@@ -37,9 +37,9 @@ If you are coming back take a look on the [Changelog here](https://github.com/li
 #### Supported versions
 | Platform | Version |
 | -------- | ------- 
-| Xamarin.Forms | 3.3+ |
-| Xamarin.Android | 8.1+ |
-| Xamarin.iOS | ? |
+| Xamarin.Forms | 4.5+ |
+| Xamarin.Android | 10.0+ |
+| Xamarin.iOS | 9.0+ |
 
 ### Usage
 To get started just install the package via Nuget into your shared and client projects.
