@@ -1,4 +1,4 @@
-﻿namespace Xamarin.Plugin.Calendar
+﻿namespace Xamarin.Plugin.Calendar.Enums
 {
     /// <summary>
     /// Set day title maximum length in calendar

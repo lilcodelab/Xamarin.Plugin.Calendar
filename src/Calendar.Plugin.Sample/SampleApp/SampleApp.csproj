@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rg.Plugins.Popup" Version="1.2.0.223" />
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.4" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +25,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\RangeSelectionPage.xaml.cs">
+      <DependentUpon>RangeSelectionPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Controls\CalendarFooter.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RangeSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CalendarPickerPopup.xaml">

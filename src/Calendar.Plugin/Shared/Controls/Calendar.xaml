@@ -39,7 +39,7 @@
                     DaysLabelStyle="{Binding DaysLabelStyle, Source={x:Reference calendar}}"
                     DaysTitleColor="{Binding DaysTitleColor, Source={x:Reference calendar}}"
                     DaysTitleHeight="{Binding DaysTitleHeight, Source={x:Reference calendar}}"
-                    DaysTitleMaximumLength="{Binding DaysTitleMaximumLength}, Source={x:Reference calendar}}"
+                    DaysTitleMaximumLength="{Binding DaysTitleMaximumLength, Source={x:Reference calendar}}"
                     DaysTitleLabelStyle="{Binding DaysTitleLabelStyle, Source={x:Reference calendar}}"
                     DeselectedDayTextColor="{Binding DeselectedDayTextColor, Source={x:Reference calendar}}"
                     DisabledDayColor="{Binding DisabledDayColor, Source={x:Reference calendar}}"
@@ -62,6 +62,9 @@
                     TodayTextColor="{Binding TodayTextColor, Source={x:Reference calendar}}"
                     TodayFillColor="{Binding TodayFillColor, Source={x:Reference calendar}}"
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
+                    SelectionType="{Binding SelectionType, Source={x:Reference calendar}}"
+                    RangeSelectionStartDate="{Binding RangeSelectionStartDate, Source={x:Reference calendar}}"
+                    RangeSelectionEndDate="{Binding RangeSelectionEndDate, Source={x:Reference calendar}}"
                     VerticalOptions="FillAndExpand" />
             </controls:SwipeAwareContainer>
         </StackLayout>

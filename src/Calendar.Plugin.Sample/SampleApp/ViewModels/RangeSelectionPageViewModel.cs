@@ -14,18 +14,17 @@ using SampleApp.Views;
 
 namespace SampleApp.ViewModels
 {
-    public class AdvancedPageViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class RangeSelectionPageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
         public ICommand DayTappedCommand => new Command<DateTime>(async (date) => await DayTapped(date));
-        public ICommand SwipeLeftCommand => new Command(() => { MonthYear = MonthYear.AddMonths(2); });
-        public ICommand SwipeRightCommand => new Command(() => { MonthYear = MonthYear.AddMonths(-2); });
-        public ICommand SwipeUpCommand => new Command(() => { MonthYear = DateTime.Today; });
 
-        public ICommand OpenPickerCommand => new Command(async () =>
+        public ICommand OpenRangePickerCommand => new Command(async () =>
         {
-            await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) =>
+            await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
             {
-                string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "Calendar Picker Canceled!";
+                string message = calendarPickerResult.IsSuccess ?
+                    $"Received date range from popup: {calendarPickerResult.SelectedStartDate:dd.MM.yyyy} - {calendarPickerResult.SelectedEndDate:dd.MM.yyyy}" :
+                    "Calendar Range Picker Canceled!";
 
                 await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
             }));
@@ -33,9 +32,8 @@ namespace SampleApp.ViewModels
 
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
-        public AdvancedPageViewModel() : base()
+        public RangeSelectionPageViewModel() : base()
         {
-            Culture = CultureInfo.CreateSpecificCulture("en-GB");
             // testing all kinds of adding events
             // when initializing collection
             Events = new EventCollection
@@ -43,13 +41,13 @@ namespace SampleApp.ViewModels
                 [DateTime.Now.AddDays(-3)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool")),
                 [DateTime.Now.AddDays(-6)] = new DayEventCollection<AdvancedEventModel>(Color.Purple, Color.Purple)
                 {
-                    new AdvancedEventModel { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= new DateTime() },
+                    new AdvancedEventModel { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= new DateTime()},
                     new AdvancedEventModel { Name = "Cool event2", Description = "This is Cool event2's description!", Starting= new DateTime()}
                 }
             };
 
             //Adding a day with a different dot color
-            Events.Add(DateTime.Now.AddDays(-2), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Blue, EventIndicatorSelectedColor = Color.Blue });
+            Events.Add(DateTime.Now.AddDays(-2), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now.AddDays(-2))) { EventIndicatorColor = Color.Blue, EventIndicatorSelectedColor = Color.Blue });
             Events.Add(DateTime.Now.AddDays(-4), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Green, EventIndicatorSelectedColor = Color.White });
             Events.Add(DateTime.Now.AddDays(-5), new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool")) { EventIndicatorColor = Color.Orange, EventIndicatorSelectedColor = Color.Orange });
 
@@ -64,13 +62,13 @@ namespace SampleApp.ViewModels
             Task.Delay(5000).ContinueWith(_ =>
             {
                 // indexer - update later
-                Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool"));
+                Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now));
 
                 // add later
-                Events.Add(DateTime.Now.AddDays(3), new List<AdvancedEventModel>(GenerateEvents(5, "Cool")));
+                Events.Add(DateTime.Now.AddDays(3), new List<AdvancedEventModel>(GenerateEvents(5, "Cool", DateTime.Now.AddDays(3))));
 
                 // indexer later
-                Events[DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Boring"));
+                Events[DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Boring", DateTime.Now.AddDays(10)));
 
                 // add later
                 Events.Add(DateTime.Now.AddDays(15), new List<AdvancedEventModel>(GenerateEvents(10, "Cool")));
@@ -101,6 +99,16 @@ namespace SampleApp.ViewModels
             });
         }
 
+        private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name, DateTime timeOfEvent)
+        {
+            return Enumerable.Range(1, count).Select(x => new AdvancedEventModel
+            {
+                Name = $"{name} event{x}",
+                Description = $"This is {name} event{x}'s description!",
+                Starting = new DateTime(timeOfEvent.Year, timeOfEvent.Month, timeOfEvent.Day, (x * 2) % 24, (x * 3) % 60, 0)
+            });
+        }
+
         public EventCollection Events { get; }
 
         private DateTime _monthYear = DateTime.Today;
@@ -117,12 +125,18 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDate, value);
         }
 
-
-        private CultureInfo _culture = CultureInfo.InvariantCulture;
-        public CultureInfo Culture
+        private DateTime _selectedStartDate = DateTime.Today;
+        public DateTime SelectedStartDate
         {
-            get => _culture;
-            set => SetProperty(ref _culture, value);
+            get => _selectedStartDate;
+            set => SetProperty(ref _selectedStartDate, value);
+        }
+
+        private DateTime _selectedEndDate = DateTime.Today;
+        public DateTime SelectedEndDate
+        {
+            get => _selectedEndDate;
+            set => SetProperty(ref _selectedEndDate, value);
         }
 
         private static async Task DayTapped(DateTime date)

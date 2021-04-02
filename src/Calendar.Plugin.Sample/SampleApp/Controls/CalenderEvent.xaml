@@ -12,7 +12,7 @@
         <Label FontAttributes="Bold" FontSize="Medium">
             <Label.FormattedText>
                 <FormattedString>
-                    <Span Text="{Binding Starting, StringFormat='{0:HH\\:mm}'}" TextColor="Black" />
+                    <Span Text="{Binding Starting, StringFormat='{0:MM/dd HH\\:mm}'}" TextColor="Black" />
                     <Span Text=" - " />
                     <Span Text="{Binding Name}" />
                 </FormattedString>

@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
@@ -53,9 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Rg.Plugins.Popup">
-      <Version>1.2.0.223</Version>
+      <Version>2.0.0.4</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
@@ -63,6 +61,9 @@
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Forms">
+      <Version>4.8.0.1364</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -104,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SampleApp\SampleApp.csproj">
-      <Project>{E4FB5119-AAD4-43E4-8741-1759FAF4083B}</Project>
+      <Project>{C269E453-794E-4A6F-AAB0-D13865588FD7}</Project>
       <Name>SampleApp</Name>
     </ProjectReference>
   </ItemGroup>
@@ -162,4 +163,9 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\baseline_event_black_24.png" />
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionSampleAppAndroidHideInfoBar="True" TriggeredFromHotReload="False" XamarinHotReloadUnhandledDeviceExceptionSampleAppAndroidHideInfoBar="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

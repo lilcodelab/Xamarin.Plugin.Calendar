@@ -86,7 +86,6 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _year, value);
         }
 
-
         private DateTime _selectedDate = DateTime.Today;
         public DateTime SelectedDate
         {
