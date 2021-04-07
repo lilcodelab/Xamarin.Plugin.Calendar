@@ -655,7 +655,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.EventIndicatorType = EventIndicatorType;
                 dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
                 dayModel.OtherMonthIsVisible = OtherMonthDayIsVisible;
-                dayModel.IsSelected = currentDate == SelectedDate.Date;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
@@ -673,7 +672,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     }
                     else ChangePropertySilently(nameof(DayModel.IsSelected), () => dayModel.IsSelected = false);
                 }
-                else dayModel.IsSelected = currentDate == SelectedDate.Date;
+                else ChangePropertySilently(nameof(DayModel.IsSelected), () => dayModel.IsSelected = currentDate == SelectedDate.Date);
 
                 AssignIndicatorColors(ref dayModel);
 
