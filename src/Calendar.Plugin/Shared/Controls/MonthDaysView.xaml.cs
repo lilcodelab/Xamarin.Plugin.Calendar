@@ -375,10 +375,10 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             InitializeComponent();
 
-            InitializeDays();
             UpdateDaysColors();
             UpdateDayTitles();
             UpdateDays(AnimateCalendar);
+            InitializeDays();
         }
 
         /// <summary> ??? </summary>

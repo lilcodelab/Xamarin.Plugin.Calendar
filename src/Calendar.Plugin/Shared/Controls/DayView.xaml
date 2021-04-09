@@ -5,59 +5,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="dayView"
     BackgroundColor="{Binding BackgroundFullEventColor}">
-
-    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding IsVisible}">
-
-        <Frame
-            Padding="0"
-            BackgroundColor="{Binding BackgroundColor}"
-            CornerRadius="{Binding DayViewCornerRadius}"
-            HasShadow="False"
-            HeightRequest="{Binding DayViewSize}"
-            HorizontalOptions="CenterAndExpand"
-            IsClippedToBounds="True"
-            OutlineColor="{Binding OutlineColor}"
-            VerticalOptions="CenterAndExpand"
-            WidthRequest="{Binding DayViewSize}" />
-
-        <Frame
-            Margin="0,4,0,0"
-            Padding="0"
-            BackgroundColor="{Binding EventColor}"
-            CornerRadius="4"
-            HasShadow="False"
-            HeightRequest="8"
-            HorizontalOptions="Center"
-            InputTransparent="True"
-            IsVisible="{Binding TopDotVisible}"
-            OutlineColor="Transparent"
-            VerticalOptions="Start"
-            WidthRequest="8" />
-
-        <Frame
-            Margin="0,0,0,3"
-            Padding="0"
-            BackgroundColor="{Binding EventColor}"
-            CornerRadius="4"
-            HasShadow="False"
-            HeightRequest="8"
-            HorizontalOptions="Center"
-            InputTransparent="True"
-            IsVisible="{Binding BottomDotVisible}"
-            OutlineColor="Transparent"
-            VerticalOptions="End"
-            WidthRequest="8" />
-
-        <Label
-            HorizontalOptions="Center"
-            InputTransparent="True"
-            Style="{Binding DaysLabelStyle}"
-            Text="{Binding Date.Day}"
-            TextColor="{Binding TextColor}"
-            VerticalOptions="Center" />
-
-        <Grid.GestureRecognizers>
+    <Frame 
+        BackgroundColor="{Binding BackgroundColor}"
+        CornerRadius="{Binding DayViewCornerRadius}"
+        HeightRequest="{Binding DayViewSize}"
+        OutlineColor="{Binding OutlineColor}"
+        WidthRequest="{Binding DayViewSize}"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Margin="0,15,0,0"
+        Padding="0">
+        <FlexLayout 
+            Direction="ColumnReverse" 
+            AlignItems="Center"
+            JustifyContent="Center">
+            <Frame
+                Padding="0"
+                BackgroundColor="{Binding EventColor}"
+                CornerRadius="4"
+                HeightRequest="8"
+                IsVisible="{Binding BottomDotVisible}"
+                WidthRequest="8"
+            />
+            <Label
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                Style="{Binding DaysLabelStyle}"
+                Text="{Binding Date.Day}"
+                TextColor="{Binding TextColor}"
+            />
+        </FlexLayout>
+        <Frame.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnTapped" />
-        </Grid.GestureRecognizers>
-    </Grid>
+        </Frame.GestureRecognizers>
+    </Frame>
 </ContentView>
