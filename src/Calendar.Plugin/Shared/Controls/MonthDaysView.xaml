@@ -6,152 +6,107 @@
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
     x:Name="monthsView">
 
-    <Grid RowSpacing="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <Grid
+    <StackLayout>
+        <FlexLayout
             x:Name="daysTitleControl"
-            ColumnSpacing="0"
             HeightRequest="{Binding DaysTitleHeight, Source={x:Reference monthsView}}"
-            VerticalOptions="FillAndExpand">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
+            JustifyContent="Center">
             <Label
-                Grid.Column="0"
                 FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
-                TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                VerticalOptions="CenterAndExpand" />
-
+                FlexLayout.Basis="14%"
+            />
             <Label
-                Grid.Column="1"
                 FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
-                TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                VerticalOptions="CenterAndExpand" />
-
+                FlexLayout.Basis="14%"
+            />
             <Label
-                Grid.Column="2"
                 FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
-                TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                VerticalOptions="CenterAndExpand" />
-
+                FlexLayout.Basis="14%"
+            />
             <Label
-                Grid.Column="3"
                 FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
-                TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                VerticalOptions="CenterAndExpand" />
-
+                FlexLayout.Basis="14%"
+            />
             <Label
-                Grid.Column="4"
                 FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
-                TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                VerticalOptions="CenterAndExpand" />
-
+                FlexLayout.Basis="14%"
+            />
             <Label
-                Grid.Column="5"
                 FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
-                TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                VerticalOptions="CenterAndExpand" />
-
+                FlexLayout.Basis="14%"
+            />
             <Label
-                Grid.Column="6"
                 FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
-                TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
-                VerticalOptions="CenterAndExpand" />
-        </Grid>
+                FlexLayout.Basis="14%"
+            />
+        </FlexLayout>
 
-        <Grid
+        <FlexLayout
             x:Name="daysControl"
-            Grid.Row="1"
-            ColumnSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <controls:DayView Grid.Row="0" Grid.Column="0" />
-            <controls:DayView Grid.Row="0" Grid.Column="1" />
-            <controls:DayView Grid.Row="0" Grid.Column="2" />
-            <controls:DayView Grid.Row="0" Grid.Column="3" />
-            <controls:DayView Grid.Row="0" Grid.Column="4" />
-            <controls:DayView Grid.Row="0" Grid.Column="5" />
-            <controls:DayView Grid.Row="0" Grid.Column="6" />
+            Wrap="Wrap"
+            JustifyContent="Center">
+            
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
 
-            <controls:DayView Grid.Row="1" Grid.Column="0" />
-            <controls:DayView Grid.Row="1" Grid.Column="1" />
-            <controls:DayView Grid.Row="1" Grid.Column="2" />
-            <controls:DayView Grid.Row="1" Grid.Column="3" />
-            <controls:DayView Grid.Row="1" Grid.Column="4" />
-            <controls:DayView Grid.Row="1" Grid.Column="5" />
-            <controls:DayView Grid.Row="1" Grid.Column="6" />
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
 
-            <controls:DayView Grid.Row="2" Grid.Column="0" />
-            <controls:DayView Grid.Row="2" Grid.Column="1" />
-            <controls:DayView Grid.Row="2" Grid.Column="2" />
-            <controls:DayView Grid.Row="2" Grid.Column="3" />
-            <controls:DayView Grid.Row="2" Grid.Column="4" />
-            <controls:DayView Grid.Row="2" Grid.Column="5" />
-            <controls:DayView Grid.Row="2" Grid.Column="6" />
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
 
-            <controls:DayView Grid.Row="3" Grid.Column="0" />
-            <controls:DayView Grid.Row="3" Grid.Column="1" />
-            <controls:DayView Grid.Row="3" Grid.Column="2" />
-            <controls:DayView Grid.Row="3" Grid.Column="3" />
-            <controls:DayView Grid.Row="3" Grid.Column="4" />
-            <controls:DayView Grid.Row="3" Grid.Column="5" />
-            <controls:DayView Grid.Row="3" Grid.Column="6" />
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
 
-            <controls:DayView Grid.Row="4" Grid.Column="0" />
-            <controls:DayView Grid.Row="4" Grid.Column="1" />
-            <controls:DayView Grid.Row="4" Grid.Column="2" />
-            <controls:DayView Grid.Row="4" Grid.Column="3" />
-            <controls:DayView Grid.Row="4" Grid.Column="4" />
-            <controls:DayView Grid.Row="4" Grid.Column="5" />
-            <controls:DayView Grid.Row="4" Grid.Column="6" />
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
 
-            <controls:DayView Grid.Row="5" Grid.Column="0" />
-            <controls:DayView Grid.Row="5" Grid.Column="1" />
-            <controls:DayView Grid.Row="5" Grid.Column="2" />
-            <controls:DayView Grid.Row="5" Grid.Column="3" />
-            <controls:DayView Grid.Row="5" Grid.Column="4" />
-            <controls:DayView Grid.Row="5" Grid.Column="5" />
-            <controls:DayView Grid.Row="5" Grid.Column="6" />
-        </Grid>
-    </Grid>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+            <controls:DayView FlexLayout.Basis="14%"/>
+        </FlexLayout>
+    </StackLayout>
 </ContentView>
