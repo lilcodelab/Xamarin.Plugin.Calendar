@@ -5,61 +5,68 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
     x:Name="monthsView">
-
     <StackLayout>
         <FlexLayout
             x:Name="daysTitleControl"
             HeightRequest="{Binding DaysTitleHeight, Source={x:Reference monthsView}}"
-            JustifyContent="Center">
+            JustifyContent="SpaceBetween"
+            AlignItems="End"
+            Padding="0"
+            Margin="5,0,5,0">
             <Label
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontAttributes="Bold"
                 FlexLayout.Basis="14%"
             />
             <Label
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontAttributes="Bold"
                 FlexLayout.Basis="14%"
             />
             <Label
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontAttributes="Bold"
                 FlexLayout.Basis="14%"
             />
             <Label
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontAttributes="Bold"
                 FlexLayout.Basis="14%"
             />
             <Label
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontAttributes="Bold"
                 FlexLayout.Basis="14%"
             />
             <Label
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontAttributes="Bold"
                 FlexLayout.Basis="14%"
             />
             <Label
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
                 Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontAttributes="Bold"
                 FlexLayout.Basis="14%"
             />
         </FlexLayout>
-
         <FlexLayout
             x:Name="daysControl"
             Wrap="Wrap"
             JustifyContent="Center">
-            
             <controls:DayView FlexLayout.Basis="14%"/>
             <controls:DayView FlexLayout.Basis="14%"/>
             <controls:DayView FlexLayout.Basis="14%"/>

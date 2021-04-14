@@ -10,8 +10,8 @@ namespace Xamarin.Plugin.Calendar.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
-        private readonly Dictionary<string, PropertyChangedEventArgs> _propertyChangedArgs = new Dictionary<string, PropertyChangedEventArgs>();
+        private readonly Dictionary<string, object> _properties = new();
+        private readonly Dictionary<string, PropertyChangedEventArgs> _propertyChangedArgs = new();
      
         protected TProperty GetProperty<TProperty>(TProperty defaultValue = default, [CallerMemberName] string propertyName = "")
         {
@@ -54,7 +54,7 @@ namespace Xamarin.Plugin.Calendar.Models
 
         internal BindableBase<TData> Notify<TProperty>(Expression<Func<TData, TProperty>> propertyExpression)
         {
-            if (!(propertyExpression.Body is MemberExpression property))
+            if (propertyExpression.Body is not MemberExpression property)
                 throw new ArgumentException($"Expression '{propertyExpression}' does not refer to a property.");
 
             return Notify(property.Member.Name);

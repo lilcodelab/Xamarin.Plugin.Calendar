@@ -43,8 +43,7 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             get => GetProperty<bool>();
             set => SetProperty(value)
-                    .Notify(nameof(BottomDotVisible),
-                            nameof(TopDotVisible),
+                    .Notify(nameof(DotVisible),
                             nameof(BackgroundEventIndicator),
                             nameof(BackgroundFullEventColor));
         }
@@ -128,8 +127,7 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             get => GetProperty(EventIndicatorType.BottomDot);
             set => SetProperty(value)
-                    .Notify(nameof(BottomDotVisible),
-                            nameof(TopDotVisible),
+                    .Notify(nameof(DotVisible),
                             nameof(BackgroundEventIndicator),
                             nameof(BackgroundColor));
         }
@@ -191,9 +189,9 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value);
         }
 
-        public bool BottomDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.BottomDot;
+        public bool DotVisible => HasEvents && (EventIndicatorType == EventIndicatorType.BottomDot || EventIndicatorType == EventIndicatorType.TopDot);
 
-        public bool TopDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.TopDot;
+        public bool IsDotAtBottom => HasEvents && EventIndicatorType == EventIndicatorType.BottomDot;
 
         public bool BackgroundEventIndicator => HasEvents && EventIndicatorType == EventIndicatorType.Background;
 
@@ -208,7 +206,6 @@ namespace Xamarin.Plugin.Calendar.Models
         public Color OutlineColor => IsToday && !IsSelected
                                    ? TodayOutlineColor
                                    : Color.Transparent;
-
 
         public Color BackgroundColor
         {

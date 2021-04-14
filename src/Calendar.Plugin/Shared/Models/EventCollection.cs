@@ -136,7 +136,7 @@ namespace Xamarin.Plugin.Calendar.Models
                 return;
 
             base.Clear();
-            CollectionChanged?.Invoke(this, new EventCollectionChangedArgs { Item = default(DateTime), Type = EventCollectionChangedType.Clear });
+            CollectionChanged?.Invoke(this, new EventCollectionChangedArgs { Item = default, Type = EventCollectionChangedType.Clear });
         }
 
         internal event EventHandler<EventCollectionChangedArgs> CollectionChanged;

@@ -29,7 +29,7 @@ namespace Xamarin.Plugin.Calendar.iOS
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (!(Element is SwipeAwareContainer element))
+            if (Element is not SwipeAwareContainer element)
                 return;
 
             switch (e.PropertyName)

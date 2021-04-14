@@ -362,9 +362,9 @@ namespace Xamarin.Plugin.Calendar.Controls
         #endregion
         #endregion
 
-        private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
-        private readonly List<DayView> _dayViews = new List<DayView>();
-        private List<DayModel> _selectedRange = new List<DayModel>();
+        private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
+        private readonly List<DayView> _dayViews = new();
+        private List<DayModel> _selectedRange = new();
         private DayModel _selectedDay;
         private DayModel _rangeSelectionStartDay;
         private DayModel _rangeSelectionEndDay;
@@ -459,17 +459,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
-        }
-
-        private void UpdateDaysIsVisible()
-        {
-            foreach (var dayView in _dayViews)
-            {
-                var dayModel = dayView.BindingContext as DayModel;
-
-
-                AssignIndicatorColors(ref dayModel);
-            }
         }
 
         private void UpdateDaysColors()

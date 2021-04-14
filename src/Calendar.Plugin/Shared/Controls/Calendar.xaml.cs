@@ -681,7 +681,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void OnMonthChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(newValue is int newMonth) || newMonth <= 0 || newMonth > 12)
+            if (newValue is not int newMonth || newMonth <= 0 || newMonth > 12)
                 throw new ArgumentException("Month must be between 1 and 12.");
 
             if (bindable is Calendar calendar && calendar.MonthYear.Month != newMonth)
@@ -872,7 +872,6 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void AnimateMonths(double currentValue)
         {
-            calendarSectionRow.Height = new GridLength(_calendarSectionHeight * currentValue);
             calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
         }

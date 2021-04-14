@@ -12,7 +12,7 @@
         OutlineColor="{Binding OutlineColor}"
         WidthRequest="{Binding DayViewSize}"
         HorizontalOptions="Center"
-        Margin="0,15,0,0"
+        Margin="0,0,0,5"
         Padding="0">
         <FlexLayout 
             Direction="ColumnReverse" 
@@ -20,11 +20,12 @@
             JustifyContent="Center">
             <Frame
                 BackgroundColor="{Binding EventColor}"
-                IsVisible="{Binding BottomDotVisible}"
+                IsVisible="{Binding DotVisible}"
                 WidthRequest="8"
                 HeightRequest="8"
                 Padding="0"
                 CornerRadius="4"
+                HasShadow="False"
             />
             <Label
                 Style="{Binding DaysLabelStyle}"

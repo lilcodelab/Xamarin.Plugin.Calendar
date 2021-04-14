@@ -30,7 +30,7 @@ namespace Xamarin.Plugin.Calendar.Android
 
         public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
         {
-            if (!(Element is SwipeAwareContainer element))
+            if (Element is not SwipeAwareContainer element)
                 return false;
 
             float distanceX = e2.GetX() - e1.GetX();
