@@ -11,10 +11,7 @@ namespace SampleApp.ViewModels
     {
         public event Action<CalendarPickerResult> Closed;
 
-        public ICommand ClearCommand => new Command(() =>
-        {
-            SelectedDate = DateTime.Today;
-        });
+        public ICommand ClearCommand => new Command(() => { SelectedDate = DateTime.Today; });
 
         public ICommand SuccessCommand => new Command(async () =>
         {
@@ -50,7 +47,6 @@ namespace SampleApp.ViewModels
         }
 
         private DateTime _maximumDate = DateTime.Today;
-
         public DateTime MaximumDate
         {
             get => _maximumDate;

@@ -20,7 +20,7 @@ namespace SampleApp.ViewModels
         public ICommand SwipeLeftCommand => new Command(() => { MonthYear = MonthYear.AddMonths(2); });
         public ICommand SwipeRightCommand => new Command(() => { MonthYear = MonthYear.AddMonths(-2); });
         public ICommand SwipeUpCommand => new Command(() => { MonthYear = DateTime.Today; });
-
+        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
         public ICommand OpenPickerCommand => new Command(async () =>
         {
             await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) =>
@@ -30,8 +30,6 @@ namespace SampleApp.ViewModels
                 await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
             }));
         });
-
-        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
         public AdvancedPageViewModel() : base()
         {
@@ -61,7 +59,7 @@ namespace SampleApp.ViewModels
 
             MonthYear = MonthYear.AddMonths(1);
 
-            Task.Delay(5000).ContinueWith(_ =>
+            Task.Delay(5000).ContinueWith( _ =>
             {
                 // indexer - update later
                 Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool"));
@@ -74,7 +72,6 @@ namespace SampleApp.ViewModels
 
                 // add later
                 Events.Add(DateTime.Now.AddDays(15), new List<AdvancedEventModel>(GenerateEvents(10, "Cool")));
-
 
                 Task.Delay(3000).ContinueWith(t =>
                 {
@@ -116,7 +113,6 @@ namespace SampleApp.ViewModels
             get => _selectedDate;
             set => SetProperty(ref _selectedDate, value);
         }
-
 
         private CultureInfo _culture = CultureInfo.InvariantCulture;
         public CultureInfo Culture

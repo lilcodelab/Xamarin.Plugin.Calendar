@@ -30,7 +30,8 @@
                     HorizontalOptions="FillAndExpand"
                     HorizontalTextAlignment="Center"
                     Text="Choose Date Range"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center" 
+                />
                 <plugin:Calendar
                     Padding="10,0"
                     FooterSectionVisible="False"
@@ -45,23 +46,14 @@
                     WidthRequest="320">
                     <plugin:Calendar.HeaderSectionTemplate>
                         <DataTemplate>
-                            <Grid
+                            <FlexLayout
                                 Margin="0,2"
                                 Padding="0"
                                 HorizontalOptions="FillAndExpand"
                                 IsVisible="{Binding ShowMonthPicker}"
-                                VerticalOptions="Start">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="3*" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-
+                                JustifyContent="SpaceAround"
+                                AlignItems="Center">
                                 <Frame
-                                    Grid.Column="0"
                                     Padding="0"
                                     BackgroundColor="Transparent"
                                     HasShadow="False"
@@ -79,14 +71,13 @@
                                         Text="&#xf060;"
                                         TextColor="Gray"
                                         VerticalOptions="CenterAndExpand"
-                                        VerticalTextAlignment="Center" />
-
+                                        VerticalTextAlignment="Center" 
+                                    />
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
                                     </Frame.GestureRecognizers>
                                 </Frame>
                                 <Label
-                                    Grid.Column="1"
                                     FontAttributes="Bold"
                                     FontSize="Medium"
                                     HorizontalOptions="Center"
@@ -101,7 +92,6 @@
                                     </Label.FormattedText>
                                 </Label>
                                 <Frame
-                                    Grid.Column="2"
                                     Padding="0"
                                     BackgroundColor="Transparent"
                                     HasShadow="False"
@@ -119,30 +109,34 @@
                                         Text="&#xf061;"
                                         TextColor="Gray"
                                         VerticalOptions="CenterAndExpand"
-                                        VerticalTextAlignment="Center" />
+                                        VerticalTextAlignment="Center" 
+                                    />
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
                                     </Frame.GestureRecognizers>
                                 </Frame>
-                            </Grid>
+                            </FlexLayout>
                         </DataTemplate>
                     </plugin:Calendar.HeaderSectionTemplate>
                 </plugin:Calendar>
-                
                 <FlexLayout
                     JustifyContent="SpaceBetween">
                     <Button
                         Command="{Binding ClearCommand}"
                         HorizontalOptions="EndAndExpand"
-                        Text="Clear" />
+                        Text="Clear" 
+                    />
                     <Button
                         Command="{Binding SuccessCommand}"
                         HorizontalOptions="EndAndExpand"
-                        Text="Select" />
-                    <Button Command="{Binding CancelCommand}" Text="Cancel" />
+                        Text="Select" 
+                    />
+                    <Button 
+                        Command="{Binding CancelCommand}" 
+                        Text="Cancel" 
+                    />
                 </FlexLayout>
             </StackLayout>
-            
         </Frame>
     </rg:PopupPage.Content>
 </rg:PopupPage>

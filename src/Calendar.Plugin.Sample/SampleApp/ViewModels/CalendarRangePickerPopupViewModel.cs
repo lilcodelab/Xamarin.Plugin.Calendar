@@ -62,7 +62,6 @@ namespace SampleApp.ViewModels
         }
 
         private DateTime _maximumDate = DateTime.Today.AddYears(1);
-
         public DateTime MaximumDate
         {
             get => _maximumDate;

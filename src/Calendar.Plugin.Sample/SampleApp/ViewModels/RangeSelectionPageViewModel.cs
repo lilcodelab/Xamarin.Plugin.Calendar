@@ -18,6 +18,8 @@ namespace SampleApp.ViewModels
     {
         public ICommand DayTappedCommand => new Command<DateTime>(async (date) => await DayTapped(date));
 
+        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
+
         public ICommand OpenRangePickerCommand => new Command(async () =>
         {
             await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
@@ -29,8 +31,6 @@ namespace SampleApp.ViewModels
                 await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
             }));
         });
-
-        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
         public RangeSelectionPageViewModel() : base()
         {
@@ -147,12 +147,12 @@ namespace SampleApp.ViewModels
 
         private async Task ExecuteEventSelectedCommand(object item)
         {
-            if (item is AdvancedEventModel eventModel)
-            {
-                var title = $"Selected: {eventModel.Name}";
-                var message = $"Starts: {eventModel.Starting:HH:mm}{Environment.NewLine}Details: {eventModel.Description}";
-                await App.Current.MainPage.DisplayAlert(title, message, "Ok");
-            }
+            if (!(item is AdvancedEventModel eventModel))
+                return;
+
+            var title = $"Selected: {eventModel.Name}";
+            var message = $"Starts: {eventModel.Starting:HH:mm}{Environment.NewLine}Details: {eventModel.Description}";
+            await App.Current.MainPage.DisplayAlert(title, message, "Ok");
         }
     }
 }

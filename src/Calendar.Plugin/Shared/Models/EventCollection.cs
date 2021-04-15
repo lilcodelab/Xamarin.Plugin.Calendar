@@ -132,7 +132,7 @@ namespace Xamarin.Plugin.Calendar.Models
         /// </summary>
         public new void Clear()
         {
-            if (base.Count == 0)
+            if (Count == 0)
                 return;
 
             base.Clear();
@@ -146,7 +146,6 @@ namespace Xamarin.Plugin.Calendar.Models
             public DateTime Item { get; set; }
             public EventCollectionChangedType Type { get; set; }
         }
-
         internal enum EventCollectionChangedType
         {
             Add,

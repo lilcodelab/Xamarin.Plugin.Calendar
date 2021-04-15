@@ -99,6 +99,5 @@ namespace Xamarin.Plugin.Calendar.iOS
             catch (Exception)
             { }
         }
-
     }
 }

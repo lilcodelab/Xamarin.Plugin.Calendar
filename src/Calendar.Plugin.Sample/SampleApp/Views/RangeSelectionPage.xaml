@@ -12,7 +12,10 @@
     mc:Ignorable="d">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding OpenRangePickerCommand}" Text="Range" />
+        <ToolbarItem 
+            Command="{Binding OpenRangePickerCommand}" 
+            Text="Range" 
+        />
     </ContentPage.ToolbarItems>
 
     <ContentPage.BindingContext>
@@ -20,15 +23,15 @@
     </ContentPage.BindingContext>
 
     <plugin:Calendar
-        Padding="10,0"
-        AnimateCalendar="True"
         DayTappedCommand="{Binding DayTappedCommand}"
         Events="{Binding Events}"
         MonthYear="{Binding MonthYear}"
         SelectedDate="{Binding SelectedDate}"
-        SelectionType="Range"
         RangeSelectionStartDate="{Binding SelectedStartDate}"
-        RangeSelectionEndDate="{Binding SelectedEndDate}">
+        RangeSelectionEndDate="{Binding SelectedEndDate}"
+        SelectionType="Range"
+        Padding="10,0"
+        AnimateCalendar="True">
 
         <plugin:Calendar.HeaderSectionTemplate>
             <controls:CalendarHeader />
@@ -51,7 +54,8 @@
                     <Label
                         Margin="0,5,0,5"
                         HorizontalTextAlignment="Center"
-                        Text="NO EVENTS FOR THE SELECTED DATE" />
+                        Text="NO EVENTS FOR THE SELECTED DATE" 
+                    />
                 </StackLayout>
             </DataTemplate>
         </plugin:Calendar.EmptyTemplate>
@@ -60,8 +64,14 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="daysTitleLabelStyle" TargetType="Label">
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="FontSize" Value="20" />
+                <Setter 
+                    Property="FontAttributes" 
+                    Value="Bold" 
+                />
+                <Setter 
+                    Property="FontSize" 
+                    Value="20" 
+                />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>

@@ -17,7 +17,7 @@
                     FontAttributes="Bold"
                     FontSize="Medium"
                     HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center" 
+                    VerticalTextAlignment="Center"
                     Text="←"
                 />
                 <Frame.GestureRecognizers>

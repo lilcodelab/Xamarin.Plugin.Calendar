@@ -3,13 +3,13 @@
     x:Class="Xamarin.Plugin.Calendar.Controls.DefaultFooterSection"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <FlexLayout JustifyContent="SpaceBetween">
+    <FlexLayout 
+        JustifyContent="SpaceBetween">
         <Label
             Text="{Binding SelectedDateText}"
             TextColor="{Binding SelectedDateColor}"
             FontAttributes="Bold"
             FontSize="Medium"
-            Margin="15,0,0,0"
         />
         <Label
             x:Name="showHideLabel"
@@ -24,8 +24,8 @@
                     TargetType="Label"
                     Value="False">
                     <Setter
-                        Property="Text" 
-                        Value="↓" 
+                        Property="Text"
+                        Value="↓"
                     />
                 </DataTrigger>
             </Label.Triggers>

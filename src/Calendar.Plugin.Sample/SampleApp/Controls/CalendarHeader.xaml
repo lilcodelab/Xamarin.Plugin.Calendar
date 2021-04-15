@@ -3,93 +3,77 @@
     x:Class="SampleApp.Controls.CalendarHeader"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
-    <Grid
+    <FlexLayout
+        IsVisible="{Binding ShowMonthPicker}"
         Margin="0,2"
         Padding="0"
-        HorizontalOptions="FillAndExpand"
-        IsVisible="{Binding ShowMonthPicker}"
-        VerticalOptions="Start">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-
-        <Frame
-            Grid.Column="0"
-            Padding="0"
-            BackgroundColor="White"
-            BorderColor="Orange"
-            CornerRadius="18"
-            HasShadow="False"
-            HeightRequest="36"
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="Center"
-            WidthRequest="36">
-            <Label
-                FontAttributes="Bold"
-                FontFamily="{StaticResource FontAwesomeSolid}"
-                FontSize="25"
+        JustifyContent="SpaceAround"
+        AlignItems="Center">
+            <Frame
+                Padding="0"
+                BackgroundColor="White"
+                BorderColor="Orange"
+                CornerRadius="18"
+                HasShadow="False"
+                HeightRequest="36"
                 HorizontalOptions="CenterAndExpand"
-                HorizontalTextAlignment="Center"
-                InputTransparent="True"
-                Text="&#xf060;"
-                TextColor="{Binding ArrowsColor}"
-                VerticalOptions="CenterAndExpand"
-                VerticalTextAlignment="Center" />
-
-            <Frame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
-            </Frame.GestureRecognizers>
-        </Frame>
-
-        <Label
-            Grid.Column="1"
-            FontAttributes="Bold"
-            FontSize="Medium"
-            HorizontalOptions="Center"
-            TextColor="{Binding MonthLabelColor}"
-            VerticalOptions="Center">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="{Binding MonthText, Mode=TwoWay}" />
-                    <Span Text=", " />
-                    <Span Text="{Binding Year, Mode=TwoWay}" />
-                </FormattedString>
-            </Label.FormattedText>
-
-        </Label>
-
-        <Frame
-            Grid.Column="2"
-            Padding="0"
-            BackgroundColor="White"
-            BorderColor="Orange"
-            CornerRadius="18"
-            HasShadow="False"
-            HeightRequest="36"
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="CenterAndExpand"
-            WidthRequest="36">
+                VerticalOptions="Center"
+                WidthRequest="36">
+                <Label
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    TextColor="{Binding ArrowsColor}"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    InputTransparent="True"
+                    Text="&#xf060;"
+                    VerticalOptions="CenterAndExpand"
+                    VerticalTextAlignment="Center" 
+                />
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
             <Label
+                TextColor="{Binding MonthLabelColor}"
                 FontAttributes="Bold"
-                FontFamily="{StaticResource FontAwesomeSolid}"
-                FontSize="25"
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding MonthText, Mode=TwoWay}" />
+                        <Span Text=", " />
+                        <Span Text="{Binding Year, Mode=TwoWay}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Frame
+                Padding="0"
+                BackgroundColor="White"
+                BorderColor="Orange"
+                CornerRadius="18"
+                HasShadow="False"
+                HeightRequest="36"
                 HorizontalOptions="CenterAndExpand"
-                HorizontalTextAlignment="Center"
-                InputTransparent="True"
-                Text="&#xf061;"
-                TextColor="{Binding ArrowsColor}"
                 VerticalOptions="CenterAndExpand"
-                VerticalTextAlignment="Center" />
-
-            <Frame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
-            </Frame.GestureRecognizers>
-        </Frame>
-    </Grid>
+                WidthRequest="36">
+                <Label
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    TextColor="{Binding ArrowsColor}"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    InputTransparent="True"
+                    Text="&#xf061;"
+                    VerticalOptions="CenterAndExpand"
+                    VerticalTextAlignment="Center" 
+                />
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+    </FlexLayout>
 </DataTemplate>

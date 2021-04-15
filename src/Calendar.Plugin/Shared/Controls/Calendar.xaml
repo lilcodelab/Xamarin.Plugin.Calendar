@@ -6,9 +6,9 @@
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
     x:Name="calendar">
     <StackLayout
+        x:Name="calendarContainer"
         Padding="0,15,0,0"
-        IsClippedToBounds="True"
-        x:Name="calendarContainer">
+        IsClippedToBounds="True">
         <controls:DataTemplateView 
             BindingContext="{x:Reference calendar}" 
             ItemTemplate="{Binding HeaderSectionTemplate}" 

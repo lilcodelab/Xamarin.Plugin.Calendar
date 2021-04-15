@@ -12,7 +12,10 @@
     mc:Ignorable="d">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding OpenPickerCommand}" Text="Picker" />
+        <ToolbarItem 
+            Command="{Binding OpenPickerCommand}" 
+            Text="Picker" 
+        />
     </ContentPage.ToolbarItems>
 
     <ContentPage.BindingContext>
@@ -20,46 +23,46 @@
     </ContentPage.BindingContext>
 
     <plugin:Calendar
-        Padding="10,0"
-        AnimateCalendar="True"
         Culture="{Binding Culture}"
         DayTappedCommand="{Binding DayTappedCommand}"
+        DaysLabelStyle="{StaticResource daysLabelStyle}"
+        DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
+        Events="{Binding Events}"
+        MonthYear="{Binding MonthYear}"
+        SelectedDate="{Binding SelectedDate}"
+        SwipeLeftCommand="{Binding SwipeLeftCommand}"
+        SwipeRightCommand="{Binding SwipeRightCommand}"
+        SwipeUpCommand="{Binding SwipeUpCommand}"
+        Padding="10,0"
+        AnimateCalendar="True"
         DayViewCornerRadius="3"
         DayViewSize="40"
-        DaysLabelStyle="{StaticResource daysLabelStyle}"
-        DaysTitleColor="Orange"
         DaysTitleHeight="40"
-        DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
         DaysTitleMaximumLength="ThreeChars"
-        DeselectedDayTextColor="Blue"
         DisableSwipeDetection="False"
+        EventIndicatorType="Background"
+        HeaderSectionVisible="True"
+        HorizontalOptions="FillAndExpand"
+        OtherMonthDayIsVisible="False"
+        SelectedDateTextFormat="ddd, dd MMM yyyy"
+        SwipeToChangeMonthEnabled="False"
+        SwipeUpToHideEnabled="False"
+        VerticalOptions="FillAndExpand"
+        DaysTitleColor="Orange"
+        DeselectedDayTextColor="Blue"
         EventIndicatorColor="Red"
         EventIndicatorSelectedColor="IndianRed"
         EventIndicatorSelectedTextColor="AliceBlue"
         EventIndicatorTextColor="WhiteSmoke"
-        EventIndicatorType="Background"
-        Events="{Binding Events}"
-        HeaderSectionVisible="True"
-        HorizontalOptions="FillAndExpand"
         MonthLabelColor="Red"
-        MonthYear="{Binding MonthYear}"
         OtherMonthDayColor="Gray"
-        OtherMonthDayIsVisible="False"
-        SelectedDate="{Binding SelectedDate}"
         SelectedDateColor="Red"
-        SelectedDateTextFormat="ddd, dd MMM yyyy"
         SelectedTodayTextColor="Green"
         TodayTextColor="Yellow"
         SelectedDayBackgroundColor="DarkCyan"
         SelectedDayTextColor="Cyan"
-        SwipeLeftCommand="{Binding SwipeLeftCommand}"
-        SwipeRightCommand="{Binding SwipeRightCommand}"
-        SwipeToChangeMonthEnabled="False"
-        SwipeUpCommand="{Binding SwipeUpCommand}"
-        SwipeUpToHideEnabled="False"
         TodayFillColor="Silver"
         TodayOutlineColor="Blue"
-        VerticalOptions="FillAndExpand"
         YearLabelColor="Blue">
 
         <plugin:Calendar.HeaderSectionTemplate>
@@ -81,9 +84,9 @@
             <DataTemplate>
                 <StackLayout>
                     <Label
-                        Margin="0,5,0,5"
                         HorizontalTextAlignment="Center"
-                        Text="NO EVENTS FOR THE SELECTED DATE" />
+                        Text="NO EVENTS FOR THE SELECTED DATE" 
+                    />
                 </StackLayout>
             </DataTemplate>
         </plugin:Calendar.EmptyTemplate>
@@ -91,7 +94,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-
             <Style x:Key="daysTitleLabelStyle" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="20" />

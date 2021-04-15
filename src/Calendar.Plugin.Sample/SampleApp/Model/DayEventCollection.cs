@@ -13,9 +13,7 @@ namespace SampleApp.Model
         /// Empty contructor extends from base()
         /// </summary>
         public DayEventCollection() : base()
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Color contructor extends from base()
@@ -33,18 +31,14 @@ namespace SampleApp.Model
         /// </summary>
         /// <param name="collection"></param>
         public DayEventCollection(IEnumerable<T> collection) : base(collection)
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Capacity contructor extends from base(int capacity)
         /// </summary>
         /// <param name="capacity"></param>
         public DayEventCollection(int capacity) : base(capacity)
-        {
-
-        }
+        { }
 
         #region PersonalizableProperties
         public Color? EventIndicatorColor { get; set; }
@@ -53,6 +47,5 @@ namespace SampleApp.Model
         public Color? EventIndicatorSelectedTextColor { get; set; }
 
         #endregion
-
     }
 }
