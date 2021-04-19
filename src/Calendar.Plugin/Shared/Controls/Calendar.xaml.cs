@@ -872,6 +872,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void AnimateMonths(double currentValue)
         {
+            calendarContainer.HeightRequest = _calendarSectionHeight * currentValue;
             calendarContainer.TranslationY = _calendarSectionHeight * (currentValue - 1);
             calendarContainer.Opacity = currentValue * currentValue * currentValue;
         }
