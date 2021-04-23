@@ -20,9 +20,11 @@ namespace Xamarin.Plugin.Calendar.Helpers
         {
 #if DEBUG
             var elapsedTime = MeasureExecutionTime(action);
-            var timesExecuted = CountTimesExecuted(action);
+            var timesExecuted = CountTimesExecuted(action, additionalLabel);
 
-            Debug.WriteLine($"\n {additionalLabel} {action.Method.Name.ToUpper()} execution time: {elapsedTime}\nTimes executed: {timesExecuted}\n");
+            Debug.WriteLine($"\n [{additionalLabel}] {action.Method.Name.ToUpper()} execution time: {elapsedTime}\nTimes executed: {timesExecuted}\n");
+#else
+            action.Invoke();
 #endif
         }
 
@@ -38,14 +40,16 @@ namespace Xamarin.Plugin.Calendar.Helpers
             return sv.Elapsed;
         }
 
-        private static int CountTimesExecuted(Action action)
+        private static int CountTimesExecuted(Action action, string additionalLabel)
         {
-            if (CalledMethodsWithCount.ContainsKey(action.Method.Name))
-                CalledMethodsWithCount[action.Method.Name]++;
-            else
-                CalledMethodsWithCount[action.Method.Name] = 1;
+            var key = $"{action.Method.Name} {additionalLabel}";
 
-            return CalledMethodsWithCount[action.Method.Name];
+            if (CalledMethodsWithCount.ContainsKey(key))
+                CalledMethodsWithCount[key]++;
+            else
+                CalledMethodsWithCount[key] = 1;
+
+            return CalledMethodsWithCount[key];
         }
 #endif
     }
