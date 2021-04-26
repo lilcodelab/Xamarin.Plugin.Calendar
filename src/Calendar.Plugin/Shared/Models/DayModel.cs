@@ -43,8 +43,7 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             get => GetProperty<bool>();
             set => SetProperty(value)
-                    .Notify(nameof(BottomDotVisible),
-                            nameof(TopDotVisible),
+                    .Notify(nameof(IsEventDotVisible),
                             nameof(BackgroundEventIndicator),
                             nameof(BackgroundFullEventColor));
         }
@@ -128,8 +127,7 @@ namespace Xamarin.Plugin.Calendar.Models
         {
             get => GetProperty(EventIndicatorType.BottomDot);
             set => SetProperty(value)
-                    .Notify(nameof(BottomDotVisible),
-                            nameof(TopDotVisible),
+                    .Notify(nameof(IsEventDotVisible),
                             nameof(BackgroundEventIndicator),
                             nameof(BackgroundColor));
         }
@@ -191,9 +189,9 @@ namespace Xamarin.Plugin.Calendar.Models
             set => SetProperty(value);
         }
 
-        public bool BottomDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.BottomDot;
+        public bool IsEventDotVisible => HasEvents && (EventIndicatorType == EventIndicatorType.BottomDot || EventIndicatorType == EventIndicatorType.TopDot);
 
-        public bool TopDotVisible => HasEvents && EventIndicatorType == EventIndicatorType.TopDot;
+        public FlexDirection EventLayoutDirection => (HasEvents && EventIndicatorType == EventIndicatorType.TopDot) ? FlexDirection.ColumnReverse : FlexDirection.Column;
 
         public bool BackgroundEventIndicator => HasEvents && EventIndicatorType == EventIndicatorType.Background;
 
@@ -208,7 +206,6 @@ namespace Xamarin.Plugin.Calendar.Models
         public Color OutlineColor => IsToday && !IsSelected
                                    ? TodayOutlineColor
                                    : Color.Transparent;
-
 
         public Color BackgroundColor
         {
@@ -247,6 +244,7 @@ namespace Xamarin.Plugin.Calendar.Models
                 };
             }
         }
+
         public bool IsVisible => IsThisMonth || OtherMonthIsVisible;
 
         private bool IsToday
