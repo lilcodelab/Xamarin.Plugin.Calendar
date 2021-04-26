@@ -2,7 +2,9 @@
 <ContentView
     x:Class="Xamarin.Plugin.Calendar.Controls.DayView"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:models="clr-namespace:Xamarin.Plugin.Calendar.Models" x:DataType="models:DayModel"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:models="clr-namespace:Xamarin.Plugin.Calendar.Models" 
+    x:DataType="models:DayModel"
     x:Name="dayView"
     BackgroundColor="{Binding BackgroundFullEventColor}">
     <Frame 
