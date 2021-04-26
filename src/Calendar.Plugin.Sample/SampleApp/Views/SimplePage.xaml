@@ -16,16 +16,15 @@
     </ContentPage.BindingContext>
 
     <plugin:Calendar
-        Padding="10,0"
         Events="{Binding Events}"
-        HorizontalOptions="FillAndExpand"
         MaximumDate="{Binding MaximumDate}"
         MinimumDate="{Binding MinimumDate}"
         Month="{Binding Month}"
         SelectedDate="{Binding SelectedDate}"
-        VerticalOptions="FillAndExpand"
-        Year="{Binding Year}">
-
+        Year="{Binding Year}"
+        Padding="10,0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
         <plugin:Calendar.EventTemplate>
             <DataTemplate>
                 <StackLayout
@@ -35,12 +34,13 @@
                     <Label
                         FontAttributes="Bold"
                         FontSize="Medium"
-                        Text="{Binding Name}" />
+                        Text="{Binding Name}" 
+                    />
                     <Label
                         FontSize="Small"
                         LineBreakMode="WordWrap"
-                        Text="{Binding Description}" />
-
+                        Text="{Binding Description}" 
+                    />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding BindingContext.EventSelectedCommand, Source={x:Reference simpleCalendarPage}}" CommandParameter="{Binding .}" />
                     </StackLayout.GestureRecognizers>
