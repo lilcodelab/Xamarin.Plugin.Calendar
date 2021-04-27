@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Enums;
+using Xamarin.Plugin.Calendar.Helpers;
 using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls
@@ -611,10 +612,10 @@ namespace Xamarin.Plugin.Calendar.Controls
             NextYearCommand = new Command(NextYear);
             ShowHideCalendarCommand = new Command(ToggleCalendarSectionVisibility);
 
-            InitializeComponent();
-            UpdateSelectedDateLabel();
-            UpdateMonthLabel();
-            UpdateEvents();
+            DebugHelper.PrintDebugInfo(InitializeComponent, "CALENDAR");
+            DebugHelper.PrintDebugInfo(UpdateSelectedDateLabel);
+            DebugHelper.PrintDebugInfo(UpdateMonthLabel);
+            DebugHelper.PrintDebugInfo(UpdateEvents);
 
             _calendarSectionAnimateHide = new Animation(AnimateMonths, 1, 0);
             _calendarSectionAnimateShow = new Animation(AnimateMonths, 0, 1);

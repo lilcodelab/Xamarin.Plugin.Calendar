@@ -3,6 +3,7 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Windows.Input;
+using Xamarin.Plugin.Calendar.Helpers;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -14,7 +15,7 @@ namespace Xamarin.Plugin.Calendar.Controls
     {        
         internal DayView()
         {
-            InitializeComponent();
+            DebugHelper.PrintDebugInfo(InitializeComponent, "DAYSVIEW");
         }
 
         private void OnTapped(object sender, EventArgs e)

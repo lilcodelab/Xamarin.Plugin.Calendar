@@ -11,6 +11,7 @@ using Xamarin.Plugin.Calendar.Models;
 using System.Windows.Input;
 using Xamarin.Plugin.Calendar.Interfaces;
 using Xamarin.Plugin.Calendar.Enums;
+using Xamarin.Plugin.Calendar.Helpers;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -373,12 +374,12 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         internal MonthDaysView()
         {
-            InitializeComponent();
+            DebugHelper.PrintDebugInfo(InitializeComponent, "MONTHDAYVIEW");
 
-            InitializeDays();
-            UpdateDaysColors();
-            UpdateDayTitles();
-            UpdateDays(AnimateCalendar);
+            DebugHelper.PrintDebugInfo(InitializeDays);
+            DebugHelper.PrintDebugInfo(UpdateDaysColors);
+            DebugHelper.PrintDebugInfo(UpdateDayTitles);
+            DebugHelper.PrintDebugInfo(() => UpdateDays(AnimateCalendar));
         }
 
         /// <summary> ??? </summary>
@@ -456,7 +457,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             Animate(() => daysControl.FadeTo(animate ? 0 : 1, 50),
                     () => daysControl.FadeTo(1, 200),
-                    () => LoadDays(),
+                    () => DebugHelper.PrintDebugInfo(LoadDays),
                     _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
         }
