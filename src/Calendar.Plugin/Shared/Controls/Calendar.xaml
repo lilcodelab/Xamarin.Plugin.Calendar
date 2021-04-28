@@ -5,30 +5,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls"
     x:Name="calendar">
-    <!--  TODO: Binding size for monthsView, text etc.  -->
     <Grid
         Padding="0,15,0,0"
-        IsClippedToBounds="True"
-        RowSpacing="5">
+        IsClippedToBounds="True">
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="calendarSectionRow" Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <StackLayout
-            x:Name="calendarContainer"
-            HorizontalOptions="FillAndExpand"
-            Orientation="Vertical"
-            VerticalOptions="FillAndExpand">
-            <controls:DataTemplateView BindingContext="{x:Reference calendar}" ItemTemplate="{Binding HeaderSectionTemplate}" IsVisible="{Binding HeaderSectionVisible}" />
-
+        <StackLayout x:Name="calendarContainer">
+            <controls:DataTemplateView 
+                BindingContext="{x:Reference calendar}" 
+                ItemTemplate="{Binding HeaderSectionTemplate}" 
+                IsVisible="{Binding HeaderSectionVisible}" 
+            />
             <controls:SwipeAwareContainer
-                HorizontalOptions="FillAndExpand"
                 SwipeDetectionDisabled="{Binding DisableSwipeDetection, Source={x:Reference calendar}}"
                 SwipedLeft="OnSwipedLeft"
                 SwipedRight="OnSwipedRight"
-                SwipedUp="OnSwipedUp"
-                VerticalOptions="FillAndExpand">
+                SwipedUp="OnSwipedUp">
                 <controls:MonthDaysView
                     x:Name="monthDaysView"
                     AnimateCalendar="{Binding AnimateCalendar, Source={x:Reference calendar}}"
@@ -50,7 +45,6 @@
                     EventIndicatorTextColor="{Binding EventIndicatorTextColor, Source={x:Reference calendar}}"
                     EventIndicatorType="{Binding EventIndicatorType, Source={x:Reference calendar}}"
                     Events="{Binding Events, Source={x:Reference calendar}}"
-                    HorizontalOptions="FillAndExpand"
                     MaximumDate="{Binding MaximumDate, Source={x:Reference calendar}}"
                     MinimumDate="{Binding MinimumDate, Source={x:Reference calendar}}"
                     OtherMonthDayColor="{Binding OtherMonthDayColor, Source={x:Reference calendar}}"
@@ -64,39 +58,24 @@
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
                     SelectionType="{Binding SelectionType, Source={x:Reference calendar}}"
                     RangeSelectionStartDate="{Binding RangeSelectionStartDate, Source={x:Reference calendar}}"
-                    RangeSelectionEndDate="{Binding RangeSelectionEndDate, Source={x:Reference calendar}}"
-                    VerticalOptions="FillAndExpand" />
+                    RangeSelectionEndDate="{Binding RangeSelectionEndDate, Source={x:Reference calendar}}" 
+                />
             </controls:SwipeAwareContainer>
         </StackLayout>
-
-        <Grid
+        <controls:DataTemplateView
             Grid.Row="1"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <controls:DataTemplateView
-                BindingContext="{x:Reference calendar}"
-                IsVisible="{Binding FooterSectionVisible, Source={x:Reference calendar}}"
-                ItemTemplate="{Binding FooterSectionTemplate}" />
-
-            <ScrollView
-                x:Name="eventsScrollView"
-                Grid.Row="1"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="StartAndExpand">
-                <controls:GenericRepeaterView
-                    HorizontalOptions="FillAndExpand"
-                    Orientation="Vertical"
-                    ItemTemplate="{Binding EventTemplate, Source={x:Reference calendar}}"
-                    ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}"
-                    EmptyTemplate="{Binding EmptyTemplate, Source={x:Reference calendar}}"
-                    VerticalOptions="FillAndExpand" />
-            </ScrollView>
-        </Grid>
-
+            BindingContext="{x:Reference calendar}"
+            IsVisible="{Binding FooterSectionVisible, Source={x:Reference calendar}}"
+            ItemTemplate="{Binding FooterSectionTemplate}" 
+        />
+        <ScrollView 
+            x:Name="eventsScrollView"
+            Grid.Row="2">
+            <controls:GenericRepeaterView
+                ItemTemplate="{Binding EventTemplate, Source={x:Reference calendar}}"
+                ItemsSource="{Binding SelectedDayEvents, Source={x:Reference calendar}}"
+                EmptyTemplate="{Binding EmptyTemplate, Source={x:Reference calendar}}"
+            />
+        </ScrollView>
     </Grid>
 </ContentView>
