@@ -22,250 +22,375 @@ namespace Xamarin.Plugin.Calendar.Controls
     {
         #region Bindable properties
 
+        /// <summary>
+        /// Bindable property for DisplayedMonthYear
+        /// </summary>
         public static readonly BindableProperty DisplayedMonthYearProperty =
           BindableProperty.Create(nameof(DisplayedMonthYear), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
 
+        /// <summary>
+        /// Currently displayed month of selected year
+        /// </summary>
         public DateTime DisplayedMonthYear
         {
             get => (DateTime)GetValue(DisplayedMonthYearProperty);
             set => SetValue(DisplayedMonthYearProperty, value);
         }
 
-        /// <summary> Bindable property for SelectedDate </summary>
+        /// <summary> 
+        /// Bindable property for SelectedDate 
+        /// </summary>
         public static readonly BindableProperty SelectedDateProperty =
           BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
 
+        /// <summary>
+        /// Selected date in single date selection mode
+        /// </summary>
         public DateTime SelectedDate
         {
             get => (DateTime)GetValue(SelectedDateProperty);
             set => SetValue(SelectedDateProperty, value);
         }
 
-        /// <summary> Bindable property for Culture </summary>
+        /// <summary> 
+        /// Bindable property for Culture 
+        /// </summary>
         public static readonly BindableProperty CultureProperty =
           BindableProperty.Create(nameof(Culture), typeof(CultureInfo), typeof(MonthDaysView), CultureInfo.InvariantCulture, BindingMode.TwoWay);
 
+        /// <summary>
+        /// Culture info to properly format and name days
+        /// </summary>
         public CultureInfo Culture
         {
             get => (CultureInfo)GetValue(CultureProperty);
             set => SetValue(CultureProperty, value);
         }
 
-        /// <summary> Bindable property for Events </summary>
+        /// <summary> 
+        /// Bindable property for Events 
+        /// </summary>
         public static readonly BindableProperty EventsProperty =
           BindableProperty.Create(nameof(Events), typeof(EventCollection), typeof(MonthDaysView), new EventCollection());
 
+        /// <summary>
+        /// Collection of all the events on the calendar
+        /// </summary>
         public EventCollection Events
         {
             get => (EventCollection)GetValue(EventsProperty);
             set => SetValue(EventsProperty, value);
         }
 
-        /// <summary> Bindable property for DaysTitleColor </summary>
+        /// <summary> 
+        /// Bindable property for DaysTitleColor 
+        /// </summary>
         public static readonly BindableProperty DaysTitleColorProperty =
           BindableProperty.Create(nameof(DaysTitleColor), typeof(Color), typeof(MonthDaysView), Color.Default);
 
+        /// <summary>
+        /// Color of weekday titles
+        /// </summary>
         public Color DaysTitleColor
         {
             get => (Color)GetValue(DaysTitleColorProperty);
             set => SetValue(DaysTitleColorProperty, value);
         }
 
-        /// <summary> Bindable property for SelectedDayTextColor </summary>
+        /// <summary> 
+        /// Bindable property for SelectedDayTextColor 
+        /// </summary>
         public static readonly BindableProperty SelectedDayTextColorProperty =
           BindableProperty.Create(nameof(SelectedDayTextColor), typeof(Color), typeof(MonthDaysView), Color.White);
 
+        /// <summary>
+        /// Color of selected dayView text
+        /// </summary>
         public Color SelectedDayTextColor
         {
             get => (Color)GetValue(SelectedDayTextColorProperty);
             set => SetValue(SelectedDayTextColorProperty, value);
         }
 
-        /// <summary> Bindable property for DeselectedDayTextColor </summary>
+        /// <summary> 
+        /// Bindable property for DeselectedDayTextColor 
+        /// </summary>
         public static readonly BindableProperty DeselectedDayTextColorProperty =
           BindableProperty.Create(nameof(DeselectedDayTextColor), typeof(Color), typeof(MonthDaysView), Color.Default);
 
-        /// <summary> Bindable property for DeselectedDayTextColor </summary>
+        /// <summary> 
+        /// Color of deselected day text
+        /// </summary>
         public Color DeselectedDayTextColor
         {
             get => (Color)GetValue(DeselectedDayTextColorProperty);
             set => SetValue(DeselectedDayTextColorProperty, value);
         }
 
-        /// <summary> Bindable property for SelectedTodayTextColorProperty </summary>
+        /// <summary>
+        /// Bindable property for SelectedTodayTextColor 
+        /// </summary>
         public static readonly BindableProperty SelectedTodayTextColorProperty =
             BindableProperty.Create(nameof(SelectedTodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
 
-        /// <summary> Bindable property for SelectedTodayTextColor </summary>
-        public Color SelectedTodayTextColor 
+        /// <summary> 
+        /// Bindable property for SelectedTodayTextColor 
+        /// </summary>
+        public Color SelectedTodayTextColor
         { 
             get => (Color)GetValue(SelectedTodayTextColorProperty); 
             set => SetValue(SelectedTodayTextColorProperty, value); 
         }
 
-        /// <summary> Bindable property for OtherMonthDayColor </summary>
+        /// <summary> 
+        /// Bindable property for OtherMonthDayColor 
+        /// </summary>
         public static readonly BindableProperty OtherMonthDayColorProperty =
           BindableProperty.Create(nameof(OtherMonthDayColor), typeof(Color), typeof(MonthDaysView), Color.Silver);
 
+        /// <summary>
+        /// Color of text for for days not belonging to the CurentMonthYear
+        /// </summary>
         public Color OtherMonthDayColor
         {
             get => (Color)GetValue(OtherMonthDayColorProperty);
             set => SetValue(OtherMonthDayColorProperty, value);
         }
 
-        /// <summary> Bindable property for OtherMonthDayIsVisible </summary>
+        /// <summary> 
+        /// Bindable property for OtherMonthDayIsVisible 
+        /// </summary>
         public static readonly BindableProperty OtherMonthDayIsVisibleProperty =
           BindableProperty.Create(nameof(OtherMonthDayIsVisible), typeof(bool), typeof(MonthDaysView), true);
 
+        /// <summary>
+        /// Specifying if days from other months are visible on the current month view
+        /// </summary>
         public bool OtherMonthDayIsVisible
         {
             get => (bool)GetValue(OtherMonthDayIsVisibleProperty);
             set => SetValue(OtherMonthDayIsVisibleProperty, value);
         }
 
-        /// <summary> Bindable property for SelectedDayBackgroundColor </summary>
+        /// <summary> 
+        /// Bindable property for SelectedDayBackgroundColor 
+        /// </summary>
         public static readonly BindableProperty SelectedDayBackgroundColorProperty =
           BindableProperty.Create(nameof(SelectedDayBackgroundColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#2196F3"));
 
+        /// <summary>
+        /// Background color of currently selected date
+        /// </summary>
         public Color SelectedDayBackgroundColor
         {
             get => (Color)GetValue(SelectedDayBackgroundColorProperty);
             set => SetValue(SelectedDayBackgroundColorProperty, value);
         }
 
-        /// <summary> Bindable property for EventIndicatorColor </summary>
+        /// <summary> 
+        /// Bindable property for EventIndicatorColor 
+        /// </summary>
         public static readonly BindableProperty EventIndicatorTypeProperty =
           BindableProperty.Create(nameof(EventIndicatorType), typeof(EventIndicatorType), typeof(MonthDaysView), EventIndicatorType.BottomDot);
 
+        /// <summary>
+        /// Enum value specifying the way events are indicated on dates
+        /// </summary>
         public EventIndicatorType EventIndicatorType
         {
             get => (EventIndicatorType)GetValue(EventIndicatorTypeProperty);
             set => SetValue(EventIndicatorTypeProperty, value);
         }
 
-        /// <summary> Bindable property for EventIndicatorColor </summary>
+        /// <summary> 
+        /// Bindable property for EventIndicatorColor 
+        /// </summary>
         public static readonly BindableProperty EventIndicatorColorProperty =
           BindableProperty.Create(nameof(EventIndicatorColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
 
+        /// <summary>
+        /// Color of event indicator on dates
+        /// </summary>
         public Color EventIndicatorColor
         {
             get => (Color)GetValue(EventIndicatorColorProperty);
             set => SetValue(EventIndicatorColorProperty, value);
         }
 
-        /// <summary> Bindable property for EventIndicatorSelectedColor </summary>
+        /// <summary> 
+        /// Bindable property for EventIndicatorSelectedColor 
+        /// </summary>
         public static readonly BindableProperty EventIndicatorSelectedColorProperty =
           BindableProperty.Create(nameof(EventIndicatorSelectedColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
 
+        /// <summary>
+        /// Color of event indicator on selected dates
+        /// </summary>
         public Color EventIndicatorSelectedColor
         {
             get => (Color)GetValue(EventIndicatorSelectedColorProperty);
             set => SetValue(EventIndicatorSelectedColorProperty, value);
         }
 
-        /// <summary> Bindable property for EventIndicatorTextColor </summary>
+        /// <summary> 
+        /// Bindable property for EventIndicatorTextColor 
+        /// </summary>
         public static readonly BindableProperty EventIndicatorTextColorProperty =
          BindableProperty.Create(nameof(EventIndicatorTextColor), typeof(Color?), typeof(Calendar), Color.Default);
 
+        /// <summary>
+        /// Color of event indicator text
+        /// </summary>
         public Color EventIndicatorTextColor
         {
             get => (Color)GetValue(EventIndicatorTextColorProperty);
             set => SetValue(EventIndicatorTextColorProperty, value);
         }
 
-        /// <summary> Bindable property for EventIndicatorSelectedTextColor </summary>
+        /// <summary> 
+        /// Bindable property for EventIndicatorSelectedTextColor 
+        /// </summary>
         public static readonly BindableProperty EventIndicatorSelectedTextColorProperty =
           BindableProperty.Create(nameof(EventIndicatorSelectedTextColor), typeof(Color), typeof(Calendar), Color.Default);
 
+        /// <summary>
+        /// Color of event indicator text on selected dates
+        /// </summary>
         public Color EventIndicatorSelectedTextColor
         {
             get => (Color)GetValue(EventIndicatorSelectedTextColorProperty);
             set => SetValue(EventIndicatorSelectedTextColorProperty, value);
         }
 
-        /// <summary> Bindable property for TodayOutlineColor </summary>
+        /// <summary> 
+        /// Bindable property for TodayOutlineColor 
+        /// </summary>
         public static readonly BindableProperty TodayOutlineColorProperty =
           BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
 
+        /// <summary>
+        /// Color of today date's outline
+        /// </summary>
         public Color TodayOutlineColor
         {
             get => (Color)GetValue(TodayOutlineColorProperty);
             set => SetValue(TodayOutlineColorProperty, value);
         }
 
+        /// <summary>
+        /// Bindable property for TodayTextColor
+        /// </summary>
         public static readonly BindableProperty TodayTextColorProperty =
             BindableProperty.Create(nameof(TodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
 
+        /// <summary>
+        /// Color of today date's text
+        /// </summary>
         public Color TodayTextColor
         {
             get => (Color)GetValue(TodayTextColorProperty);
             set => SetValue(TodayTextColorProperty, value);
         }
 
-        /// <summary> Bindable property for TodayFillColor </summary>
+        /// <summary> 
+        /// Bindable property for TodayFillColor 
+        /// </summary>
         public static readonly BindableProperty TodayFillColorProperty =
           BindableProperty.Create(nameof(TodayFillColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
 
+        /// <summary>
+        /// Color of today date's fill
+        /// </summary>
         public Color TodayFillColor
         {
             get => (Color)GetValue(TodayFillColorProperty);
             set => SetValue(TodayFillColorProperty, value);
         }
 
-        /// <summary> Bindable property for DayViewSize </summary>
+        /// <summary> 
+        /// Bindable property for DayViewSize 
+        /// </summary>
         public static readonly BindableProperty DayViewSizeProperty =
           BindableProperty.Create(nameof(DayViewSize), typeof(double), typeof(MonthDaysView), 40.0);
 
+        /// <summary>
+        /// Size of all individual dates
+        /// </summary>
         public double DayViewSize
         {
             get => (double)GetValue(DayViewSizeProperty);
             set => SetValue(DayViewSizeProperty, value);
         }
 
-        /// <summary> Bindable property for DayViewCornerRadius </summary>
+        /// <summary> 
+        /// Bindable property for DayViewCornerRadius 
+        /// </summary>
         public static readonly BindableProperty DayViewCornerRadiusProperty =
           BindableProperty.Create(nameof(DayViewCornerRadius), typeof(float), typeof(MonthDaysView), 20f);
 
+        /// <summary>
+        /// Corner radius of individual dates
+        /// </summary>
         public float DayViewCornerRadius
         {
             get => (float)GetValue(DayViewCornerRadiusProperty);
             set => SetValue(DayViewCornerRadiusProperty, value);
         }
 
-        /// <summary> Bindable property for DaysTitleHeight </summary>
+        /// <summary> 
+        /// Bindable property for DaysTitleHeight 
+        /// </summary>
         public static readonly BindableProperty DaysTitleHeightProperty =
           BindableProperty.Create(nameof(DaysTitleHeight), typeof(double), typeof(MonthDaysView), 30.0);
 
+        /// <summary>
+        /// Height of the weekday names container
+        /// </summary>
         public double DaysTitleHeight
         {
             get => (double)GetValue(DaysTitleHeightProperty);
             set => SetValue(DaysTitleHeightProperty, value);
         }
 
-        /// <summary> Bindable property for DaysTitleMaximumLength </summary>
+        /// <summary> 
+        /// Bindable property for DaysTitleMaximumLength 
+        /// </summary>
         public static readonly BindableProperty DaysTitleMaximumLengthProperty =
         BindableProperty.Create(nameof(DaysTitleMaximumLength), typeof(DaysTitleMaxLength), typeof(MonthDaysView), DaysTitleMaxLength.ThreeChars);
 
+        /// <summary>
+        /// Maximum character length of weekday titles
+        /// </summary>
         public DaysTitleMaxLength DaysTitleMaximumLength
         {
             get => (DaysTitleMaxLength)GetValue(DaysTitleMaximumLengthProperty);
             set => SetValue(DaysTitleMaximumLengthProperty, value);
         }
 
-        /// <summary> Bindable property for DaysLabelStyle </summary>
+        /// <summary> 
+        /// Bindable property for DaysLabelStyle 
+        /// </summary>
         public static readonly BindableProperty DaysLabelStyleProperty =
           BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), Device.Styles.BodyStyle);
 
+        /// <summary>
+        /// Style of weekday labels
+        /// </summary>
         public Style DaysLabelStyle
         {
             get => (Style)GetValue(DaysLabelStyleProperty);
             set => SetValue(DaysLabelStyleProperty, value);
         }
 
-        /// <summary> Bindable property for DaysTitleLabelStyle </summary>
+        /// <summary> 
+        /// Bindable property for DaysTitleLabelStyle 
+        /// </summary>
         public static readonly BindableProperty DaysTitleLabelStyleProperty =
           BindableProperty.Create(nameof(DaysTitleLabelStyle), typeof(Style), typeof(MonthDaysView), null);
 
+        /// <summary>
+        /// ???
+        /// </summary>
         public Style DaysTitleLabelStyle
         {
             get => (Style)GetValue(DaysTitleLabelStyleProperty);
@@ -287,84 +412,116 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DayTappedCommandProperty, value);
         }
 
-        /// <summary> Bindable property for MinimumDate </summary>
+        /// <summary> 
+        /// Bindable property for MinimumDate 
+        /// </summary>
         public static readonly BindableProperty MinimumDateProperty =
           BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MinValue);
 
-        /// <summary> Minimum date which can be selected </summary>
+        /// <summary> 
+        /// Minimum date which can be selected 
+        /// </summary>
         public DateTime MinimumDate
         {
             get => (DateTime)GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
         }
 
-        /// <summary> Bindable property for MaximumDate </summary>
+        /// <summary> 
+        /// Bindable property for MaximumDate 
+        /// </summary>
         public static readonly BindableProperty MaximumDateProperty =
           BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MaxValue);
 
-        /// <summary> Maximum date which can be selected </summary>
+        /// <summary> 
+        /// Maximum date which can be selected 
+        /// </summary>
         public DateTime MaximumDate
         {
             get => (DateTime)GetValue(MaximumDateProperty);
             set => SetValue(MaximumDateProperty, value);
         }
 
-        /// <summary> Bindable property for DisabledDayColor </summary>
+        /// <summary> 
+        /// Bindable property for DisabledDayColor 
+        /// </summary>
         public static readonly BindableProperty DisabledDayColorProperty =
           BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#ECECEC"));
 
-        /// <summary> Color for days which are out of MinimumDate - MaximumDate range </summary>
+        /// <summary> 
+        /// Color for days which are out of MinimumDate - MaximumDate range 
+        /// </summary>
         public Color DisabledDayColor
         {
             get => (Color)GetValue(DisabledDayColorProperty);
             set => SetValue(DisabledDayColorProperty, value);
         }
 
+        /// <summary>
+        /// Bindable property for AnimateCalendar
+        /// </summary>
         public static readonly BindableProperty AnimateCalendarProperty =
             BindableProperty.Create(nameof(AnimateCalendar), typeof(bool), typeof(Calendar), true);
 
+        /// <summary>
+        /// Specifies if the calendar should animate or not
+        /// </summary>
         public bool AnimateCalendar
         {
             get => (bool)GetValue(AnimateCalendarProperty);
             set { SetValue(AnimateCalendarProperty, value); }
         }
 
-
-        #region Range Selection
+        /// <summary>
+        /// Bindable property for RangeSelectionStartDate
+        /// </summary>
         public static readonly BindableProperty RangeSelectionStartDateProperty =
           BindableProperty.Create(nameof(RangeSelectionStartDate), typeof(DateTime?), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
 
+        /// <summary>
+        /// Beginning date of ranged selection
+        /// </summary>
         public DateTime? RangeSelectionStartDate
         {
             get => (DateTime?)GetValue(RangeSelectionStartDateProperty);
             set => SetValue(RangeSelectionStartDateProperty, value);
         }
 
-
+        /// <summary>
+        /// Bindable property for RangeSelectionEndDate
+        /// </summary>
         public static readonly BindableProperty RangeSelectionEndDateProperty =
           BindableProperty.Create(nameof(RangeSelectionEndDate), typeof(DateTime?), typeof(MonthDaysView), DateTime.Today.AddDays(5), BindingMode.TwoWay);
 
+        /// <summary>
+        /// End date of ranged selection
+        /// </summary>
         public DateTime? RangeSelectionEndDate
         {
             get => (DateTime?)GetValue(RangeSelectionEndDateProperty);
             set => SetValue(RangeSelectionEndDateProperty, value);
         }
 
-
+        /// <summary>
+        /// Bindable property for SelectionType
+        /// </summary>
         public static readonly BindableProperty SelectionTypeProperty =
             BindableProperty.Create(nameof(SelectionType), typeof(SelectionType), typeof(MonthDaysView), SelectionType.Day);
 
+        /// <summary>
+        /// Specifies which selection mode will be used in the calendar
+        /// </summary>
         public SelectionType SelectionType
         {
             get => (SelectionType)GetValue(SelectionTypeProperty);
             set => SetValue(SelectionTypeProperty, value);
         }
-        #endregion
+
         #endregion
 
-        private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new Dictionary<string, bool>();
-        private readonly List<DayView> _dayViews = new List<DayView>();
-        private List<DayModel> _selectedRange = new List<DayModel>();
+        private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
+        private readonly List<DayView> _dayViews = new();
+        private List<DayModel> _selectedRange = new();
         private DayModel _selectedDay;
         private DayModel _rangeSelectionStartDay;
         private DayModel _rangeSelectionEndDay;
@@ -375,18 +532,22 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             InitializeComponent();
 
-            InitializeDays();
             UpdateDaysColors();
             UpdateDayTitles();
             UpdateDays(AnimateCalendar);
+            InitializeDays();
         }
 
-        /// <summary> ??? </summary>
+        /// <summary> 
+        /// Destructor for optimization 
+        /// </summary>
         ~MonthDaysView() => DiposeDayViews();
 
         #region PropertyChanged
 
-        /// <summary> Method that is called when a bound property is changed. </summary>
+        /// <summary> 
+        /// Method that is called when a bound property is changed. 
+        /// </summary>
         /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -441,7 +602,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             var dayNumber = (int)Culture.DateTimeFormat.FirstDayOfWeek;
 
-            foreach (var dayLabel in daysTitleControl.Children.OfType<Label>())
+            foreach (var dayLabel in daysControl.Children.OfType<Label>())
             {
                 var abberivatedDayName = Culture.DateTimeFormat.AbbreviatedDayNames[dayNumber];
                 dayLabel.Text = abberivatedDayName.ToUpper().Substring(0, (int)DaysTitleMaximumLength > abberivatedDayName.Length ? abberivatedDayName.Length: (int)DaysTitleMaximumLength);
@@ -459,17 +620,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
-        }
-
-        private void UpdateDaysIsVisible()
-        {
-            foreach (var dayView in _dayViews)
-            {
-                var dayModel = dayView.BindingContext as DayModel;
-
-
-                AssignIndicatorColors(ref dayModel);
-            }
         }
 
         private void UpdateDaysColors()
