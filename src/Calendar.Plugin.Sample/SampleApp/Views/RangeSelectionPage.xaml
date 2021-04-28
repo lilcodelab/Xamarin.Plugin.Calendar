@@ -27,6 +27,12 @@
         MonthYear="{Binding MonthYear}"
         SelectedDate="{Binding SelectedDate}"
         SelectionType="Range"
+        EventIndicatorSelectedTextColor="Blue"
+        EventIndicatorSelectedColor="Yellow"
+        SelectedDayBackgroundColor="GreenYellow"
+        SelectedDayTextColor ="DarkBlue"
+        EventIndicatorType="TopDot"
+        DayViewCornerRadius="0"
         RangeSelectionStartDate="{Binding SelectedStartDate}"
         RangeSelectionEndDate="{Binding SelectedEndDate}">
 

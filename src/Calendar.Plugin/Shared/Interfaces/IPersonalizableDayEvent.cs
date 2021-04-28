@@ -2,6 +2,9 @@
 
 namespace Xamarin.Plugin.Calendar.Interfaces
 {
+    /// <summary>
+    /// Interface for customize DayEvent colors
+    /// </summary>
     public interface IPersonalizableDayEvent
     {
         #region PersonalizableProperties
