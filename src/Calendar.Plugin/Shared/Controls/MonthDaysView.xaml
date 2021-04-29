@@ -18,7 +18,7 @@
             Grid.Row="0" 
             Grid.Column="0" 
             HorizontalTextAlignment="Center"
-            />
+        />
         <Label 
             TextColor="{Binding DaysTitleColor, Source={x:Reference monthsView}}"
             Style="{Binding DaysTitleLabelStyle, Source={x:Reference monthsView}}" 
