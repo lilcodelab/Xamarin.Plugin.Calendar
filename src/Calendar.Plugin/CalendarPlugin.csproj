@@ -52,6 +52,11 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Shared\Controls\MonthDayViews\IMonthDaysView.cs" />
+    <Compile Remove="Shared\Controls\MonthDayViews\Interfaces\SingleSelectionMonthDaysView.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <EmbeddedResource Update="Shared\Controls\Calendar.xaml">
