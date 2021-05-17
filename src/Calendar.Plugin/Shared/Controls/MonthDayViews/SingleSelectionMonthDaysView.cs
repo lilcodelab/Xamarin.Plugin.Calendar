@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using Xamarin.Forms;
-using Xamarin.Plugin.Calendar.Controls;
-using Xamarin.Plugin.Calendar.Interfaces;
 using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -552,7 +551,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
             }
 
-            UpdateDays(AnimateCalendar);
             InitializeDays();
             UpdateDaysColors();
             UpdateDayTitles();
@@ -576,6 +574,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (propertyChangedNotificationSupressions.TryGetValue(propertyName, out bool isSuppressed)
                 && isSuppressed)
                 return;
+
+            
 
             switch (propertyName)
             {
@@ -675,7 +675,6 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             _monthDayView.LoadDays(monthStart);
         }
-
 
         private void UpdateDaysColors()
         {

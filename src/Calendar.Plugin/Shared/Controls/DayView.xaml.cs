@@ -2,7 +2,6 @@
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Windows.Input;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
