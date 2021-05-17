@@ -11,7 +11,6 @@ using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     internal class RangeSelectionMonthDaysView : IMonthDaysView
     {
         private readonly MonthDaysView _parentView;
@@ -30,35 +29,15 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             SelectDateRange(newSelected);
         }
 
-        void IMonthDaysView.LoadDays()
+        void IMonthDaysView.LoadDays(DateTime monthStart)
         {
-            var monthStart = new DateTime(_parentView.DisplayedMonthYear.Year, _parentView.DisplayedMonthYear.Month, 1);
-            var addDays = ((int)_parentView.Culture.DateTimeFormat.FirstDayOfWeek) - (int)monthStart.DayOfWeek;
-
-            if (addDays > 0)
-                addDays -= 7;
-
             foreach (var dayView in _parentView.dayViews)
             {
-                var currentDate = monthStart.AddDays(addDays++);
                 var dayModel = dayView.BindingContext as DayModel;
 
-                dayModel.Date = currentDate.Date;
-                dayModel.DayViewSize = _parentView.DayViewSize;
-                dayModel.DayViewCornerRadius = _parentView.DayViewCornerRadius;
-                dayModel.DayTappedCommand = _parentView.DayTappedCommand;
-                dayModel.DaysLabelStyle = _parentView.DaysLabelStyle;
-                dayModel.EventIndicatorType = _parentView.EventIndicatorType;
-                dayModel.IsThisMonth = currentDate.Month == _parentView.DisplayedMonthYear.Month;
-                dayModel.OtherMonthIsVisible = _parentView.OtherMonthDayIsVisible;
-                dayModel.HasEvents = _parentView.Events.ContainsKey(currentDate);
-                dayModel.IsDisabled = currentDate < _parentView.MinimumDate || currentDate > _parentView.MaximumDate;
-
-                _parentView.AssignIndicatorColors(ref dayModel);
-
-                if (DateTime.Compare(currentDate.Date, _parentView.RangeSelectionEndDate.Date) <= 0 && 
-                    DateTime.Compare(currentDate.Date, _parentView.RangeSelectionStartDate.Date) >= 0 ||
-                    DateTime.Equals(currentDate.Date, _parentView.RangeSelectionStartDate.Date))
+                if (DateTime.Compare(dayModel.Date, _parentView.RangeSelectionEndDate.Date) <= 0 && 
+                    DateTime.Compare(dayModel.Date, _parentView.RangeSelectionStartDate.Date) >= 0 ||
+                    DateTime.Equals(dayModel.Date, _parentView.RangeSelectionStartDate.Date))
                     _parentView.ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = true);
                 else
                     _parentView.ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = false);

@@ -580,13 +580,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             switch (propertyName)
             {
                 case nameof(SelectedDate):
-                case nameof(DisplayedMonthYear):
+                case nameof(RangeSelectionStartDate):
+                case nameof(RangeSelectionEndDate):
+                    LoadDays();
+                    break;
+
                 case nameof(Events):
+                case nameof(DisplayedMonthYear):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
                 case nameof(OtherMonthDayIsVisible):
-                case nameof(RangeSelectionStartDate):
-                case nameof(RangeSelectionEndDate):
                     UpdateDays(AnimateCalendar);
                     break;
 
@@ -637,10 +640,42 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             Animate(() => daysControl.FadeTo(animate ? 0 : 1, 50),
                     () => daysControl.FadeTo(1, 200),
-                    () => _monthDayView.LoadDays(),
+                    () => LoadDays(),
                     _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
         }
+
+
+        private void LoadDays()
+        {
+            var monthStart = new DateTime(DisplayedMonthYear.Year, DisplayedMonthYear.Month, 1);
+            var addDays = ((int)Culture.DateTimeFormat.FirstDayOfWeek) - (int)monthStart.DayOfWeek;
+
+            if (addDays > 0)
+                addDays -= 7;
+
+            foreach (var dayView in dayViews)
+            {
+                var currentDate = monthStart.AddDays(addDays++);
+                var dayModel = dayView.BindingContext as DayModel;
+
+                dayModel.Date = currentDate.Date;
+                dayModel.DayTappedCommand = DayTappedCommand;
+                dayModel.EventIndicatorType = EventIndicatorType;
+                dayModel.DayViewSize = DayViewSize;
+                dayModel.DayViewCornerRadius = DayViewCornerRadius;
+                dayModel.DaysLabelStyle = DaysLabelStyle;
+                dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
+                dayModel.OtherMonthIsVisible = OtherMonthDayIsVisible;
+                dayModel.HasEvents = Events.ContainsKey(currentDate);
+                dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
+
+                AssignIndicatorColors(ref dayModel);
+            }
+
+            _monthDayView.LoadDays(monthStart);
+        }
+
 
         private void UpdateDaysColors()
         {
@@ -671,6 +706,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 var dayModel = new DayModel();
 
                 dayView.BindingContext = dayModel;
+                dayModel.DayTappedCommand = DayTappedCommand;
                 dayModel.PropertyChanged += _monthDayView.OnDayModelPropertyChanged;
 
                 dayViews.Add(dayView);

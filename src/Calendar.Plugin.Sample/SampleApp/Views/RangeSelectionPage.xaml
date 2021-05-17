@@ -21,7 +21,6 @@
 
     <plugin:Calendar
         Padding="10,0"
-        AnimateCalendar="True"
         DayTappedCommand="{Binding DayTappedCommand}"
         Events="{Binding Events}"
         MonthYear="{Binding MonthYear}"

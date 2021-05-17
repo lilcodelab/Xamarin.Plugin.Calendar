@@ -22,6 +22,6 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
         /// <summary>
         /// Method to load selected days in the calendar properly
         /// </summary>
-        internal void LoadDays();
+        internal void LoadDays(DateTime monthStart);
     }
 }
