@@ -109,6 +109,21 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedDateProperty, value);
         }
 
+        /// <summary> 
+        /// Bindable property for SelectedDates
+        /// </summary>
+        public static readonly BindableProperty SelectedDatesProperty =
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay);
+
+        /// <summary>
+        /// Selected date in single date selection mode
+        /// </summary>
+        public List<DateTime> SelectedDates
+        {
+            get => (List<DateTime>)GetValue(SelectedDatesProperty);
+            set => SetValue(SelectedDatesProperty, value);
+        }
+
         /// <summary>
         /// Bindable property for Culture
         /// </summary>
@@ -855,38 +870,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(AnimateCalendarProperty, value);
         }
 
-        #region Range Selection
-
-        /// <summary>
-        /// Bindable property for RangeSelectionStartDate
-        /// </summary>
-        public static readonly BindableProperty RangeSelectionStartDateProperty =
-          BindableProperty.Create(nameof(RangeSelectionStartDate), typeof(DateTime?), typeof(Calendar), DateTime.Today, BindingMode.TwoWay);
-
-        /// <summary>
-        /// Beginning of selected interval in ranged selection mode
-        /// </summary>
-        public DateTime RangeSelectionStartDate
-        {
-            get => (DateTime)GetValue(RangeSelectionStartDateProperty);
-            set => SetValue(RangeSelectionStartDateProperty, value);
-        }
-
-        /// <summary>
-        /// Bindable property for RangeSelectionEndDate
-        /// </summary>
-        public static readonly BindableProperty RangeSelectionEndDateProperty =
-          BindableProperty.Create(nameof(RangeSelectionEndDate), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay);
-
-        /// <summary>
-        /// End of selected interval in ranged selection mode
-        /// </summary>
-        public DateTime RangeSelectionEndDate
-        {
-            get => (DateTime)GetValue(RangeSelectionEndDateProperty);
-            set => SetValue(RangeSelectionEndDateProperty, value);
-        }
-
         /// <summary>
         /// Bindable property for SelectionType
         /// </summary>
@@ -902,7 +885,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectionTypeProperty, value);
         }
 
-        #endregion
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;
@@ -982,7 +964,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     newEvents.CollectionChanged += view.OnEventsCollectionChanged;
 
                 view.UpdateEvents();
-                view.monthDaysView.UpdateDays(view.AnimateCalendar);
+                view.monthDaysView.UpdateAndAnimateDays(view.AnimateCalendar);
             }
         }
 
@@ -1026,8 +1008,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(SelectedDate):
-                case nameof(RangeSelectionStartDate):
-                case nameof(RangeSelectionEndDate):
                     UpdateSelectedDateLabel();
                     UpdateEvents();
                     break;
@@ -1047,7 +1027,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateEvents()
         {
-            if (SelectionType == SelectionType.Range && Events.TryGetValues(RangeSelectionStartDate, RangeSelectionEndDate, out var rangeEvents))
+            if (SelectionType == SelectionType.Range && Events.TryGetValues(SelectedDates[0], SelectedDates[SelectedDates.Count - 1], out var rangeEvents))
             {
                 SelectedDayEvents = rangeEvents;
                 eventsScrollView.ScrollToAsync(0, 0, false);
@@ -1068,12 +1048,12 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateSelectedDateLabel()
         {
-            if(SelectionType == SelectionType.Day)
-                SelectedDateText = SelectedDate.ToString(SelectedDateTextFormat, Culture);
-            else if (!Equals(RangeSelectionStartDate, RangeSelectionEndDate)) 
-                SelectedDateText = RangeSelectionStartDate.ToString(SelectedDateTextFormat, Culture) + " - " + RangeSelectionEndDate.ToString(SelectedDateTextFormat, Culture);
+            if (Equals(SelectedDates[0], SelectedDates[SelectedDates.Count - 1]))
+                SelectedDateText = SelectedDates[0].ToString(SelectedDateTextFormat, Culture);
             else
-                SelectedDateText = RangeSelectionStartDate.ToString(SelectedDateTextFormat, Culture);
+                SelectedDateText = SelectedDates[0].ToString(SelectedDateTextFormat, Culture)
+                    + " - "
+                    + SelectedDates[SelectedDates.Count - 1].ToString(SelectedDateTextFormat, Culture);
         }
 
         private void ShowHideCalendarSection()
@@ -1103,7 +1083,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private void OnEventsCollectionChanged(object sender, EventCollection.EventCollectionChangedArgs e)
         {
             UpdateEvents();
-            monthDaysView.UpdateDays(AnimateCalendar);
+            monthDaysView.UpdateAndAnimateDays(AnimateCalendar);
         }
 
         #endregion

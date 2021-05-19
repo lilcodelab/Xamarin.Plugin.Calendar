@@ -50,6 +50,7 @@
                     OtherMonthDayColor="{Binding OtherMonthDayColor, Source={x:Reference calendar}}"
                     OtherMonthDayIsVisible="{Binding OtherMonthDayIsVisible, Source={x:Reference calendar}}"
                     SelectedDate="{Binding SelectedDate, Source={x:Reference calendar}}"
+                    SelectedDates="{Binding SelectedDates, Source={x:Reference calendar}}"
                     SelectedDayBackgroundColor="{Binding SelectedDayBackgroundColor, Source={x:Reference calendar}}"
                     SelectedDayTextColor="{Binding SelectedDayTextColor, Source={x:Reference calendar}}"
                     SelectedTodayTextColor="{Binding SelectedTodayTextColor, Source={x:Reference calendar}}"
@@ -57,8 +58,6 @@
                     TodayFillColor="{Binding TodayFillColor, Source={x:Reference calendar}}"
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
                     SelectionType="{Binding SelectionType, Source={x:Reference calendar}}"
-                    RangeSelectionStartDate="{Binding RangeSelectionStartDate, Source={x:Reference calendar}}"
-                    RangeSelectionEndDate="{Binding RangeSelectionEndDate, Source={x:Reference calendar}}" 
                 />
             </controls:SwipeAwareContainer>
         </StackLayout>

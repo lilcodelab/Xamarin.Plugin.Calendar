@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Xamarin.Plugin.Calendar.Interfaces;
 using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Controls.MonthDayViews;
+using System.ComponentModel;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -49,6 +50,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (DateTime)GetValue(SelectedDateProperty);
             set => SetValue(SelectedDateProperty, value);
+        }
+
+        /// <summary> 
+        /// Bindable property for SelectedDates
+        /// </summary>
+        public static readonly BindableProperty SelectedDatesProperty =
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay);
+
+        /// <summary>
+        /// Selected date in single date selection mode
+        /// </summary>
+        public List<DateTime> SelectedDates
+        {
+            get => (List<DateTime>)GetValue(SelectedDatesProperty);
+            set => SetValue(SelectedDatesProperty, value);
         }
 
         /// <summary> 
@@ -472,36 +488,6 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary>
-        /// Bindable property for RangeSelectionStartDate
-        /// </summary>
-        public static readonly BindableProperty RangeSelectionStartDateProperty =
-          BindableProperty.Create(nameof(RangeSelectionStartDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
-
-        /// <summary>
-        /// Beginning date of ranged selection
-        /// </summary>
-        public DateTime RangeSelectionStartDate
-        {
-            get => (DateTime)GetValue(RangeSelectionStartDateProperty);
-            set => SetValue(RangeSelectionStartDateProperty, value);
-        }
-
-        /// <summary>
-        /// Bindable property for RangeSelectionEndDate
-        /// </summary>
-        public static readonly BindableProperty RangeSelectionEndDateProperty =
-          BindableProperty.Create(nameof(RangeSelectionEndDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today.AddDays(5), BindingMode.TwoWay);
-
-        /// <summary>
-        /// End date of ranged selection
-        /// </summary>
-        public DateTime RangeSelectionEndDate
-        {
-            get => (DateTime)GetValue(RangeSelectionEndDateProperty);
-            set => SetValue(RangeSelectionEndDateProperty, value);
-        }
-
-        /// <summary>
         /// Bindable property for SelectionType
         /// </summary>
         public static readonly BindableProperty SelectionTypeProperty =
@@ -510,7 +496,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private static void Changed(BindableObject bindable, object oldValue, object newValue)
         {
             if(bindable is MonthDaysView control && newValue is SelectionType type)
-                control.InitializeMonthDaysView();
+                control.InitializeSelectionType();
         }
 
         /// <summary>
@@ -523,37 +509,29 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
         #endregion
 
-        internal readonly Dictionary<string, bool> propertyChangedNotificationSupressions = new();
-        internal readonly List<DayView> dayViews = new();
+        private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
+        private readonly List<DayView> _dayViews = new();
         private DateTime _lastAnimationTime;
         private bool _animating;
-
         private IMonthDaysView _monthDayView;
 
         internal MonthDaysView()
         {
             InitializeComponent();
-            InitializeMonthDaysView();
-        }
-
-        private void InitializeMonthDaysView()
-        {
-            switch (SelectionType)
-            {
-                case (SelectionType.Day):
-                    _monthDayView = new SingleSelectionMonthDaysView(this);
-                    break;
-                case (SelectionType.Range):
-                    _monthDayView = new RangeSelectionMonthDaysView(this);
-                    break;
-                default:
-                    _monthDayView = new SingleSelectionMonthDaysView(this);
-                    break;
-            }
-
+            InitializeSelectionType();
             InitializeDays();
             UpdateDaysColors();
             UpdateDayTitles();
+        }
+
+        private void InitializeSelectionType()
+        {
+            _monthDayView = SelectionType switch
+            {
+                (SelectionType.Day) => new SingleSelectionMonthDaysView(),
+                (SelectionType.Range) => new RangeSelectionMonthDaysView(),
+                _ => new SingleSelectionMonthDaysView(),
+            };
         }
 
         /// <summary> 
@@ -571,26 +549,18 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             base.OnPropertyChanged(propertyName);
 
-            if (propertyChangedNotificationSupressions.TryGetValue(propertyName, out bool isSuppressed)
+            if (_propertyChangedNotificationSupressions.TryGetValue(propertyName, out bool isSuppressed)
                 && isSuppressed)
                 return;
 
-            
-
             switch (propertyName)
             {
-                case nameof(SelectedDate):
-                case nameof(RangeSelectionStartDate):
-                case nameof(RangeSelectionEndDate):
-                    LoadDays();
-                    break;
-
                 case nameof(Events):
                 case nameof(DisplayedMonthYear):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
                 case nameof(OtherMonthDayIsVisible):
-                    UpdateDays(AnimateCalendar);
+                    UpdateAndAnimateDays(AnimateCalendar);
                     break;
 
                 case nameof(TodayTextColor):
@@ -612,13 +582,25 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 case nameof(Culture):
                     UpdateDayTitles();
-                    UpdateDays(AnimateCalendar);
+                    UpdateAndAnimateDays(AnimateCalendar);
                     break;
 
                 case nameof(DaysTitleMaximumLength):
                     UpdateDayTitles();
                     break;
             }
+        }
+
+        private void OnDayModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(DayModel.IsSelected) || sender is not DayModel newSelected ||
+                (_propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
+                return;
+
+            SelectedDates = _monthDayView.PerformSelection(newSelected.Date);
+            SelectedDate = newSelected.Date;
+
+            UpdateDays();
         }
 
         private void UpdateDayTitles()
@@ -633,20 +615,20 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        internal void UpdateDays(bool animate)
+        internal void UpdateAndAnimateDays(bool animate)
         {
             if (Culture == null)
                 return;
 
             Animate(() => daysControl.FadeTo(animate ? 0 : 1, 50),
                     () => daysControl.FadeTo(1, 200),
-                    () => LoadDays(),
+                    () => UpdateDays(),
                     _lastAnimationTime = DateTime.UtcNow,
-                    () => UpdateDays(false));//send false to prevent flashing if several property bindings are changed
+                    () => UpdateAndAnimateDays(false));//send false to prevent flashing if several property bindings are changed
         }
 
 
-        private void LoadDays()
+        private void UpdateDays()
         {
             var monthStart = new DateTime(DisplayedMonthYear.Year, DisplayedMonthYear.Month, 1);
             var addDays = ((int)Culture.DateTimeFormat.FirstDayOfWeek) - (int)monthStart.DayOfWeek;
@@ -654,7 +636,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (addDays > 0)
                 addDays -= 7;
 
-            foreach (var dayView in dayViews)
+            foreach (var dayView in _dayViews)
             {
                 var currentDate = monthStart.AddDays(addDays++);
                 var dayModel = dayView.BindingContext as DayModel;
@@ -670,15 +652,14 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
+                ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = _monthDayView.IsSelected(dayModel.Date));
                 AssignIndicatorColors(ref dayModel);
             }
-
-            _monthDayView.LoadDays(monthStart);
         }
 
         private void UpdateDaysColors()
         {
-            foreach (var dayView in dayViews)
+            foreach (var dayView in _dayViews)
             {
                 var dayModel = dayView.BindingContext as DayModel;
 
@@ -706,9 +687,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
                 dayView.BindingContext = dayModel;
                 dayModel.DayTappedCommand = DayTappedCommand;
-                dayModel.PropertyChanged += _monthDayView.OnDayModelPropertyChanged;
+                dayModel.PropertyChanged += OnDayModelPropertyChanged;
 
-                dayViews.Add(dayView);
+                _dayViews.Add(dayView);
             }
         }
 
@@ -716,7 +697,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             foreach (var dayView in daysControl.Children.OfType<DayView>())
             {
-                (dayView.BindingContext as DayModel).PropertyChanged -= _monthDayView.OnDayModelPropertyChanged;
+                (dayView.BindingContext as DayModel).PropertyChanged -= OnDayModelPropertyChanged;
                 dayView.BindingContext = null;
             }
         }
@@ -749,9 +730,9 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         internal void ChangePropertySilently(string propertyName, Action propertyChangeAction)
         {
-            propertyChangedNotificationSupressions[propertyName] = true;
+            _propertyChangedNotificationSupressions[propertyName] = true;
             propertyChangeAction();
-            propertyChangedNotificationSupressions[propertyName] = false;
+            _propertyChangedNotificationSupressions[propertyName] = false;
         }
 
         internal void AssignIndicatorColors(ref DayModel dayModel)

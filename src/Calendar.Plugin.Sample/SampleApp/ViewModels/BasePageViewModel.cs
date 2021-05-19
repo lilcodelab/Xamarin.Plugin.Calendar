@@ -6,8 +6,7 @@ namespace SampleApp.ViewModels
     public class BasePageViewModel : INotifyPropertyChanged
     {
         public BasePageViewModel()
-        {
-        }
+        { }
         
         #region INotifyPropertyChanged
 

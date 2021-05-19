@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Plugin.Calendar.Models;
 
@@ -6,38 +7,25 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 {
     internal class SingleSelectionMonthDaysView : IMonthDaysView
     {
-        private readonly MonthDaysView _parentView;
+        private DateTime _selectedDate = DateTime.Today;
 
-        internal SingleSelectionMonthDaysView(MonthDaysView parentView)
+        internal SingleSelectionMonthDaysView()
+        { }
+
+        bool IMonthDaysView.IsSelected(DateTime dateToCheck)
         {
-            _parentView = parentView;
+            return DateTime.Equals(dateToCheck, _selectedDate);
         }
 
-        void IMonthDaysView.OnDayModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        List<DateTime> IMonthDaysView.PerformSelection(DateTime dateToSelect)
         {
-            if (e.PropertyName != nameof(DayModel.IsSelected) || sender is not DayModel newSelected ||
-                (_parentView.propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
-                return;
-
-            SelectSingleDate(newSelected);
+            SelectSingleDate(dateToSelect);
+            return new List<DateTime> { dateToSelect };
         }
 
-        void IMonthDaysView.LoadDays(DateTime monthStart)
+        private void SelectSingleDate(DateTime dateToSelect)
         {
-            foreach (var dayView in _parentView.dayViews)
-            {
-                var dayModel = dayView.BindingContext as DayModel;
-
-                if (DateTime.Equals(dayModel.Date, _parentView.SelectedDate.Date))
-                    _parentView.ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = true);
-                else
-                    _parentView.ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = false);
-            }
-        }
-
-        private void SelectSingleDate(DayModel newSelected)
-        {
-            _parentView.SelectedDate = newSelected.Date;
+            _selectedDate = dateToSelect;
         }
     }
 }

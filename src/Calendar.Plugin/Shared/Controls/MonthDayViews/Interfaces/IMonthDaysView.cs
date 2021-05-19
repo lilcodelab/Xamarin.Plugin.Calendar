@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 {
@@ -9,15 +11,13 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
     interface IMonthDaysView
     {
         /// <summary>
-        /// Method that is called when the DayModel is changed. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        internal void OnDayModelPropertyChanged(object sender, PropertyChangedEventArgs e);
-
-        /// <summary>
         /// Method to load selected days in the calendar properly
         /// </summary>
-        internal void LoadDays(DateTime monthStart);
+        internal bool IsSelected(DateTime dateToCheck);
+
+        /// <summary>
+        /// Method to perform event selection
+        /// </summary>
+        internal List<DateTime> PerformSelection(DateTime dateToSelect);
     }
 }

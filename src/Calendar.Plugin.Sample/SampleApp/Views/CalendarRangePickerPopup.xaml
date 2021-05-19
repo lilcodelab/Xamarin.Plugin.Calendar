@@ -39,8 +39,7 @@
                     MinimumDate="{Binding MinimumDate}"
                     MonthYear="{Binding MonthYear}"
                     SelectionType="Range"
-                    RangeSelectionEndDate="{Binding SelectedEndDate}"
-                    RangeSelectionStartDate="{Binding SelectedStartDate}"
+                    SelectedDates="{Binding SelectedDates}"
                     VerticalOptions="Center"
                     WidthRequest="320">
                     <plugin:Calendar.HeaderSectionTemplate>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Plugin.Calendar.Models;
 
@@ -6,57 +7,55 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 {
     internal class RangeSelectionMonthDaysView : IMonthDaysView
     {
-        private readonly MonthDaysView _parentView;
+        private DateTime _rangeSelectionStartDate = DateTime.Today;
+        private DateTime _rangeSelectionEndDate = DateTime.Today.AddDays(7);
 
-        public RangeSelectionMonthDaysView(MonthDaysView parentView)
+        public RangeSelectionMonthDaysView()
+        { }
+
+        bool IMonthDaysView.IsSelected(DateTime dateToCheck)
         {
-            _parentView = parentView;
+            return DateTime.Compare(dateToCheck, _rangeSelectionEndDate.Date) <= 0 &&
+                   DateTime.Compare(dateToCheck, _rangeSelectionStartDate.Date) >= 0;
         }
 
-        void IMonthDaysView.OnDayModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        List<DateTime> IMonthDaysView.PerformSelection(DateTime dateToSelect)
         {
-            if (e.PropertyName != nameof(DayModel.IsSelected) || sender is not DayModel newSelected ||
-                (_parentView.propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
-                return;
-
-            SelectDateRange(newSelected);
+            return SelectDateRange(dateToSelect);
         }
 
-        void IMonthDaysView.LoadDays(DateTime monthStart)
+        private List<DateTime> SelectDateRange(DateTime newSelected)
         {
-            foreach (var dayView in _parentView.dayViews)
-            {
-                var dayModel = dayView.BindingContext as DayModel;
-
-                if (DateTime.Compare(dayModel.Date, _parentView.RangeSelectionEndDate.Date) <= 0 && 
-                    DateTime.Compare(dayModel.Date, _parentView.RangeSelectionStartDate.Date) >= 0 ||
-                    DateTime.Equals(dayModel.Date, _parentView.RangeSelectionStartDate.Date))
-                    _parentView.ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = true);
-                else
-                    _parentView.ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = false);
-            }
-        }
-
-        private void SelectDateRange(DayModel newSelected)
-        {
-            if (Equals(_parentView.RangeSelectionStartDate, _parentView.RangeSelectionEndDate))
-                SelectSecondIntervalBorder(newSelected);
-            else
+            if (!DateTime.Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
                 SelectFirstIntervalBorder(newSelected);
-        }
-
-        private void SelectFirstIntervalBorder(DayModel newSelected)
-        {
-            _parentView.RangeSelectionStartDate = newSelected.Date;
-            _parentView.RangeSelectionEndDate = newSelected.Date;
-        }
-
-        private void SelectSecondIntervalBorder(DayModel newSelected)
-        {
-            if(DateTime.Compare(newSelected.Date, _parentView.RangeSelectionStartDate.Date) <= 0)
-                _parentView.RangeSelectionStartDate = newSelected.Date;
             else
-                _parentView.RangeSelectionEndDate = newSelected.Date;
+                SelectSecondIntervalBorder(newSelected);
+
+            return CreateRangeList();
+        }
+
+        private void SelectFirstIntervalBorder(DateTime newSelected)
+        {
+            _rangeSelectionStartDate = newSelected.Date;
+            _rangeSelectionEndDate = newSelected.Date;
+        }
+
+        private void SelectSecondIntervalBorder(DateTime newSelected)
+        {
+            if(DateTime.Compare(newSelected.Date, _rangeSelectionStartDate.Date) <= 0)
+                _rangeSelectionStartDate = newSelected.Date;
+            else
+                _rangeSelectionEndDate = newSelected.Date;
+        }
+
+        private List<DateTime> CreateRangeList()
+        {
+            var rangeList = new List<DateTime>();
+
+            for (var currentDate = _rangeSelectionStartDate; DateTime.Compare(currentDate, _rangeSelectionEndDate) <= 0; currentDate = currentDate.AddDays(1))
+                rangeList.Add(currentDate);
+
+            return rangeList;
         }
     }
 }
