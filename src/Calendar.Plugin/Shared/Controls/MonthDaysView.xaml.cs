@@ -495,7 +495,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void Changed(BindableObject bindable, object oldValue, object newValue)
         {
-            if(bindable is MonthDaysView control && newValue is SelectionType type)
+            if(bindable is MonthDaysView control && newValue is SelectionType)
                 control.InitializeSelectionType();
         }
 
