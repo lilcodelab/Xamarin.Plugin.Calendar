@@ -41,8 +41,14 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for SelectedDate 
         /// </summary>
         public static readonly BindableProperty SelectedDateProperty =
-          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay, propertyChanged: SelectedDateChanged);
 
+        private static void SelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is MonthDaysView control && newValue is DateTime && newValue.Equals(oldValue))
+                control.UpdateDays();
+        }
+        
         /// <summary>
         /// Selected date in single date selection mode
         /// </summary>
@@ -56,7 +62,13 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
-          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay, propertyChanged: SelectedDatesChanged);
+
+        private static void SelectedDatesChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is MonthDaysView control && newValue is DateTime && newValue.Equals(oldValue))
+                control.UpdateDays();
+        }
 
         /// <summary>
         /// Selected date in single date selection mode
@@ -491,11 +503,11 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for SelectionType
         /// </summary>
         public static readonly BindableProperty SelectionTypeProperty =
-            BindableProperty.Create(nameof(SelectionType), typeof(SelectionType), typeof(MonthDaysView), SelectionType.Day, propertyChanged: Changed);
+            BindableProperty.Create(nameof(SelectionType), typeof(SelectionType), typeof(MonthDaysView), SelectionType.Day, propertyChanged: SelectionTypeChanged);
 
-        private static void Changed(BindableObject bindable, object oldValue, object newValue)
+        private static void SelectionTypeChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if(bindable is MonthDaysView control && newValue is SelectionType)
+            if(bindable is MonthDaysView control && newValue is SelectionType type && !newValue.Equals(oldValue))
                 control.InitializeSelectionType();
         }
 
@@ -555,6 +567,14 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             switch (propertyName)
             {
+                case nameof(SelectedDates):
+                    _monthDayView.UpdateSelection(SelectedDates);
+                    break;
+
+                case nameof(SelectedDate):
+                    _monthDayView.UpdateSelection(new List<DateTime> { SelectedDate });
+                    break;
+
                 case nameof(Events):
                 case nameof(DisplayedMonthYear):
                 case nameof(MinimumDate):

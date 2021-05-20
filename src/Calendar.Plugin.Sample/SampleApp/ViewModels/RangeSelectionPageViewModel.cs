@@ -91,6 +91,21 @@ namespace SampleApp.ViewModels
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            Task.Delay(10000).ContinueWith(t =>
+            {
+                SelectedDate = DateTime.Today.Date.AddDays(6);
+                SelectedDates = new List<DateTime>
+                {
+                    DateTime.Today.AddDays(6),
+                    DateTime.Today.AddDays(7),
+                    DateTime.Today.AddDays(8),
+                    DateTime.Today.AddDays(9),
+                    DateTime.Today.AddDays(10),
+                    DateTime.Today.AddDays(11),
+                    DateTime.Today.AddDays(12),
+                };
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name)
@@ -129,18 +144,19 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDate, value);
         }
 
-        private DateTime _selectedStartDate = DateTime.Today;
-        public DateTime SelectedStartDate
+        private List<DateTime> _selectedDates = new List<DateTime> { 
+            DateTime.Today, 
+            DateTime.Today.AddDays(1),
+            DateTime.Today.AddDays(2),
+            DateTime.Today.AddDays(3),
+            DateTime.Today.AddDays(4),
+            DateTime.Today.AddDays(5),
+            DateTime.Today.AddDays(6),
+        };
+        public List<DateTime> SelectedDates
         {
-            get => _selectedStartDate;
-            set => SetProperty(ref _selectedStartDate, value);
-        }
-
-        private DateTime _selectedEndDate = DateTime.Today;
-        public DateTime SelectedEndDate
-        {
-            get => _selectedEndDate;
-            set => SetProperty(ref _selectedEndDate, value);
+            get => _selectedDates;
+            set => SetProperty(ref _selectedDates, value);
         }
 
         private static async Task DayTapped(DateTime date)

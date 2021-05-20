@@ -17,5 +17,11 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
         /// Method to perform event selection
         /// </summary>
         internal List<DateTime> PerformSelection(DateTime dateToSelect);
+
+        /// <summary>
+        /// Method to update selectedDates when changed from code
+        /// </summary>
+        /// <param name="datesToSelect"></param>
+        internal void UpdateSelection(List<DateTime> datesToSelect);
     }
 }

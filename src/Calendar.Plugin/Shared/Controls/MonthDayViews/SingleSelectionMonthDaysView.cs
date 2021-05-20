@@ -25,5 +25,10 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
         {
             _selectedDate = dateToSelect;
         }
+
+        void IMonthDaysView.UpdateSelection(List<DateTime> datesToSelect)
+        {
+            _selectedDate = datesToSelect[0];
+        }
     }
 }

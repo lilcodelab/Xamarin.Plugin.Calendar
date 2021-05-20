@@ -24,7 +24,6 @@
         DayTappedCommand="{Binding DayTappedCommand}"
         Events="{Binding Events}"
         MonthYear="{Binding MonthYear}"
-        SelectedDate="{Binding SelectedDate}"
         SelectedDates="{Binding SelectedDates}"
         SelectionType="Range">
 

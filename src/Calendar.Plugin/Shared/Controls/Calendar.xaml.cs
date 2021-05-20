@@ -1008,6 +1008,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(SelectedDate):
+                case nameof(SelectedDates):
                     UpdateSelectedDateLabel();
                     UpdateEvents();
                     break;

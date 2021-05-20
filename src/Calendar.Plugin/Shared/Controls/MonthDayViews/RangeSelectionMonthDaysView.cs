@@ -55,5 +55,20 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 
             return rangeList;
         }
+
+        void IMonthDaysView.UpdateSelection(List<DateTime> datesToSelect)
+        {
+            _rangeSelectionStartDate = datesToSelect[0];
+            _rangeSelectionEndDate = datesToSelect[0];
+
+            foreach (var date in datesToSelect)
+            {
+                if (DateTime.Compare(date, _rangeSelectionStartDate) < 0)
+                    _rangeSelectionStartDate = date;
+
+                if (DateTime.Compare(_rangeSelectionEndDate, date) < 0)
+                    _rangeSelectionEndDate = date;
+            }
+        }
     }
 }

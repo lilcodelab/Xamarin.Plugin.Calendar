@@ -10,7 +10,7 @@
         /// </summary>
         Day,
         /// <summary>
-        /// Selection of range of dates using start and end date.
+        /// Selection of range of sequential days.
         /// </summary>
         Range,
     }

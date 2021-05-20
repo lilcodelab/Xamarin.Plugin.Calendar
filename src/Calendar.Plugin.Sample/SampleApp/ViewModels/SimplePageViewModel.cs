@@ -63,6 +63,8 @@ namespace SampleApp.ViewModels
                     Month += 1;
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            SelectedDate = new DateTime(2021, 7, 13);
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
