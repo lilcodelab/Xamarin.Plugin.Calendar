@@ -1028,7 +1028,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateEvents()
         {
-            SelectedDayEvents = monthDaysView.ChosenSelectionType.GetSelectedEvents(Events);
+            SelectedDayEvents = monthDaysView.CurrentSelectionEngine.GetSelectedEvents(Events);
             eventsScrollView.ScrollToAsync(0, 0, false);
         }
 
@@ -1039,7 +1039,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateSelectedDateLabel()
         {
-            SelectedDateText = monthDaysView.ChosenSelectionType.GetSelectedDateText(SelectedDateTextFormat, Culture);
+            SelectedDateText = monthDaysView.CurrentSelectionEngine.GetSelectedDateText(SelectedDateTextFormat, Culture);
         }
 
         private void ShowHideCalendarSection()

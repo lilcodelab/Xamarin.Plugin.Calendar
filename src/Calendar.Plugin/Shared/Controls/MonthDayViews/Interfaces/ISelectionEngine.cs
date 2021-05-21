@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using Xamarin.Plugin.Calendar.Models;
 
-namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
+namespace Xamarin.Plugin.Calendar.Controls
 {
     /// <summary>
     /// Interface for different selection implementations within MonthDaysView
     /// </summary>
-    interface IChosenSelectionType
+    interface ISelectionEngine
     {
         /// <summary>
         /// Method to load selected days in the calendar properly

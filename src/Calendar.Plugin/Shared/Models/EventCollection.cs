@@ -98,8 +98,7 @@ namespace Xamarin.Plugin.Calendar.Models
         /// <summary>
         /// Gets the values associated with the specific date range
         /// </summary>
-        /// <param name="startKey"></param>
-        /// <param name="endKey"></param>
+        /// <param name="keys"></param>
         /// <param name="values"></param>
         /// <returns></returns>
         public bool TryGetValues(List<DateTime> keys, out ICollection values)

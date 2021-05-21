@@ -4,23 +4,23 @@ using System.Collections.Generic;
 using System.Globalization;
 using Xamarin.Plugin.Calendar.Models;
 
-namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
+namespace Xamarin.Plugin.Calendar.Controls
 {
-    internal class RangeSelectionType : IChosenSelectionType
+    internal class Range : ISelectionEngine
     {
         private DateTime _rangeSelectionStartDate = DateTime.Today;
         private DateTime _rangeSelectionEndDate = DateTime.Today.AddDays(7);
 
-        public RangeSelectionType()
+        public Range()
         { }
 
-        bool IChosenSelectionType.IsDateSelected(DateTime dateToCheck)
+        bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)
         {
             return DateTime.Compare(dateToCheck, _rangeSelectionEndDate.Date) <= 0 &&
                    DateTime.Compare(dateToCheck, _rangeSelectionStartDate.Date) >= 0;
         }
 
-        List<DateTime> IChosenSelectionType.PerformDateSelection(DateTime dateToSelect)
+        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime dateToSelect)
         {
             return SelectDateRange(dateToSelect);
         }
@@ -59,7 +59,7 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             return rangeList;
         }
 
-        void IChosenSelectionType.UpdateDateSelection(List<DateTime> datesToSelect)
+        void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
         {
             _rangeSelectionStartDate = datesToSelect[0];
             _rangeSelectionEndDate = datesToSelect[0];
@@ -74,7 +74,7 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             }
         }
 
-        ICollection IChosenSelectionType.GetSelectedEvents(EventCollection allEvents)
+        ICollection ISelectionEngine.GetSelectedEvents(EventCollection allEvents)
         {
             var listOfEvents = CreateRangeList();
             var wasSuccessful = allEvents.TryGetValues(listOfEvents, out var rangeEvents);
@@ -82,7 +82,7 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             return wasSuccessful ? rangeEvents : null;
         }
 
-        string IChosenSelectionType.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
+        string ISelectionEngine.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
         {
             var startDateText = _rangeSelectionStartDate.ToString(selectedDateTextFormat, culture);
             var endDateText = _rangeSelectionEndDate.ToString(selectedDateTextFormat, culture);

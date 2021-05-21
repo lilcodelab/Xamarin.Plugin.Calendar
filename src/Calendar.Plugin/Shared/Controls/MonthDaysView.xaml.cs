@@ -521,11 +521,11 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
         #endregion
 
-        private IChosenSelectionType _chosenSelectionType;
+        private ISelectionEngine _currentSelectionEngine;
 
-        internal IChosenSelectionType ChosenSelectionType
+        internal ISelectionEngine CurrentSelectionEngine
         {
-            get => _chosenSelectionType;
+            get => _currentSelectionEngine;
         }
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
@@ -544,11 +544,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void InitializeSelectionType()
         {
-            _chosenSelectionType = SelectionType switch
+            _currentSelectionEngine = SelectionType switch
             {
-                (SelectionType.Day) => new SingleSelectionType(),
-                (SelectionType.Range) => new RangeSelectionType(),
-                _ => new SingleSelectionType(),
+                (SelectionType.Day) => new MonthDayViews.SingleSelectionEngine(),
+                (SelectionType.Range) => new Range(),
+                _ => new MonthDayViews.SingleSelectionEngine(),
             };
         }
 
@@ -574,11 +574,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             switch (propertyName)
             {
                 case nameof(SelectedDates):
-                    _chosenSelectionType.UpdateDateSelection(SelectedDates);
+                    _currentSelectionEngine.UpdateDateSelection(SelectedDates);
                     break;
 
                 case nameof(SelectedDate):
-                    _chosenSelectionType.UpdateDateSelection(new List<DateTime> { SelectedDate });
+                    _currentSelectionEngine.UpdateDateSelection(new List<DateTime> { SelectedDate });
                     break;
 
                 case nameof(Events):
@@ -623,7 +623,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 (_propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
                 return;
 
-            SelectedDates = _chosenSelectionType.PerformDateSelection(newSelected.Date);
+            SelectedDates = _currentSelectionEngine.PerformDateSelection(newSelected.Date);
             SelectedDate = newSelected.Date;
 
             UpdateDays();
@@ -678,7 +678,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
-                ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = _chosenSelectionType.IsDateSelected(dayModel.Date));
+                ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = _currentSelectionEngine.IsDateSelected(dayModel.Date));
                 AssignIndicatorColors(ref dayModel);
             }
         }

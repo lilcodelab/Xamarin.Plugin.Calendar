@@ -6,19 +6,19 @@ using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 {
-    internal class SingleSelectionType : IChosenSelectionType
+    internal class SingleSelectionEngine : ISelectionEngine
     {
         private DateTime _selectedDate = DateTime.Today;
 
-        internal SingleSelectionType()
+        internal SingleSelectionEngine()
         { }
 
-        bool IChosenSelectionType.IsDateSelected(DateTime dateToCheck)
+        bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)
         {
             return DateTime.Equals(dateToCheck, _selectedDate);
         }
 
-        List<DateTime> IChosenSelectionType.PerformDateSelection(DateTime dateToSelect)
+        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime dateToSelect)
         {
             SelectSingleDate(dateToSelect);
             return new List<DateTime> { dateToSelect };
@@ -29,19 +29,19 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             _selectedDate = dateToSelect;
         }
 
-        void IChosenSelectionType.UpdateDateSelection(List<DateTime> datesToSelect)
+        void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
         {
             _selectedDate = datesToSelect[0];
         }
 
-        ICollection IChosenSelectionType.GetSelectedEvents(EventCollection allEvents)
+        ICollection ISelectionEngine.GetSelectedEvents(EventCollection allEvents)
         {
             var wasSuccessful = allEvents.TryGetValue(_selectedDate, out var dayEvents);
 
             return wasSuccessful ? dayEvents : null;
         }
 
-        string IChosenSelectionType.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
+        string ISelectionEngine.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
         {
             return _selectedDate.ToString(selectedDateTextFormat, culture);
         }
