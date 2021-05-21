@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 {
-    internal class RangeSelectionMonthDaysView : IMonthDaysView
+    internal class RangeSelectionType : IChosenSelectionType
     {
         private DateTime _rangeSelectionStartDate = DateTime.Today;
         private DateTime _rangeSelectionEndDate = DateTime.Today.AddDays(7);
 
-        public RangeSelectionMonthDaysView()
+        public RangeSelectionType()
         { }
 
-        bool IMonthDaysView.IsSelected(DateTime dateToCheck)
+        bool IChosenSelectionType.IsDateSelected(DateTime dateToCheck)
         {
             return DateTime.Compare(dateToCheck, _rangeSelectionEndDate.Date) <= 0 &&
                    DateTime.Compare(dateToCheck, _rangeSelectionStartDate.Date) >= 0;
         }
 
-        List<DateTime> IMonthDaysView.PerformSelection(DateTime dateToSelect)
+        List<DateTime> IChosenSelectionType.PerformDateSelection(DateTime dateToSelect)
         {
             return SelectDateRange(dateToSelect);
         }
@@ -56,7 +59,7 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             return rangeList;
         }
 
-        void IMonthDaysView.UpdateSelection(List<DateTime> datesToSelect)
+        void IChosenSelectionType.UpdateDateSelection(List<DateTime> datesToSelect)
         {
             _rangeSelectionStartDate = datesToSelect[0];
             _rangeSelectionEndDate = datesToSelect[0];
@@ -69,6 +72,22 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
                 if (DateTime.Compare(_rangeSelectionEndDate, date) < 0)
                     _rangeSelectionEndDate = date;
             }
+        }
+
+        ICollection IChosenSelectionType.GetSelectedEvents(EventCollection allEvents)
+        {
+            var listOfEvents = CreateRangeList();
+            var wasSuccessful = allEvents.TryGetValues(listOfEvents, out var rangeEvents);
+
+            return wasSuccessful ? rangeEvents : null;
+        }
+
+        string IChosenSelectionType.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
+        {
+            var startDateText = _rangeSelectionStartDate.ToString(selectedDateTextFormat, culture);
+            var endDateText = _rangeSelectionEndDate.ToString(selectedDateTextFormat, culture);
+
+            return $"{startDateText} - {endDateText}";
         }
     }
 }

@@ -507,7 +507,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void SelectionTypeChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if(bindable is MonthDaysView control && newValue is SelectionType type && !newValue.Equals(oldValue))
+            if(bindable is MonthDaysView control && newValue is SelectionType && !newValue.Equals(oldValue))
                 control.InitializeSelectionType();
         }
 
@@ -521,11 +521,17 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
         #endregion
 
+        private IChosenSelectionType _chosenSelectionType;
+
+        internal IChosenSelectionType ChosenSelectionType
+        {
+            get => _chosenSelectionType;
+        }
+
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
         private readonly List<DayView> _dayViews = new();
         private DateTime _lastAnimationTime;
         private bool _animating;
-        private IMonthDaysView _monthDayView;
 
         internal MonthDaysView()
         {
@@ -538,11 +544,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void InitializeSelectionType()
         {
-            _monthDayView = SelectionType switch
+            _chosenSelectionType = SelectionType switch
             {
-                (SelectionType.Day) => new SingleSelectionMonthDaysView(),
-                (SelectionType.Range) => new RangeSelectionMonthDaysView(),
-                _ => new SingleSelectionMonthDaysView(),
+                (SelectionType.Day) => new SingleSelectionType(),
+                (SelectionType.Range) => new RangeSelectionType(),
+                _ => new SingleSelectionType(),
             };
         }
 
@@ -568,11 +574,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             switch (propertyName)
             {
                 case nameof(SelectedDates):
-                    _monthDayView.UpdateSelection(SelectedDates);
+                    _chosenSelectionType.UpdateDateSelection(SelectedDates);
                     break;
 
                 case nameof(SelectedDate):
-                    _monthDayView.UpdateSelection(new List<DateTime> { SelectedDate });
+                    _chosenSelectionType.UpdateDateSelection(new List<DateTime> { SelectedDate });
                     break;
 
                 case nameof(Events):
@@ -617,7 +623,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 (_propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
                 return;
 
-            SelectedDates = _monthDayView.PerformSelection(newSelected.Date);
+            SelectedDates = _chosenSelectionType.PerformDateSelection(newSelected.Date);
             SelectedDate = newSelected.Date;
 
             UpdateDays();
@@ -672,7 +678,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
-                ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = _monthDayView.IsSelected(dayModel.Date));
+                ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = _chosenSelectionType.IsDateSelected(dayModel.Date));
                 AssignIndicatorColors(ref dayModel);
             }
         }

@@ -1028,18 +1028,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateEvents()
         {
-            if (SelectionType == SelectionType.Range && Events.TryGetValues(SelectedDates[0], SelectedDates[SelectedDates.Count - 1], out var rangeEvents))
-            {
-                SelectedDayEvents = rangeEvents;
-                eventsScrollView.ScrollToAsync(0, 0, false);
-            }
-            else if (SelectionType == SelectionType.Day && Events.TryGetValue(SelectedDate, out var dayEvents))
-            {
-                SelectedDayEvents = dayEvents;
-                eventsScrollView.ScrollToAsync(0, 0, false);
-            }
-            else
-                SelectedDayEvents = null;
+            SelectedDayEvents = monthDaysView.ChosenSelectionType.GetSelectedEvents(Events);
+            eventsScrollView.ScrollToAsync(0, 0, false);
         }
 
         private void UpdateMonthLabel()
@@ -1049,12 +1039,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateSelectedDateLabel()
         {
-            if (Equals(SelectedDates[0], SelectedDates[SelectedDates.Count - 1]))
-                SelectedDateText = SelectedDates[0].ToString(SelectedDateTextFormat, Culture);
-            else
-                SelectedDateText = SelectedDates[0].ToString(SelectedDateTextFormat, Culture)
-                    + " - "
-                    + SelectedDates[SelectedDates.Count - 1].ToString(SelectedDateTextFormat, Culture);
+            SelectedDateText = monthDaysView.ChosenSelectionType.GetSelectedDateText(SelectedDateTextFormat, Culture);
         }
 
         private void ShowHideCalendarSection()

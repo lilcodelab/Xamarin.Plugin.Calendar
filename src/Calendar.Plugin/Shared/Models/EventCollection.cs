@@ -102,26 +102,14 @@ namespace Xamarin.Plugin.Calendar.Models
         /// <param name="endKey"></param>
         /// <param name="values"></param>
         /// <returns></returns>
-        public bool TryGetValues(DateTime? startKey, DateTime? endKey, out ICollection values)
+        public bool TryGetValues(List<DateTime> keys, out ICollection values)
         {
-            if (!startKey.HasValue && !endKey.HasValue)
-            {
-                values = null;
-                return false;
-            }
-            else if (!endKey.HasValue)
-            {
-                endKey = startKey;
-            }
-
             var listToReturn = new List<object>();
 
-            for (var currentDate = startKey.Value.Date; DateTime.Compare(currentDate, endKey.Value.Date) <= 0; currentDate = currentDate.AddDays(1))
-            {
+            foreach (var currentDate in keys)
                 if (base.TryGetValue(currentDate, out var dayEvents))
                     foreach (var singleEvent in dayEvents)
                         listToReturn.Add(singleEvent);
-            }
 
             values = listToReturn;
             return true;
