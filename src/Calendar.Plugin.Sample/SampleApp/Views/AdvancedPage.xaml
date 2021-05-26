@@ -19,7 +19,7 @@
         <local:AdvancedPageViewModel />
     </ContentPage.BindingContext>
 
-    <plugin:Calendar
+    <plugin:SingleSelectionCalendar
         Padding="10,0"
         AnimateCalendar="True"
         Culture="{Binding Culture}"
@@ -62,22 +62,22 @@
         VerticalOptions="FillAndExpand"
         YearLabelColor="Blue">
 
-        <plugin:Calendar.HeaderSectionTemplate>
+        <plugin:SingleSelectionCalendar.HeaderSectionTemplate>
             <controls:CalendarHeader />
-        </plugin:Calendar.HeaderSectionTemplate>
+        </plugin:SingleSelectionCalendar.HeaderSectionTemplate>
 
-        <plugin:Calendar.FooterSectionTemplate>
+        <plugin:SingleSelectionCalendar.FooterSectionTemplate>
             <DataTemplate>
                 <controls:CalendarFooter />
             </DataTemplate>
-        </plugin:Calendar.FooterSectionTemplate>
+        </plugin:SingleSelectionCalendar.FooterSectionTemplate>
 
-        <plugin:Calendar.EventTemplate>
+        <plugin:SingleSelectionCalendar.EventTemplate>
             <DataTemplate>
                 <controls:CalenderEvent CalenderEventCommand="{Binding BindingContext.EventSelectedCommand, Source={x:Reference advancedCalendarPage}}" />
             </DataTemplate>
-        </plugin:Calendar.EventTemplate>
-        <plugin:Calendar.EmptyTemplate>
+        </plugin:SingleSelectionCalendar.EventTemplate>
+        <plugin:SingleSelectionCalendar.EmptyTemplate>
             <DataTemplate>
                 <StackLayout>
                     <Label
@@ -86,8 +86,8 @@
                         Text="NO EVENTS FOR THE SELECTED DATE" />
                 </StackLayout>
             </DataTemplate>
-        </plugin:Calendar.EmptyTemplate>
-    </plugin:Calendar>
+        </plugin:SingleSelectionCalendar.EmptyTemplate>
+    </plugin:SingleSelectionCalendar>
 
     <ContentPage.Resources>
         <ResourceDictionary>

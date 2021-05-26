@@ -15,7 +15,7 @@
         <local:SimplePageViewModel />
     </ContentPage.BindingContext>
 
-    <plugin:Calendar
+    <plugin:SingleSelectionCalendar
         Events="{Binding Events}"
         MaximumDate="{Binding MaximumDate}"
         MinimumDate="{Binding MinimumDate}"
@@ -47,7 +47,7 @@
                 </StackLayout>
             </DataTemplate>
         </plugin:Calendar.EventTemplate>
-    </plugin:Calendar>
+    </plugin:SingleSelectionCalendar>
 
     <!--
         Styling

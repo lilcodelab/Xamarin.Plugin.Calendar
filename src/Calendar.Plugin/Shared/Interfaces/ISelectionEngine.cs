@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Xamarin.Plugin.Calendar.Models;
 
-namespace Xamarin.Plugin.Calendar.Controls
+namespace Xamarin.Plugin.Calendar.Controls.Interfaces
 {
     /// <summary>
     /// Interface for different selection implementations within MonthDaysView

@@ -870,21 +870,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(AnimateCalendarProperty, value);
         }
 
-        /// <summary>
-        /// Bindable property for SelectionType
-        /// </summary>
-        public static readonly BindableProperty SelectionTypeProperty =
-            BindableProperty.Create(nameof(SelectionType), typeof(SelectionType), typeof(Calendar), SelectionType.Day);
-
-        /// <summary>
-        /// Specifies the date selection mode
-        /// </summary>
-        public SelectionType SelectionType
-        {
-            get => (SelectionType)GetValue(SelectionTypeProperty);
-            set => SetValue(SelectionTypeProperty, value);
-        }
-
         #endregion
 
         private const uint CalendarSectionAnimationRate = 16;

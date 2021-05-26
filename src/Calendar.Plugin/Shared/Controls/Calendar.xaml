@@ -26,6 +26,7 @@
                 SwipedUp="OnSwipedUp">
                 <controls:MonthDaysView
                     x:Name="monthDaysView"
+                    x:FieldModifier="internal"
                     AnimateCalendar="{Binding AnimateCalendar, Source={x:Reference calendar}}"
                     Culture="{Binding Culture, Source={x:Reference calendar}}"
                     DayTappedCommand="{Binding DayTappedCommand, Source={x:Reference calendar}}"
@@ -57,7 +58,6 @@
                     TodayTextColor="{Binding TodayTextColor, Source={x:Reference calendar}}"
                     TodayFillColor="{Binding TodayFillColor, Source={x:Reference calendar}}"
                     TodayOutlineColor="{Binding TodayOutlineColor, Source={x:Reference calendar}}"
-                    SelectionType="{Binding SelectionType, Source={x:Reference calendar}}"
                 />
             </controls:SwipeAwareContainer>
         </StackLayout>

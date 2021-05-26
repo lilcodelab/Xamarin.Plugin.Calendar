@@ -19,13 +19,12 @@
         <local:RangeSelectionPageViewModel />
     </ContentPage.BindingContext>
 
-    <plugin:Calendar
+    <plugin:RangeSelectionCalendar
         Padding="10,0"
         DayTappedCommand="{Binding DayTappedCommand}"
         Events="{Binding Events}"
         MonthYear="{Binding MonthYear}"
-        SelectedDates="{Binding SelectedDates}"
-        SelectionType="Range">
+        SelectedDates="{Binding SelectedDates}">
 
         <plugin:Calendar.HeaderSectionTemplate>
             <controls:CalendarHeader />
@@ -52,7 +51,7 @@
                 </StackLayout>
             </DataTemplate>
         </plugin:Calendar.EmptyTemplate>
-    </plugin:Calendar>
+    </plugin:RangeSelectionCalendar>
 
     <ContentPage.Resources>
         <ResourceDictionary>

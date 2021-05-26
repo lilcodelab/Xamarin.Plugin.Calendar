@@ -12,6 +12,7 @@ using Xamarin.Plugin.Calendar.Interfaces;
 using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Controls.MonthDayViews;
 using System.ComponentModel;
+using Xamarin.Plugin.Calendar.Controls.Interfaces;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -546,7 +547,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             _currentSelectionEngine = SelectionType switch
             {
-                (SelectionType.Day) => new MonthDayViews.SingleSelectionEngine(),
+                (SelectionType.Day) => new SingleSelectionEngine(),
                 (SelectionType.Range) => new Range(),
                 _ => new MonthDayViews.SingleSelectionEngine(),
             };
