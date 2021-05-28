@@ -19,7 +19,7 @@
         <local:AdvancedPageViewModel />
     </ContentPage.BindingContext>
 
-    <plugin:SingleSelectionCalendar
+    <plugin:Calendar
         Padding="10,0"
         AnimateCalendar="True"
         Culture="{Binding Culture}"
@@ -45,7 +45,6 @@
         MonthYear="{Binding MonthYear}"
         OtherMonthDayColor="Gray"
         OtherMonthDayIsVisible="False"
-        SelectedDate="{Binding SelectedDate}"
         SelectedDateColor="Red"
         SelectedDateTextFormat="ddd, dd MMM yyyy"
         SelectedTodayTextColor="Green"
@@ -62,22 +61,22 @@
         VerticalOptions="FillAndExpand"
         YearLabelColor="Blue">
 
-        <plugin:SingleSelectionCalendar.HeaderSectionTemplate>
+        <plugin:Calendar.HeaderSectionTemplate>
             <controls:CalendarHeader />
-        </plugin:SingleSelectionCalendar.HeaderSectionTemplate>
+        </plugin:Calendar.HeaderSectionTemplate>
 
-        <plugin:SingleSelectionCalendar.FooterSectionTemplate>
+        <plugin:Calendar.FooterSectionTemplate>
             <DataTemplate>
                 <controls:CalendarFooter />
             </DataTemplate>
-        </plugin:SingleSelectionCalendar.FooterSectionTemplate>
+        </plugin:Calendar.FooterSectionTemplate>
 
-        <plugin:SingleSelectionCalendar.EventTemplate>
+        <plugin:Calendar.EventTemplate>
             <DataTemplate>
                 <controls:CalenderEvent CalenderEventCommand="{Binding BindingContext.EventSelectedCommand, Source={x:Reference advancedCalendarPage}}" />
             </DataTemplate>
-        </plugin:SingleSelectionCalendar.EventTemplate>
-        <plugin:SingleSelectionCalendar.EmptyTemplate>
+        </plugin:Calendar.EventTemplate>
+        <plugin:Calendar.EmptyTemplate>
             <DataTemplate>
                 <StackLayout>
                     <Label
@@ -86,8 +85,8 @@
                         Text="NO EVENTS FOR THE SELECTED DATE" />
                 </StackLayout>
             </DataTemplate>
-        </plugin:SingleSelectionCalendar.EmptyTemplate>
-    </plugin:SingleSelectionCalendar>
+        </plugin:Calendar.EmptyTemplate>
+    </plugin:Calendar>
 
     <ContentPage.Resources>
         <ResourceDictionary>

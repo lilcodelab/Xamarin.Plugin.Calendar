@@ -95,36 +95,6 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary>
-        /// Bindable property for SelectedDate
-        /// </summary>
-        public static readonly BindableProperty SelectedDateProperty =
-          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay);
-
-        /// <summary>
-        /// Specifies the currently selected date in single selection mode
-        /// </summary>
-        public DateTime SelectedDate
-        {
-            get => (DateTime)GetValue(SelectedDateProperty);
-            set => SetValue(SelectedDateProperty, value);
-        }
-
-        /// <summary> 
-        /// Bindable property for SelectedDates
-        /// </summary>
-        public static readonly BindableProperty SelectedDatesProperty =
-          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay);
-
-        /// <summary>
-        /// Selected date in single date selection mode
-        /// </summary>
-        public List<DateTime> SelectedDates
-        {
-            get => (List<DateTime>)GetValue(SelectedDatesProperty);
-            set => SetValue(SelectedDatesProperty, value);
-        }
-
-        /// <summary>
         /// Bindable property for Culture
         /// </summary>
         public static readonly BindableProperty CultureProperty =
@@ -868,6 +838,65 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             get => (bool)GetValue(AnimateCalendarProperty);
             set => SetValue(AnimateCalendarProperty, value);
+        }
+
+        #endregion
+
+        #region SelectedDates
+        /// <summary>
+        /// Bindable property for SelectedDate
+        /// </summary>
+        public static readonly BindableProperty SelectedDateProperty =
+          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, propertyChanged: OnSelectedDateChanged);
+
+        private static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if(bindable is Calendar control && newValue is DateTime newDate && !newValue.Equals(oldValue))
+            {
+                control.SetValue(SelectedDateProperty, newValue);
+                control.SetValue(SelectedDatesProperty, new List<DateTime> { newDate });
+            }
+        }
+
+        /// <summary>
+        /// Selected date in single date selection mode
+        /// </summary>
+        public DateTime SelectedDate
+        {
+            get => (DateTime)GetValue(SelectedDateProperty);
+            set
+            {
+                SetValue(SelectedDateProperty, value);
+                if (_selectedDate != value)
+                {
+                    _selectedDate = value;
+                    SelectedDates = new List<DateTime> { value };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Specifies the currently selected date in single selection mode
+        /// </summary>
+        private DateTime _selectedDate = DateTime.Today;
+
+        /// <summary> 
+        /// Bindable property for SelectedDates
+        /// </summary>
+        public static readonly BindableProperty SelectedDatesProperty =
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay);
+
+        /// <summary>
+        /// Selected date in single date selection mode
+        /// </summary>
+        public List<DateTime> SelectedDates
+        {
+            get => (List<DateTime>)GetValue(SelectedDatesProperty);
+            set
+            {
+                SetValue(SelectedDatesProperty, value);
+                SetValue(SelectedDateProperty, value[0]);
+            }
         }
 
         #endregion

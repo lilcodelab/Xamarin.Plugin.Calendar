@@ -39,27 +39,6 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary> 
-        /// Bindable property for SelectedDate 
-        /// </summary>
-        public static readonly BindableProperty SelectedDateProperty =
-          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay, propertyChanged: SelectedDateChanged);
-
-        private static void SelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if (bindable is MonthDaysView control && newValue is DateTime && newValue.Equals(oldValue))
-                control.UpdateDays();
-        }
-        
-        /// <summary>
-        /// Selected date in single date selection mode
-        /// </summary>
-        public DateTime SelectedDate
-        {
-            get => (DateTime)GetValue(SelectedDateProperty);
-            set => SetValue(SelectedDateProperty, value);
-        }
-
-        /// <summary> 
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
@@ -67,7 +46,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void SelectedDatesChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is MonthDaysView control && newValue is DateTime && newValue.Equals(oldValue))
+            if (bindable is MonthDaysView control && newValue is List<DateTime> && !newValue.Equals(oldValue))
                 control.UpdateDays();
         }
 
@@ -578,9 +557,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     _currentSelectionEngine.UpdateDateSelection(SelectedDates);
                     break;
 
-                case nameof(SelectedDate):
-                    _currentSelectionEngine.UpdateDateSelection(new List<DateTime> { SelectedDate });
-                    break;
 
                 case nameof(Events):
                 case nameof(DisplayedMonthYear):
@@ -625,7 +601,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 return;
 
             SelectedDates = _currentSelectionEngine.PerformDateSelection(newSelected.Date);
-            SelectedDate = newSelected.Date;
 
             UpdateDays();
         }
