@@ -23,7 +23,7 @@ namespace SampleApp.ViewModels
 
         public ICommand OpenPickerCommand => new Command(async () =>
         {
-            await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) =>
+            await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) => 
             {
                 string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "Calendar Picker Canceled!";
 
@@ -44,7 +44,7 @@ namespace SampleApp.ViewModels
                 [DateTime.Now.AddDays(-6)] = new DayEventCollection<AdvancedEventModel>(Color.Purple, Color.Purple)
                 {
                     new AdvancedEventModel { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= new DateTime() },
-                    new AdvancedEventModel { Name = "Cool event2", Description = "This is Cool event2's description!", Starting= new DateTime()}
+                    new AdvancedEventModel { Name = "Cool event2", Description = "This is Cool event2's description!", Starting= new DateTime() }
                 }
             };
 
@@ -61,7 +61,7 @@ namespace SampleApp.ViewModels
 
             MonthYear = MonthYear.AddMonths(1);
 
-            Task.Delay(5000).ContinueWith(_ =>
+            Task.Delay(5000).ContinueWith( _ =>
             {
                 // indexer - update later
                 Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool"));
@@ -89,6 +89,8 @@ namespace SampleApp.ViewModels
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            SelectedDate = new DateTime(2021, 7, 13);
         }
 
         private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name)

@@ -506,6 +506,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         internal ISelectionEngine CurrentSelectionEngine
         {
             get => _currentSelectionEngine;
+            set => _currentSelectionEngine = value;
         }
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
@@ -527,8 +528,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             _currentSelectionEngine = SelectionType switch
             {
                 (SelectionType.Day) => new SingleSelectionEngine(),
-                (SelectionType.Range) => new Range(),
-                _ => new MonthDayViews.SingleSelectionEngine(),
+                (SelectionType.Range) => new RangedSelectionEngine(),
+                _ => new SingleSelectionEngine(),
             };
         }
 

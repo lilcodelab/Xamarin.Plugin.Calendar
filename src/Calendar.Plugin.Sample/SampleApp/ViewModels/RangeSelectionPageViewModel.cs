@@ -94,16 +94,15 @@ namespace SampleApp.ViewModels
 
             Task.Delay(10000).ContinueWith(t =>
             {
-                SelectedDate = DateTime.Today.Date.AddDays(6);
                 SelectedDates = new List<DateTime>
                 {
+                    DateTime.Today,
+                    DateTime.Today.AddDays(1),
+                    DateTime.Today.AddDays(2),
+                    DateTime.Today.AddDays(3),
+                    DateTime.Today.AddDays(4),
+                    DateTime.Today.AddDays(5),
                     DateTime.Today.AddDays(6),
-                    DateTime.Today.AddDays(7),
-                    DateTime.Today.AddDays(8),
-                    DateTime.Today.AddDays(9),
-                    DateTime.Today.AddDays(10),
-                    DateTime.Today.AddDays(11),
-                    DateTime.Today.AddDays(12),
                 };
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -137,13 +136,6 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private DateTime _selectedDate = DateTime.Today;
-        public DateTime SelectedDate
-        {
-            get => _selectedDate;
-            set => SetProperty(ref _selectedDate, value);
-        }
-
         private List<DateTime> _selectedDates = new List<DateTime> { 
             DateTime.Today, 
             DateTime.Today.AddDays(1),
@@ -153,6 +145,7 @@ namespace SampleApp.ViewModels
             DateTime.Today.AddDays(5),
             DateTime.Today.AddDays(6),
         };
+
         public List<DateTime> SelectedDates
         {
             get => _selectedDates;

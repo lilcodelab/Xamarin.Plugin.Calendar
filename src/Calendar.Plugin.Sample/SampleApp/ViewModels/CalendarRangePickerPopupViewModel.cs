@@ -16,11 +16,7 @@ namespace SampleApp.ViewModels
             SelectedDates = new List<DateTime> { 
                 DateTime.Today, 
                 DateTime.Today.AddDays(1),
-                DateTime.Today.AddDays(2),
-                DateTime.Today.AddDays(-3),
-                DateTime.Today.AddDays(-4),
-                DateTime.Today.AddDays(-5),
-                DateTime.Today.AddDays(-6),
+                DateTime.Today.AddDays(2)
             };
         });
 
@@ -50,13 +46,9 @@ namespace SampleApp.ViewModels
         private List<DateTime> _selectedDates = new List<DateTime> { 
             DateTime.Today, 
             DateTime.Today.AddDays(1),
-                DateTime.Today.AddDays(1),
-                DateTime.Today.AddDays(2),
-                DateTime.Today.AddDays(-3),
-                DateTime.Today.AddDays(-4),
-                DateTime.Today.AddDays(-5),
-                DateTime.Today.AddDays(-6),
+            DateTime.Today.AddDays(2)
         };
+
         public List<DateTime> SelectedDates
         {
             get => _selectedDates;

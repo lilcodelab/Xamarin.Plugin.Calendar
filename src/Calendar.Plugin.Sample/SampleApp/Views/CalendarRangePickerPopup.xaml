@@ -31,7 +31,7 @@
                     HorizontalTextAlignment="Center"
                     Text="Choose Date Range"
                     VerticalOptions="Center" />
-                <plugin:Calendar
+                <plugin:RangeSelectionCalendar
                     Padding="10,0"
                     FooterSectionVisible="False"
                     HorizontalOptions="Center"
@@ -125,7 +125,7 @@
                             </Grid>
                         </DataTemplate>
                     </plugin:Calendar.HeaderSectionTemplate>
-                </plugin:Calendar>
+                </plugin:RangeSelectionCalendar>
                 
                 <FlexLayout
                     JustifyContent="SpaceBetween">

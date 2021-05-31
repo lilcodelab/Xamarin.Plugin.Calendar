@@ -11,6 +11,11 @@ namespace SampleApp.ViewModels
     {
         public event Action<CalendarPickerResult> Closed;
 
+        public CalendarPickerPopupViewModel() : base()
+        {
+            SelectedDate = new DateTime(2021, 7, 13);
+        }
+
         public ICommand ClearCommand => new Command(() =>
         {
             SelectedDate = DateTime.Today;

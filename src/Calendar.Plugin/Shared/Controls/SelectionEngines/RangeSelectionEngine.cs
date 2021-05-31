@@ -7,12 +7,12 @@ using Xamarin.Plugin.Calendar.Models;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
-    internal class Range : ISelectionEngine
+    internal class RangedSelectionEngine : ISelectionEngine
     {
         private DateTime _rangeSelectionStartDate = DateTime.Today;
         private DateTime _rangeSelectionEndDate = DateTime.Today.AddDays(7);
 
-        public Range()
+        public RangedSelectionEngine()
         { }
 
         bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)

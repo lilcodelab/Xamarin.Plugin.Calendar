@@ -851,12 +851,17 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if(bindable is Calendar control && newValue is DateTime newDate && !newValue.Equals(oldValue))
+            var control = (Calendar)bindable;
+
+            if (control._isInitialLoad)
             {
-                control.SetValue(SelectedDateProperty, newValue);
-                control.SetValue(SelectedDatesProperty, new List<DateTime> { newDate });
+                control.SetValue(SelectedDateProperty, (DateTime)newValue);
+                control.SetValue(SelectedDatesProperty, new List<DateTime> { (DateTime)newValue });
+                control._isInitialLoad = false;
             }
         }
+
+        private bool _isInitialLoad = true;
 
         /// <summary>
         /// Selected date in single date selection mode
@@ -1021,7 +1026,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     UpdateMonthLabel();
                     break;
 
-                case nameof(SelectedDate):
                 case nameof(SelectedDates):
                     UpdateSelectedDateLabel();
                     UpdateEvents();
@@ -1050,7 +1054,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             MonthText = Culture.DateTimeFormat.MonthNames[MonthYear.Month - 1].Capitalize();
         }
-
+        
         private void UpdateSelectedDateLabel()
         {
             SelectedDateText = monthDaysView.CurrentSelectionEngine.GetSelectedDateText(SelectedDateTextFormat, Culture);

@@ -26,6 +26,7 @@
                 SwipedUp="OnSwipedUp">
                 <controls:MonthDaysView
                     x:Name="monthDaysView"
+                    x:FieldModifier="internal"
                     AnimateCalendar="{Binding AnimateCalendar, Source={x:Reference calendar}}"
                     Culture="{Binding Culture, Source={x:Reference calendar}}"
                     DayTappedCommand="{Binding DayTappedCommand, Source={x:Reference calendar}}"
