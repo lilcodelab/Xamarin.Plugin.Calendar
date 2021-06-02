@@ -10,7 +10,7 @@ namespace Xamarin.Plugin.Calendar.Controls
     internal class RangedSelectionEngine : ISelectionEngine
     {
         private DateTime _rangeSelectionStartDate = DateTime.Today;
-        private DateTime _rangeSelectionEndDate = DateTime.Today.AddDays(7);
+        private DateTime _rangeSelectionEndDate = DateTime.Today;
 
         public RangedSelectionEngine()
         { }
@@ -26,7 +26,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             return SelectDateRange(dateToSelect);
         }
 
-        private List<DateTime> SelectDateRange(DateTime newSelected)
+        internal List<DateTime> SelectDateRange(DateTime newSelected)
         {
             if (!DateTime.Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
                 SelectFirstIntervalBorder(newSelected);
@@ -62,8 +62,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
         {
-            _rangeSelectionStartDate = datesToSelect[0];
-            _rangeSelectionEndDate = datesToSelect[0];
+            if(datesToSelect.Count > 0)
+            {
+                _rangeSelectionStartDate = datesToSelect[0];
+                _rangeSelectionEndDate = datesToSelect[0];
+            }
 
             foreach (var date in datesToSelect)
             {

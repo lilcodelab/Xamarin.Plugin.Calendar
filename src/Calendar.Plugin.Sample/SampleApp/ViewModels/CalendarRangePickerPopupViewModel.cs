@@ -36,6 +36,19 @@ namespace SampleApp.ViewModels
             await PopupNavigation.Instance.PopAsync();
         });
 
+
+        public CalendarRangePickerPopupViewModel()
+        {
+            SelectedDates = new List<DateTime>
+            {
+                DateTime.Today,
+                DateTime.Today.AddDays(2),
+                DateTime.Today.AddDays(4),
+                DateTime.Today.AddDays(6),
+                DateTime.Today.AddDays(3),
+            };
+        }
+
         private DateTime _monthYear = DateTime.Today;
         public DateTime MonthYear
         {

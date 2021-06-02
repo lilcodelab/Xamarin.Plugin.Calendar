@@ -900,7 +900,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(SelectedDatesProperty, value);
-                SetValue(SelectedDateProperty, value[0]);
+                if(value.Count > 0)
+                    SetValue(SelectedDateProperty, value[0]);
             }
         }
 

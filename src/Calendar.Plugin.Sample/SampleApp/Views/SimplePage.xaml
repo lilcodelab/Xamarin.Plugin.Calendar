@@ -34,7 +34,7 @@
                     <Label
                         FontAttributes="Bold"
                         FontSize="Medium"
-                        Text="{Binding Name}" 
+                        Text="{Binding Name}"
                     />
                     <Label
                         FontSize="Small"

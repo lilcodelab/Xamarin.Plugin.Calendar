@@ -91,20 +91,6 @@ namespace SampleApp.ViewModels
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
-
-            Task.Delay(10000).ContinueWith(t =>
-            {
-                SelectedDates = new List<DateTime>
-                {
-                    DateTime.Today,
-                    DateTime.Today.AddDays(1),
-                    DateTime.Today.AddDays(2),
-                    DateTime.Today.AddDays(3),
-                    DateTime.Today.AddDays(4),
-                    DateTime.Today.AddDays(5),
-                    DateTime.Today.AddDays(6),
-                };
-            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name)
@@ -136,20 +122,26 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private List<DateTime> _selectedDates = new List<DateTime> { 
-            DateTime.Today, 
-            DateTime.Today.AddDays(1),
-            DateTime.Today.AddDays(2),
-            DateTime.Today.AddDays(3),
-            DateTime.Today.AddDays(4),
-            DateTime.Today.AddDays(5),
-            DateTime.Today.AddDays(6),
-        };
+        private List<DateTime> _selectedDates = new List<DateTime> { };
 
         public List<DateTime> SelectedDates
         {
             get => _selectedDates;
             set => SetProperty(ref _selectedDates, value);
+        }
+
+        private DateTime _startDate = DateTime.Today.AddDays(-9);
+        public DateTime StartDate
+        {
+            get => _startDate;
+            set => SetProperty(ref _startDate, value);
+        }
+
+        private DateTime _endDate = DateTime.Today.AddDays(2);
+        public DateTime EndDate
+        {
+            get => _endDate;
+            set => SetProperty(ref _endDate, value);
         }
 
         private static async Task DayTapped(DateTime date)

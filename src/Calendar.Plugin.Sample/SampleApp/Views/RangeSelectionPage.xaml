@@ -20,11 +20,15 @@
     </ContentPage.BindingContext>
 
     <plugin:RangeSelectionCalendar
+        x:Name="rangedCalendar"
         Padding="10,0"
         DayTappedCommand="{Binding DayTappedCommand}"
         Events="{Binding Events}"
         MonthYear="{Binding MonthYear}"
-        SelectedDates="{Binding SelectedDates}">
+        SelectedDates="{Binding SelectedDates}"
+        StartDate="{Binding StartDate}"
+        EndDate="{Binding EndDate}"
+        >
 
         <plugin:RangeSelectionCalendar.HeaderSectionTemplate>
             <controls:CalendarHeader />

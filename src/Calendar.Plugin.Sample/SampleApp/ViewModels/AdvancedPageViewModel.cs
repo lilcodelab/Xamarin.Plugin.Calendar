@@ -90,7 +90,7 @@ namespace SampleApp.ViewModels
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            SelectedDate = new DateTime(2021, 7, 13);
+            SelectedDate = DateTime.Today.AddDays(10);
         }
 
         private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name)
