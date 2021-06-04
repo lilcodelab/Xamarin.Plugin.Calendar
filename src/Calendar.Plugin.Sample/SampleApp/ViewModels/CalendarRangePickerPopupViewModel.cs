@@ -13,11 +13,7 @@ namespace SampleApp.ViewModels
 
         public ICommand ClearCommand => new Command(() =>
         {
-            SelectedDates = new List<DateTime> { 
-                DateTime.Today, 
-                DateTime.Today.AddDays(1),
-                DateTime.Today.AddDays(2)
-            };
+            SelectedDates = new List<DateTime>();
         });
 
         public ICommand SuccessCommand => new Command(async () =>

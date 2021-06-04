@@ -14,12 +14,12 @@ namespace Xamarin.Plugin.Calendar.Controls.Interfaces
         /// <summary>
         /// Method to load selected days in the calendar properly
         /// </summary>
-        internal bool IsDateSelected(DateTime dateToCheck);
+        internal bool IsDateSelected(DateTime? dateToCheck);
 
         /// <summary>
         /// Method to perform event selection
         /// </summary>
-        internal List<DateTime> PerformDateSelection(DateTime dateToSelect);
+        internal List<DateTime> PerformDateSelection(DateTime? dateToSelect);
 
         /// <summary>
         /// Method to update selectedDates when changed from code

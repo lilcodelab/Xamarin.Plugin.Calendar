@@ -60,7 +60,7 @@ namespace SampleApp.ViewModels
 
             };
 
-            MonthYear = MonthYear.AddMonths(1);            
+            MonthYear = MonthYear.AddMonths(1);       
         }
 
         private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name)

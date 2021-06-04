@@ -15,15 +15,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         public RangedSelectionEngine()
         { }
 
-        bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)
+        bool ISelectionEngine.IsDateSelected(DateTime? dateToCheck)
         {
-            return DateTime.Compare(dateToCheck, _rangeSelectionEndDate.Date) <= 0 &&
-                   DateTime.Compare(dateToCheck, _rangeSelectionStartDate.Date) >= 0;
+            if (!dateToCheck.HasValue)
+                return false;
+
+            return DateTime.Compare(dateToCheck.Value, _rangeSelectionEndDate.Date) <= 0 &&
+                   DateTime.Compare(dateToCheck.Value, _rangeSelectionStartDate.Date) >= 0;
         }
 
-        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime dateToSelect)
+        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime? dateToSelect)
         {
-            return SelectDateRange(dateToSelect);
+            if (!dateToSelect.HasValue)
+                return new List<DateTime>();
+
+            return SelectDateRange(dateToSelect.Value);
         }
 
         internal List<DateTime> SelectDateRange(DateTime newSelected)

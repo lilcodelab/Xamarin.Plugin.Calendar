@@ -112,8 +112,8 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private DateTime _selectedDate = DateTime.Today;
-        public DateTime SelectedDate
+        private DateTime? _selectedDate = DateTime.Today;
+        public DateTime? SelectedDate
         {
             get => _selectedDate;
             set => SetProperty(ref _selectedDate, value);

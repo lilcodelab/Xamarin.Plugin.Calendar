@@ -13,17 +13,21 @@ namespace SampleApp.ViewModels
 
         public CalendarPickerPopupViewModel() : base()
         {
-            SelectedDate = new DateTime(2021, 7, 13);
+            SelectedDate = new DateTime(2021, 6, 13);
         }
 
         public ICommand ClearCommand => new Command(() =>
         {
-            SelectedDate = DateTime.Today;
+            SelectedDate = null;
         });
 
         public ICommand SuccessCommand => new Command(async () =>
         {
-            Closed?.Invoke(new CalendarPickerResult() { IsSuccess = true, SelectedDate = SelectedDate });
+            if (SelectedDate.HasValue)
+                Closed?.Invoke(new CalendarPickerResult() { IsSuccess = true, SelectedDate = SelectedDate });
+            else
+                Closed?.Invoke(new CalendarPickerResult() { IsSuccess = false });
+
             await PopupNavigation.Instance.PopAsync();
         });
 
@@ -40,8 +44,8 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private DateTime _selectedDate = DateTime.Today;
-        public DateTime SelectedDate
+        private DateTime? _selectedDate = DateTime.Today;
+        public DateTime? SelectedDate
         {
             get => _selectedDate;
             set => SetProperty(ref _selectedDate, value);

@@ -42,7 +42,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
-          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay, propertyChanged: SelectedDatesChanged);
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime>(), BindingMode.TwoWay, propertyChanged: SelectedDatesChanged);
 
         private static void SelectedDatesChanged(BindableObject bindable, object oldValue, object newValue)
         {
@@ -602,8 +602,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                 return;
 
             SelectedDates = _currentSelectionEngine.PerformDateSelection(newSelected.Date);
-
-            UpdateDays();
         }
 
         private void UpdateDayTitles()

@@ -6,6 +6,6 @@ namespace SampleApp.Model
     {
         public bool IsSuccess { get; set; }
 
-        public DateTime SelectedDate { get; set; }
+        public DateTime? SelectedDate { get; set; }
     }
 }
