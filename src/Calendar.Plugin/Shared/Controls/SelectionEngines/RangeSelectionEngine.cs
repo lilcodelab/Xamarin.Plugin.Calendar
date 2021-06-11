@@ -9,79 +9,21 @@ namespace Xamarin.Plugin.Calendar.Controls
 {
     internal class RangedSelectionEngine : ISelectionEngine
     {
-        private DateTime _rangeSelectionStartDate = DateTime.Today;
-        private DateTime _rangeSelectionEndDate = DateTime.Today;
+        private DateTime? _rangeSelectionEndDate = null;
+        private DateTime? _rangeSelectionStartDate = null;
 
         public RangedSelectionEngine()
         { }
 
-        bool ISelectionEngine.IsDateSelected(DateTime? dateToCheck)
+        string ISelectionEngine.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
         {
-            if (!dateToCheck.HasValue)
-                return false;
-
-            return DateTime.Compare(dateToCheck.Value, _rangeSelectionEndDate.Date) <= 0 &&
-                   DateTime.Compare(dateToCheck.Value, _rangeSelectionStartDate.Date) >= 0;
-        }
-
-        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime? dateToSelect)
-        {
-            if (!dateToSelect.HasValue)
-                return new List<DateTime>();
-
-            return SelectDateRange(dateToSelect.Value);
-        }
-
-        internal List<DateTime> SelectDateRange(DateTime newSelected)
-        {
-            if (!DateTime.Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
-                SelectFirstIntervalBorder(newSelected);
-            else
-                SelectSecondIntervalBorder(newSelected);
-
-            return CreateRangeList();
-        }
-
-        private void SelectFirstIntervalBorder(DateTime newSelected)
-        {
-            _rangeSelectionStartDate = newSelected.Date;
-            _rangeSelectionEndDate = newSelected.Date;
-        }
-
-        private void SelectSecondIntervalBorder(DateTime newSelected)
-        {
-            if(DateTime.Compare(newSelected.Date, _rangeSelectionStartDate.Date) <= 0)
-                _rangeSelectionStartDate = newSelected.Date;
-            else
-                _rangeSelectionEndDate = newSelected.Date;
-        }
-
-        private List<DateTime> CreateRangeList()
-        {
-            var rangeList = new List<DateTime>();
-
-            for (var currentDate = _rangeSelectionStartDate; DateTime.Compare(currentDate, _rangeSelectionEndDate) <= 0; currentDate = currentDate.AddDays(1))
-                rangeList.Add(currentDate);
-
-            return rangeList;
-        }
-
-        void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
-        {
-            if(datesToSelect.Count > 0)
+            if (_rangeSelectionStartDate.HasValue)
             {
-                _rangeSelectionStartDate = datesToSelect[0];
-                _rangeSelectionEndDate = datesToSelect[0];
+                var startDateText = _rangeSelectionStartDate.Value.ToString(selectedDateTextFormat, culture);
+                var endDateText = _rangeSelectionEndDate.Value.ToString(selectedDateTextFormat, culture);
+                return $"{startDateText} - {endDateText}";
             }
-
-            foreach (var date in datesToSelect)
-            {
-                if (DateTime.Compare(date, _rangeSelectionStartDate) < 0)
-                    _rangeSelectionStartDate = date;
-
-                if (DateTime.Compare(_rangeSelectionEndDate, date) < 0)
-                    _rangeSelectionEndDate = date;
-            }
+            return string.Empty;
         }
 
         ICollection ISelectionEngine.GetSelectedEvents(EventCollection allEvents)
@@ -92,12 +34,77 @@ namespace Xamarin.Plugin.Calendar.Controls
             return wasSuccessful ? rangeEvents : null;
         }
 
-        string ISelectionEngine.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
+        bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)
         {
-            var startDateText = _rangeSelectionStartDate.ToString(selectedDateTextFormat, culture);
-            var endDateText = _rangeSelectionEndDate.ToString(selectedDateTextFormat, culture);
+            if (!_rangeSelectionStartDate.HasValue)
+                return false;
 
-            return $"{startDateText} - {endDateText}";
+            return DateTime.Compare(dateToCheck, _rangeSelectionEndDate.Value.Date) <= 0 &&
+                   DateTime.Compare(dateToCheck, _rangeSelectionStartDate.Value.Date) >= 0;
+        }
+
+        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime dateToSelect)
+        {
+            return SelectDateRange(dateToSelect);
+        }
+
+        void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
+        {
+            if (datesToSelect?.Count > 0)
+            {
+                _rangeSelectionStartDate = datesToSelect[0];
+                _rangeSelectionEndDate = datesToSelect[0];
+
+                foreach (var date in datesToSelect)
+                {
+                    if (DateTime.Compare(date, _rangeSelectionStartDate.Value) < 0)
+                        _rangeSelectionStartDate = date;
+
+                    if (DateTime.Compare(_rangeSelectionEndDate.Value, date) < 0)
+                        _rangeSelectionEndDate = date;
+                }
+            }
+            else
+            {
+                _rangeSelectionStartDate = null;
+                _rangeSelectionEndDate = null;
+            }
+        }
+
+        internal List<DateTime> SelectDateRange(DateTime newSelected)
+        {
+            if (_rangeSelectionStartDate is null || !Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
+                SelectFirstIntervalBorder(newSelected);
+            else
+                SelectSecondIntervalBorder(newSelected);
+
+            return CreateRangeList();
+        }
+
+        private List<DateTime> CreateRangeList()
+        {
+            var rangeList = new List<DateTime>();
+            if (_rangeSelectionStartDate.HasValue && _rangeSelectionEndDate.HasValue)
+            {
+                for (var currentDate = _rangeSelectionStartDate; DateTime.Compare(currentDate.Value, _rangeSelectionEndDate.Value) <= 0; currentDate = currentDate.Value.AddDays(1))
+                    rangeList.Add(currentDate.Value);
+            }
+
+            return rangeList;
+        }
+
+        private void SelectFirstIntervalBorder(DateTime newSelected)
+        {
+            _rangeSelectionStartDate = newSelected.Date;
+            _rangeSelectionEndDate = newSelected.Date;
+        }
+
+        private void SelectSecondIntervalBorder(DateTime newSelected)
+        {
+            if (DateTime.Compare(newSelected.Date, _rangeSelectionStartDate.Value.Date) <= 0)
+                _rangeSelectionStartDate = newSelected.Date;
+            else
+                _rangeSelectionEndDate = newSelected.Date;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -852,7 +853,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = (Calendar)bindable;
-            var dateToSet = ((DateTime?)newValue);
+            var dateToSet = (DateTime?)newValue;
 
             control.SetValue(SelectedDateProperty, dateToSet);
 
@@ -903,10 +904,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(SelectedDatesProperty, value);
-                if(value.Count > 0)
-                    SetValue(SelectedDateProperty, value[0]);
-                else
-                    SetValue(SelectedDateProperty, null);
+                SetValue(SelectedDateProperty, value?.FirstOrDefault());
             }
         }
 

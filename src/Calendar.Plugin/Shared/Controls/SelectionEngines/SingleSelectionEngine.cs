@@ -14,38 +14,9 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
         internal SingleSelectionEngine()
         { }
 
-        bool ISelectionEngine.IsDateSelected(DateTime? dateToCheck)
+        string ISelectionEngine.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
         {
-            return Equals(dateToCheck, _selectedDate);
-        }
-
-        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime? dateToSelect)
-        {
-            if (dateToSelect == _selectedDate)
-            {
-                _selectedDate = null;
-                return new List<DateTime>();
-            }
-
-            SelectSingleDate(dateToSelect);
-
-            if (dateToSelect.HasValue)
-                return new List<DateTime> { dateToSelect.Value };
-
-            return new List<DateTime>();
-        }
-
-        private void SelectSingleDate(DateTime? dateToSelect)
-        {
-            _selectedDate = dateToSelect;
-        }
-
-        void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
-        {
-            if (datesToSelect.Count > 0)
-                _selectedDate = datesToSelect[0];
-            else
-                _selectedDate = null;
+            return _selectedDate?.ToString(selectedDateTextFormat, culture);
         }
 
         ICollection ISelectionEngine.GetSelectedEvents(EventCollection allEvents)
@@ -58,9 +29,35 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             return wasSuccessful ? dayEvents : null;
         }
 
-        string ISelectionEngine.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
+        bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)
         {
-            return _selectedDate?.ToString(selectedDateTextFormat, culture);
+            return Equals(dateToCheck, _selectedDate);
+        }
+
+        List<DateTime> ISelectionEngine.PerformDateSelection(DateTime dateToSelect)
+        {
+            if (dateToSelect == _selectedDate)
+            {
+                _selectedDate = null;
+                return new List<DateTime>();
+            }
+
+            SelectSingleDate(dateToSelect);
+
+            return new List<DateTime> { dateToSelect };
+        }
+
+        void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
+        {
+            if (datesToSelect.Count > 0)
+                _selectedDate = datesToSelect[0];
+            else
+                _selectedDate = null;
+        }
+
+        private void SelectSingleDate(DateTime? dateToSelect)
+        {
+            _selectedDate = dateToSelect;
         }
     }
 }
