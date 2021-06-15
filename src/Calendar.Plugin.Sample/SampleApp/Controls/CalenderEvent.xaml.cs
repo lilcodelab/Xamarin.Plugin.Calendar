@@ -25,9 +25,7 @@ namespace SampleApp.Controls
         private void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
         {
             if (BindingContext is AdvancedEventModel eventModel)
-            {
                 CalenderEventCommand?.Execute(eventModel);
-            }
         }
     }
 }

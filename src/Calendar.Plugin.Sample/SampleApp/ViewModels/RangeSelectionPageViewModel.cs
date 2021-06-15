@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -20,9 +19,14 @@ namespace SampleApp.ViewModels
         {
             await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
             {
-                string message = calendarPickerResult.IsSuccess ?
-                    $"Received date range from popup: {calendarPickerResult.SelectedStartDate:dd.MM.yyyy} - {calendarPickerResult.SelectedEndDate:dd.MM.yyyy}" :
-                    "Calendar Range Picker Canceled!";
+                var message = "Calendar Range Picker Canceled!";
+
+                if(calendarPickerResult.IsSuccess)
+                {
+                    var startDate = calendarPickerResult.SelectedDates[0];
+                    var endDate = calendarPickerResult.SelectedDates[calendarPickerResult.SelectedDates.Count - 1];
+                    message = $"Received date range from popup: {startDate:dd.MM.yyyy} - {endDate:dd.MM.yyyy}";
+                }
 
                 await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
             }));
@@ -88,18 +92,26 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private DateTime _selectedStartDate = DateTime.Today;
-        public DateTime SelectedStartDate
+        private List<DateTime> _selectedDates = new List<DateTime> { };
+
+        public List<DateTime> SelectedDates
         {
-            get => _selectedStartDate;
-            set => SetProperty(ref _selectedStartDate, value);
+            get => _selectedDates;
+            set => SetProperty(ref _selectedDates, value);
         }
 
-        private DateTime _selectedEndDate = DateTime.Today;
-        public DateTime SelectedEndDate
+        private DateTime _startDate = DateTime.Today.AddDays(-9);
+        public DateTime StartDate
         {
-            get => _selectedEndDate;
-            set => SetProperty(ref _selectedEndDate, value);
+            get => _startDate;
+            set => SetProperty(ref _startDate, value);
+        }
+
+        private DateTime _endDate = DateTime.Today.AddDays(2);
+        public DateTime EndDate
+        {
+            get => _endDate;
+            set => SetProperty(ref _endDate, value);
         }
 
         private async Task ExecuteEventSelectedCommand(object item)

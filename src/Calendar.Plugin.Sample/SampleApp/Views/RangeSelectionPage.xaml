@@ -19,39 +19,33 @@
         <local:RangeSelectionPageViewModel />
     </ContentPage.BindingContext>
 
-    <plugin:Calendar
+    <plugin:RangeSelectionCalendar
+        x:Name="rangedCalendar"
         Padding="10,0"
-        AnimateCalendar="True"
         DayTappedCommand="{Binding DayTappedCommand}"
         Events="{Binding Events}"
         MonthYear="{Binding MonthYear}"
-        SelectedDate="{Binding SelectedDate}"
-        SelectionType="Range"
-        EventIndicatorSelectedTextColor="Blue"
-        EventIndicatorSelectedColor="Yellow"
-        SelectedDayBackgroundColor="GreenYellow"
-        SelectedDayTextColor ="DarkBlue"
-        EventIndicatorType="TopDot"
-        DayViewCornerRadius="0"
-        RangeSelectionStartDate="{Binding SelectedStartDate}"
-        RangeSelectionEndDate="{Binding SelectedEndDate}">
+        SelectedDates="{Binding SelectedDates}"
+        StartDate="{Binding StartDate}"
+        EndDate="{Binding EndDate}"
+        >
 
-        <plugin:Calendar.HeaderSectionTemplate>
+        <plugin:RangeSelectionCalendar.HeaderSectionTemplate>
             <controls:CalendarHeader />
-        </plugin:Calendar.HeaderSectionTemplate>
+        </plugin:RangeSelectionCalendar.HeaderSectionTemplate>
 
-        <plugin:Calendar.FooterSectionTemplate>
+        <plugin:RangeSelectionCalendar.FooterSectionTemplate>
             <DataTemplate>
                 <controls:CalendarFooter />
             </DataTemplate>
-        </plugin:Calendar.FooterSectionTemplate>
+        </plugin:RangeSelectionCalendar.FooterSectionTemplate>
 
-        <plugin:Calendar.EventTemplate>
+        <plugin:RangeSelectionCalendar.EventTemplate>
             <DataTemplate>
                 <controls:CalenderEvent CalenderEventCommand="{Binding BindingContext.EventSelectedCommand, Source={x:Reference advancedRangeSelectionCalendarPage}}" />
             </DataTemplate>
-        </plugin:Calendar.EventTemplate>
-        <plugin:Calendar.EmptyTemplate>
+        </plugin:RangeSelectionCalendar.EventTemplate>
+        <plugin:RangeSelectionCalendar.EmptyTemplate>
             <DataTemplate>
                 <StackLayout>
                     <Label
@@ -60,8 +54,8 @@
                         Text="NO EVENTS FOR THE SELECTED DATE" />
                 </StackLayout>
             </DataTemplate>
-        </plugin:Calendar.EmptyTemplate>
-    </plugin:Calendar>
+        </plugin:RangeSelectionCalendar.EmptyTemplate>
+    </plugin:RangeSelectionCalendar>
 
     <ContentPage.Resources>
         <ResourceDictionary>

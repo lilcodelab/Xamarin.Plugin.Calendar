@@ -31,16 +31,14 @@
                     HorizontalTextAlignment="Center"
                     Text="Choose Date Range"
                     VerticalOptions="Center" />
-                <plugin:Calendar
+                <plugin:RangeSelectionCalendar
                     Padding="10,0"
                     FooterSectionVisible="False"
                     HorizontalOptions="Center"
                     MaximumDate="{Binding MaximumDate}"
                     MinimumDate="{Binding MinimumDate}"
                     MonthYear="{Binding MonthYear}"
-                    SelectionType="Range"
-                    RangeSelectionEndDate="{Binding SelectedEndDate}"
-                    RangeSelectionStartDate="{Binding SelectedStartDate}"
+                    SelectedDates="{Binding SelectedDates}"
                     VerticalOptions="Center"
                     WidthRequest="320">
                     <plugin:Calendar.HeaderSectionTemplate>
@@ -127,7 +125,7 @@
                             </Grid>
                         </DataTemplate>
                     </plugin:Calendar.HeaderSectionTemplate>
-                </plugin:Calendar>
+                </plugin:RangeSelectionCalendar>
                 
                 <FlexLayout
                     JustifyContent="SpaceBetween">

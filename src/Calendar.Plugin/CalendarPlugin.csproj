@@ -52,7 +52,6 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
   </ItemGroup>
 
-
   <ItemGroup>
     <EmbeddedResource Update="Shared\Controls\Calendar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -98,4 +97,8 @@
   </ItemGroup>
   
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+  
+  <ItemGroup>
+    <None Remove="Shared\Controls\RangeSelectionCalendar.cs" />
+  </ItemGroup>
 </Project>

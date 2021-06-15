@@ -1,6 +1,7 @@
 ﻿using Rg.Plugins.Popup.Services;
 using SampleApp.Model;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -12,8 +13,11 @@ namespace SampleApp.ViewModels
 
         public ICommand ClearCommand => new Command(() =>
         {
-            SelectedStartDate = DateTime.Today;
-            SelectedEndDate = DateTime.Today;
+            SelectedDates = new List<DateTime> { 
+                DateTime.Today, 
+                DateTime.Today.AddDays(1),
+                DateTime.Today.AddDays(2)
+            };
         });
 
         public ICommand SuccessCommand => new Command(async () =>
@@ -21,8 +25,7 @@ namespace SampleApp.ViewModels
             Closed?.Invoke(new CalendarRangePickerResult()
             {
                 IsSuccess = true,
-                SelectedStartDate = SelectedStartDate,
-                SelectedEndDate = SelectedEndDate,
+                SelectedDates = SelectedDates,
             });
             await PopupNavigation.Instance.PopAsync();
         });
@@ -33,6 +36,19 @@ namespace SampleApp.ViewModels
             await PopupNavigation.Instance.PopAsync();
         });
 
+
+        public CalendarRangePickerPopupViewModel()
+        {
+            SelectedDates = new List<DateTime>
+            {
+                DateTime.Today,
+                DateTime.Today.AddDays(2),
+                DateTime.Today.AddDays(4),
+                DateTime.Today.AddDays(6),
+                DateTime.Today.AddDays(3),
+            };
+        }
+
         private DateTime _monthYear = DateTime.Today;
         public DateTime MonthYear
         {
@@ -40,18 +56,16 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private DateTime _selectedStartDate = DateTime.Today;
-        public DateTime SelectedStartDate
-        {
-            get => _selectedStartDate;
-            set => SetProperty(ref _selectedStartDate, value);
-        }
+        private List<DateTime> _selectedDates = new List<DateTime> { 
+            DateTime.Today, 
+            DateTime.Today.AddDays(1),
+            DateTime.Today.AddDays(2)
+        };
 
-        private DateTime _selectedEndDate = DateTime.Today;
-        public DateTime SelectedEndDate
+        public List<DateTime> SelectedDates
         {
-            get => _selectedEndDate;
-            set => SetProperty(ref _selectedEndDate, value);
+            get => _selectedDates;
+            set => SetProperty(ref _selectedDates, value);
         }
 
         private DateTime _minimumDate = DateTime.Today.AddYears(-1);

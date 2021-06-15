@@ -2,7 +2,6 @@
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Windows.Input;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -21,7 +20,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             if (BindingContext is DayModel dayModel && !dayModel.IsDisabled && dayModel.IsVisible)
             {
-                dayModel.IsSelected = true;
+                dayModel.IsSelected = !dayModel.IsSelected;
                 dayModel.DayTappedCommand?.Execute(dayModel.Date);
             }
         }
