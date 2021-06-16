@@ -70,7 +70,8 @@ Bindable properties:
 In your XAML, add the data template for events, and bind the events collection, example:
 ```xml
 <controls:Calendar
-        Events="{Binding Events}">
+        Events="{Binding Events}"
+        Culture="{Binding Culture}">
     <controls:Calendar.EventTemplate>
         <DataTemplate>
             <StackLayout
@@ -92,6 +93,17 @@ In your XAML, add the data template for events, and bind the events collection, 
 In your ViewModel reference the following namespace:
 ```csharp
 using Xamarin.Plugin.Calendar.Models;
+```
+
+Add property for Culture:
+```csharp
+private CultureInfo _cultureInfo = new CultureInfo("hr-HR");
+
+public CultureInfo Culture 
+{ 
+    get => _cultureInfo; 
+    set => SetProperty(ref _cultureInfo, value); 
+}
 ```
 
 Add property for Events:
