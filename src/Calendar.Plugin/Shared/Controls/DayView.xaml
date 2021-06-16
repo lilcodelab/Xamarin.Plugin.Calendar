@@ -14,7 +14,8 @@
         OutlineColor="{Binding OutlineColor}"
         WidthRequest="{Binding DayViewSize}"
         HorizontalOptions="Center"
-        Padding="0">
+        Padding="0"
+        HasShadow="False">
         <FlexLayout 
             Direction="{Binding EventLayoutDirection}"
             AlignItems="Center"
