@@ -15,7 +15,7 @@ namespace SampleApp.ViewModels
 
         private DateTime _monthYear = DateTime.Today;
 
-        private List<DateTime>? _selectedDates = new List<DateTime> {
+        private List<DateTime> _selectedDates = new List<DateTime> {
             DateTime.Today,
             DateTime.Today.AddDays(1),
             DateTime.Today.AddDays(2)
@@ -64,7 +64,7 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        public List<DateTime>? SelectedDates
+        public List<DateTime> SelectedDates
         {
             get => _selectedDates;
             set => SetProperty(ref _selectedDates, value);
