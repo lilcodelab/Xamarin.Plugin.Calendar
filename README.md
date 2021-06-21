@@ -12,7 +12,7 @@ Simple cross platform plugin for Calendar control featuring:
 - UI reactive to EventCollection, Culture and other changes
 
 We are open to any suggestions and feedback, and we got our community telegram group [here](https://t.me/XamarinPluginCalendar) :)   
-If you are coming back take a look on the [Changelog here](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/CHANGELOG.md).
+
 
 ## Simple Implementation
 | Android | iPhone |
@@ -37,7 +37,7 @@ If you are coming back take a look on the [Changelog here](https://github.com/li
 #### Supported versions
 | Platform | Version |
 | -------- | ------- 
-| Xamarin.Forms | 4.5+ |
+| Xamarin.Forms | 4.8+ |
 | Xamarin.Android | 10.0+ |
 | Xamarin.iOS | 9.0+ |
 
