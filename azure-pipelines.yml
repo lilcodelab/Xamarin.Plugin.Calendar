@@ -33,6 +33,14 @@ jobs:
         solution: '**/CalendarPlugin.csproj'
         msbuildArguments: '/p:Version=$(nugetVersion)'
         configuration: '$(BuildConfiguration)'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          OUTPUT_PATH=src/Calendar.Plugin/bin/Release
+
+          echo "$(nugetVersion)" > $OUTPUT_PATH/NUGET_VERSION
+          echo "$(Build.SourceVersion)" > $OUTPUT_PATH/SOURCE_VERSION
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: nupkg'
