@@ -23,7 +23,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private static void OnStartDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (((RangeSelectionCalendar)bindable)._isRangeSelection == false)
-               ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime)newValue);
+               ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime?)newValue);
         }
 
         /// <summary> Beggining of selected interval </summary>
@@ -40,7 +40,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private static void OnEndDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if(((RangeSelectionCalendar)bindable)._isRangeSelection == false)
-                ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime)newValue);
+                ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime?)newValue);
             ((RangeSelectionCalendar)bindable)._isRangeSelection = false;
         }
 
@@ -66,7 +66,6 @@ namespace Xamarin.Plugin.Calendar.Controls
                     SetValue(StartDateProperty, first.First());
                     SetValue(EndDateProperty, first.Last());
                 }
-                
             }
         }
         /// <summary>

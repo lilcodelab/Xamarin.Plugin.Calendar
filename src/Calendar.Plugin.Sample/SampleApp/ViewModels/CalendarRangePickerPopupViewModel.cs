@@ -16,28 +16,28 @@ namespace SampleApp.ViewModels
         private DateTime _monthYear = DateTime.Today;
 
         // If you do with _selectedDates then set _startDate & _endDate to null
-        private DateTime? _startDate = null;
-        private DateTime? _endDate = null;
+        private DateTime? _startDate = DateTime.Today.AddDays(-5);
+        private DateTime? _endDate = DateTime.Today.AddDays(5);
 
         // If you do with startDate and endDate then set _selectedDates to null
-        //private List<DateTime> _selectedDates = null;
+        private List<DateTime> _selectedDates = null;
 
-        private List<DateTime> _selectedDates = new List<DateTime> {
-            DateTime.Today.AddDays(1),
-            DateTime.Today.AddDays(2),
-            DateTime.Today.AddDays(3)
-        };
+        //private List<DateTime> _selectedDates = new List<DateTime> {
+        //    DateTime.Today.AddDays(1),
+        //    DateTime.Today.AddDays(2),
+        //    DateTime.Today.AddDays(3)
+        //};
 
         public CalendarRangePickerPopupViewModel()
         {
-            SelectedDates = new List<DateTime>
-            {
-                DateTime.Today,
-                DateTime.Today.AddDays(2),
-                DateTime.Today.AddDays(4),
-                DateTime.Today.AddDays(6),
-                DateTime.Today.AddDays(5),
-            };
+            //SelectedDates = new List<DateTime>
+            //{
+            //    DateTime.Today,
+            //    DateTime.Today.AddDays(2),
+            //    DateTime.Today.AddDays(4),
+            //    DateTime.Today.AddDays(6),
+            //    DateTime.Today.AddDays(5),
+            //};
         }
 
         public event Action<CalendarRangePickerResult> Closed;
@@ -51,8 +51,8 @@ namespace SampleApp.ViewModels
         public ICommand ClearCommand => new Command(() =>
                 {
                     SelectedDates = null;
-                    //StartDate = null;
-                    //EndDate = null;
+                    StartDate = null;
+                    EndDate = null;
                 });
 
         public DateTime MaximumDate

@@ -71,9 +71,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        internal List<DateTime> SelectDateRange(DateTime newSelected)
+        internal List<DateTime> SelectDateRange(DateTime? newSelected)
         {
-            if (_rangeSelectionStartDate is null || !Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
+            if (_rangeSelectionStartDate is null && newSelected is null)
+                return null;
+            else if (_rangeSelectionStartDate is null || !Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
                 SelectFirstIntervalBorder(newSelected);
             else
                 SelectSecondIntervalBorder(newSelected);
@@ -95,21 +97,24 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         internal List<DateTime> GetDateRange() => CreateRangeList();
 
-        private void SelectFirstIntervalBorder(DateTime newSelected)
+        private void SelectFirstIntervalBorder(DateTime? newSelected)
         {
-            _rangeSelectionStartDate = newSelected.Date;
-            _rangeSelectionEndDate = newSelected.Date;
+            if (newSelected is not null)
+            {
+            _rangeSelectionStartDate = newSelected.Value.Date;
+            _rangeSelectionEndDate = newSelected.Value.Date;
+            } 
         }
 
         internal DateTime? RangeSelectionStartDate => _rangeSelectionStartDate;
         internal DateTime? RangeSelectionEndDate => _rangeSelectionEndDate;
 
-        private void SelectSecondIntervalBorder(DateTime newSelected)
+        private void SelectSecondIntervalBorder(DateTime? newSelected)
         {
-            if (DateTime.Compare(newSelected.Date, _rangeSelectionStartDate.Value.Date) <= 0)
-                _rangeSelectionStartDate = newSelected.Date;
+            if (DateTime.Compare(newSelected.Value.Date, _rangeSelectionStartDate.Value.Date) <= 0)
+                _rangeSelectionStartDate = newSelected.Value.Date;
             else
-                _rangeSelectionEndDate = newSelected.Date;
+                _rangeSelectionEndDate = newSelected.Value.Date;
         }
     }
 }

@@ -33,12 +33,14 @@
                     VerticalOptions="Center" />
                 <plugin:RangeSelectionCalendar
                     Padding="10,0"
+                    EndDate="{Binding EndDate}"
                     FooterSectionVisible="False"
                     HorizontalOptions="Center"
                     MaximumDate="{Binding MaximumDate}"
                     MinimumDate="{Binding MinimumDate}"
                     MonthYear="{Binding MonthYear}"
                     SelectedDates="{Binding SelectedDates}"
+                    StartDate="{Binding StartDate}"
                     VerticalOptions="Center"
                     WidthRequest="320">
                     <plugin:Calendar.HeaderSectionTemplate>
