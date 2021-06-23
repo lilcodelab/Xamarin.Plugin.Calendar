@@ -8,7 +8,7 @@
     <PackageProjectUrl>https://github.com/lilcodelab/XamarinForms-Calendar</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lilcodelab/XamarinForms-Calendar</RepositoryUrl>
     <PackageReleaseNotes />
-    <Copyright>Copyright 2020 lilcodelab</Copyright>
+    <Copyright>Copyright 2021 littlecode</Copyright>
     <Company>lilcodelab</Company>
     <Owners>lilcodelab</Owners>
     <Version>1.0.0.0</Version>
@@ -45,7 +45,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 

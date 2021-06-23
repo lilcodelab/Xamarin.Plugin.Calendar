@@ -12,7 +12,7 @@ Simple cross platform plugin for Calendar control featuring:
 - UI reactive to EventCollection, Culture and other changes
 
 We are open to any suggestions and feedback, and we got our community telegram group [here](https://t.me/XamarinPluginCalendar) :)   
-If you are coming back take a look on the [Changelog here](https://github.com/lilcodelab/Xamarin.Plugin.Calendar/blob/master/CHANGELOG.md).
+
 
 ## Simple Implementation
 | Android | iPhone |
@@ -37,7 +37,7 @@ If you are coming back take a look on the [Changelog here](https://github.com/li
 #### Supported versions
 | Platform | Version |
 | -------- | ------- 
-| Xamarin.Forms | 4.5+ |
+| Xamarin.Forms | 4.8+ |
 | Xamarin.Android | 10.0+ |
 | Xamarin.iOS | 9.0+ |
 
@@ -60,17 +60,17 @@ Basic control usage:
 ```
 
 Bindable properties:
-* `Culture` CultureInfo
-* `Month` int
-* `Year` int
-* `Events` EventCollection (from package)
+* `Culture` _CultureInfo_ calender culture/language
+* `Month` _int_ currently viewing month
+* `Year` _int_ currently viewing year
+* `Events` _EventCollection_ (from package) your events for calender
 * Custom colors, fonts, sizes ...
 
 #### Binding events:
 In your XAML, add the data template for events, and bind the events collection, example:
 ```xml
 <controls:Calendar
-        Events="{Binding Events}">
+    Events="{Binding Events}">
     <controls:Calendar.EventTemplate>
         <DataTemplate>
             <StackLayout
@@ -154,22 +154,36 @@ Where `EventModel` is just an example, it can be replaced by any data model you 
 
 `DayEventCollection` is just a wrapper over `List<T>` exposing custom properties `EventIndicatorColor` and `EventIndicatorSelectedColor` for assigning a custom color to the dot.
 
+#### Set up culture
+
+In your ViewModel add property for Culture:
+```csharp
+public CultureInfo Culture => new CultureInfo("hr-HR")
+```
+
+In XAML add Culture binding
+```xml
+<controls:Calendar
+    Culture="{Binding Culture}">
+</controls:Calendar>
+```
+
 #### Available color customization
 Sample properties:
 ```xml
 MonthLabelColor="Red"
 YearLabelColor="Blue"
-SelectedDateColor="Red"
-SelectedDayBackgroundColor="DarkCyan"
 EventIndicatorColor="Red"
 EventIndicatorSelectedColor="White"
 DaysTitleColor="Orange"
-SelectedDayTextColor="Cyan"
 DeselectedDayTextColor="Blue"
 OtherMonthDayColor="Gray"
+SelectedDayTextColor="Cyan"
+SelectedDayBackgroundColor="DarkCyan"
+SelectedDateColor="Red"
+SelectedTodayTextColor="Green"
 TodayOutlineColor="Blue"
 TodayFillColor="Silver"
-SelectedTodayTextColor="Green"
 TodayTextColor="Yellow"
 ```
 
