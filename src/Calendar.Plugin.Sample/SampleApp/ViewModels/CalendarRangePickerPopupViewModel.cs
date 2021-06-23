@@ -15,10 +15,17 @@ namespace SampleApp.ViewModels
 
         private DateTime _monthYear = DateTime.Today;
 
+        // If you do with _selectedDates then set _startDate & _endDate to null
+        private DateTime? _startDate = null;
+        private DateTime? _endDate = null;
+
+        // If you do with startDate and endDate then set _selectedDates to null
+        //private List<DateTime> _selectedDates = null;
+
         private List<DateTime> _selectedDates = new List<DateTime> {
-            DateTime.Today,
             DateTime.Today.AddDays(1),
-            DateTime.Today.AddDays(2)
+            DateTime.Today.AddDays(2),
+            DateTime.Today.AddDays(3)
         };
 
         public CalendarRangePickerPopupViewModel()
@@ -29,7 +36,7 @@ namespace SampleApp.ViewModels
                 DateTime.Today.AddDays(2),
                 DateTime.Today.AddDays(4),
                 DateTime.Today.AddDays(6),
-                DateTime.Today.AddDays(3),
+                DateTime.Today.AddDays(5),
             };
         }
 
@@ -44,6 +51,8 @@ namespace SampleApp.ViewModels
         public ICommand ClearCommand => new Command(() =>
                 {
                     SelectedDates = null;
+                    //StartDate = null;
+                    //EndDate = null;
                 });
 
         public DateTime MaximumDate
@@ -70,12 +79,26 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDates, value);
         }
 
+        public DateTime? StartDate 
+        {
+            get => _startDate; 
+            set => SetProperty(ref _startDate, value); 
+        }
+
+        public DateTime? EndDate
+        {
+            get => _endDate;
+            set => SetProperty(ref _endDate, value);
+        }
+
         public ICommand SuccessCommand => new Command(async () =>
             {
                 Closed?.Invoke(new CalendarRangePickerResult()
                 {
                     IsSuccess = true,
                     SelectedDates = SelectedDates,
+                    StartDate = StartDate,
+                    EndDate = EndDate
                 });
                 await PopupNavigation.Instance.PopAsync();
             });

@@ -93,11 +93,16 @@ namespace Xamarin.Plugin.Calendar.Controls
             return rangeList;
         }
 
+        internal List<DateTime> GetDateRange() => CreateRangeList();
+
         private void SelectFirstIntervalBorder(DateTime newSelected)
         {
             _rangeSelectionStartDate = newSelected.Date;
             _rangeSelectionEndDate = newSelected.Date;
         }
+
+        internal DateTime? RangeSelectionStartDate => _rangeSelectionStartDate;
+        internal DateTime? RangeSelectionEndDate => _rangeSelectionEndDate;
 
         private void SelectSecondIntervalBorder(DateTime newSelected)
         {

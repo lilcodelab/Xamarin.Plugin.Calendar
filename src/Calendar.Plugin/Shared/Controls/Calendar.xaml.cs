@@ -850,17 +850,23 @@ namespace Xamarin.Plugin.Calendar.Controls
         public static readonly BindableProperty SelectedDateProperty =
           BindableProperty.Create(nameof(SelectedDate), typeof(DateTime?), typeof(Calendar), null, BindingMode.TwoWay, propertyChanged: OnSelectedDateChanged);
 
-        private static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
+        protected internal static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = (Calendar)bindable;
             var dateToSet = (DateTime?)newValue;
 
             control.SetValue(SelectedDateProperty, dateToSet);
-
-            if (dateToSet.HasValue)
-                control.SetValue(SelectedDatesProperty, new List<DateTime> { dateToSet.Value });
-            else
-                control.SetValue(SelectedDatesProperty, new List<DateTime>());
+            if (!control._isSelectingDates)
+            {
+                if (dateToSet.HasValue)
+                    control.SetValue(SelectedDatesProperty, new List<DateTime> { dateToSet.Value });
+                else
+                    control.SetValue(SelectedDatesProperty, new List<DateTime>());
+            } else
+            {
+                control._isSelectingDates = false;
+            }
+            
         }
 
         /// <summary>
@@ -872,28 +878,17 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(SelectedDateProperty, value);
-
-                if(!value.HasValue)
-                    SelectedDates = new List<DateTime>();
-
-                if (value.HasValue && _selectedDate.HasValue && _selectedDate.Value != value.Value)
-                {
-                    _selectedDate = value;
-                    SelectedDates = new List<DateTime> { value.Value };
-                }
+                SetValue(SelectedDatesProperty, value.HasValue ? new List<DateTime> { value.Value } : null);
             }
         }
-
-        /// <summary>
-        /// Specifies the currently selected date in single selection mode
-        /// </summary>
-        private DateTime? _selectedDate;
 
         /// <summary> 
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
-          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime>(), BindingMode.TwoWay);
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(Calendar), null, BindingMode.TwoWay);
+
+        private bool _isSelectingDates = false;
 
         /// <summary>
         /// Selected date in single date selection mode
@@ -904,7 +899,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(SelectedDatesProperty, value);
-                SetValue(SelectedDateProperty, value?.FirstOrDefault());
+                _isSelectingDates = true;
+                SetValue(SelectedDateProperty, value?.Count > 0 ? value.First() : null);
             }
         }
 

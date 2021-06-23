@@ -72,10 +72,21 @@ namespace SampleApp.ViewModels
             {
                 var message = "Calendar Range Picker Canceled!";
 
-                if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedDates.Count > 0)
+                if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedDates?.Count > 0 || (calendarPickerResult.StartDate.HasValue && calendarPickerResult.EndDate.HasValue))
                 {
                     var startDate = calendarPickerResult.SelectedDates[0];
-                    var endDate = calendarPickerResult.SelectedDates[calendarPickerResult.SelectedDates.Count - 1];
+                    var endDate = DateTime.MinValue;
+                    foreach (DateTime date in calendarPickerResult.SelectedDates)
+                    {
+                        if (date < startDate)
+                            startDate = date;
+                        if (date > endDate)
+                        {
+                            endDate = date;
+                        }
+                    }
+                    //var startDate = calendarPickerResult.StartDate;
+                    //var endDate = calendarPickerResult.EndDate;
                     message = $"Received date range from popup: {startDate:dd.MM.yyyy} - {endDate:dd.MM.yyyy}";
                 }
                 else if (calendarPickerResult.IsSuccess)

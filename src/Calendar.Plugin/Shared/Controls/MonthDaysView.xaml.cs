@@ -46,7 +46,7 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void SelectedDatesChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is MonthDaysView control && newValue is List<DateTime> && !newValue.Equals(oldValue))
+            if (bindable is MonthDaysView control && (newValue is List<DateTime> || newValue is null) && !Equals(newValue, oldValue))
                 control.UpdateDays();
         }
 
@@ -556,6 +556,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 case nameof(SelectedDates):
                     _currentSelectionEngine.UpdateDateSelection(SelectedDates);
+                    //_currentSelectionEngine.UpdateDateSelection(StartRangeDate, EndRangeDate);
                     break;
 
 

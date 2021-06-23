@@ -49,7 +49,7 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
 
         void ISelectionEngine.UpdateDateSelection(List<DateTime> datesToSelect)
         {
-            if (datesToSelect.Count > 0)
+            if (datesToSelect?.Count > 0)
                 _selectedDate = datesToSelect[0];
             else
                 _selectedDate = null;
