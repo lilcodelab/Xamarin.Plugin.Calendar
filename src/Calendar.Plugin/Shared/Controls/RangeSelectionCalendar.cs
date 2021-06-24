@@ -22,8 +22,12 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void OnStartDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (((RangeSelectionCalendar)bindable)._isRangeSelection == false)
-               ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime?)newValue);
+            var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
+            if (rangeSelectionCalendar._isRangeSelection == false)
+            {
+                rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
+                rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
+            }
         }
 
         /// <summary> Beggining of selected interval </summary>
@@ -39,9 +43,13 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void OnEndDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if(((RangeSelectionCalendar)bindable)._isRangeSelection == false)
-                ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime?)newValue);
-            ((RangeSelectionCalendar)bindable)._isRangeSelection = false;
+            var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
+            if(rangeSelectionCalendar._isRangeSelection == false)
+            {
+                rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
+                rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
+            }
+            rangeSelectionCalendar._isRangeSelection = false;
         }
 
         /// <summary> End of selected interval </summary>
@@ -56,7 +64,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-            if(propertyName == nameof(SelectedDates))
+            if(propertyName == nameof(SelectedDates) && _isRangeSelection == false)
             {
                 var first = _selectionEngine.GetDateRange();
                 

@@ -22,6 +22,7 @@ namespace SampleApp.ViewModels
         // If you do with startDate and endDate then set _selectedDates to null
         private List<DateTime> _selectedDates = null;
 
+        // TODO create new class when we refactor sample app.
         //private List<DateTime> _selectedDates = new List<DateTime> {
         //    DateTime.Today.AddDays(1),
         //    DateTime.Today.AddDays(2),
@@ -50,9 +51,9 @@ namespace SampleApp.ViewModels
 
         public ICommand ClearCommand => new Command(() =>
                 {
-                    SelectedDates = null;
-                    StartDate = null;
+                    //SelectedDates = null;
                     EndDate = null;
+                    StartDate = null;
                 });
 
         public DateTime MaximumDate

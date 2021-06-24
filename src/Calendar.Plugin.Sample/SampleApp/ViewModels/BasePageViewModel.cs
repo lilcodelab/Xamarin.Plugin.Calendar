@@ -14,7 +14,7 @@ namespace SampleApp.ViewModels
 
         protected void SetProperty<TData>(ref TData storage, TData value, [CallerMemberName] string propertyName = "")
         {
-            if (storage != null && storage.Equals(value))
+            if (storage?.Equals(value) == true)
                 return;
 
             storage = value;

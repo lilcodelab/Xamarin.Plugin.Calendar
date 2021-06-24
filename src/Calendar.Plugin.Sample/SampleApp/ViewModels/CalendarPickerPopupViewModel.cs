@@ -23,10 +23,7 @@ namespace SampleApp.ViewModels
 
         public ICommand SuccessCommand => new Command(async () =>
         {
-            if (SelectedDate.HasValue)
-                Closed?.Invoke(new CalendarPickerResult() { IsSuccess = true, SelectedDate = SelectedDate });
-            else
-                Closed?.Invoke(new CalendarPickerResult() { IsSuccess = false });
+            Closed?.Invoke(new CalendarPickerResult() { IsSuccess = SelectedDate.HasValue, SelectedDate = SelectedDate });
 
             await PopupNavigation.Instance.PopAsync();
         });
@@ -44,7 +41,7 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private DateTime? _selectedDate = DateTime.Today;
+        private DateTime? _selectedDate = null;
         public DateTime? SelectedDate
         {
             get => _selectedDate;

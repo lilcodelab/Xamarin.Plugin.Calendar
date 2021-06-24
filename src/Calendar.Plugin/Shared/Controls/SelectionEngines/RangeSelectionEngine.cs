@@ -64,18 +64,11 @@ namespace Xamarin.Plugin.Calendar.Controls
                         _rangeSelectionEndDate = date;
                 }
             }
-            else
-            {
-                _rangeSelectionStartDate = null;
-                _rangeSelectionEndDate = null;
-            }
         }
 
         internal List<DateTime> SelectDateRange(DateTime? newSelected)
         {
-            if (_rangeSelectionStartDate is null && newSelected is null)
-                return null;
-            else if (_rangeSelectionStartDate is null || !Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
+            if (_rangeSelectionStartDate is null || !Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
                 SelectFirstIntervalBorder(newSelected);
             else
                 SelectSecondIntervalBorder(newSelected);
@@ -99,11 +92,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void SelectFirstIntervalBorder(DateTime? newSelected)
         {
-            if (newSelected is not null)
-            {
-            _rangeSelectionStartDate = newSelected.Value.Date;
-            _rangeSelectionEndDate = newSelected.Value.Date;
-            } 
+            _rangeSelectionStartDate = newSelected?.Date;
+            _rangeSelectionEndDate = newSelected?.Date;
         }
 
         internal DateTime? RangeSelectionStartDate => _rangeSelectionStartDate;

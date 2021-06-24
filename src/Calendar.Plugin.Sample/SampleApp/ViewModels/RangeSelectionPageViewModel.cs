@@ -14,13 +14,13 @@ namespace SampleApp.ViewModels
 {
     public class RangeSelectionPageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
-        private DateTime _endDate = DateTime.Today.AddDays(2);
+        private DateTime? _endDate = DateTime.Today.AddDays(2);
 
         private DateTime _monthYear = DateTime.Today;
 
         private List<DateTime> _selectedDates = new List<DateTime> { };
 
-        private DateTime _startDate = DateTime.Today.AddDays(-9);
+        private DateTime? _startDate = DateTime.Today.AddDays(-9);
 
         public RangeSelectionPageViewModel() : base()
         {
@@ -50,12 +50,6 @@ namespace SampleApp.ViewModels
             MonthYear = MonthYear.AddMonths(1);
         }
 
-        public DateTime EndDate
-        {
-            get => _endDate;
-            set => SetProperty(ref _endDate, value);
-        }
-
         public EventCollection Events { get; }
 
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
@@ -74,6 +68,7 @@ namespace SampleApp.ViewModels
 
                 if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedDates?.Count > 0 || (calendarPickerResult.StartDate.HasValue && calendarPickerResult.EndDate.HasValue))
                 {
+                    // TODO create new class when we refactor sample app.
                     //var startDate = calendarPickerResult.SelectedDates[0];
                     //var endDate = DateTime.MinValue;
                     //foreach (DateTime date in calendarPickerResult.SelectedDates)
@@ -81,9 +76,7 @@ namespace SampleApp.ViewModels
                     //    if (date < startDate)
                     //        startDate = date;
                     //    if (date > endDate)
-                    //    {
                     //        endDate = date;
-                    //    }
                     //}
                     var startDate = calendarPickerResult.StartDate;
                     var endDate = calendarPickerResult.EndDate;
@@ -103,10 +96,16 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDates, value);
         }
 
-        public DateTime StartDate
+        public DateTime? StartDate
         {
             get => _startDate;
             set => SetProperty(ref _startDate, value);
+        }
+
+        public DateTime? EndDate
+        {
+            get => _endDate;
+            set => SetProperty(ref _endDate, value);
         }
 
         private async Task ExecuteEventSelectedCommand(object item)
