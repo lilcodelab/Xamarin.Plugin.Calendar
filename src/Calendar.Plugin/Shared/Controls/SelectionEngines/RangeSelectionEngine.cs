@@ -9,11 +9,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 {
     internal class RangedSelectionEngine : ISelectionEngine
     {
-        private DateTime? _rangeSelectionEndDate = null;
-        private DateTime? _rangeSelectionStartDate = null;
-
-        public RangedSelectionEngine()
-        { }
+        private DateTime? _rangeSelectionEndDate;
+        private DateTime? _rangeSelectionStartDate;
 
         string ISelectionEngine.GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture)
         {

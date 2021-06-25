@@ -556,7 +556,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 case nameof(SelectedDates):
                     _currentSelectionEngine.UpdateDateSelection(SelectedDates);
-                    //_currentSelectionEngine.UpdateDateSelection(StartRangeDate, EndRangeDate);
                     break;
 
 

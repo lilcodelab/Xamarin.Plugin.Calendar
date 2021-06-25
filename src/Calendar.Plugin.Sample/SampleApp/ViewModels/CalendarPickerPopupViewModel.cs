@@ -41,7 +41,7 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        private DateTime? _selectedDate = null;
+        private DateTime? _selectedDate;
         public DateTime? SelectedDate
         {
             get => _selectedDate;

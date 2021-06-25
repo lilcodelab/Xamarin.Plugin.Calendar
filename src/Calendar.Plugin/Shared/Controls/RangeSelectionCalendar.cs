@@ -23,7 +23,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private static void OnStartDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
-            if (rangeSelectionCalendar._isRangeSelection == false)
+            if (!rangeSelectionCalendar._isRangeSelection)
             {
                 rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
                 rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
@@ -44,7 +44,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private static void OnEndDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
-            if(rangeSelectionCalendar._isRangeSelection == false)
+            if(!rangeSelectionCalendar._isRangeSelection)
             {
                 rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
                 rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
@@ -64,7 +64,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-            if(propertyName == nameof(SelectedDates) && _isRangeSelection == false)
+            if(propertyName is nameof(SelectedDates) && !_isRangeSelection)
             {
                 var first = _selectionEngine.GetDateRange();
                 

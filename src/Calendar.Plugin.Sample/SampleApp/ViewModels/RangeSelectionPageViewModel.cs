@@ -18,7 +18,7 @@ namespace SampleApp.ViewModels
 
         private DateTime _monthYear = DateTime.Today;
 
-        private List<DateTime> _selectedDates = new List<DateTime> { };
+        private List<DateTime> _selectedDates = new();
 
         private DateTime? _startDate = DateTime.Today.AddDays(-9);
 
@@ -86,7 +86,6 @@ namespace SampleApp.ViewModels
                     message = "Nothing is selected!";
                 
                 await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
-                
             }));
         });
 
