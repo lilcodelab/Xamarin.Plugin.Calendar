@@ -28,7 +28,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             var listOfEvents = CreateRangeList();
             var wasSuccessful = allEvents.TryGetValues(listOfEvents, out var rangeEvents);
 
-            return wasSuccessful ? rangeEvents : null;
+            return wasSuccessful ? rangeEvents : new EventCollection();
         }
 
         bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)
