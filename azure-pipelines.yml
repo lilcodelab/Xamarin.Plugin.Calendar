@@ -10,7 +10,7 @@ variables:
   buildPlatform: 'AnyCPU'
   buildConfiguration: 'Release'
   nugetVersion: '1.4.$(Build.BuildId)'
-  MonoVersion: 6_12_0
+  MonoVersion: 6_12_7
 
 jobs:
 - job: 'Nuget'
