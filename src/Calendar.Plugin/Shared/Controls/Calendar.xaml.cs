@@ -851,7 +851,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         public static readonly BindableProperty SelectedDateProperty =
           BindableProperty.Create(nameof(SelectedDate), typeof(DateTime?), typeof(Calendar), null, BindingMode.TwoWay, propertyChanged: OnSelectedDateChanged);
 
-        protected internal static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = (Calendar)bindable;
             var dateToSet = (DateTime?)newValue;
@@ -1022,7 +1022,9 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        /// <summary> Method that is called when a bound property is changed. </summary>
+        /// <summary> 
+        /// Method that is called when a bound property is changed. 
+        /// </summary>
         /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

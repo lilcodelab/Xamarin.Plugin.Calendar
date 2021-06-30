@@ -49,6 +49,10 @@ namespace Xamarin.Plugin.Calendar.Controls
             _selectionEngine = monthDaysView.CurrentSelectionEngine as RangedSelectionEngine;
         }
 
+        /// <summary> 
+        /// Method that is called when a bound property is changed. 
+        /// </summary>
+        /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);

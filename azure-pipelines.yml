@@ -99,20 +99,16 @@ jobs:
           nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
           nuget restore src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
-    - task: VSBuild@1
-      inputs:
-        solution: '**/SampleApp.iOS.csproj'
-        msbuildArgs: '/p:Platform=iPhoneSimulator /p:OutputPath=/Users/runner/work/1/b/Release'
-        configuration: '$(BuildConfiguration)'
 
-    # - task: XamariniOS@2
-    #   continueOnError: true
-    #   inputs:
-    #     solutionFile: '**/SampleApp.iOS.csproj'
-    #     configuration: '$(buildConfiguration)'
-    #     packageApp: false
-    #     runNugetRestore: false
-    #     buildForSimulator: true
+    - task: XamariniOS@2
+      continueOnError: true
+      inputs:
+        buildToolLocation: '.azure-devops/msbuild.sh'
+        solutionFile: '**/SampleApp.iOS.csproj'
+        configuration: '$(buildConfiguration)'
+        packageApp: false
+        runNugetRestore: false
+        buildForSimulator: true
 
 - job: 'AndroidSampleApp'
   displayName: 'Build Android Sample App'
@@ -163,22 +159,18 @@ jobs:
           nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
           nuget restore src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
-    - task: VSBuild@1
-      inputs:
-        solution: '**/SampleApp.Android.csproj'
-        msbuildArgs: '/t:PackageForAndroid /p:OutputPath=/Users/runner/work/1/b/Release'
-        configuration: '$(BuildConfiguration)'
 
-    # - task: XamarinAndroid@1
-    #   displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
-    #   inputs:
-    #     projectFile: '**/SampleApp.Android.csproj'
-    #     createAppPackage: true
-    #     outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
-    #     jdkOption: 'JDKVersion'
-    #     clean: false
-    #     configuration: '$(BuildConfiguration)'
-    #     msbuildVersionOption: latest
+    - task: XamarinAndroid@1
+      displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
+      inputs:
+        buildToolLocation: '.azure-devops/msbuild.sh'
+        projectFile: '**/SampleApp.Android.csproj'
+        createAppPackage: true
+        outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
+        jdkOption: 'JDKVersion'
+        clean: false
+        configuration: '$(BuildConfiguration)'
+        msbuildVersionOption: latest
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Android App artifacts'
