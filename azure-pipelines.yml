@@ -165,14 +165,13 @@ jobs:
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
       inputs:
-        #buildToolLocation: '$(Build.Repository.LocalPath)/.azure-devops/msbuild.sh'
+        msbuildFile: '$(Build.Repository.LocalPath)/.azure-devops/msbuild.sh'
         projectFile: '**/SampleApp.Android.csproj'
         createAppPackage: true
         outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
         jdkOption: 'JDKVersion'
         clean: false
         configuration: '$(BuildConfiguration)'
-        msbuildVersionOption: latest
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Android App artifacts'
