@@ -99,6 +99,7 @@ jobs:
           nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
           nuget restore src/Calendar.Plugin.Sample/SampleApp.iOS/SampleApp.iOS.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
+          chmod 755 $(Build.Repository.LocalPath)/.azure-devops/msbuild.sh
 
     - task: XamariniOS@2
       continueOnError: true
@@ -159,7 +160,7 @@ jobs:
           nuget restore src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
           nuget restore src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
-
+          chmod 755 $(Build.Repository.LocalPath)/.azure-devops/msbuild.sh
 
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
