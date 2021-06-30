@@ -1,11 +1,9 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-
+using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Plugin.Calendar.Controls.SelectionEngines;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -16,36 +14,31 @@ namespace Xamarin.Plugin.Calendar.Controls
     public class RangeSelectionCalendar : Calendar
     {
         /// <summary> Bindable property for StartDate </summary>
-        public static readonly BindableProperty StartDateProperty =
-          BindableProperty.Create(nameof(StartDate), typeof(DateTime), typeof(RangeSelectionCalendar), DateTime.Today, propertyChanged: OnStartDateChanged);
+        public static readonly BindableProperty SelectedStartDateProperty =
+          BindableProperty.Create(nameof(SelectedStartDate), typeof(DateTime?), typeof(RangeSelectionCalendar), null, BindingMode.TwoWay, propertyChanged: OnSelectedStartDateChanged);
 
-        private static void OnStartDateChanged(BindableObject bindable, object oldValue, object newValue)
+        /// <summary>
+        /// Beggining of selected interval
+        /// </summary>
+        public DateTime? SelectedStartDate
         {
-            ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime)newValue);
-        }
-
-        /// <summary> Beggining of selected interval </summary>
-        public DateTime StartDate
-        {
-            get => (DateTime)GetValue(StartDateProperty);
-            set => SetValue(StartDateProperty, value);
+            get => (DateTime?)GetValue(SelectedStartDateProperty);
+            set => SetValue(SelectedStartDateProperty, value);
         }
 
         /// <summary> Bindable property for EndDate </summary>
-        public static readonly BindableProperty EndDateProperty =
-          BindableProperty.Create(nameof(EndDate), typeof(DateTime), typeof(RangeSelectionCalendar), DateTime.Today, propertyChanged: OnEndDateChanged);
-
-        private static void OnEndDateChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            ((RangeSelectionCalendar)bindable)._selectionEngine.SelectDateRange((DateTime)newValue);
-        }
+        public static readonly BindableProperty SelectedEndDateProperty =
+          BindableProperty.Create(nameof(SelectedEndDate), typeof(DateTime?), typeof(RangeSelectionCalendar), null, BindingMode.TwoWay, propertyChanged: OnSelectedEndDateChanged);
 
         /// <summary> End of selected interval </summary>
-        public DateTime EndDate
+        public DateTime? SelectedEndDate
         {
-            get => (DateTime)GetValue(EndDateProperty);
-            set => SetValue(EndDateProperty, value);
+            get => (DateTime?)GetValue(SelectedEndDateProperty);
+            set => SetValue(SelectedEndDateProperty, value);
         }
+
+        private bool _isSelectionDatesChanging = false;
+        private readonly RangedSelectionEngine _selectionEngine;
 
         /// <summary>
         /// Constructor
@@ -56,6 +49,42 @@ namespace Xamarin.Plugin.Calendar.Controls
             _selectionEngine = monthDaysView.CurrentSelectionEngine as RangedSelectionEngine;
         }
 
-        private readonly RangedSelectionEngine _selectionEngine;
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+            if (propertyName is nameof(SelectedDates) && !_isSelectionDatesChanging)
+            {
+                var first = _selectionEngine.GetDateRange();
+
+                if (first.Count > 0)
+                {
+                    _isSelectionDatesChanging = true;
+                    SetValue(SelectedStartDateProperty, first.First());
+                    SetValue(SelectedEndDateProperty, first.Last());
+                }
+            }
+        }
+
+        private static void OnSelectedStartDateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
+            if (!rangeSelectionCalendar._isSelectionDatesChanging)
+            {
+                rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
+                rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
+            }
+        }
+        private static void OnSelectedEndDateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
+            if (!rangeSelectionCalendar._isSelectionDatesChanging)
+            {
+                rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
+                rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
+            }
+            rangeSelectionCalendar._isSelectionDatesChanging = false;
+        }
+
+        
     }
 }

@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Plugin.Calendar.Controls.SelectionEngines;
 using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Models;
 
@@ -198,7 +200,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (Color)GetValue(YearLabelColorProperty);
             set => SetValue(YearLabelColorProperty, value);
         }
-        
+
         /// <summary>
         /// Bindable property for SelectedDateColor
         /// </summary>
@@ -478,10 +480,10 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary>
         /// Specifies the color of text for today's date
         /// </summary>
-        public Color TodayTextColor 
-        { 
-            get => (Color)GetValue(TodayTextColorProperty); 
-            set => SetValue(TodayTextColorProperty, value); 
+        public Color TodayTextColor
+        {
+            get => (Color)GetValue(TodayTextColorProperty);
+            set => SetValue(TodayTextColorProperty, value);
         }
 
         /// <summary>
@@ -847,49 +849,48 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for SelectedDate
         /// </summary>
         public static readonly BindableProperty SelectedDateProperty =
-          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, propertyChanged: OnSelectedDateChanged);
+          BindableProperty.Create(nameof(SelectedDate), typeof(DateTime?), typeof(Calendar), null, BindingMode.TwoWay, propertyChanged: OnSelectedDateChanged);
 
-        private static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
+        protected internal static void OnSelectedDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var control = (Calendar)bindable;
+            var dateToSet = (DateTime?)newValue;
 
-            if (control._isInitialLoad)
+            control.SetValue(SelectedDateProperty, dateToSet);
+            if (!control._isSelectingDates)
             {
-                control.SetValue(SelectedDateProperty, (DateTime)newValue);
-                control.SetValue(SelectedDatesProperty, new List<DateTime> { (DateTime)newValue });
-                control._isInitialLoad = false;
+                if (dateToSet.HasValue)
+                    control.SetValue(SelectedDatesProperty, new List<DateTime> { dateToSet.Value });
+                else
+                    control.SetValue(SelectedDatesProperty, new List<DateTime>());
             }
-        }
+            else
+            {
+                control._isSelectingDates = false;
+            }
 
-        private bool _isInitialLoad = true;
+        }
 
         /// <summary>
         /// Selected date in single date selection mode
         /// </summary>
-        public DateTime SelectedDate
+        public DateTime? SelectedDate
         {
-            get => (DateTime)GetValue(SelectedDateProperty);
+            get => (DateTime?)GetValue(SelectedDateProperty);
             set
             {
                 SetValue(SelectedDateProperty, value);
-                if (_selectedDate != value)
-                {
-                    _selectedDate = value;
-                    SelectedDates = new List<DateTime> { value };
-                }
+                SetValue(SelectedDatesProperty, value.HasValue ? new List<DateTime> { value.Value } : null);
             }
         }
-
-        /// <summary>
-        /// Specifies the currently selected date in single selection mode
-        /// </summary>
-        private DateTime _selectedDate = DateTime.Today;
 
         /// <summary> 
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
-          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay);
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(Calendar), null, BindingMode.TwoWay);
+
+        private bool _isSelectingDates = false;
 
         /// <summary>
         /// Selected date in single date selection mode
@@ -900,8 +901,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set
             {
                 SetValue(SelectedDatesProperty, value);
-                if(value.Count > 0)
-                    SetValue(SelectedDateProperty, value[0]);
+                _isSelectingDates = true;
+                SetValue(SelectedDateProperty, value?.Count > 0 ? value.First() : null);
             }
         }
 
@@ -927,6 +928,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             ShowHideCalendarCommand = new Command(ToggleCalendarSectionVisibility);
 
             InitializeComponent();
+            InitializeSelectionType();
             UpdateSelectedDateLabel();
             UpdateMonthLabel();
             UpdateEvents();
@@ -935,6 +937,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             _calendarSectionAnimateShow = new Animation(AnimateMonths, 0, 1);
 
             calendarContainer.SizeChanged += OnCalendarContainerSizeChanged;
+        }
+
+        private void InitializeSelectionType()
+        {
+            monthDaysView.CurrentSelectionEngine = new SingleSelectionEngine();
         }
 
         #region Properties
@@ -1047,7 +1054,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateEvents()
         {
-            SelectedDayEvents = monthDaysView.CurrentSelectionEngine.GetSelectedEvents(Events);
+            SelectedDayEvents = monthDaysView.CurrentSelectionEngine.TryGetSelectedEvents(Events, out var selectedEvents) ? selectedEvents : null;
+
             eventsScrollView.ScrollToAsync(0, 0, false);
         }
 
@@ -1055,7 +1063,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             MonthText = Culture.DateTimeFormat.MonthNames[MonthYear.Month - 1].Capitalize();
         }
-        
+
         private void UpdateSelectedDateLabel()
         {
             SelectedDateText = monthDaysView.CurrentSelectionEngine.GetSelectedDateText(SelectedDateTextFormat, Culture);

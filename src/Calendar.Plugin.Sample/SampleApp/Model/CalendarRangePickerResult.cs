@@ -7,5 +7,7 @@ namespace SampleApp.Model
     {
         public bool IsSuccess { get; set; }
         public List<DateTime> SelectedDates { get; set; } = new List<DateTime>();
+        public DateTime? SelectedStartDate { get; set; }
+        public DateTime? SelectedEndDate { get; set; }
     }
 }

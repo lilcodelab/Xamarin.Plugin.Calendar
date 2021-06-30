@@ -38,7 +38,8 @@
                     MaximumDate="{Binding MaximumDate}"
                     MinimumDate="{Binding MinimumDate}"
                     MonthYear="{Binding MonthYear}"
-                    SelectedDates="{Binding SelectedDates}"
+                    SelectedEndDate="{Binding SelectedEndDate}"
+                    SelectedStartDate="{Binding SelectedStartDate}"
                     VerticalOptions="Center"
                     WidthRequest="320">
                     <plugin:Calendar.HeaderSectionTemplate>
@@ -126,9 +127,8 @@
                         </DataTemplate>
                     </plugin:Calendar.HeaderSectionTemplate>
                 </plugin:RangeSelectionCalendar>
-                
-                <FlexLayout
-                    JustifyContent="SpaceBetween">
+
+                <FlexLayout JustifyContent="SpaceBetween">
                     <Button
                         Command="{Binding ClearCommand}"
                         HorizontalOptions="EndAndExpand"
@@ -140,7 +140,7 @@
                     <Button Command="{Binding CancelCommand}" Text="Cancel" />
                 </FlexLayout>
             </StackLayout>
-            
+
         </Frame>
     </rg:PopupPage.Content>
 </rg:PopupPage>

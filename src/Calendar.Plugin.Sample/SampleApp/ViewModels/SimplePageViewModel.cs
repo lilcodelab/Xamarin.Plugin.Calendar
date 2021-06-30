@@ -63,8 +63,6 @@ namespace SampleApp.ViewModels
                     Month += 1;
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
-
-            SelectedDate = new DateTime(2021, 7, 13);
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
@@ -92,8 +90,8 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _year, value);
         }
 
-        private DateTime _selectedDate = DateTime.Today;
-        public DateTime SelectedDate
+        private DateTime? _selectedDate = DateTime.Today;
+        public DateTime? SelectedDate
         {
             get => _selectedDate;
             set => SetProperty(ref _selectedDate, value);

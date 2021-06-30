@@ -216,19 +216,23 @@ SwipeToChangeMonthEnabled="False"
 SwipeUpToHideEnabled="False"
 ```
 
-##### Selection type customization
+##### Selection type of calender
 
-You can either use the default single selection mode with the 'Day' SelectionType enum value, where the date value binds to the SelectedDate property.
+You can either use the `Calender` class implementation for single selection mode or `RangeSelectionCalendar` for range selection mode.
+
 ```xml
-SelectionType="Day"
-SelectedDate="{Binding SelectedDate}"
+    <plugin:Calendar
+        SelectedDate="{Binding SelectedDate}"/>
 ```
-or the Range selection mode, where StartDate and EndDate bindings are required.
+On the `RangeSelectionCalendar` you can use binding for start date `SelectedStartDate` and end date `SelectedEndDate` or get list of selected dates with `SelectedDates`.
 ```xml
-SelectionType="Range"
-RangeSelectionStartDate="{Binding SelectedStartDate}"
-RangeSelectionEndDate="{Binding SelectedEndDate}"
+    <plugin:RangeSelectionCalendar
+        x:Name="rangedCalendar"
+        SelectedDates="{Binding SelectedDates}"
+        SelectedEndDate="{Binding SelectedEndDate}"
+        SelectedStartDate="{Binding SelectedStartDate}">
 ```
+__Remark: Don't use both `SelectedDates` and `SelectedStartDate`/`SelectedEndDate`__
 
 ##### Other customizations
 Enable/Disable animation when calendar is loaded or refreshed

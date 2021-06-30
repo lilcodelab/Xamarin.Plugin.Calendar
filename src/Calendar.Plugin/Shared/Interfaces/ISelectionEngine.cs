@@ -9,32 +9,37 @@ namespace Xamarin.Plugin.Calendar.Controls.Interfaces
     /// <summary>
     /// Interface for different selection implementations within MonthDaysView
     /// </summary>
-    interface ISelectionEngine
+    public interface ISelectionEngine
     {
         /// <summary>
-        /// Method to load selected days in the calendar properly
+        /// Method to get formatted selected dates text
         /// </summary>
-        internal bool IsDateSelected(DateTime dateToCheck);
-
-        /// <summary>
-        /// Method to perform event selection
-        /// </summary>
-        internal List<DateTime> PerformDateSelection(DateTime dateToSelect);
-
-        /// <summary>
-        /// Method to update selectedDates when changed from code
-        /// </summary>
-        /// <param name="datesToSelect"></param>
-        internal void UpdateDateSelection(List<DateTime> datesToSelect);
+        string GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture);
 
         /// <summary>
         /// Method to get all events for currently selected dates
         /// </summary>
-        internal ICollection GetSelectedEvents(EventCollection allEvents);
+        /// <param name="allEvents">EventCollection with events</param>
+        /// <param name="selectedEvents">returns ICollection of events for selected period</param>
+        /// <returns>returns true if there are events in allEvents collection for selected period</returns>
+        bool TryGetSelectedEvents(EventCollection allEvents, out ICollection selectedEvents);
 
         /// <summary>
-        /// Method to get formatted selected dates text
+        /// Method to check is selected day
         /// </summary>
-        internal string GetSelectedDateText(string selectedDateTextFormat, CultureInfo culture);
+        /// <param name="dateToCheck">Date to check is selected</param>
+        /// <returns>true if dateToCheck is slected</returns>
+        bool IsDateSelected(DateTime dateToCheck);
+
+        /// <summary>
+        /// Method to perform selection
+        /// </summary>
+        List<DateTime> PerformDateSelection(DateTime dateToSelect);
+
+        /// <summary>
+        /// Method to selectedDates when changed from code
+        /// </summary>
+        /// <param name="datesToSelect"></param>
+        void UpdateDateSelection(List<DateTime> datesToSelect);
     }
 }

@@ -10,7 +10,7 @@ using Xamarin.Plugin.Calendar.Models;
 using System.Windows.Input;
 using Xamarin.Plugin.Calendar.Interfaces;
 using Xamarin.Plugin.Calendar.Enums;
-using Xamarin.Plugin.Calendar.Controls.MonthDayViews;
+using Xamarin.Plugin.Calendar.Controls.SelectionEngines;
 using System.ComponentModel;
 using Xamarin.Plugin.Calendar.Controls.Interfaces;
 
@@ -42,11 +42,11 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
-          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime> { DateTime.Today }, BindingMode.TwoWay, propertyChanged: SelectedDatesChanged);
+          BindableProperty.Create(nameof(SelectedDates), typeof(List<DateTime>), typeof(MonthDaysView), new List<DateTime>(), BindingMode.TwoWay, propertyChanged: SelectedDatesChanged);
 
         private static void SelectedDatesChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is MonthDaysView control && newValue is List<DateTime> && !newValue.Equals(oldValue))
+            if (bindable is MonthDaysView control && (newValue is List<DateTime> || newValue is null) && !Equals(newValue, oldValue))
                 control.UpdateDays();
         }
 
@@ -144,9 +144,9 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for SelectedTodayTextColor 
         /// </summary>
         public Color SelectedTodayTextColor
-        { 
-            get => (Color)GetValue(SelectedTodayTextColorProperty); 
-            set => SetValue(SelectedTodayTextColorProperty, value); 
+        {
+            get => (Color)GetValue(SelectedTodayTextColorProperty);
+            set => SetValue(SelectedTodayTextColorProperty, value);
         }
 
         /// <summary> 
@@ -479,35 +479,12 @@ namespace Xamarin.Plugin.Calendar.Controls
             set { SetValue(AnimateCalendarProperty, value); }
         }
 
-        /// <summary>
-        /// Bindable property for SelectionType
-        /// </summary>
-        public static readonly BindableProperty SelectionTypeProperty =
-            BindableProperty.Create(nameof(SelectionType), typeof(SelectionType), typeof(MonthDaysView), SelectionType.Day, propertyChanged: SelectionTypeChanged);
-
-        private static void SelectionTypeChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            if(bindable is MonthDaysView control && newValue is SelectionType && !newValue.Equals(oldValue))
-                control.InitializeSelectionType();
-        }
-
-        /// <summary>
-        /// Specifies which selection mode will be used in the calendar
-        /// </summary>
-        public SelectionType SelectionType
-        {
-            get => (SelectionType)GetValue(SelectionTypeProperty);
-            set => SetValue(SelectionTypeProperty, value);
-        }
         #endregion
 
-        private ISelectionEngine _currentSelectionEngine;
-
-        internal ISelectionEngine CurrentSelectionEngine
-        {
-            get => _currentSelectionEngine;
-            set => _currentSelectionEngine = value;
-        }
+        /// <summary>
+        /// Current implementation of selection engine
+        /// </summary>
+        internal ISelectionEngine CurrentSelectionEngine { get; set; } = new SingleSelectionEngine();
 
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
         private readonly List<DayView> _dayViews = new();
@@ -517,20 +494,9 @@ namespace Xamarin.Plugin.Calendar.Controls
         internal MonthDaysView()
         {
             InitializeComponent();
-            InitializeSelectionType();
             InitializeDays();
             UpdateDaysColors();
             UpdateDayTitles();
-        }
-
-        private void InitializeSelectionType()
-        {
-            _currentSelectionEngine = SelectionType switch
-            {
-                (SelectionType.Day) => new SingleSelectionEngine(),
-                (SelectionType.Range) => new RangedSelectionEngine(),
-                _ => new SingleSelectionEngine(),
-            };
         }
 
         /// <summary> 
@@ -555,7 +521,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             switch (propertyName)
             {
                 case nameof(SelectedDates):
-                    _currentSelectionEngine.UpdateDateSelection(SelectedDates);
+                    CurrentSelectionEngine.UpdateDateSelection(SelectedDates);
                     break;
 
 
@@ -601,9 +567,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 (_propertyChangedNotificationSupressions.TryGetValue(e.PropertyName, out bool isSuppressed) && isSuppressed))
                 return;
 
-            SelectedDates = _currentSelectionEngine.PerformDateSelection(newSelected.Date);
-
-            UpdateDays();
+            SelectedDates = CurrentSelectionEngine.PerformDateSelection(newSelected.Date);
         }
 
         private void UpdateDayTitles()
@@ -613,7 +577,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             foreach (var dayLabel in daysControl.Children.OfType<Label>())
             {
                 var abberivatedDayName = Culture.DateTimeFormat.AbbreviatedDayNames[dayNumber];
-                dayLabel.Text = abberivatedDayName.ToUpper().Substring(0, (int)DaysTitleMaximumLength > abberivatedDayName.Length ? abberivatedDayName.Length: (int)DaysTitleMaximumLength);
+                dayLabel.Text = abberivatedDayName.ToUpper().Substring(0, (int)DaysTitleMaximumLength > abberivatedDayName.Length ? abberivatedDayName.Length : (int)DaysTitleMaximumLength);
                 dayNumber = (dayNumber + 1) % 7;
             }
         }
@@ -655,7 +619,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
-                ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = _currentSelectionEngine.IsDateSelected(dayModel.Date));
+                ChangePropertySilently(nameof(dayModel.IsSelected), () => dayModel.IsSelected = CurrentSelectionEngine.IsDateSelected(dayModel.Date));
                 AssignIndicatorColors(ref dayModel);
             }
         }

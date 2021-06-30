@@ -97,8 +97,4 @@
   </ItemGroup>
   
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
-  
-  <ItemGroup>
-    <None Remove="Shared\Controls\RangeSelectionCalendar.cs" />
-  </ItemGroup>
 </Project>

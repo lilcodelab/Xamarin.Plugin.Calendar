@@ -1,38 +1,26 @@
-﻿using Xamarin.Plugin.Calendar.Models;
+﻿using Rg.Plugins.Popup.Services;
+using SampleApp.Model;
+using SampleApp.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Linq;
-using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using SampleApp.Model;
-using Rg.Plugins.Popup.Services;
-using SampleApp.Views;
+using Xamarin.Plugin.Calendar.Models;
 
 namespace SampleApp.ViewModels
 {
     public class RangeSelectionPageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
-        public ICommand OpenRangePickerCommand => new Command(async () =>
-        {
-            await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
-            {
-                var message = "Calendar Range Picker Canceled!";
+        private DateTime? _selectedEndDate = DateTime.Today.AddDays(2);
 
-                if(calendarPickerResult.IsSuccess)
-                {
-                    var startDate = calendarPickerResult.SelectedDates[0];
-                    var endDate = calendarPickerResult.SelectedDates[calendarPickerResult.SelectedDates.Count - 1];
-                    message = $"Received date range from popup: {startDate:dd.MM.yyyy} - {endDate:dd.MM.yyyy}";
-                }
+        private DateTime _monthYear = DateTime.Today;
 
-                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
-            }));
-        });
+        private List<DateTime> _selectedDates = new();
 
-        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
+        private DateTime? _selectedStartDate = DateTime.Today.AddDays(-9);
 
         public RangeSelectionPageViewModel() : base()
         {
@@ -40,59 +28,66 @@ namespace SampleApp.ViewModels
             // when initializing collection
             Events = new EventCollection
             {
-                [DateTime.Now.AddDays(-1)] = new List<AdvancedEventModel>(GenerateEvents(5, "Cool")),
+                [DateTime.Now.AddDays(-1)] = new List<AdvancedEventModel>(GenerateEvents(5, "Cool", DateTime.Now.AddDays(-1))),
                 [DateTime.Now.AddDays(-2)] = new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now.AddDays(-2))),
-                [DateTime.Now.AddDays(-4)] = new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Super Cool")),
-                [DateTime.Now.AddDays(-5)] = new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool")),
+                [DateTime.Now.AddDays(-4)] = new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Super Cool", DateTime.Now.AddDays(-4))),
+                [DateTime.Now.AddDays(-5)] = new DayEventCollection<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now.AddDays(-5))),
                 [DateTime.Now.AddDays(-6)] = new DayEventCollection<AdvancedEventModel>(Color.Purple, Color.Purple)
                 {
-                    new AdvancedEventModel { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= new DateTime()},
-                    new AdvancedEventModel { Name = "Cool event2", Description = "This is Cool event2's description!", Starting= new DateTime()}
+                    new AdvancedEventModel { Name = "Cool event1", Description = "This is Cool event1's description!", Starting= DateTime.Now.AddDays(-6)},
+                    new AdvancedEventModel { Name = "Cool event2", Description = "This is Cool event2's description!", Starting= DateTime.Now.AddDays(-6)}
                 },
-                [DateTime.Now.AddDays(-10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool")),
-                [DateTime.Now.AddDays(1)] = new List<AdvancedEventModel>(GenerateEvents(2, "Boring")),
-                [DateTime.Now.AddDays(4)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool")),
-                [DateTime.Now.AddDays(8)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool")),
-                [DateTime.Now.AddDays(9)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool H")),
-                [DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool X")),
-                [DateTime.Now.AddDays(16)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool B")),
-                [DateTime.Now.AddDays(20)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool A")),
-
+                [DateTime.Now.AddDays(-10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now.AddDays(-10))),
+                [DateTime.Now.AddDays(1)] = new List<AdvancedEventModel>(GenerateEvents(2, "Boring", DateTime.Now.AddDays(1))),
+                [DateTime.Now.AddDays(4)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now.AddDays(4))),
+                [DateTime.Now.AddDays(8)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool", DateTime.Now.AddDays(8))),
+                [DateTime.Now.AddDays(9)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool H", DateTime.Now.AddDays(9))),
+                [DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool X", DateTime.Now.AddDays(10))),
+                [DateTime.Now.AddDays(16)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool B", DateTime.Now.AddDays(16))),
+                [DateTime.Now.AddDays(20)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool A", DateTime.Now.AddDays(20))),
             };
 
-            MonthYear = MonthYear.AddMonths(1);            
-        }
-
-        private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name)
-        {
-            return Enumerable.Range(1, count).Select(x => new AdvancedEventModel
-            {
-                Name = $"{name} event{x}",
-                Description = $"This is {name} event{x}'s description!",
-                Starting = new DateTime(2000, 1, 1, (x * 2) % 24, (x * 3) % 60, 0)
-            });
-        }
-
-        private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name, DateTime timeOfEvent)
-        {
-            return Enumerable.Range(1, count).Select(x => new AdvancedEventModel
-            {
-                Name = $"{name} event{x}",
-                Description = $"This is {name} event{x}'s description!",
-                Starting = new DateTime(timeOfEvent.Year, timeOfEvent.Month, timeOfEvent.Day, (x * 2) % 24, (x * 3) % 60, 0)
-            });
+            MonthYear = MonthYear.AddMonths(1);
         }
 
         public EventCollection Events { get; }
 
-        private DateTime _monthYear = DateTime.Today;
+        public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
+
         public DateTime MonthYear
         {
             get => _monthYear;
             set => SetProperty(ref _monthYear, value);
         }
 
-        private List<DateTime> _selectedDates = new List<DateTime> { };
+        public ICommand OpenRangePickerCommand => new Command(async () =>
+        {
+            await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
+            {
+                var message = "Calendar Range Picker Canceled!";
+
+                if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedDates?.Count > 0 || (calendarPickerResult.SelectedStartDate.HasValue && calendarPickerResult.SelectedEndDate.HasValue))
+                {
+                    // TODO create new class when we refactor sample app.
+                    //var startDate = calendarPickerResult.SelectedDates[0];
+                    //var endDate = DateTime.MinValue;
+                    //foreach (DateTime date in calendarPickerResult.SelectedDates)
+                    //{
+                    //    if (date < startDate)
+                    //        startDate = date;
+                    //    if (date > endDate)
+                    //        endDate = date;
+                    //}
+                    var startDate = calendarPickerResult.SelectedStartDate;
+                    var endDate = calendarPickerResult.SelectedEndDate;
+                    message = $"Received date range from popup: {startDate:dd.MM.yyyy} - {endDate:dd.MM.yyyy}";
+                }
+                else if (calendarPickerResult.IsSuccess)
+                    message = "Nothing is selected!";
+                
+                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
+            }));
+        });
 
         public List<DateTime> SelectedDates
         {
@@ -100,18 +95,16 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDates, value);
         }
 
-        private DateTime _startDate = DateTime.Today.AddDays(-9);
-        public DateTime StartDate
+        public DateTime? SelectedStartDate
         {
-            get => _startDate;
-            set => SetProperty(ref _startDate, value);
+            get => _selectedStartDate;
+            set => SetProperty(ref _selectedStartDate, value);
         }
 
-        private DateTime _endDate = DateTime.Today.AddDays(2);
-        public DateTime EndDate
+        public DateTime? SelectedEndDate
         {
-            get => _endDate;
-            set => SetProperty(ref _endDate, value);
+            get => _selectedEndDate;
+            set => SetProperty(ref _selectedEndDate, value);
         }
 
         private async Task ExecuteEventSelectedCommand(object item)
@@ -122,6 +115,16 @@ namespace SampleApp.ViewModels
                 var message = $"Starts: {eventModel.Starting:HH:mm}{Environment.NewLine}Details: {eventModel.Description}";
                 await App.Current.MainPage.DisplayAlert(title, message, "Ok");
             }
+        }
+
+        private IEnumerable<AdvancedEventModel> GenerateEvents(int count, string name, DateTime timeOfEvent)
+        {
+            return Enumerable.Range(1, count).Select(x => new AdvancedEventModel
+            {
+                Name = $"{name} event{x}",
+                Description = $"This is {name} event{x}'s description!",
+                Starting = new DateTime(timeOfEvent.Year, timeOfEvent.Month, timeOfEvent.Day, (x * 2) % 24, (x * 3) % 60, 0)
+            });
         }
     }
 }
