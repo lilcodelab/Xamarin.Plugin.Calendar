@@ -21,9 +21,9 @@ jobs:
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
-      displayName: 'Use dotnet sdk $dotentVersion'
+      displayName: 'Use dotnet sdk $(dotentVersion)'
       inputs:
-        version: $dotentVersion
+        version: $(dotentVersion)
 
     - task: NuGetCommand@2
       displayName: 'Nuget restore solution'
@@ -62,9 +62,9 @@ jobs:
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
-      displayName: 'Use dotnet sdk $dotentVersion'
+      displayName: 'Use dotnet sdk $(dotentVersion)'
       inputs:
-        version: $dotentVersion
+        version: $(dotentVersion)
 
     - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $monoVersion
       displayName: 'Selecting the Xamarin SDK version'
@@ -126,9 +126,9 @@ jobs:
   steps:
     - task: NuGetToolInstaller@1
     - task: UseDotNet@2
-      displayName: 'Use dotnet sdk $dotentVersion'
+      displayName: 'Use dotnet sdk $(dotentVersion)'
       inputs:
-        version: $dotentVersion
+        version: $(dotentVersion)
 
     - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $MonoVersion
       displayName: 'Selecting the Xamarin SDK version'
