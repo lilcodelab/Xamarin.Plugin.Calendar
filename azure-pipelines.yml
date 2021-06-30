@@ -103,7 +103,7 @@ jobs:
     - task: XamariniOS@2
       continueOnError: true
       inputs:
-        buildToolLocation: '.azure-devops/msbuild.sh'
+        buildToolLocation: '$(Build.Repository.LocalPath)/.azure-devops/msbuild.sh'
         solutionFile: '**/SampleApp.iOS.csproj'
         configuration: '$(buildConfiguration)'
         packageApp: false
@@ -160,10 +160,11 @@ jobs:
           nuget restore src/Calendar.Plugin.Sample/SampleApp.Android/SampleApp.Android.csproj -NonInteractive -Source $(build.binariesDirectory)/nuget/nupkg/ -Source https://api.nuget.org/v3/index.json
 
 
+
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'
       inputs:
-        buildToolLocation: '.azure-devops/msbuild.sh'
+        #buildToolLocation: '$(Build.Repository.LocalPath)/.azure-devops/msbuild.sh'
         projectFile: '**/SampleApp.Android.csproj'
         createAppPackage: true
         outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
