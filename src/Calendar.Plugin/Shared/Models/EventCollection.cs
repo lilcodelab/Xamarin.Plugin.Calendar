@@ -101,7 +101,7 @@ namespace Xamarin.Plugin.Calendar.Models
         /// <param name="keys"></param>
         /// <param name="values"></param>
         /// <returns></returns>
-        public bool TryGetValues(List<DateTime> keys, out ICollection values)
+        public bool TryGetValues(ICollection<DateTime> keys, out ICollection values)
         {
             var listToReturn = new List<object>();
 
@@ -110,8 +110,16 @@ namespace Xamarin.Plugin.Calendar.Models
                     foreach (var singleEvent in dayEvents)
                         listToReturn.Add(singleEvent);
 
-            values = listToReturn;
-            return true;
+            if (listToReturn.Count > 0)
+            {
+                values = listToReturn;
+                return true;
+            }
+            else
+            {
+                values = null;
+                return false;
+            }
         }
 
         /// <summary>

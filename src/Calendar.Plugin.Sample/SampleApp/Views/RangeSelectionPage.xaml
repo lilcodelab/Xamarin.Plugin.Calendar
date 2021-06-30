@@ -26,9 +26,8 @@
         Events="{Binding Events}"
         MonthYear="{Binding MonthYear}"
         SelectedDates="{Binding SelectedDates}"
-        StartDate="{Binding StartDate}"
-        EndDate="{Binding EndDate}"
-        >
+        SelectedEndDate="{Binding SelectedEndDate}"
+        SelectedStartDate="{Binding SelectedStartDate}">
 
         <plugin:RangeSelectionCalendar.HeaderSectionTemplate>
             <controls:CalendarHeader />

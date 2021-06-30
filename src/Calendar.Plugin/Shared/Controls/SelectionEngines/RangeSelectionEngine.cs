@@ -5,7 +5,7 @@ using System.Globalization;
 using Xamarin.Plugin.Calendar.Controls.Interfaces;
 using Xamarin.Plugin.Calendar.Models;
 
-namespace Xamarin.Plugin.Calendar.Controls
+namespace Xamarin.Plugin.Calendar.Controls.SelectionEngines
 {
     internal class RangedSelectionEngine : ISelectionEngine
     {
@@ -23,12 +23,10 @@ namespace Xamarin.Plugin.Calendar.Controls
             return string.Empty;
         }
 
-        ICollection ISelectionEngine.GetSelectedEvents(EventCollection allEvents)
+        bool ISelectionEngine.TryGetSelectedEvents(EventCollection allEvents, out ICollection selectedEvents)
         {
             var listOfEvents = CreateRangeList();
-            var wasSuccessful = allEvents.TryGetValues(listOfEvents, out var rangeEvents);
-
-            return wasSuccessful ? rangeEvents : new EventCollection();
+            return allEvents.TryGetValues(listOfEvents, out selectedEvents);
         }
 
         bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)

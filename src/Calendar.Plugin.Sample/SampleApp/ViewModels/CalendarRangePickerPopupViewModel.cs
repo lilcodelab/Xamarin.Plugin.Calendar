@@ -16,8 +16,8 @@ namespace SampleApp.ViewModels
         private DateTime _monthYear = DateTime.Today;
 
         // If you do with _selectedDates then set _startDate & _endDate to null
-        private DateTime? _startDate = DateTime.Today.AddDays(-5);
-        private DateTime? _endDate = DateTime.Today.AddDays(5);
+        private DateTime? _selectedStartDate = DateTime.Today.AddDays(-5);
+        private DateTime? _selectedEndDate = DateTime.Today.AddDays(5);
 
         // If you do with startDate and endDate then set _selectedDates to null
         private List<DateTime> _selectedDates = null;
@@ -52,8 +52,8 @@ namespace SampleApp.ViewModels
         public ICommand ClearCommand => new Command(() =>
                 {
                     //SelectedDates = null;
-                    EndDate = null;
-                    StartDate = null;
+                    SelectedEndDate = null;
+                    SelectedStartDate = null;
                 });
 
         public DateTime MaximumDate
@@ -80,16 +80,16 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDates, value);
         }
 
-        public DateTime? StartDate 
+        public DateTime? SelectedStartDate 
         {
-            get => _startDate; 
-            set => SetProperty(ref _startDate, value); 
+            get => _selectedStartDate; 
+            set => SetProperty(ref _selectedStartDate, value); 
         }
 
-        public DateTime? EndDate
+        public DateTime? SelectedEndDate
         {
-            get => _endDate;
-            set => SetProperty(ref _endDate, value);
+            get => _selectedEndDate;
+            set => SetProperty(ref _selectedEndDate, value);
         }
 
         public ICommand SuccessCommand => new Command(async () =>
@@ -98,8 +98,8 @@ namespace SampleApp.ViewModels
                 {
                     IsSuccess = true,
                     SelectedDates = SelectedDates,
-                    StartDate = StartDate,
-                    EndDate = EndDate
+                    SelectedStartDate = SelectedStartDate,
+                    SelectedEndDate = SelectedEndDate
                 });
                 await PopupNavigation.Instance.PopAsync();
             });

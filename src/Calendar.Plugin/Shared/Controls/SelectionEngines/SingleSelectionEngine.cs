@@ -5,7 +5,7 @@ using System.Globalization;
 using Xamarin.Plugin.Calendar.Controls.Interfaces;
 using Xamarin.Plugin.Calendar.Models;
 
-namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
+namespace Xamarin.Plugin.Calendar.Controls.SelectionEngines
 {
     internal class SingleSelectionEngine : ISelectionEngine
     {
@@ -19,14 +19,13 @@ namespace Xamarin.Plugin.Calendar.Controls.MonthDayViews
             return _selectedDate?.ToString(selectedDateTextFormat, culture);
         }
 
-        ICollection ISelectionEngine.GetSelectedEvents(EventCollection allEvents)
+        bool ISelectionEngine.TryGetSelectedEvents(EventCollection allEvents, out ICollection selectedEvents)
         {
-            if (!_selectedDate.HasValue)
-                return null;
+            if (_selectedDate.HasValue)
+                return allEvents.TryGetValue(_selectedDate.Value, out selectedEvents);
 
-            var wasSuccessful = allEvents.TryGetValue(_selectedDate.Value, out var dayEvents);
-
-            return wasSuccessful ? dayEvents : null;
+            selectedEvents = null;
+            return false;
         }
 
         bool ISelectionEngine.IsDateSelected(DateTime dateToCheck)

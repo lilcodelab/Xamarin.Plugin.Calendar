@@ -14,13 +14,13 @@ namespace SampleApp.ViewModels
 {
     public class RangeSelectionPageViewModel : BasePageViewModel, INotifyPropertyChanged
     {
-        private DateTime? _endDate = DateTime.Today.AddDays(2);
+        private DateTime? _selectedEndDate = DateTime.Today.AddDays(2);
 
         private DateTime _monthYear = DateTime.Today;
 
         private List<DateTime> _selectedDates = new();
 
-        private DateTime? _startDate = DateTime.Today.AddDays(-9);
+        private DateTime? _selectedStartDate = DateTime.Today.AddDays(-9);
 
         public RangeSelectionPageViewModel() : base()
         {
@@ -66,7 +66,7 @@ namespace SampleApp.ViewModels
             {
                 var message = "Calendar Range Picker Canceled!";
 
-                if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedDates?.Count > 0 || (calendarPickerResult.StartDate.HasValue && calendarPickerResult.EndDate.HasValue))
+                if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedDates?.Count > 0 || (calendarPickerResult.SelectedStartDate.HasValue && calendarPickerResult.SelectedEndDate.HasValue))
                 {
                     // TODO create new class when we refactor sample app.
                     //var startDate = calendarPickerResult.SelectedDates[0];
@@ -78,8 +78,8 @@ namespace SampleApp.ViewModels
                     //    if (date > endDate)
                     //        endDate = date;
                     //}
-                    var startDate = calendarPickerResult.StartDate;
-                    var endDate = calendarPickerResult.EndDate;
+                    var startDate = calendarPickerResult.SelectedStartDate;
+                    var endDate = calendarPickerResult.SelectedEndDate;
                     message = $"Received date range from popup: {startDate:dd.MM.yyyy} - {endDate:dd.MM.yyyy}";
                 }
                 else if (calendarPickerResult.IsSuccess)
@@ -95,16 +95,16 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDates, value);
         }
 
-        public DateTime? StartDate
+        public DateTime? SelectedStartDate
         {
-            get => _startDate;
-            set => SetProperty(ref _startDate, value);
+            get => _selectedStartDate;
+            set => SetProperty(ref _selectedStartDate, value);
         }
 
-        public DateTime? EndDate
+        public DateTime? SelectedEndDate
         {
-            get => _endDate;
-            set => SetProperty(ref _endDate, value);
+            get => _selectedEndDate;
+            set => SetProperty(ref _selectedEndDate, value);
         }
 
         private async Task ExecuteEventSelectedCommand(object item)

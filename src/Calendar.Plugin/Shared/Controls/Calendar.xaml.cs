@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Plugin.Calendar.Controls.SelectionEngines;
 using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Models;
 
@@ -199,7 +200,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (Color)GetValue(YearLabelColorProperty);
             set => SetValue(YearLabelColorProperty, value);
         }
-        
+
         /// <summary>
         /// Bindable property for SelectedDateColor
         /// </summary>
@@ -479,10 +480,10 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// <summary>
         /// Specifies the color of text for today's date
         /// </summary>
-        public Color TodayTextColor 
-        { 
-            get => (Color)GetValue(TodayTextColorProperty); 
-            set => SetValue(TodayTextColorProperty, value); 
+        public Color TodayTextColor
+        {
+            get => (Color)GetValue(TodayTextColorProperty);
+            set => SetValue(TodayTextColorProperty, value);
         }
 
         /// <summary>
@@ -862,11 +863,12 @@ namespace Xamarin.Plugin.Calendar.Controls
                     control.SetValue(SelectedDatesProperty, new List<DateTime> { dateToSet.Value });
                 else
                     control.SetValue(SelectedDatesProperty, new List<DateTime>());
-            } else
+            }
+            else
             {
                 control._isSelectingDates = false;
             }
-            
+
         }
 
         /// <summary>
@@ -926,6 +928,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             ShowHideCalendarCommand = new Command(ToggleCalendarSectionVisibility);
 
             InitializeComponent();
+            InitializeSelectionType();
             UpdateSelectedDateLabel();
             UpdateMonthLabel();
             UpdateEvents();
@@ -934,6 +937,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             _calendarSectionAnimateShow = new Animation(AnimateMonths, 0, 1);
 
             calendarContainer.SizeChanged += OnCalendarContainerSizeChanged;
+        }
+
+        private void InitializeSelectionType()
+        {
+            monthDaysView.CurrentSelectionEngine = new SingleSelectionEngine();
         }
 
         #region Properties
@@ -1046,7 +1054,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void UpdateEvents()
         {
-            SelectedDayEvents = monthDaysView.CurrentSelectionEngine.GetSelectedEvents(Events);
+            SelectedDayEvents = monthDaysView.CurrentSelectionEngine.TryGetSelectedEvents(Events, out var selectedEvents) ? selectedEvents : null;
+
             eventsScrollView.ScrollToAsync(0, 0, false);
         }
 
@@ -1054,7 +1063,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             MonthText = Culture.DateTimeFormat.MonthNames[MonthYear.Month - 1].Capitalize();
         }
-        
+
         private void UpdateSelectedDateLabel()
         {
             SelectedDateText = monthDaysView.CurrentSelectionEngine.GetSelectedDateText(SelectedDateTextFormat, Culture);
