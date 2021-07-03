@@ -1,4 +1,8 @@
 #!/bin/sh
+@echo off
+
+NUGETVERSION = $(NUGETVERSION)
+echo "Nuget Version = "$NUGETVERSION
 
 sed -E -i .bak -e 's/<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"/<PackageReference Include="Xamarin.Plugin.Calendar" Version="'$(NUGETVERSION)'"/g' src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj
 

@@ -78,10 +78,12 @@ jobs:
         artifactName: 'nupkg'
 
     - task: Bash@3
+      displayName: "Replace project ref with nuget reference"
       inputs:
         filePath: '.azure-devops/use-nuget.sh'
 
     - task: Bash@3
+      displayName: "Restore nuget packages"
       inputs:
         targetType: 'inline'
         script: |
@@ -91,7 +93,6 @@ jobs:
           chmod 755 $(Build.Repository.LocalPath)/.azure-devops/msbuild.sh
 
     - task: XamariniOS@2
-      continueOnError: true
       inputs:
         buildToolLocation: '$(Build.Repository.LocalPath)/.azure-devops/msbuild.sh'
         solutionFile: '**/SampleApp.iOS.csproj'
@@ -122,14 +123,16 @@ jobs:
         artifactName: 'nupkg'
 
     - task: PowerShell@2
+      displayName: "Replace project ref with nuget reference"
       inputs:
         filePath: '.azure-devops\use-nuget.ps1'
+
     - task: CmdLine@2
+      displayName: "Restore nuget packages"
       inputs:
         script: |
           nuget restore src\Calendar.Plugin.Sample\SampleApp\SampleApp.csproj -NonInteractive -Source $(build.binariesDirectory)\nuget\nupkg\ -Source https://api.nuget.org/v3/index.json
           nuget restore src\Calendar.Plugin.Sample\SampleApp.Android\SampleApp.Android.csproj -NonInteractive -Source $(build.binariesDirectory)\nuget\nupkg\ -Source https://api.nuget.org/v3/index.json
-
 
     - task: XamarinAndroid@1
       displayName: 'Build Xamarin.Android project SampleApp.Android.csproj'

@@ -1,4 +1,5 @@
-$nugetVersion = $(env:NUGETVERSION)
+$nugetVersion = $Env:NUGETVERSION
+echo "Nuget Version = "$nugetVersion
 
 ((Get-Content src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj) -replace '<ProjectReference Include="..\\..\\Calendar.Plugin\\CalendarPlugin.csproj"', "<PackageReference Include=""Xamarin.Plugin.Calendar"" Version=""$($nugetVersion)""") | Out-File -encoding ASCII src/Calendar.Plugin.Sample/SampleApp/SampleApp.csproj
 
