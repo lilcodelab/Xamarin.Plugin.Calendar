@@ -79,7 +79,7 @@ jobs:
 
     - task: Bash@3
       inputs:
-        filePath: '.azure-devops\use-nuget.sh'
+        filePath: '.azure-devops/use-nuget.sh'
 
     - task: Bash@3
       inputs:
