@@ -17,10 +17,10 @@
         <DebugSymbols>false</DebugSymbols>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.12" />
-        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.12" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
+  </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\Calendar.Plugin\CalendarPlugin.csproj" />
