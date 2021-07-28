@@ -857,7 +857,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             var dateToSet = (DateTime?)newValue;
 
             control.SetValue(SelectedDateProperty, dateToSet);
-            if (!control._isSelectingDates)
+            if (!control._isSelectingDates || control.monthDaysView.CurrentSelectionEngine is SingleSelectionEngine)
             {
                 if (dateToSet.HasValue)
                     control.SetValue(SelectedDatesProperty, new List<DateTime> { dateToSet.Value });

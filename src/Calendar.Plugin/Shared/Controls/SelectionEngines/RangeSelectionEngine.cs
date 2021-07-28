@@ -63,7 +63,7 @@ namespace Xamarin.Plugin.Calendar.Controls.SelectionEngines
 
         internal List<DateTime> SelectDateRange(DateTime? newSelected)
         {
-            if (_rangeSelectionStartDate is null || !Equals(_rangeSelectionStartDate, _rangeSelectionEndDate))
+            if (_rangeSelectionStartDate is null || !Equals(_rangeSelectionStartDate, _rangeSelectionEndDate) || newSelected is null)
                 SelectFirstIntervalBorder(newSelected);
             else
                 SelectSecondIntervalBorder(newSelected);

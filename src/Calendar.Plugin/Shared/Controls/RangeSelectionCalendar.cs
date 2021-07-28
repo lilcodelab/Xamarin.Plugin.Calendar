@@ -74,8 +74,10 @@ namespace Xamarin.Plugin.Calendar.Controls
             var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
             if (!rangeSelectionCalendar._isSelectionDatesChanging)
             {
+                rangeSelectionCalendar._isSelectionDatesChanging = true;
                 rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
                 rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
+                rangeSelectionCalendar._isSelectionDatesChanging = false;
             }
         }
         private static void OnSelectedEndDateChanged(BindableObject bindable, object oldValue, object newValue)
@@ -83,6 +85,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             var rangeSelectionCalendar = (RangeSelectionCalendar)bindable;
             if (!rangeSelectionCalendar._isSelectionDatesChanging)
             {
+                rangeSelectionCalendar._isSelectionDatesChanging = true;
                 rangeSelectionCalendar._selectionEngine.SelectDateRange((DateTime?)newValue);
                 rangeSelectionCalendar.SelectedDates = rangeSelectionCalendar._selectionEngine.GetDateRange();
             }
