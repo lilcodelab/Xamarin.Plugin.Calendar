@@ -21,16 +21,6 @@ namespace SampleApp.ViewModels
         public ICommand SwipeRightCommand => new Command(() => { MonthYear = MonthYear.AddMonths(-2); });
         public ICommand SwipeUpCommand => new Command(() => { MonthYear = DateTime.Today; });
 
-        public ICommand OpenPickerCommand => new Command(async () =>
-        {
-            await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) => 
-            {
-                string message = calendarPickerResult.IsSuccess ? $"Received date from popup: {calendarPickerResult.SelectedDate:dd/MM/yy}" : "Calendar Picker Canceled!";
-
-                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
-            }));
-        });
-
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
         public AdvancedPageViewModel() : base()

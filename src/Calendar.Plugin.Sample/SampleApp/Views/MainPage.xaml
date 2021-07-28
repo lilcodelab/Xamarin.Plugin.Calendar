@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Calendar Plugin for Xamarin.Forms">
+
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Button
+                Margin="10,0,10,10"
+                Clicked="SipmleCalendar"
+                HorizontalOptions="CenterAndExpand"
+                Text="Simple Calendar"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Margin="10,-200,10,10"
+                Clicked="AdvancedCalendar"
+                HorizontalOptions="CenterAndExpand"
+                Text="Advanced Calendar"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Margin="10,-200,10,10"
+                Clicked="RangeCalendar"
+                HorizontalOptions="CenterAndExpand"
+                Text="Range Calendar"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Margin="10,-200,10,10"
+                Clicked="PickerPopup"
+                HorizontalOptions="CenterAndExpand"
+                Text="Picker Popup Calendar"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Margin="10,-200,10,10"
+                Clicked="RangePickerPopup"
+                HorizontalOptions="CenterAndExpand"
+                Text="Range Picker Popup Calendar"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Margin="10,-200,10,10"
+                Clicked="RangeStartEndDatePickerPopup"
+                HorizontalOptions="CenterAndExpand"
+                Text="Range Start-End Date Picker Popup Calendar"
+                VerticalOptions="CenterAndExpand" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

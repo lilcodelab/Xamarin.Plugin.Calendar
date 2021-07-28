@@ -60,35 +60,6 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        public ICommand OpenRangePickerCommand => new Command(async () =>
-        {
-            await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
-            {
-                var message = "Calendar Range Picker Canceled!";
-
-                if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedDates?.Count > 0 || (calendarPickerResult.SelectedStartDate.HasValue && calendarPickerResult.SelectedEndDate.HasValue))
-                {
-                    // TODO create new class when we refactor sample app.
-                    //var startDate = calendarPickerResult.SelectedDates[0];
-                    //var endDate = DateTime.MinValue;
-                    //foreach (DateTime date in calendarPickerResult.SelectedDates)
-                    //{
-                    //    if (date < startDate)
-                    //        startDate = date;
-                    //    if (date > endDate)
-                    //        endDate = date;
-                    //}
-                    var startDate = calendarPickerResult.SelectedStartDate;
-                    var endDate = calendarPickerResult.SelectedEndDate;
-                    message = $"Received date range from popup: {startDate:dd.MM.yyyy} - {endDate:dd.MM.yyyy}";
-                }
-                else if (calendarPickerResult.IsSuccess)
-                    message = "Nothing is selected!";
-                
-                await App.Current.MainPage.DisplayAlert("Popup result", message, "Ok");
-            }));
-        });
-
         public List<DateTime> SelectedDates
         {
             get => _selectedDates;

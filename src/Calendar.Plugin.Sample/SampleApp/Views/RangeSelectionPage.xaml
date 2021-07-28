@@ -11,10 +11,6 @@
     x:Name="advancedRangeSelectionCalendarPage"
     mc:Ignorable="d">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding OpenRangePickerCommand}" Text="Range" />
-    </ContentPage.ToolbarItems>
-
     <ContentPage.BindingContext>
         <local:RangeSelectionPageViewModel />
     </ContentPage.BindingContext>

@@ -11,7 +11,7 @@ namespace SampleApp
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainTabbedPage());
+            MainPage = new NavigationPage(new MainPage());
         }
     }
 }
