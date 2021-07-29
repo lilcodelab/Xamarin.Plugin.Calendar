@@ -5,46 +5,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Calendar Plugin for Xamarin.Forms">
 
-    <ContentPage.Content>
-        <StackLayout>
 
+    <ScrollView>
+        <StackLayout>
             <Button
-                Margin="10,0,10,10"
+                Margin="10"
                 Clicked="SipmleCalendar"
                 HorizontalOptions="CenterAndExpand"
-                Text="Simple Calendar"
-                VerticalOptions="CenterAndExpand" />
+                Text="Simple Calendar" />
             <Button
-                Margin="10,-200,10,10"
                 Clicked="AdvancedCalendar"
                 HorizontalOptions="CenterAndExpand"
-                Text="Advanced Calendar"
-                VerticalOptions="CenterAndExpand" />
+                Text="Advanced Calendar" />
             <Button
-                Margin="10,-200,10,10"
+                Margin="10"
                 Clicked="RangeCalendar"
                 HorizontalOptions="CenterAndExpand"
-                Text="Range Calendar"
-                VerticalOptions="CenterAndExpand" />
+                Text="Range Calendar" />
             <Button
-                Margin="10,-200,10,10"
+                Margin="10"
                 Clicked="PickerPopup"
                 HorizontalOptions="CenterAndExpand"
-                Text="Picker Popup Calendar"
-                VerticalOptions="CenterAndExpand" />
+                Text="Picker Popup Calendar" />
             <Button
-                Margin="10,-200,10,10"
+                Margin="10"
                 Clicked="RangePickerPopup"
                 HorizontalOptions="CenterAndExpand"
-                Text="Range Picker Popup Calendar"
-                VerticalOptions="CenterAndExpand" />
+                Text="Range Picker Popup Calendar" />
             <Button
-                Margin="10,-200,10,10"
+                Margin="10"
                 Clicked="RangeStartEndDatePickerPopup"
                 HorizontalOptions="CenterAndExpand"
-                Text="Range Start-End Date Picker Popup Calendar"
-                VerticalOptions="CenterAndExpand" />
-
+                Text="Range Start-End Date Picker Popup Calendar" />
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>
