@@ -11,10 +11,6 @@
     x:Name="advancedCalendarPage"
     mc:Ignorable="d">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding OpenPickerCommand}" Text="Picker" />
-    </ContentPage.ToolbarItems>
-
     <ContentPage.BindingContext>
         <local:AdvancedPageViewModel />
     </ContentPage.BindingContext>
@@ -48,10 +44,9 @@
         SelectedDate="{Binding SelectedDate}"
         SelectedDateColor="Red"
         SelectedDateTextFormat="ddd, dd MMM yyyy"
-        SelectedTodayTextColor="Green"
-        TodayTextColor="Yellow"
         SelectedDayBackgroundColor="DarkCyan"
         SelectedDayTextColor="Cyan"
+        SelectedTodayTextColor="Green"
         SwipeLeftCommand="{Binding SwipeLeftCommand}"
         SwipeRightCommand="{Binding SwipeRightCommand}"
         SwipeToChangeMonthEnabled="False"
@@ -59,6 +54,7 @@
         SwipeUpToHideEnabled="False"
         TodayFillColor="Silver"
         TodayOutlineColor="Blue"
+        TodayTextColor="Yellow"
         VerticalOptions="FillAndExpand"
         YearLabelColor="Blue">
 

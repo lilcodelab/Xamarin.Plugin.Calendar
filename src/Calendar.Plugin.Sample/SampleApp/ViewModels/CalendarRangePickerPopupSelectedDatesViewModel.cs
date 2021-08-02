@@ -1,12 +1,13 @@
 ﻿using Rg.Plugins.Popup.Services;
 using SampleApp.Model;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace SampleApp.ViewModels
 {
-    public class CalendarRangePickerPopupViewModel : BasePageViewModel
+    public class CalendarRangePickerPopupSelectedDatesViewModel : BasePageViewModel
     {
         private DateTime _maximumDate = DateTime.Today.AddYears(1);
 
@@ -14,8 +15,16 @@ namespace SampleApp.ViewModels
 
         private DateTime _monthYear = DateTime.Today;
 
-        private DateTime? _selectedStartDate = DateTime.Today.AddDays(-5);
-        private DateTime? _selectedEndDate = DateTime.Today.AddDays(5);
+        private List<DateTime> _selectedDates = null;
+
+        public CalendarRangePickerPopupSelectedDatesViewModel()
+        {
+            SelectedDates = new List<DateTime>
+            {
+                DateTime.Today,
+                DateTime.Today.AddDays(6),
+            };
+        }
 
         public event Action<CalendarRangePickerResult> Closed;
 
@@ -26,10 +35,9 @@ namespace SampleApp.ViewModels
         });
 
         public ICommand ClearCommand => new Command(() =>
-                {
-                    SelectedEndDate = null;
-                    SelectedStartDate = null;
-                });
+        {
+            SelectedDates = null;
+        });
 
         public DateTime MaximumDate
         {
@@ -49,27 +57,20 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _monthYear, value);
         }
 
-        public DateTime? SelectedStartDate 
+        public List<DateTime> SelectedDates
         {
-            get => _selectedStartDate; 
-            set => SetProperty(ref _selectedStartDate, value); 
-        }
-
-        public DateTime? SelectedEndDate
-        {
-            get => _selectedEndDate;
-            set => SetProperty(ref _selectedEndDate, value);
+            get => _selectedDates;
+            set => SetProperty(ref _selectedDates, value);
         }
 
         public ICommand SuccessCommand => new Command(async () =>
+        {
+            Closed?.Invoke(new CalendarRangePickerResult()
             {
-                Closed?.Invoke(new CalendarRangePickerResult()
-                {
-                    IsSuccess = true,
-                    SelectedStartDate = SelectedStartDate,
-                    SelectedEndDate = SelectedEndDate
-                });
-                await PopupNavigation.Instance.PopAsync();
+                IsSuccess = true,
+                SelectedDates = SelectedDates
             });
+            await PopupNavigation.Instance.PopAsync();
+        });
     }
 }

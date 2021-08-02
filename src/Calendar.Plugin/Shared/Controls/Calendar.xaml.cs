@@ -472,7 +472,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary>
-        /// Bindable property for 
+        /// Bindable property for
         /// </summary>
         public static readonly BindableProperty TodayTextColorProperty =
             BindableProperty.Create(nameof(TodayTextColor), typeof(Color?), typeof(Calendar), Color.Transparent);
@@ -687,8 +687,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleLabelStyleProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DisableSwipeDetection 
+        /// <summary>
+        /// Bindable property for DisableSwipeDetection
         /// </summary>
         public static readonly BindableProperty DisableSwipeDetectionProperty =
           BindableProperty.Create(nameof(DisableSwipeDetection), typeof(bool), typeof(Calendar), false);
@@ -704,14 +704,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DisableSwipeDetectionProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for SwipeUpCommand 
+        /// <summary>
+        /// Bindable property for SwipeUpCommand
         /// </summary>
         public static readonly BindableProperty SwipeUpCommandProperty =
           BindableProperty.Create(nameof(SwipeUpCommand), typeof(ICommand), typeof(Calendar), null);
 
-        /// <summary> 
-        /// Activated when user swipes-up over days view 
+        /// <summary>
+        /// Activated when user swipes-up over days view
         /// </summary>
         public ICommand SwipeUpCommand
         {
@@ -719,14 +719,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeUpCommandProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for SwipeUpToHideEnabled 
+        /// <summary>
+        /// Bindable property for SwipeUpToHideEnabled
         /// </summary>
         public static readonly BindableProperty SwipeUpToHideEnabledProperty =
           BindableProperty.Create(nameof(SwipeUpToHideEnabled), typeof(bool), typeof(Calendar), true);
 
-        /// <summary> 
-        /// Enable/disable default swipe-up action for showing/hiding calendar 
+        /// <summary>
+        /// Enable/disable default swipe-up action for showing/hiding calendar
         /// </summary>
         public bool SwipeUpToHideEnabled
         {
@@ -734,14 +734,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeUpToHideEnabledProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for SwipeLeftCommand 
+        /// <summary>
+        /// Bindable property for SwipeLeftCommand
         /// </summary>
         public static readonly BindableProperty SwipeLeftCommandProperty =
           BindableProperty.Create(nameof(SwipeLeftCommand), typeof(ICommand), typeof(Calendar), null);
 
-        /// <summary> 
-        /// Activated when user swipes-left over days view 
+        /// <summary>
+        /// Activated when user swipes-left over days view
         /// </summary>
         public ICommand SwipeLeftCommand
         {
@@ -749,14 +749,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeLeftCommandProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for SwipeRightCommand 
+        /// <summary>
+        /// Bindable property for SwipeRightCommand
         /// </summary>
         public static readonly BindableProperty SwipeRightCommandProperty =
           BindableProperty.Create(nameof(SwipeRightCommand), typeof(ICommand), typeof(Calendar), null);
 
-        /// <summary> 
-        /// Activated when user swipes-right over days view 
+        /// <summary>
+        /// Activated when user swipes-right over days view
         /// </summary>
         public ICommand SwipeRightCommand
         {
@@ -764,14 +764,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SwipeRightCommandProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for SwipeToChangeMonthEnabled 
+        /// <summary>
+        /// Bindable property for SwipeToChangeMonthEnabled
         /// </summary>
         public static readonly BindableProperty SwipeToChangeMonthEnabledProperty =
           BindableProperty.Create(nameof(SwipeToChangeMonthEnabled), typeof(bool), typeof(Calendar), true);
 
-        /// <summary> 
-        /// Enable/disable default swipe actions for changing months 
+        /// <summary>
+        /// Enable/disable default swipe actions for changing months
         /// </summary>
         public bool SwipeToChangeMonthEnabled
         {
@@ -868,7 +868,6 @@ namespace Xamarin.Plugin.Calendar.Controls
             {
                 control._isSelectingDates = false;
             }
-
         }
 
         /// <summary>
@@ -879,12 +878,12 @@ namespace Xamarin.Plugin.Calendar.Controls
             get => (DateTime?)GetValue(SelectedDateProperty);
             set
             {
-                SetValue(SelectedDateProperty, value);
                 SetValue(SelectedDatesProperty, value.HasValue ? new List<DateTime> { value.Value } : null);
+                SetValue(SelectedDateProperty, value);
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
@@ -1022,8 +1021,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             }
         }
 
-        /// <summary> 
-        /// Method that is called when a bound property is changed. 
+        /// <summary>
+        /// Method that is called when a bound property is changed.
         /// </summary>
         /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

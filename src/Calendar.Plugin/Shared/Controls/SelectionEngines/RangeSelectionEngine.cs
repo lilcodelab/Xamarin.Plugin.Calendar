@@ -59,6 +59,11 @@ namespace Xamarin.Plugin.Calendar.Controls.SelectionEngines
                         _rangeSelectionEndDate = date;
                 }
             }
+            else
+            {
+                _rangeSelectionStartDate = null;
+                _rangeSelectionEndDate = null;
+            }
         }
 
         internal List<DateTime> SelectDateRange(DateTime? newSelected)

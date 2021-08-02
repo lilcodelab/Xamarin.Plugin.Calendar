@@ -1,13 +1,12 @@
 ﻿using Rg.Plugins.Popup.Services;
 using SampleApp.Model;
 using System;
-using System.ComponentModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace SampleApp.ViewModels
 {
-    public class CalendarPickerPopupViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class CalendarPickerPopupViewModel : BasePageViewModel
     {
         public event Action<CalendarPickerResult> Closed;
 
