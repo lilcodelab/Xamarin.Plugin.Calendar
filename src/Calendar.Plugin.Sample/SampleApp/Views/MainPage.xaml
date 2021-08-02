@@ -7,36 +7,40 @@
 
 
     <ScrollView>
-        <StackLayout>
+
+        <StackLayout HorizontalOptions="CenterAndExpand">
+            <Label
+                Margin="0,30,0,0"
+                HorizontalOptions="CenterAndExpand"
+                Text="Event Calendar" />
             <Button
-                Margin="10"
+                Margin="5"
                 Clicked="SipmleCalendar"
-                HorizontalOptions="CenterAndExpand"
-                Text="Simple Calendar" />
+                Text="Simple Event Calendar" />
             <Button
+                Margin="5"
                 Clicked="AdvancedCalendar"
-                HorizontalOptions="CenterAndExpand"
-                Text="Advanced Calendar" />
+                Text="Advanced Event Calendar" />
             <Button
-                Margin="10"
+                Margin="5"
                 Clicked="RangeCalendar"
+                Text="Range Event Calendar" />
+            <Label
+                Margin="0,30,0,0"
                 HorizontalOptions="CenterAndExpand"
-                Text="Range Calendar" />
+                Text="Picker Popup" />
             <Button
-                Margin="10"
+                Margin="5"
                 Clicked="PickerPopup"
-                HorizontalOptions="CenterAndExpand"
-                Text="Picker Popup Calendar" />
+                Text="Single Select Calendar" />
             <Button
-                Margin="10"
+                Margin="5"
                 Clicked="RangePickerPopup"
-                HorizontalOptions="CenterAndExpand"
-                Text="Range Picker Popup Calendar" />
+                Text="Range Selection Calendar" />
             <Button
-                Margin="10"
+                Margin="5"
                 Clicked="RangeStartEndDatePickerPopup"
-                HorizontalOptions="CenterAndExpand"
-                Text="Range Start-End Date Picker Popup Calendar" />
+                Text="Range Start-End Selection Calendar" />
         </StackLayout>
     </ScrollView>
 </ContentPage>
