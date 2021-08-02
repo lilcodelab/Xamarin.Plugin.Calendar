@@ -14,7 +14,7 @@ namespace SampleApp.Views
             InitializeComponent();
         }
 
-        async void SipmleCalendar(object sender, EventArgs e)
+        async void SimpleCalendar(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SimplePage());
         }

@@ -2,13 +2,12 @@
 using SampleApp.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace SampleApp.ViewModels
 {
-    public class CalendarRangePickerPopupSelectedDatesViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class CalendarRangePickerPopupSelectedDatesViewModel : BasePageViewModel
     {
         private DateTime _maximumDate = DateTime.Today.AddYears(1);
 

@@ -1,9 +1,6 @@
-﻿using Rg.Plugins.Popup.Services;
-using SampleApp.Model;
-using SampleApp.Views;
+﻿using SampleApp.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,7 +9,7 @@ using Xamarin.Plugin.Calendar.Models;
 
 namespace SampleApp.ViewModels
 {
-    public class RangeSelectionPageViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class RangeSelectionPageViewModel : BasePageViewModel
     {
         private DateTime? _selectedEndDate = DateTime.Today.AddDays(2);
 

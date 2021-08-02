@@ -1,7 +1,6 @@
 ﻿using Xamarin.Plugin.Calendar.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Linq;
@@ -9,12 +8,10 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 using SampleApp.Model;
-using Rg.Plugins.Popup.Services;
-using SampleApp.Views;
 
 namespace SampleApp.ViewModels
 {
-    public class AdvancedPageViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class AdvancedPageViewModel : BasePageViewModel
     {
         public ICommand DayTappedCommand => new Command<DateTime>(async (date) => await DayTapped(date));
         public ICommand SwipeLeftCommand => new Command(() => { MonthYear = MonthYear.AddMonths(2); });

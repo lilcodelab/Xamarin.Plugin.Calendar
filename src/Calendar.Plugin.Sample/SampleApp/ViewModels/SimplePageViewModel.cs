@@ -1,7 +1,6 @@
 ﻿using Xamarin.Plugin.Calendar.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -11,7 +10,7 @@ using SampleApp.Model;
 
 namespace SampleApp.ViewModels
 {
-    public class SimplePageViewModel : BasePageViewModel, INotifyPropertyChanged
+    public class SimplePageViewModel : BasePageViewModel
     {
         public ICommand TodayCommand => new Command(() => { 
             Year = DateTime.Today.Year; 

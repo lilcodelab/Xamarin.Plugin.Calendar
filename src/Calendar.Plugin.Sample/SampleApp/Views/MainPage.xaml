@@ -15,7 +15,7 @@
                 Text="Event Calendar" />
             <Button
                 Margin="5"
-                Clicked="SipmleCalendar"
+                Clicked="SimpleCalendar"
                 Text="Simple Event Calendar" />
             <Button
                 Margin="5"
