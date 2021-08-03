@@ -1,22 +1,23 @@
-﻿using Xamarin.Plugin.Calendar.Models;
+﻿using SampleApp.Model;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Threading.Tasks;
-using System.Linq;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using SampleApp.Model;
+using Xamarin.Plugin.Calendar.Enums;
+using Xamarin.Plugin.Calendar.Models;
 
 namespace SampleApp.ViewModels
 {
     public class AdvancedPageViewModel : BasePageViewModel
     {
         public ICommand DayTappedCommand => new Command<DateTime>(async (date) => await DayTapped(date));
-        public ICommand SwipeLeftCommand => new Command(() => { MonthYear = MonthYear.AddMonths(2); });
-        public ICommand SwipeRightCommand => new Command(() => { MonthYear = MonthYear.AddMonths(-2); });
-        public ICommand SwipeUpCommand => new Command(() => { MonthYear = DateTime.Today; });
+        public ICommand SwipeLeftCommand => new Command(() => ChangeShownUnit(1));
+        public ICommand SwipeRightCommand => new Command(() => ChangeShownUnit(-1));
+        public ICommand SwipeUpCommand => new Command(() => { ShownDate = DateTime.Today; });
 
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
@@ -46,36 +47,34 @@ namespace SampleApp.ViewModels
             // with indexer
             Events[DateTime.Now] = new List<AdvancedEventModel>(GenerateEvents(2, "Boring"));
 
-            MonthYear = MonthYear.AddMonths(1);
+            ShownDate = ShownDate.AddMonths(1);
 
-            Task.Delay(5000).ContinueWith( _ =>
-            {
-                // indexer - update later
-                Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool"));
+            Task.Delay(5000).ContinueWith(_ =>
+           {
+               // indexer - update later
+               Events[DateTime.Now] = new ObservableCollection<AdvancedEventModel>(GenerateEvents(10, "Cool"));
 
-                // add later
-                Events.Add(DateTime.Now.AddDays(3), new List<AdvancedEventModel>(GenerateEvents(5, "Cool")));
+               // add later
+               Events.Add(DateTime.Now.AddDays(3), new List<AdvancedEventModel>(GenerateEvents(5, "Cool")));
 
-                // indexer later
-                Events[DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Boring"));
+               // indexer later
+               Events[DateTime.Now.AddDays(10)] = new List<AdvancedEventModel>(GenerateEvents(10, "Boring"));
 
-                // add later
-                Events.Add(DateTime.Now.AddDays(15), new List<AdvancedEventModel>(GenerateEvents(10, "Cool")));
+               // add later
+               Events.Add(DateTime.Now.AddDays(15), new List<AdvancedEventModel>(GenerateEvents(10, "Cool")));
 
+               Task.Delay(3000).ContinueWith(t =>
+               {
+                   ShownDate = ShownDate.AddMonths(-2);
 
-                Task.Delay(3000).ContinueWith(t =>
-                {
-                    MonthYear = MonthYear.AddMonths(-2);
+                   // get observable collection later
+                   var todayEvents = Events[DateTime.Now] as ObservableCollection<AdvancedEventModel>;
 
-                    // get observable collection later
-                    var todayEvents = Events[DateTime.Now] as ObservableCollection<AdvancedEventModel>;
-
-                    // insert/add items to observable collection
-                    todayEvents.Insert(0, new AdvancedEventModel { Name = "Cool event insert", Description = "This is Cool event's description!", Starting = new DateTime() });
-                    todayEvents.Add(new AdvancedEventModel { Name = "Cool event add", Description = "This is Cool event's description!", Starting = new DateTime() });
-
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                   // insert/add items to observable collection
+                   todayEvents.Insert(0, new AdvancedEventModel { Name = "Cool event insert", Description = "This is Cool event's description!", Starting = new DateTime() });
+                   todayEvents.Add(new AdvancedEventModel { Name = "Cool event add", Description = "This is Cool event's description!", Starting = new DateTime() });
+               }, TaskScheduler.FromCurrentSynchronizationContext());
+           }, TaskScheduler.FromCurrentSynchronizationContext());
 
             SelectedDate = DateTime.Today.AddDays(10);
         }
@@ -92,22 +91,32 @@ namespace SampleApp.ViewModels
 
         public EventCollection Events { get; }
 
-        private DateTime _monthYear = DateTime.Today;
-        public DateTime MonthYear
+        private DateTime _shownDate = DateTime.Today;
+
+        public DateTime ShownDate
         {
-            get => _monthYear;
-            set => SetProperty(ref _monthYear, value);
+            get => _shownDate;
+            set => SetProperty(ref _shownDate, value);
+        }
+
+        private WeekLayout _calendarLayout = WeekLayout.Month;
+
+        public WeekLayout CalendarLayout
+        {
+            get => _calendarLayout;
+            set => SetProperty(ref _calendarLayout, value);
         }
 
         private DateTime? _selectedDate = DateTime.Today;
+
         public DateTime? SelectedDate
         {
             get => _selectedDate;
             set => SetProperty(ref _selectedDate, value);
         }
 
-
         private CultureInfo _culture = CultureInfo.InvariantCulture;
+
         public CultureInfo Culture
         {
             get => _culture;
@@ -128,6 +137,32 @@ namespace SampleApp.ViewModels
                 var message = $"Starts: {eventModel.Starting:HH:mm}{Environment.NewLine}Details: {eventModel.Description}";
                 await App.Current.MainPage.DisplayAlert(title, message, "Ok");
             }
+        }
+
+        private void ChangeShownUnit(int amountToAdd)
+        {
+            switch (CalendarLayout)
+            {
+                case WeekLayout.Week:
+                case WeekLayout.TwoWeek:
+                    ChangeShownWeek(amountToAdd);
+                    break;
+
+                case WeekLayout.Month:
+                default:
+                    ChangeShownMonth(amountToAdd);
+                    break;
+            }
+        }
+
+        private void ChangeShownMonth(int monthsToAdd)
+        {
+            ShownDate.AddMonths(monthsToAdd);
+        }
+
+        private void ChangeShownWeek(int weeksToAdd)
+        {
+            ShownDate.AddDays(weeksToAdd * 7);
         }
     }
 }

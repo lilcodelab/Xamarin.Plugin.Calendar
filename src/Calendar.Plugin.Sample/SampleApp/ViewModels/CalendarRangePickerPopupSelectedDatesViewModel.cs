@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Plugin.Calendar.Enums;
 
 namespace SampleApp.ViewModels
 {
@@ -13,9 +14,11 @@ namespace SampleApp.ViewModels
 
         private DateTime _minimumDate = DateTime.Today.AddYears(-1);
 
-        private DateTime _monthYear = DateTime.Today;
+        private DateTime _shownDate = DateTime.Today;
 
         private List<DateTime> _selectedDates = null;
+
+        private WeekLayout _calendarLayout = WeekLayout.Month;
 
         public CalendarRangePickerPopupSelectedDatesViewModel()
         {
@@ -51,10 +54,16 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _minimumDate, value);
         }
 
-        public DateTime MonthYear
+        public DateTime ShownDate
         {
-            get => _monthYear;
-            set => SetProperty(ref _monthYear, value);
+            get => _shownDate;
+            set => SetProperty(ref _shownDate, value);
+        }
+
+        public WeekLayout CalendarLayout
+        {
+            get => _calendarLayout;
+            set => SetProperty(ref _calendarLayout, value);
         }
 
         public List<DateTime> SelectedDates

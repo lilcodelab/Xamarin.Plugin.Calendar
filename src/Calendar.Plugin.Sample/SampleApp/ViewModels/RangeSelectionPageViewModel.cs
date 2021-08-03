@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Models;
 
 namespace SampleApp.ViewModels
@@ -13,7 +14,9 @@ namespace SampleApp.ViewModels
     {
         private DateTime? _selectedEndDate = DateTime.Today.AddDays(2);
 
-        private DateTime _monthYear = DateTime.Today;
+        private DateTime _shownDate = DateTime.Today;
+
+        private WeekLayout _calendarLayout = WeekLayout.Month;
 
         private List<DateTime> _selectedDates = new();
 
@@ -44,17 +47,23 @@ namespace SampleApp.ViewModels
                 [DateTime.Now.AddDays(20)] = new List<AdvancedEventModel>(GenerateEvents(10, "Cool A", DateTime.Now.AddDays(20))),
             };
 
-            MonthYear = MonthYear.AddMonths(1);
+            ShownDate = ShownDate.AddMonths(1);
         }
 
         public EventCollection Events { get; }
 
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
-        public DateTime MonthYear
+        public DateTime ShownDate
         {
-            get => _monthYear;
-            set => SetProperty(ref _monthYear, value);
+            get => _shownDate;
+            set => SetProperty(ref _shownDate, value);
+        }
+
+        public WeekLayout CalendarLayout
+        {
+            get => _calendarLayout;
+            set => SetProperty(ref _calendarLayout, value);
         }
 
         public List<DateTime> SelectedDates

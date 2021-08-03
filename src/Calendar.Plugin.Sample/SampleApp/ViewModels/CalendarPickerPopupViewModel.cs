@@ -3,6 +3,7 @@ using SampleApp.Model;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Plugin.Calendar.Enums;
 
 namespace SampleApp.ViewModels
 {
@@ -33,14 +34,24 @@ namespace SampleApp.ViewModels
             await PopupNavigation.Instance.PopAsync();
         });
 
-        private DateTime _monthYear = DateTime.Today;
-        public DateTime MonthYear
+        private DateTime _shownDate = DateTime.Today;
+
+        public DateTime ShownDate
         {
-            get => _monthYear;
-            set => SetProperty(ref _monthYear, value);
+            get => _shownDate;
+            set => SetProperty(ref _shownDate, value);
+        }
+
+        private WeekLayout _calendarLayout = WeekLayout.Month;
+
+        public WeekLayout CalendarLayout
+        {
+            get => _calendarLayout;
+            set => SetProperty(ref _calendarLayout, value);
         }
 
         private DateTime? _selectedDate;
+
         public DateTime? SelectedDate
         {
             get => _selectedDate;
@@ -48,6 +59,7 @@ namespace SampleApp.ViewModels
         }
 
         private DateTime _minimumDate = new DateTime(1900, 1, 1);
+
         public DateTime MinimumDate
         {
             get => _minimumDate;

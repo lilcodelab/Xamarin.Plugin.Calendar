@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Calendar Plugin for Xamarin.Forms">
 
-
     <ScrollView>
 
         <StackLayout HorizontalOptions="CenterAndExpand">
@@ -41,6 +40,18 @@
                 Margin="5"
                 Clicked="RangeStartEndDatePickerPopup"
                 Text="Range Start-End Selection Calendar" />
+            <Label
+                Margin="0,30,0,0"
+                HorizontalOptions="CenterAndExpand"
+                Text="Week View Calendars" />
+            <Button
+                Margin="5"
+                Clicked="WeekViewCalendar"
+                Text="Single Week View Calendar" />
+            <Button
+                Margin="5"
+                Clicked="TwoWeekViewCalendar"
+                Text="Two Weeks View Calendar" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

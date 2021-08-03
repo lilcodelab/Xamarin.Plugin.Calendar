@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Controls.SelectionEngines;
 using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Models;
+using Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines;
+using Xamarin.Plugin.Calendar.Shared.Interfaces;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -52,6 +54,21 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary>
+        /// Bindable property for Day
+        /// </summary>
+        public static readonly BindableProperty DayProperty =
+          BindableProperty.Create(nameof(Day), typeof(int), typeof(Calendar), DateTime.Today.Day, BindingMode.TwoWay, propertyChanged: OnDayChanged);
+
+        /// <summary>
+        /// Number signifying the day currently selected in the picker
+        /// </summary>
+        public int Day
+        {
+            get => (int)GetValue(DayProperty);
+            set => SetValue(DayProperty, value);
+        }
+
+        /// <summary>
         /// Bindable property for Month
         /// </summary>
         public static readonly BindableProperty MonthProperty =
@@ -82,18 +99,18 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary>
-        /// Bindable property for MonthYear
+        /// Bindable property for InitalDate
         /// </summary>
-        public static readonly BindableProperty MonthYearProperty =
-          BindableProperty.Create(nameof(MonthYear), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, propertyChanged: OnMonthYearChanged);
+        public static readonly BindableProperty ShownDateProperty =
+          BindableProperty.Create(nameof(ShownDate), typeof(DateTime), typeof(Calendar), DateTime.Today, BindingMode.TwoWay, propertyChanged: OnDateChanged);
 
         /// <summary>
-        /// Specifies the currently selected month and year
+        /// Specifies the Date that is initially shown
         /// </summary>
-        public DateTime MonthYear
+        public DateTime ShownDate
         {
-            get => (DateTime)GetValue(MonthYearProperty);
-            set => SetValue(MonthYearProperty, value);
+            get => (DateTime)GetValue(ShownDateProperty);
+            set => SetValue(ShownDateProperty, value);
         }
 
         /// <summary>
@@ -535,12 +552,12 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// Bindable property for MonthText
         /// </summary>
         public static readonly BindableProperty MonthTextProperty =
-          BindableProperty.Create(nameof(MonthText), typeof(string), typeof(Calendar), null);
+          BindableProperty.Create(nameof(LayoutUnitText), typeof(string), typeof(Calendar), null);
 
         /// <summary>
         /// Culture specific text specifying the name of the month
         /// </summary>
-        public string MonthText
+        public string LayoutUnitText
         {
             get => (string)GetValue(MonthTextProperty);
             set => SetValue(MonthTextProperty, value);
@@ -842,9 +859,40 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(AnimateCalendarProperty, value);
         }
 
+        /// <summary>
+        /// Bindable property for WeekLayout
+        /// </summary>
+        public static readonly BindableProperty CalendarLayoutProperty =
+            BindableProperty.Create(nameof(CalendarLayout), typeof(WeekLayout), typeof(Calendar), WeekLayout.Month, propertyChanged: OnCalendarLayoutChanged);
+
+        /// <summary>
+        /// Sets the layout of the calendar
+        /// </summary>
+        public WeekLayout CalendarLayout
+        {
+            get => (WeekLayout)GetValue(CalendarLayoutProperty);
+            set => SetValue(CalendarLayoutProperty, value);
+        }
+
+        /// <summary>
+        /// Bindable property for WeekViewUnit
+        /// </summary>
+        public static readonly BindableProperty WeekViewUnitProperty =
+            BindableProperty.Create(nameof(WeekViewUnit), typeof(WeekViewUnit), typeof(Calendar), WeekViewUnit.MonthName, propertyChanged: OnWeekViewUnitChanged);
+
+        /// <summary>
+        /// Sets the display name of the calendar unit
+        /// </summary>
+        public WeekViewUnit WeekViewUnit
+        {
+            get => (WeekViewUnit)GetValue(WeekViewUnitProperty);
+            set => SetValue(WeekViewUnitProperty, value);
+        }
+
         #endregion
 
         #region SelectedDates
+
         /// <summary>
         /// Bindable property for SelectedDate
         /// </summary>
@@ -914,14 +962,15 @@ namespace Xamarin.Plugin.Calendar.Controls
         private readonly Animation _calendarSectionAnimateShow;
         private bool _calendarSectionAnimating;
         private double _calendarSectionHeight;
+        private IViewLayoutEngine _viewLayoutEngine = new MonthViewEngine(CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Calendar plugin for Xamarin.Forms
         /// </summary>
         public Calendar()
         {
-            PrevMonthCommand = new Command(PrevMonth);
-            NextMonthCommand = new Command(NextMonth);
+            PrevLayoutUnitCommand = new Command(PrevUnit);
+            NextLayoutUnitCommand = new Command(NextUnit);
             PrevYearCommand = new Command(PrevYear);
             NextYearCommand = new Command(NextYear);
             ShowHideCalendarCommand = new Command(ToggleCalendarSectionVisibility);
@@ -929,7 +978,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             InitializeComponent();
             InitializeSelectionType();
             UpdateSelectedDateLabel();
-            UpdateMonthLabel();
+            UpdateLayoutUnitLabel();
             UpdateEvents();
 
             _calendarSectionAnimateHide = new Animation(AnimateMonths, 1, 0);
@@ -946,16 +995,16 @@ namespace Xamarin.Plugin.Calendar.Controls
         #region Properties
 
         /// <summary>
-        /// When executed calendar moves to previous month.
+        /// When executed calendar moves to previous week/month.
         /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
         /// </summary>
-        public ICommand PrevMonthCommand { get; }
+        public ICommand PrevLayoutUnitCommand { get; }
 
         /// <summary>
-        /// When executed calendar moves to next month.
+        /// When executed calendar moves to next week/month.
         /// Read only command to use in your <see cref="HeaderSectionTemplate"/> or <see cref="FooterSectionTemplate"/>
         /// </summary>
-        public ICommand NextMonthCommand { get; }
+        public ICommand NextLayoutUnitCommand { get; }
 
         /// <summary>
         /// When executed calendar moves to previous year.
@@ -996,8 +1045,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private static void OnYearChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is Calendar calendar && calendar.MonthYear.Year != (int)newValue)
-                calendar.MonthYear = new DateTime((int)newValue, calendar.Month, 1);
+            if (bindable is Calendar calendar && calendar.ShownDate.Year != (int)newValue)
+                calendar.ShownDate = new DateTime((int)newValue, calendar.Month, calendar.Day);
         }
 
         private static void OnMonthChanged(BindableObject bindable, object oldValue, object newValue)
@@ -1005,19 +1054,54 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (newValue is not int newMonth || newMonth <= 0 || newMonth > 12)
                 throw new ArgumentException("Month must be between 1 and 12.");
 
-            if (bindable is Calendar calendar && calendar.MonthYear.Month != newMonth)
-                calendar.MonthYear = new DateTime(calendar.Year, newMonth, 1);
+            if (bindable is Calendar calendar && calendar.ShownDate.Month != newMonth)
+                calendar.ShownDate = new DateTime(calendar.Year, newMonth, calendar.Day);
         }
 
-        private static void OnMonthYearChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnDayChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar calendar && newValue is int newDay && calendar.ShownDate.Day != newDay)
+                calendar.ShownDate = new DateTime(calendar.Year, calendar.Month, newDay);
+        }
+
+        private static void OnDateChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is Calendar calendar && newValue is DateTime newDateTime)
             {
+                if (calendar.Day != newDateTime.Day)
+                    calendar.Day = newDateTime.Day;
+
                 if (calendar.Month != newDateTime.Month)
                     calendar.Month = newDateTime.Month;
 
                 if (calendar.Year != newDateTime.Year)
                     calendar.Year = newDateTime.Year;
+
+                if (calendar.monthDaysView.ShownDate != calendar.ShownDate)
+                    calendar.monthDaysView.ShownDate = calendar.ShownDate;
+            }
+        }
+
+        private static void OnCalendarLayoutChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar calendar && newValue is WeekLayout layout)
+            {
+                calendar.monthDaysView.CalendarLayout = layout;
+
+                calendar._viewLayoutEngine = layout switch
+                {
+                    WeekLayout.Week => new WeekViewEngine(calendar.Culture, 1),
+                    WeekLayout.TwoWeek => new WeekViewEngine(calendar.Culture, 2),
+                    _ => new MonthViewEngine(calendar.Culture),
+                };
+            }
+        }
+
+        private static void OnWeekViewUnitChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is Calendar calendar && newValue is WeekViewUnit viewUnit)
+            {
+                calendar.WeekViewUnit = viewUnit;
             }
         }
 
@@ -1031,8 +1115,8 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             switch (propertyName)
             {
-                case nameof(MonthYear):
-                    UpdateMonthLabel();
+                case nameof(ShownDate):
+                    UpdateLayoutUnitLabel();
                     break;
 
                 case nameof(SelectedDates):
@@ -1041,8 +1125,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(Culture):
-                    if (MonthYear.Month > 0)
-                        UpdateMonthLabel();
+                    if (ShownDate.Month > 0)
+                        UpdateLayoutUnitLabel();
 
                     UpdateSelectedDateLabel();
                     break;
@@ -1060,9 +1144,15 @@ namespace Xamarin.Plugin.Calendar.Controls
             eventsScrollView.ScrollToAsync(0, 0, false);
         }
 
-        private void UpdateMonthLabel()
+        private void UpdateLayoutUnitLabel()
         {
-            MonthText = Culture.DateTimeFormat.MonthNames[MonthYear.Month - 1].Capitalize();
+            if (WeekViewUnit == WeekViewUnit.WeekNumber)
+            {
+                LayoutUnitText = GetWeekNumber(ShownDate).ToString();
+                return;
+            }
+
+            LayoutUnitText = Culture.DateTimeFormat.MonthNames[ShownDate.Month - 1].Capitalize();
         }
 
         private void UpdateSelectedDateLabel()
@@ -1115,7 +1205,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             SwipeRightCommand?.Execute(null);
 
             if (SwipeToChangeMonthEnabled)
-                PrevMonth();
+                PrevUnit();
         }
 
         private void OnSwipedLeft(object sender, EventArgs e)
@@ -1123,7 +1213,7 @@ namespace Xamarin.Plugin.Calendar.Controls
             SwipeLeftCommand?.Execute(null);
 
             if (SwipeToChangeMonthEnabled)
-                NextMonth();
+                NextUnit();
         }
 
         private void OnSwipedUp(object sender, EventArgs e)
@@ -1138,41 +1228,30 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #region Other methods
 
-        private void ChangeDisplayedMonth(int monthsToAdd)
+        private int GetWeekNumber(DateTime date)
         {
-            var targetDisplayedMonth = MonthYear.AddMonths(monthsToAdd);
-            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate ||
-                targetDisplayedMonth.Month == MaximumDate.Month ||
-                targetDisplayedMonth.Month == MinimumDate.Month)
-            {
-                MonthYear = targetDisplayedMonth;
-            }
+            return Culture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, Culture.DateTimeFormat.FirstDayOfWeek);
         }
 
-        private void ChangeDisplayedYear(int yearsToAdd)
+        private void PrevUnit()
         {
-            var targetDisplayedMonth = MonthYear.AddYears(yearsToAdd);
-            if (targetDisplayedMonth <= MaximumDate && targetDisplayedMonth >= MinimumDate)
-            {
-                MonthYear = targetDisplayedMonth;
-            }
-            else if (targetDisplayedMonth.Year == MaximumDate.Year)
-            {
-                MonthYear = MaximumDate;
-            }
-            else if (targetDisplayedMonth.Year == MinimumDate.Year)
-            {
-                MonthYear = MinimumDate;
-            }
+            ShownDate = _viewLayoutEngine.GetPreviousUnit(ShownDate);
         }
 
-        private void PrevMonth() => ChangeDisplayedMonth(-1);
+        private void NextUnit()
+        {
+            ShownDate = _viewLayoutEngine.GetNextUnit(ShownDate);
+        }
 
-        private void NextMonth() => ChangeDisplayedMonth(1);
+        private void NextYear(object obj)
+        {
+            ShownDate = ShownDate.AddYears(1);
+        }
 
-        private void PrevYear() => ChangeDisplayedYear(-1);
-
-        private void NextYear() => ChangeDisplayedYear(1);
+        private void PrevYear(object obj)
+        {
+            ShownDate = ShownDate.AddYears(-1);
+        }
 
         private void ToggleCalendarSectionVisibility()
             => CalendarSectionShown = !CalendarSectionShown;

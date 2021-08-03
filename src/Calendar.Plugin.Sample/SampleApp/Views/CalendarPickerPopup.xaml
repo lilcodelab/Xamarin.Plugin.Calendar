@@ -3,11 +3,11 @@
     x:Class="SampleApp.Views.CalendarPickerPopup"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:local="clr-namespace:SampleApp.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:local="clr-namespace:SampleApp.ViewModels"
+    xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
     CloseWhenBackgroundIsClicked="False"
     mc:Ignorable="d">
 
@@ -37,7 +37,7 @@
                     HorizontalOptions="Center"
                     MaximumDate="{Binding MaximumDate}"
                     MinimumDate="{Binding MinimumDate}"
-                    MonthYear="{Binding MonthYear}"
+                    ShownDate="{Binding InitalDate}"
                     SelectedDate="{Binding SelectedDate}"
                     VerticalOptions="Center"
                     WidthRequest="320" />
@@ -55,7 +55,6 @@
                     <Button Command="{Binding CancelCommand}" Text="Cancel" />
                 </FlexLayout>
             </StackLayout>
-
         </Frame>
     </rg:PopupPage.Content>
 </rg:PopupPage>

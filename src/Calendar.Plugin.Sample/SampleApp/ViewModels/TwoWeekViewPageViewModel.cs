@@ -6,21 +6,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Plugin.Calendar.Enums;
 using Xamarin.Plugin.Calendar.Models;
 
 namespace SampleApp.ViewModels
 {
-    public class SimplePageViewModel : BasePageViewModel
+    public class TwoWeekViewPageViewModel : BasePageViewModel
     {
         public ICommand TodayCommand => new Command(() =>
         {
-            Year = DateTime.Today.Year;
-            Month = DateTime.Today.Month;
+            ShownDate = DateTime.Today;
+            SelectedDate = DateTime.Today;
         });
 
         public ICommand EventSelectedCommand => new Command(async (item) => await ExecuteEventSelectedCommand(item));
 
-        public SimplePageViewModel() : base()
+        public TwoWeekViewPageViewModel() : base()
         {
             // testing all kinds of adding events
             // when initializing collection
@@ -49,8 +50,9 @@ namespace SampleApp.ViewModels
                 // add later
                 Events.Add(DateTime.Now.AddDays(15), new List<EventModel>(GenerateEvents(10, "Cool")));
 
-                Month += 1;
+                ShownDate.AddDays(7);
 
+                Day += 7;
                 Task.Delay(3000).ContinueWith(t =>
                 {
                     // get observable collection later
@@ -60,7 +62,7 @@ namespace SampleApp.ViewModels
                     todayEvents.Insert(0, new EventModel { Name = "Cool event insert", Description = "This is Cool event's description!" });
                     todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
 
-                    Month += 1;
+                    Day += 7;
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -75,6 +77,14 @@ namespace SampleApp.ViewModels
         }
 
         public EventCollection Events { get; }
+
+        private int _day = DateTime.Today.Day;
+
+        public int Day
+        {
+            get => _day;
+            set => SetProperty(ref _day, value);
+        }
 
         private int _month = DateTime.Today.Month;
 
@@ -92,6 +102,22 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _year, value);
         }
 
+        private DateTime _shownDate = DateTime.Today;
+
+        public DateTime ShownDate
+        {
+            get => _shownDate;
+            set => SetProperty(ref _shownDate, value);
+        }
+
+        private WeekLayout _calendarLayout = WeekLayout.TwoWeek;
+
+        public WeekLayout CalendarLayout
+        {
+            get => _calendarLayout;
+            set => SetProperty(ref _calendarLayout, value);
+        }
+
         private DateTime? _selectedDate = DateTime.Today;
 
         public DateTime? SelectedDate
@@ -100,7 +126,7 @@ namespace SampleApp.ViewModels
             set => SetProperty(ref _selectedDate, value);
         }
 
-        private DateTime _minimumDate = new DateTime(2019, 4, 29);
+        private DateTime _minimumDate = DateTime.Today.AddYears(-2).AddMonths(-5);
 
         public DateTime MinimumDate
         {
