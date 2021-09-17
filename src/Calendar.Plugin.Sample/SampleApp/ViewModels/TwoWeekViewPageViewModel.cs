@@ -35,36 +35,24 @@ namespace SampleApp.ViewModels
 
             // with indexer
             Events[DateTime.Now] = new List<EventModel>(GenerateEvents(2, "Boring"));
+            // indexer - update later
+            Events[DateTime.Now] = new ObservableCollection<EventModel>(GenerateEvents(10, "Cool"));
 
-            Task.Delay(5000).ContinueWith(_ =>
-            {
-                // indexer - update later
-                Events[DateTime.Now] = new ObservableCollection<EventModel>(GenerateEvents(10, "Cool"));
+            // add later
+            Events.Add(DateTime.Now.AddDays(3), new List<EventModel>(GenerateEvents(5, "Cool")));
 
-                // add later
-                Events.Add(DateTime.Now.AddDays(3), new List<EventModel>(GenerateEvents(5, "Cool")));
+            // indexer later
+            Events[DateTime.Now.AddDays(10)] = new List<EventModel>(GenerateEvents(10, "Boring"));
 
-                // indexer later
-                Events[DateTime.Now.AddDays(10)] = new List<EventModel>(GenerateEvents(10, "Boring"));
+            // add later
+            Events.Add(DateTime.Now.AddDays(15), new List<EventModel>(GenerateEvents(10, "Cool")));
 
-                // add later
-                Events.Add(DateTime.Now.AddDays(15), new List<EventModel>(GenerateEvents(10, "Cool")));
+            // get observable collection later
+            var todayEvents = Events[DateTime.Now] as ObservableCollection<EventModel>;
 
-                ShownDate.AddDays(7);
-
-                Day += 7;
-                Task.Delay(3000).ContinueWith(t =>
-                {
-                    // get observable collection later
-                    var todayEvents = Events[DateTime.Now] as ObservableCollection<EventModel>;
-
-                    // insert/add items to observable collection
-                    todayEvents.Insert(0, new EventModel { Name = "Cool event insert", Description = "This is Cool event's description!" });
-                    todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
-
-                    Day += 7;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            // insert/add items to observable collection
+            todayEvents.Insert(0, new EventModel { Name = "Cool event insert", Description = "This is Cool event's description!" });
+            todayEvents.Add(new EventModel { Name = "Cool event add", Description = "This is Cool event's description!" });
         }
 
         private IEnumerable<EventModel> GenerateEvents(int count, string name)
