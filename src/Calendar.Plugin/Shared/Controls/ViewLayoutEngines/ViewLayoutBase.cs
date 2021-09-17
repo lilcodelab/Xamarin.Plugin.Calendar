@@ -11,6 +11,8 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
 {
     internal abstract class ViewLayoutBase
     {
+        protected const int _numberOfDaysInWeek = 7;
+
         protected ViewLayoutBase(CultureInfo culture)
         {
             Culture = culture;
@@ -46,7 +48,7 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
                 }
             };
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < _numberOfDaysInWeek; i++)
             {
                 var label = new Label()
                 {
