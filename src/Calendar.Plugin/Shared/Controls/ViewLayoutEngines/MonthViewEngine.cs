@@ -11,6 +11,8 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
 {
     internal class MonthViewEngine : ViewLayoutBase, IViewLayoutEngine
     {
+        private const int _monthNumberOfWeeks = 6;
+
         public MonthViewEngine(CultureInfo culture) : base(culture)
         {
         }
@@ -33,7 +35,7 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
                 dayViewSize,
                 dayTappedCommand,
                 dayModelPropertyChanged,
-                6
+                _monthNumberOfWeeks
             );
 
             return grid;
