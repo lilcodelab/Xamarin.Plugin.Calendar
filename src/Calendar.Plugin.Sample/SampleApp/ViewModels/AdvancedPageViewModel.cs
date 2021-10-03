@@ -23,6 +23,8 @@ namespace SampleApp.ViewModels
 
         public AdvancedPageViewModel() : base()
         {
+            Device.BeginInvokeOnMainThread(async () => await App.Current.MainPage.DisplayAlert("Info", "Loading events with delay, and changeing current view.", "Ok"));
+
             Culture = CultureInfo.CreateSpecificCulture("en-GB");
             // testing all kinds of adding events
             // when initializing collection
