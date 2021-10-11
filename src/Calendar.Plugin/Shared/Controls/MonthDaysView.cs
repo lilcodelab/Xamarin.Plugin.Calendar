@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Plugin.Calendar.Models;
-using System.Windows.Input;
-using Xamarin.Plugin.Calendar.Interfaces;
-using Xamarin.Plugin.Calendar.Enums;
-using Xamarin.Plugin.Calendar.Controls.SelectionEngines;
-using System.ComponentModel;
 using Xamarin.Plugin.Calendar.Controls.Interfaces;
+using Xamarin.Plugin.Calendar.Controls.SelectionEngines;
+using Xamarin.Plugin.Calendar.Enums;
+using Xamarin.Plugin.Calendar.Interfaces;
+using Xamarin.Plugin.Calendar.Models;
+using Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines;
+using Xamarin.Plugin.Calendar.Shared.Interfaces;
 
 namespace Xamarin.Plugin.Calendar.Controls
 {
@@ -22,23 +24,26 @@ namespace Xamarin.Plugin.Calendar.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MonthDaysView : ContentView
     {
+        private Grid _daysControl;
+
         #region Bindable Properties
+
         /// <summary>
-        /// Bindable property for DisplayedMonthYear
+        /// Bindable property for ShownDate
         /// </summary>
-        public static readonly BindableProperty DisplayedMonthYearProperty =
-          BindableProperty.Create(nameof(DisplayedMonthYear), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
+        public static readonly BindableProperty ShownDateProperty =
+          BindableProperty.Create(nameof(ShownDate), typeof(DateTime), typeof(MonthDaysView), DateTime.Today, BindingMode.TwoWay);
 
         /// <summary>
         /// Currently displayed month of selected year
         /// </summary>
-        public DateTime DisplayedMonthYear
+        public DateTime ShownDate
         {
-            get => (DateTime)GetValue(DisplayedMonthYearProperty);
-            set => SetValue(DisplayedMonthYearProperty, value);
+            get => (DateTime)GetValue(ShownDateProperty);
+            set => SetValue(ShownDateProperty, value);
         }
 
-        /// <summary> 
+        /// <summary>
         /// Bindable property for SelectedDates
         /// </summary>
         public static readonly BindableProperty SelectedDatesProperty =
@@ -59,8 +64,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedDatesProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for Culture 
+        /// <summary>
+        /// Bindable property for Culture
         /// </summary>
         public static readonly BindableProperty CultureProperty =
           BindableProperty.Create(nameof(Culture), typeof(CultureInfo), typeof(MonthDaysView), CultureInfo.InvariantCulture, BindingMode.TwoWay);
@@ -74,8 +79,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(CultureProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for Events 
+        /// <summary>
+        /// Bindable property for Events
         /// </summary>
         public static readonly BindableProperty EventsProperty =
           BindableProperty.Create(nameof(Events), typeof(EventCollection), typeof(MonthDaysView), new EventCollection());
@@ -89,8 +94,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventsProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DaysTitleColor 
+        /// <summary>
+        /// Bindable property for DaysTitleColor
         /// </summary>
         public static readonly BindableProperty DaysTitleColorProperty =
           BindableProperty.Create(nameof(DaysTitleColor), typeof(Color), typeof(MonthDaysView), Color.Default);
@@ -104,8 +109,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for SelectedDayTextColor 
+        /// <summary>
+        /// Bindable property for SelectedDayTextColor
         /// </summary>
         public static readonly BindableProperty SelectedDayTextColorProperty =
           BindableProperty.Create(nameof(SelectedDayTextColor), typeof(Color), typeof(MonthDaysView), Color.White);
@@ -119,13 +124,13 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedDayTextColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DeselectedDayTextColor 
+        /// <summary>
+        /// Bindable property for DeselectedDayTextColor
         /// </summary>
         public static readonly BindableProperty DeselectedDayTextColorProperty =
           BindableProperty.Create(nameof(DeselectedDayTextColor), typeof(Color), typeof(MonthDaysView), Color.Default);
 
-        /// <summary> 
+        /// <summary>
         /// Color of deselected day text
         /// </summary>
         public Color DeselectedDayTextColor
@@ -135,13 +140,13 @@ namespace Xamarin.Plugin.Calendar.Controls
         }
 
         /// <summary>
-        /// Bindable property for SelectedTodayTextColor 
+        /// Bindable property for SelectedTodayTextColor
         /// </summary>
         public static readonly BindableProperty SelectedTodayTextColorProperty =
             BindableProperty.Create(nameof(SelectedTodayTextColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
 
-        /// <summary> 
-        /// Bindable property for SelectedTodayTextColor 
+        /// <summary>
+        /// Bindable property for SelectedTodayTextColor
         /// </summary>
         public Color SelectedTodayTextColor
         {
@@ -149,14 +154,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedTodayTextColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for OtherMonthDayColor 
+        /// <summary>
+        /// Bindable property for OtherMonthDayColor
         /// </summary>
         public static readonly BindableProperty OtherMonthDayColorProperty =
           BindableProperty.Create(nameof(OtherMonthDayColor), typeof(Color), typeof(MonthDaysView), Color.Silver);
 
         /// <summary>
-        /// Color of text for for days not belonging to the CurentMonthYear
+        /// Color of text for for days not belonging to the current month
         /// </summary>
         public Color OtherMonthDayColor
         {
@@ -164,8 +169,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(OtherMonthDayColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for OtherMonthDayIsVisible 
+        /// <summary>
+        /// Bindable property for OtherMonthDayIsVisible
         /// </summary>
         public static readonly BindableProperty OtherMonthDayIsVisibleProperty =
           BindableProperty.Create(nameof(OtherMonthDayIsVisible), typeof(bool), typeof(MonthDaysView), true);
@@ -179,8 +184,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(OtherMonthDayIsVisibleProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for SelectedDayBackgroundColor 
+        /// <summary>
+        /// Bindable property for SelectedDayBackgroundColor
         /// </summary>
         public static readonly BindableProperty SelectedDayBackgroundColorProperty =
           BindableProperty.Create(nameof(SelectedDayBackgroundColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#2196F3"));
@@ -194,8 +199,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(SelectedDayBackgroundColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for EventIndicatorColor 
+        /// <summary>
+        /// Bindable property for EventIndicatorColor
         /// </summary>
         public static readonly BindableProperty EventIndicatorTypeProperty =
           BindableProperty.Create(nameof(EventIndicatorType), typeof(EventIndicatorType), typeof(MonthDaysView), EventIndicatorType.BottomDot);
@@ -209,8 +214,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorTypeProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for EventIndicatorColor 
+        /// <summary>
+        /// Bindable property for EventIndicatorColor
         /// </summary>
         public static readonly BindableProperty EventIndicatorColorProperty =
           BindableProperty.Create(nameof(EventIndicatorColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
@@ -224,8 +229,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for EventIndicatorSelectedColor 
+        /// <summary>
+        /// Bindable property for EventIndicatorSelectedColor
         /// </summary>
         public static readonly BindableProperty EventIndicatorSelectedColorProperty =
           BindableProperty.Create(nameof(EventIndicatorSelectedColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
@@ -239,8 +244,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorSelectedColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for EventIndicatorTextColor 
+        /// <summary>
+        /// Bindable property for EventIndicatorTextColor
         /// </summary>
         public static readonly BindableProperty EventIndicatorTextColorProperty =
          BindableProperty.Create(nameof(EventIndicatorTextColor), typeof(Color?), typeof(Calendar), Color.Default);
@@ -254,8 +259,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorTextColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for EventIndicatorSelectedTextColor 
+        /// <summary>
+        /// Bindable property for EventIndicatorSelectedTextColor
         /// </summary>
         public static readonly BindableProperty EventIndicatorSelectedTextColorProperty =
           BindableProperty.Create(nameof(EventIndicatorSelectedTextColor), typeof(Color), typeof(Calendar), Color.Default);
@@ -269,8 +274,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(EventIndicatorSelectedTextColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for TodayOutlineColor 
+        /// <summary>
+        /// Bindable property for TodayOutlineColor
         /// </summary>
         public static readonly BindableProperty TodayOutlineColorProperty =
           BindableProperty.Create(nameof(TodayOutlineColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#FF4081"));
@@ -299,8 +304,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(TodayTextColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for TodayFillColor 
+        /// <summary>
+        /// Bindable property for TodayFillColor
         /// </summary>
         public static readonly BindableProperty TodayFillColorProperty =
           BindableProperty.Create(nameof(TodayFillColor), typeof(Color), typeof(MonthDaysView), Color.Transparent);
@@ -314,8 +319,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(TodayFillColorProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DayViewSize 
+        /// <summary>
+        /// Bindable property for DayViewSize
         /// </summary>
         public static readonly BindableProperty DayViewSizeProperty =
           BindableProperty.Create(nameof(DayViewSize), typeof(double), typeof(MonthDaysView), 40.0);
@@ -329,8 +334,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DayViewSizeProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DayViewCornerRadius 
+        /// <summary>
+        /// Bindable property for DayViewCornerRadius
         /// </summary>
         public static readonly BindableProperty DayViewCornerRadiusProperty =
           BindableProperty.Create(nameof(DayViewCornerRadius), typeof(float), typeof(MonthDaysView), 20f);
@@ -344,8 +349,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DayViewCornerRadiusProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DaysTitleHeight 
+        /// <summary>
+        /// Bindable property for DaysTitleHeight
         /// </summary>
         public static readonly BindableProperty DaysTitleHeightProperty =
           BindableProperty.Create(nameof(DaysTitleHeight), typeof(double), typeof(MonthDaysView), 30.0);
@@ -359,8 +364,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleHeightProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DaysTitleMaximumLength 
+        /// <summary>
+        /// Bindable property for DaysTitleMaximumLength
         /// </summary>
         public static readonly BindableProperty DaysTitleMaximumLengthProperty =
         BindableProperty.Create(nameof(DaysTitleMaximumLength), typeof(DaysTitleMaxLength), typeof(MonthDaysView), DaysTitleMaxLength.ThreeChars);
@@ -374,8 +379,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysTitleMaximumLengthProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DaysLabelStyle 
+        /// <summary>
+        /// Bindable property for DaysLabelStyle
         /// </summary>
         public static readonly BindableProperty DaysLabelStyleProperty =
           BindableProperty.Create(nameof(DaysLabelStyle), typeof(Style), typeof(MonthDaysView), Device.Styles.BodyStyle);
@@ -389,8 +394,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DaysLabelStyleProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DaysTitleLabelStyle 
+        /// <summary>
+        /// Bindable property for DaysTitleLabelStyle
         /// </summary>
         public static readonly BindableProperty DaysTitleLabelStyleProperty =
           BindableProperty.Create(nameof(DaysTitleLabelStyle), typeof(Style), typeof(MonthDaysView), null);
@@ -419,14 +424,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(DayTappedCommandProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for MinimumDate 
+        /// <summary>
+        /// Bindable property for MinimumDate
         /// </summary>
         public static readonly BindableProperty MinimumDateProperty =
           BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MinValue);
 
-        /// <summary> 
-        /// Minimum date which can be selected 
+        /// <summary>
+        /// Minimum date which can be selected
         /// </summary>
         public DateTime MinimumDate
         {
@@ -434,14 +439,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(MinimumDateProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for MaximumDate 
+        /// <summary>
+        /// Bindable property for MaximumDate
         /// </summary>
         public static readonly BindableProperty MaximumDateProperty =
           BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(MonthDaysView), DateTime.MaxValue);
 
-        /// <summary> 
-        /// Maximum date which can be selected 
+        /// <summary>
+        /// Maximum date which can be selected
         /// </summary>
         public DateTime MaximumDate
         {
@@ -449,14 +454,14 @@ namespace Xamarin.Plugin.Calendar.Controls
             set => SetValue(MaximumDateProperty, value);
         }
 
-        /// <summary> 
-        /// Bindable property for DisabledDayColor 
+        /// <summary>
+        /// Bindable property for DisabledDayColor
         /// </summary>
         public static readonly BindableProperty DisabledDayColorProperty =
           BindableProperty.Create(nameof(DisabledDayColor), typeof(Color), typeof(MonthDaysView), Color.FromHex("#ECECEC"));
 
-        /// <summary> 
-        /// Color for days which are out of MinimumDate - MaximumDate range 
+        /// <summary>
+        /// Color for days which are out of MinimumDate - MaximumDate range
         /// </summary>
         public Color DisabledDayColor
         {
@@ -476,7 +481,22 @@ namespace Xamarin.Plugin.Calendar.Controls
         public bool AnimateCalendar
         {
             get => (bool)GetValue(AnimateCalendarProperty);
-            set { SetValue(AnimateCalendarProperty, value); }
+            set => SetValue(AnimateCalendarProperty, value);
+        }
+
+        /// <summary>
+        /// Bindable property for WeekLayout
+        /// </summary>
+        public static readonly BindableProperty CalendarLayoutProperty =
+            BindableProperty.Create(nameof(CalendarLayout), typeof(WeekLayout), typeof(Calendar), WeekLayout.Month);
+
+        /// <summary>
+        /// Sets the layout of the calendar
+        /// </summary>
+        public WeekLayout CalendarLayout
+        {
+            get => (WeekLayout)GetValue(CalendarLayoutProperty);
+            set => SetValue(CalendarLayoutProperty, value);
         }
 
         #endregion
@@ -486,6 +506,8 @@ namespace Xamarin.Plugin.Calendar.Controls
         /// </summary>
         internal ISelectionEngine CurrentSelectionEngine { get; set; } = new SingleSelectionEngine();
 
+        internal IViewLayoutEngine CurrentViewLayoutEngine { get; set; } = new MonthViewEngine(CultureInfo.InvariantCulture);
+
         private readonly Dictionary<string, bool> _propertyChangedNotificationSupressions = new();
         private readonly List<DayView> _dayViews = new();
         private DateTime _lastAnimationTime;
@@ -493,21 +515,18 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         internal MonthDaysView()
         {
-            InitializeComponent();
-            InitializeDays();
-            UpdateDaysColors();
-            UpdateDayTitles();
+            RenderLayout();
         }
 
-        /// <summary> 
-        /// Destructor for optimization 
+        /// <summary>
+        /// Destructor for optimization
         /// </summary>
         ~MonthDaysView() => DiposeDayViews();
 
         #region PropertyChanged
 
-        /// <summary> 
-        /// Method that is called when a bound property is changed. 
+        /// <summary>
+        /// Method that is called when a bound property is changed.
         /// </summary>
         /// <param name="propertyName">The name of the bound property that changed.</param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -524,9 +543,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                     CurrentSelectionEngine.UpdateDateSelection(SelectedDates);
                     break;
 
-
                 case nameof(Events):
-                case nameof(DisplayedMonthYear):
+                case nameof(ShownDate):
                 case nameof(MinimumDate):
                 case nameof(MaximumDate):
                 case nameof(OtherMonthDayIsVisible):
@@ -558,6 +576,10 @@ namespace Xamarin.Plugin.Calendar.Controls
                 case nameof(DaysTitleMaximumLength):
                     UpdateDayTitles();
                     break;
+
+                case nameof(CalendarLayout):
+                    RenderLayout();
+                    break;
             }
         }
 
@@ -574,7 +596,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         {
             var dayNumber = (int)Culture.DateTimeFormat.FirstDayOfWeek;
 
-            foreach (var dayLabel in daysControl.Children.OfType<Label>())
+            foreach (var dayLabel in _daysControl.Children.OfType<Label>())
             {
                 var abberivatedDayName = Culture.DateTimeFormat.AbbreviatedDayNames[dayNumber];
                 dayLabel.Text = abberivatedDayName.ToUpper().Substring(0, (int)DaysTitleMaximumLength > abberivatedDayName.Length ? abberivatedDayName.Length : (int)DaysTitleMaximumLength);
@@ -587,25 +609,21 @@ namespace Xamarin.Plugin.Calendar.Controls
             if (Culture == null)
                 return;
 
-            Animate(() => daysControl.FadeTo(animate ? 0 : 1, 50),
-                    () => daysControl.FadeTo(1, 200),
+            Animate(() => _daysControl.FadeTo(animate ? 0 : 1, 50),
+                    () => _daysControl.FadeTo(1, 200),
                     () => UpdateDays(),
                     _lastAnimationTime = DateTime.UtcNow,
                     () => UpdateAndAnimateDays(false));//send false to prevent flashing if several property bindings are changed
         }
 
-
         private void UpdateDays()
         {
-            var monthStart = new DateTime(DisplayedMonthYear.Year, DisplayedMonthYear.Month, 1);
-            var addDays = ((int)Culture.DateTimeFormat.FirstDayOfWeek) - (int)monthStart.DayOfWeek;
+            var firstDate = CurrentViewLayoutEngine.GetFirstDate(ShownDate);
 
-            if (addDays > 0)
-                addDays -= 7;
-
+            int addDays = 0;
             foreach (var dayView in _dayViews)
             {
-                var currentDate = monthStart.AddDays(addDays++);
+                var currentDate = firstDate.AddDays(addDays++);
                 var dayModel = dayView.BindingContext as DayModel;
 
                 dayModel.Date = currentDate.Date;
@@ -614,8 +632,8 @@ namespace Xamarin.Plugin.Calendar.Controls
                 dayModel.DayViewSize = DayViewSize;
                 dayModel.DayViewCornerRadius = DayViewCornerRadius;
                 dayModel.DaysLabelStyle = DaysLabelStyle;
-                dayModel.IsThisMonth = currentDate.Month == DisplayedMonthYear.Month;
-                dayModel.OtherMonthIsVisible = OtherMonthDayIsVisible;
+                dayModel.IsThisMonth = (CalendarLayout != WeekLayout.Month) || currentDate.Month == ShownDate.Month;
+                dayModel.OtherMonthIsVisible = (CalendarLayout != WeekLayout.Month) || OtherMonthDayIsVisible;
                 dayModel.HasEvents = Events.ContainsKey(currentDate);
                 dayModel.IsDisabled = currentDate < MinimumDate || currentDate > MaximumDate;
 
@@ -646,23 +664,33 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         #endregion
 
-        private void InitializeDays()
+        private void RenderLayout()
         {
-            foreach (var dayView in daysControl.Children.OfType<DayView>())
+            CurrentViewLayoutEngine = CalendarLayout switch
             {
-                var dayModel = new DayModel();
+                WeekLayout.Week => new WeekViewEngine(Culture, 1),
+                WeekLayout.TwoWeek => new WeekViewEngine(Culture, 2),
+                _ => new MonthViewEngine(Culture),
+            };
 
-                dayView.BindingContext = dayModel;
-                dayModel.DayTappedCommand = DayTappedCommand;
-                dayModel.PropertyChanged += OnDayModelPropertyChanged;
+            _daysControl = CurrentViewLayoutEngine.GenerateLayout(
+                _dayViews,
+                DaysTitleHeight,
+                DaysTitleColor,
+                DaysTitleLabelStyle,
+                DayViewSize,
+                DayTappedCommand,
+                OnDayModelPropertyChanged);
 
-                _dayViews.Add(dayView);
-            }
+            UpdateDaysColors();
+            UpdateDayTitles();
+
+            Content = _daysControl;
         }
 
         private void DiposeDayViews()
         {
-            foreach (var dayView in daysControl.Children.OfType<DayView>())
+            foreach (var dayView in _daysControl.Children.OfType<DayView>())
             {
                 (dayView.BindingContext as DayModel).PropertyChanged -= OnDayModelPropertyChanged;
                 dayView.BindingContext = null;

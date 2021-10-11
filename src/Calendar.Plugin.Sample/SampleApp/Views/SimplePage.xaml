@@ -3,8 +3,8 @@
     x:Class="SampleApp.Views.SimplePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:SampleApp.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:SampleApp.ViewModels"
     xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
     x:Name="simpleCalendarPage"
     mc:Ignorable="d">
@@ -34,13 +34,11 @@
                     <Label
                         FontAttributes="Bold"
                         FontSize="Medium"
-                        Text="{Binding Name}"
-                    />
+                        Text="{Binding Name}" />
                     <Label
                         FontSize="Small"
                         LineBreakMode="WordWrap"
-                        Text="{Binding Description}" 
-                    />
+                        Text="{Binding Description}" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding BindingContext.EventSelectedCommand, Source={x:Reference simpleCalendarPage}}" CommandParameter="{Binding .}" />
                     </StackLayout.GestureRecognizers>
@@ -54,9 +52,9 @@
 
         <ContentPage.Resources>
             <ResourceDictionary>
-                <Style x:Key="daysLabelStyle" TargetType="Label">	
-                    <Setter Property="FontAttributes" Value="Italic" />	
-                    <Setter Property="FontSize" Value="18" />	
+                <Style x:Key="daysLabelStyle" TargetType="Label">
+                    <Setter Property="FontAttributes" Value="Italic" />
+                    <Setter Property="FontSize" Value="18" />
                 </Style>
 
                 <Style x:Key="daysTitleLabelStyle" TargetType="Label">
@@ -69,20 +67,20 @@
 
     <!--
         Swipe handling
-        
+
         DisableSwipeDetection="False"
-        
+
         SwipeLeftCommand="{Binding SwipeLeftCommand}"
         SwipeRightCommand="{Binding SwipeRightCommand}"
         SwipeUpCommand="{Binding SwipeUpCommand}"
-        
+
         SwipeUpToHideEnabled="False"
         SwipeToChangeMonthEnabled="False"
     -->
 
     <!--
         Customizations
-        
+
         DaysLabelStyle="{StaticResource daysLabelStyle}"
         DaysTitleLabelStyle="{StaticResource daysTitleLabelStyle}"
         MonthLabelColor="Red"
@@ -102,5 +100,4 @@
         DayViewCornerRadius="3"
         DaysTitleHeight="40"
     -->
-
 </ContentPage>

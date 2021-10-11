@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SampleApp.Controls"
+             xmlns:local="clr-namespace:SampleApp.ViewModels"
+             xmlns:plugin="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+             x:Class="SampleApp.Views.TwoWeekViewPage"
+             x:Name="twoWeekViewCalendarPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding TodayCommand}" Text="Today" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <local:TwoWeekViewPageViewModel />
+    </ContentPage.BindingContext>
+
+    <plugin:Calendar
+        CalendarLayout="{Binding CalendarLayout}"
+        ShownDate="{Binding ShownDate}"
+        Events="{Binding Events}"
+        MaximumDate="{Binding MaximumDate}"
+        MinimumDate="{Binding MinimumDate}"
+        SelectedDate="{Binding SelectedDate}"
+        Day="{Binding Day}"
+        Month="{Binding Month}"
+        Year="{Binding Year}"
+        Padding="10,0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+        <plugin:Calendar.HeaderSectionTemplate>
+            <controls:CalendarHeader />
+        </plugin:Calendar.HeaderSectionTemplate>
+
+        <plugin:Calendar.EventTemplate>
+            <DataTemplate>
+                <StackLayout
+                    Padding="15,0,0,0"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="{Binding Name}" />
+                    <Label
+                        FontSize="Small"
+                        LineBreakMode="WordWrap"
+                        Text="{Binding Description}" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BindingContext.EventSelectedCommand, Source={x:Reference twoWeekViewCalendarPage}}" CommandParameter="{Binding .}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </DataTemplate>
+        </plugin:Calendar.EventTemplate>
+    </plugin:Calendar>
+</ContentPage>

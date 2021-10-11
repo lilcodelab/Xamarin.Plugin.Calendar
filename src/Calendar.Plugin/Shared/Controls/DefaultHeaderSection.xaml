@@ -12,7 +12,7 @@
         VerticalOptions="FillAndExpand">
         <Grid
             HorizontalOptions="FillAndExpand"
-            IsVisible="{Binding ShowMonthPicker}"
+            IsVisible="{Binding ShowLayoutUnitPicker}"
             VerticalOptions="StartAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -45,7 +45,7 @@
                     VerticalTextAlignment="Center" />
 
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
+                    <TapGestureRecognizer Command="{Binding PrevLayoutUnitCommand}" />
                 </Frame.GestureRecognizers>
             </Frame>
 
@@ -54,8 +54,8 @@
                 FontAttributes="Bold"
                 FontSize="Medium"
                 HorizontalOptions="Center"
-                Text="{Binding MonthText}"
-                TextColor="{Binding MonthLabelColor}"
+                Text="{Binding LayoutUnitText}"
+                TextColor="{Binding LayoutUnitLabelColor}"
                 VerticalOptions="Center" />
 
             <Frame
@@ -80,7 +80,7 @@
                     VerticalTextAlignment="Center" />
 
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
+                    <TapGestureRecognizer Command="{Binding NextLayoutUnitCommand}" />
                 </Frame.GestureRecognizers>
             </Frame>
         </Grid>

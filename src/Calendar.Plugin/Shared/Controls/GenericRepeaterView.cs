@@ -42,6 +42,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         internal GenericRepeaterView()
         {
             Spacing = 0;
+            VerticalOptions = LayoutOptions.StartAndExpand;
         }
 
         #region PropertyChanged

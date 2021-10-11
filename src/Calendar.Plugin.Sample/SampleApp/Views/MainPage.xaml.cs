@@ -1,6 +1,5 @@
 ﻿using Rg.Plugins.Popup.Services;
 using System;
-using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,22 +13,22 @@ namespace SampleApp.Views
             InitializeComponent();
         }
 
-        async void SimpleCalendar(object sender, EventArgs e)
+        private async void SimpleCalendar(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SimplePage());
         }
 
-        async void AdvancedCalendar(object sender, EventArgs e)
+        private async void AdvancedCalendar(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AdvancedPage());
         }
 
-        async void RangeCalendar(object sender, EventArgs e)
+        private async void RangeCalendar(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RangeSelectionPage());
         }
 
-        async void PickerPopup(object sender, EventArgs e)
+        private async void PickerPopup(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.PushAsync(new CalendarPickerPopup(async (calendarPickerResult) =>
             {
@@ -39,7 +38,7 @@ namespace SampleApp.Views
             }));
         }
 
-        async void RangePickerPopup(object sender, EventArgs e)
+        private async void RangePickerPopup(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopupSelectedDates(async (calendarPickerResult) =>
             {
@@ -65,13 +64,13 @@ namespace SampleApp.Views
             }));
         }
 
-        async void RangeStartEndDatePickerPopup(object sender, EventArgs e)
+        private async void RangeStartEndDatePickerPopup(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.PushAsync(new CalendarRangePickerPopup(async (calendarPickerResult) =>
             {
                 var message = "Calendar Range Piceker Canceled!";
 
-            if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedEndDate.HasValue && calendarPickerResult.SelectedEndDate.HasValue)
+                if (calendarPickerResult.IsSuccess && calendarPickerResult.SelectedEndDate.HasValue && calendarPickerResult.SelectedEndDate.HasValue)
                 {
                     var startDate = calendarPickerResult.SelectedStartDate;
                     var endDate = calendarPickerResult.SelectedEndDate;
@@ -84,6 +83,14 @@ namespace SampleApp.Views
             }));
         }
 
+        private async void WeekViewCalendar(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new WeekViewPage());
+        }
 
+        private async void TwoWeekViewCalendar(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TwoWeekViewPage());
+        }
     }
 }

@@ -53,6 +53,7 @@ xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.
 Basic control usage:
 ```xml
 <controls:Calendar
+        Day="14"
         Month="5"
         Year="2019"
         VerticalOptions="FillAndExpand"
@@ -61,10 +62,20 @@ Basic control usage:
 
 Bindable properties:
 * `Culture` _CultureInfo_ calender culture/language
+* `Day` _int_ currently viewing day
 * `Month` _int_ currently viewing month
 * `Year` _int_ currently viewing year
 * `Events` _EventCollection_ (from package) your events for calender
 * Custom colors, fonts, sizes ...
+
+
+__Remark: You can use `ShownDate` as an alternative to `Year`, `Month` and `Day`__
+```xml
+<controls:Calendar
+        ShownDate="2019-05-14"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+```
 
 #### Binding events:
 In your XAML, add the data template for events, and bind the events collection, example:
@@ -189,6 +200,28 @@ TodayTextColor="Yellow"
 
 #### Available customization properties
 
+##### Calendar Layout customizations
+You can set the layout of the calendar with property `CalendarLayout`
+
+- Available layouts are: 
+
+    `OneWeek` - only one week is shown
+
+    `TwoWeeks` - two weeks are shown
+
+    `Month` - whole month is shown (default value)
+
+```xml
+CalendarLayout="Month"
+```
+
+You can also choose to display the shown week number instead of month name
+
+```xml
+CalendarLayout="Week"
+WeekViewUnit="WeekNumber"
+```
+
 ##### Event indicator customizations
 You can customize how will look event indication with property `EventIndicatorType`
 
@@ -201,7 +234,6 @@ You can customize how will look event indication with property `EventIndicatorTy
 ```xml
 EventIndicatorType="Background"
 ```
-
 ##### Calendar swipe customizations
 You can write your own customizations commands for swipe. 
 ```xml
