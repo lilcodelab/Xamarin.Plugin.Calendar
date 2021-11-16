@@ -14,6 +14,7 @@ namespace Xamarin.Plugin.Calendar.Android
         private const int SwipeDistanceThreshold = 50;
         private const int SwipeVelocityThreshold = 20;
         private readonly GestureDetector _gestureDetector;
+        private bool _isDisposed;
 
         public SwipeAwareContainerRenderer(Context context) : base(context)
         {
@@ -22,6 +23,9 @@ namespace Xamarin.Plugin.Calendar.Android
 
         public override bool OnInterceptTouchEvent(MotionEvent ev)
         {
+            if (_isDisposed)
+                return false;
+        
             if (Element is SwipeAwareContainer element && !element.SwipeDetectionDisabled)
                 _gestureDetector.OnTouchEvent(ev);
 
@@ -63,6 +67,25 @@ namespace Xamarin.Plugin.Calendar.Android
 
             return false;
         }
+        
+        protected override void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+                return;
+
+            _isDisposed = true;
+
+            if (disposing)
+            {
+                if (_gestureDetector != null)
+                {
+                    _gestureDetector.Dispose();
+                    _gestureDetector = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #region Unused gestures
 
@@ -73,6 +96,5 @@ namespace Xamarin.Plugin.Calendar.Android
         public bool OnSingleTapUp(MotionEvent e) => false;
 
         #endregion
-
     }
 }
