@@ -569,7 +569,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                     break;
 
                 case nameof(Culture):
-                    UpdateDayTitles();
+                    RenderLayout();
                     UpdateAndAnimateDays(AnimateCalendar);
                     break;
 
