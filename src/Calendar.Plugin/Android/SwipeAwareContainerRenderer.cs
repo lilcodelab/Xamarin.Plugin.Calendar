@@ -14,7 +14,7 @@ namespace Xamarin.Plugin.Calendar.Android
         private const int SwipeDistanceThreshold = 50;
         private const int SwipeVelocityThreshold = 20;
         private readonly GestureDetector _gestureDetector;
-        private bool _isDisposed;
+        private bool _isDisposed = false;
 
         public SwipeAwareContainerRenderer(Context context) : base(context)
         {
