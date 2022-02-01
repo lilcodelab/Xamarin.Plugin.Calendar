@@ -1055,7 +1055,7 @@ namespace Xamarin.Plugin.Calendar.Controls
                 throw new ArgumentException("Month must be between 1 and 12.");
 
             if (bindable is Calendar calendar && calendar.ShownDate.Month != newMonth)
-                calendar.ShownDate = new DateTime(calendar.Year, newMonth, calendar.Day);
+                calendar.ShownDate = new DateTime(calendar.Year, newMonth, Math.Min(DateTime.DaysInMonth(calendar.Year, newMonth), calendar.Day));
         }
 
         private static void OnDayChanged(BindableObject bindable, object oldValue, object newValue)
