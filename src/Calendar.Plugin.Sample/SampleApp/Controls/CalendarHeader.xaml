@@ -8,7 +8,7 @@
         Margin="0,2"
         Padding="0"
         HorizontalOptions="FillAndExpand"
-        IsVisible="{Binding ShowLayoutUnitPicker}"
+        IsVisible="{Binding ShowMonthPicker}"
         VerticalOptions="Start">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -52,7 +52,7 @@
             FontAttributes="Bold"
             FontSize="Medium"
             HorizontalOptions="Center"
-            TextColor="{Binding LayoutUnitLabelColor}"
+            TextColor="{Binding MonthLabelColor}"
             VerticalOptions="Center">
             <Label.FormattedText>
                 <FormattedString>

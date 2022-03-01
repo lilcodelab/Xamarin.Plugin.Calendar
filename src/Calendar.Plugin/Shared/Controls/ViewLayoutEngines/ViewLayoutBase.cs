@@ -28,23 +28,28 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
 
         protected Grid GenerateWeekLayout(
                 List<DayView> dayViews,
-                double daysTitleHeight,
-                Color daysTitleColor,
-                Style daysTitleLabelStyle,
-                double dayViewSize,
+                object bindingContext,
+                string daysTitleHeightBindingName,
+                string daysTitleColorBindingName,
+                string daysTitleLabelStyleBindingName,
+                string dayViewSizeBindingName,
                 ICommand dayTappedCommand,
                 PropertyChangedEventHandler dayModelPropertyChanged,
                 int numberOfWeeks
             )
         {
+            var rowDefinition = new RowDefinition()
+            {
+                BindingContext = bindingContext,
+            };
+            rowDefinition.SetBinding(RowDefinition.HeightProperty, daysTitleHeightBindingName);
+
             var grid = new Grid
             {
                 ColumnSpacing = 0d,
                 RowDefinitions = new RowDefinitionCollection()
                 {
-                    new RowDefinition(){
-                        Height = daysTitleHeight
-                    },
+                    rowDefinition,
                 }
             };
 
@@ -52,10 +57,12 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
             {
                 var label = new Label()
                 {
-                    TextColor = daysTitleColor,
-                    Style = daysTitleLabelStyle,
                     HorizontalTextAlignment = TextAlignment.Center,
                 };
+                label.BindingContext = bindingContext;
+                label.SetBinding(Label.TextColorProperty, daysTitleColorBindingName);
+                label.SetBinding(Label.StyleProperty, daysTitleLabelStyleBindingName);
+
                 Grid.SetRow(label, 0);
                 Grid.SetColumn(label, i);
 
@@ -66,10 +73,12 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
 
             for (int i = 1; i <= numberOfWeeks; i++)
             {
-                grid.RowDefinitions.Add(new RowDefinition()
+                rowDefinition = new RowDefinition()
                 {
-                    Height = dayViewSize,
-                });
+                    BindingContext = bindingContext,
+                };
+                rowDefinition.SetBinding(RowDefinition.HeightProperty, dayViewSizeBindingName);
+                grid.RowDefinitions.Add(rowDefinition);
 
                 for (int ii = 0; ii < 7; ii++)
                 {

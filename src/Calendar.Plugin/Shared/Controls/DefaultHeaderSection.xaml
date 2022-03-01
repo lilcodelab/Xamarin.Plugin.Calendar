@@ -2,7 +2,9 @@
 <ContentView
     x:Class="Xamarin.Plugin.Calendar.Controls.DefaultHeaderSection"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls" 
+    x:DataType="controls:Calendar">
 
     <!--  TODO: Controls for circle buttons  -->
     <StackLayout
@@ -12,7 +14,7 @@
         VerticalOptions="FillAndExpand">
         <Grid
             HorizontalOptions="FillAndExpand"
-            IsVisible="{Binding ShowLayoutUnitPicker}"
+            IsVisible="{Binding ShowMonthPicker}"
             VerticalOptions="StartAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -55,7 +57,7 @@
                 FontSize="Medium"
                 HorizontalOptions="Center"
                 Text="{Binding LayoutUnitText}"
-                TextColor="{Binding LayoutUnitLabelColor}"
+                TextColor="{Binding MonthLabelColor}"
                 VerticalOptions="Center" />
 
             <Frame

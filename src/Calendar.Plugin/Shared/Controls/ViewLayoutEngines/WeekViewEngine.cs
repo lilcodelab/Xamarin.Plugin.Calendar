@@ -22,20 +22,22 @@ namespace Xamarin.Plugin.Calendar.Shared.Controls.ViewLayoutEngines
 
         public Grid GenerateLayout(
             List<DayView> dayViews,
-            double daysTitleHeight,
-            Color daysTitleColor,
-            Style daysTitleLabelStyle,
-            double dayViewSize,
+            object bindingContext,
+            string daysTitleHeightBindingName,
+            string daysTitleColorBindingName,
+            string daysTitleLabelStyleBindingName,
+            string dayViewSizeBindingName,
             ICommand dayTappedCommand,
             PropertyChangedEventHandler dayModelPropertyChanged
         )
         {
             var grid = GenerateWeekLayout(
                 dayViews,
-                daysTitleHeight,
-                daysTitleColor,
-                daysTitleLabelStyle,
-                dayViewSize,
+                bindingContext,
+                daysTitleHeightBindingName,
+                daysTitleColorBindingName,
+                daysTitleLabelStyleBindingName,
+                dayViewSizeBindingName,
                 dayTappedCommand,
                 dayModelPropertyChanged,
                 _numberOfWeeks
