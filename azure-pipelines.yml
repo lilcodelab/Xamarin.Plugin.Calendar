@@ -9,7 +9,7 @@ trigger:
 variables:
   buildPlatform: 'AnyCPU'
   buildConfiguration: 'Release'
-  nugetVersion: '1.4.$(Build.BuildId)'
+  nugetVersion: '2.0.$(Build.BuildId)'
   monoVersion: 6_12_7
   dotentVersion: 5.x
 
