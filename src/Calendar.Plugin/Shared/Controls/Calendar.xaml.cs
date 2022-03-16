@@ -1242,22 +1242,38 @@ namespace Xamarin.Plugin.Calendar.Controls
 
         private void PrevUnit()
         {
-            ShownDate = _viewLayoutEngine.GetPreviousUnit(ShownDate);
+            var targetDate = _viewLayoutEngine.GetPreviousUnit(ShownDate);
+
+            ShownDate = targetDate < MinimumDate
+                ? MinimumDate
+                : targetDate;
         }
 
         private void NextUnit()
         {
-            ShownDate = _viewLayoutEngine.GetNextUnit(ShownDate);
-        }
+            var targetDate = _viewLayoutEngine.GetNextUnit(ShownDate);
 
-        private void NextYear(object obj)
-        {
-            ShownDate = ShownDate.AddYears(1);
+            ShownDate = targetDate > MaximumDate
+                ? MaximumDate
+                : targetDate;
         }
 
         private void PrevYear(object obj)
         {
-            ShownDate = ShownDate.AddYears(-1);
+            var targetDate = ShownDate.AddYears(-1);
+
+            ShownDate = targetDate < MinimumDate
+                ? MinimumDate
+                : targetDate;
+        }
+
+        private void NextYear(object obj)
+        {
+            var targetDate = ShownDate.AddYears(1);
+
+            ShownDate = targetDate > MaximumDate
+                ? MaximumDate
+                : targetDate;
         }
 
         private void ToggleCalendarSectionVisibility()
