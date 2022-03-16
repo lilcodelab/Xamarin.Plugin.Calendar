@@ -962,7 +962,7 @@ namespace Xamarin.Plugin.Calendar.Controls
         private readonly Animation _calendarSectionAnimateShow;
         private bool _calendarSectionAnimating;
         private double _calendarSectionHeight;
-        private IViewLayoutEngine _viewLayoutEngine = new MonthViewEngine(CultureInfo.InvariantCulture);
+        private IViewLayoutEngine _viewLayoutEngine;
 
         /// <summary>
         /// Calendar plugin for Xamarin.Forms
@@ -976,6 +976,8 @@ namespace Xamarin.Plugin.Calendar.Controls
             ShowHideCalendarCommand = new Command(ToggleCalendarSectionVisibility);
 
             InitializeComponent();
+
+            InitializeViewLayoutEngine();
             InitializeSelectionType();
             UpdateSelectedDateLabel();
             UpdateLayoutUnitLabel();
@@ -985,6 +987,11 @@ namespace Xamarin.Plugin.Calendar.Controls
             _calendarSectionAnimateShow = new Animation(AnimateMonths, 0, 1);
 
             calendarContainer.SizeChanged += OnCalendarContainerSizeChanged;
+        }
+
+        private void InitializeViewLayoutEngine()
+        {
+            _viewLayoutEngine = new MonthViewEngine(Culture);
         }
 
         private void InitializeSelectionType()
