@@ -675,10 +675,11 @@ namespace Xamarin.Plugin.Calendar.Controls
 
             _daysControl = CurrentViewLayoutEngine.GenerateLayout(
                 _dayViews,
-                DaysTitleHeight,
-                DaysTitleColor,
-                DaysTitleLabelStyle,
-                DayViewSize,
+                this,
+                nameof(DaysTitleHeight),
+                nameof(DaysTitleColor),
+                nameof(DaysTitleLabelStyle),
+                nameof(DayViewSize),
                 DayTappedCommand,
                 OnDayModelPropertyChanged);
 

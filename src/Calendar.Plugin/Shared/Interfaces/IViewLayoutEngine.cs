@@ -11,10 +11,11 @@ namespace Xamarin.Plugin.Calendar.Shared.Interfaces
     {
         Grid GenerateLayout(
             List<DayView> dayViews,
-            double daysTitleHeight,
-            Color daysTitleColor,
-            Style daysTitleLabelStyle,
-            double dayViewSize,
+            object bindingContext,
+            string daysTitleHeightBindingName,
+            string daysTitleColorBindingName,
+            string daysTitleLabelStyleBindingName,
+            string dayViewSizeBindingName,
             ICommand dayTappedCommand,
             PropertyChangedEventHandler dayModelPropertyChanged
         );
